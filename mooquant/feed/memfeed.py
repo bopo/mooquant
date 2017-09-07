@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -103,7 +103,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
                         download_daily_bars(instrument, year, fileName)
                     else:
                         raise Exception("Invalid frequency")
-                except Exception as e:
+                except Exception, e:
                     if skipErrors:
                         logger.error(str(e))
                         continue

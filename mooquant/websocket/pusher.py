@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -73,7 +73,7 @@ class WebSocketClient(client.WebSocketClientBase):
     def __init__(self, appKey, protocol=5, maxInactivity=120, responseTimeout=30):
         params = {
             "protocol": protocol,
-            "client": "Python-MooQuant",
+            "client": "Python-PyAlgoTrade",
             "version": mooquant.__version__
             }
 

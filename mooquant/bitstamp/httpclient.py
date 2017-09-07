@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -110,7 +110,7 @@ class UserTransaction(object):
 
 
 class HTTPClient(object):
-    USER_AGENT = "MooQuant"
+    USER_AGENT = "PyAlgoTrade"
     REQUEST_TIMEOUT = 30
 
     class UserTransactionType:

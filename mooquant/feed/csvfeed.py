@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -117,7 +117,7 @@ class BasicRowParser(RowParser):
         # Convert the values
         values = {}
         
-        for key, value in csvRowDict.iteritems():
+        for key, value in csvRowDict.items():
             if key != self.__dateTimeColumn:
                 values[key] = self.__converter(key, value)
         

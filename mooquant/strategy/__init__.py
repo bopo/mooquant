@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -549,7 +549,7 @@ class BaseStrategy(object):
         """Logs a message with level INFO on the strategy logger."""
         self.getLogger().info(msg)
 
-    def warn(self, msg):
+    def warning(self, msg):
         """Logs a message with level WARNING on the strategy logger."""
         self.getLogger().warning(msg)
 

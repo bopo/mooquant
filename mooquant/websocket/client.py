@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -130,7 +130,7 @@ class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
                     return
 
             self.onMessage(msg)
-        except Exception as e:
+        except Exception, e:
             self.onUnhandledException(e)
 
     def opened(self):
@@ -168,7 +168,7 @@ class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
 
             self.close_connection()
 
-        except Exception as e:
+        except Exception, e:
             logger.warning("Failed to close connection: %s" % (e))
 
     ######################################################################

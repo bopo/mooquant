@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -80,7 +80,7 @@ class BaseFeed(observer.Subject):
     def getNextValuesAndUpdateDS(self):
         dateTime, values = self.getNextValues()
         if dateTime is not None:
-            for key, value in values.iteritems():
+            for key, value in values.items():
                 # Get or create the datseries for each key.
                 try:
                     ds = self.__ds[key]

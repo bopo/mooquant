@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -48,7 +48,7 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 
 class Worker(object):
     def __init__(self, address, port, workerName=None):
-        url = "http://%s:%s/MooQuantRPC" % (address, port)
+        url = "http://%s:%s/PyAlgoTradeRPC" % (address, port)
         self.__server = xmlrpclib.ServerProxy(url, allow_none=True)
         self.__logger = mooquant.logger.getLogger(workerName)
         
@@ -100,7 +100,7 @@ class Worker(object):
             
             try:
                 result = self.runStrategy(feed, *parameters)
-            except Exception as e:
+            except Exception, e:
                 self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
             
             self.getLogger().info("Result %s" % result)
@@ -134,7 +134,7 @@ class Worker(object):
                 job = self.getNextJob()
             
             self.getLogger().info("Finished running")
-        except Exception as e:
+        except Exception, e:
             self.getLogger().exception("Finished running with errors: %s" % (e))
 
 

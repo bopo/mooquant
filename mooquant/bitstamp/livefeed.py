@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -134,7 +134,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
             # Start the thread that runs the client.
             self.__thread = self.buildWebSocketClientThread()
             self.__thread.start()
-        except Exception as e:
+        except Exception, e:
             self.__initializationOk = False
             common.logger.error("Error connecting : %s" % str(e))
 
@@ -239,7 +239,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
             if self.__thread is not None and self.__thread.is_alive():
                 common.logger.info("Shutting down websocket client.")
                 self.__thread.stop()
-        except Exception as e:
+        except Exception, e:
             common.logger.error("Error shutting down client: %s" % (str(e)))
 
     # This should not raise.

@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -52,7 +52,7 @@ def worker_process(strategyClass, port, logLevel):
         w = Worker("localhost", port, name)
         w.getLogger().setLevel(logLevel)
         w.run()
-    except Exception as e:
+    except Exception, e:
         w.getLogger().exception("Failed to run worker: %s" % (e))
 
 

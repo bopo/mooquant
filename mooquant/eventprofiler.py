@@ -36,7 +36,7 @@ class Results(object):
         self.__eventCount = 0
 
         # Process events.
-        for instrument, events in eventsDict.iteritems():
+        for instrument, events in eventsDict.items():
             for event in events:
                 
                 # Skip events which are on the boundary or for some reason are not complete.

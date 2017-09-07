@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -152,7 +152,7 @@ def build_feed(sourceCode, tableCodes, fromYear, toYear, storage, frequency=bar.
                         download_weekly_bars(sourceCode, tableCode, year, fileName, authToken)
                     else:
                         raise Exception("Invalid frequency")
-                except Exception as e:
+                except Exception, e:
                     if skipErrors:
                         logger.error(str(e))
                         continue

@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -148,7 +148,7 @@ class TwitterFeed(observer.Subject):
             if self.__thread is not None and self.__thread.is_alive():
                 logger.info("Shutting down client.")
                 self.__stream.disconnect()
-        except Exception as e:
+        except Exception, e:
             logger.error("Error disconnecting stream: %s." % (str(e)))
 
     def join(self):

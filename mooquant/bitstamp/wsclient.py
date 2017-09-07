@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -132,7 +132,7 @@ class WebSocketClient(pusher.WebSocketClient):
         common.logger.warning("Disconnection detected.")
         try:
             self.stopClient()
-        except Exception as e:
+        except Exception, e:
             common.logger.error("Error stopping websocket client: %s." % (str(e)))
         self.__queue.put((WebSocketClient.ON_DISCONNECTED, None))
 
@@ -180,5 +180,5 @@ class WebSocketClientThread(threading.Thread):
         try:
             common.logger.info("Stopping websocket client.")
             self.__wsClient.stopClient()
-        except Exception as e:
+        except Exception, e:
             common.logger.error("Error stopping websocket client: %s." % (str(e)))
