@@ -24,7 +24,7 @@ import unittest
 from mooquant import bar, broker
 from mooquant.broker import backtesting, fillstrategy
 
-import broker_backtesting_test
+from . import broker_backtesting_test
 
 
 class BaseTestCase(unittest.TestCase):

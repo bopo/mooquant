@@ -22,7 +22,7 @@ from mooquant import strategy
 from mooquant.barfeed import yahoofeed
 from mooquant.technical import cross, ma
 
-import common
+from . import common
 
 
 class SMACrossOverStrategy(strategy.BacktestingStrategy):

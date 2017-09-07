@@ -21,7 +21,7 @@
 from mooquant import dataseries
 from mooquant.technical import rsi
 
-import common
+from . import common
 
 
 class TestCase(common.TestCase):

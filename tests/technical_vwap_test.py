@@ -21,7 +21,7 @@
 from mooquant.barfeed import yahoofeed
 from mooquant.technical import vwap
 
-import common
+from . import common
 
 
 class VWAPTestCase(common.TestCase):

@@ -23,8 +23,8 @@ import os
 from mooquant import bar, marketsession
 from mooquant.barfeed import sqlitefeed, yahoofeed
 
-import common
-import feed_test
+from . import common
+from . import feed_test
 
 
 class TemporarySQLiteFeed:

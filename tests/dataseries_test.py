@@ -23,7 +23,7 @@ import datetime
 from mooquant import bar, dataseries
 from mooquant.dataseries import aligned, bards
 
-import common
+from . import common
 
 
 class TestSequenceDataSeries(common.TestCase):

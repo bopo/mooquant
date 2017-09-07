@@ -23,7 +23,7 @@ import datetime
 
 from mooquant import dispatcher, observer
 
-import common
+from . import common
 
 
 class NonRealtimeFeed(observer.Subject):

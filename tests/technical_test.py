@@ -20,7 +20,7 @@
 
 from mooquant import dataseries, technical
 
-import common
+from . import common
 
 
 class TestEventWindow(technical.EventWindow):

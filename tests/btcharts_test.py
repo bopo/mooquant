@@ -23,7 +23,7 @@ import datetime
 from mooquant.bitcoincharts import barfeed
 from mooquant.utils import dt
 
-import common
+from . import common
 
 
 class TestCase(common.TestCase):

@@ -23,7 +23,7 @@ import datetime
 from mooquant import bar, barfeed, broker
 from mooquant.broker import backtesting
 
-import common
+from . import common
 
 
 class OrderUpdateCallback:

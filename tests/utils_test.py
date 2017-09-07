@@ -23,7 +23,7 @@ import datetime
 from mooquant import utils
 from mooquant.utils import collections, dt
 
-import common
+from . import common
 
 
 class UtilsTestCase(common.TestCase):

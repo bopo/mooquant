@@ -25,8 +25,8 @@ from mooquant.barfeed import csvfeed, ninjatraderfeed, yahoofeed
 from mooquant.broker import backtesting
 from mooquant.stratanalyzer import sharpe
 
-import common
-import strategy_test
+from . import common
+from . import strategy_test
 
 
 class SharpeRatioTestCase(common.TestCase):

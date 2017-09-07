@@ -24,7 +24,7 @@ from mooquant import bar
 from mooquant.dataseries import bards
 from mooquant.technical import stoch
 
-import common
+from . import common
 
 
 def values_equal(v1, v2):

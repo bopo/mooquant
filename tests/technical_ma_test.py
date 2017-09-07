@@ -22,7 +22,7 @@ from mooquant import bar, dataseries
 from mooquant.barfeed import ninjatraderfeed
 from mooquant.technical import ma
 
-import common
+from . import common
 
 
 def safe_round(number, ndigits):

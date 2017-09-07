@@ -23,7 +23,7 @@ import datetime
 from mooquant import broker, strategy
 from mooquant.barfeed import yahoofeed
 
-import common
+from . import common
 
 
 def get_by_datetime_or_date(dict_, dateTimeOrDate):

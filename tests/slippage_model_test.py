@@ -23,7 +23,7 @@ import unittest
 from mooquant import bar, broker
 from mooquant.broker import backtesting, slippage
 
-import broker_backtesting_test
+from . import broker_backtesting_test
 
 
 class BaseTestCase(unittest.TestCase):

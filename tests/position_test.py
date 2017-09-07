@@ -26,8 +26,8 @@ from mooquant.barfeed import csvfeed, membf, ninjatraderfeed, yahoofeed
 from mooquant.strategy import position
 from mooquant.utils import dt
 
-import common
-import strategy_test
+from . import common
+from . import strategy_test
 
 
 def load_daily_barfeed(instrument):

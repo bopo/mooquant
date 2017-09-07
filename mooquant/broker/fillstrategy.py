@@ -23,7 +23,7 @@ import abc
 import mooquant.bar
 from mooquant import broker
 
-import slippage
+from . import slippage
 
 
 # Returns the trigger price for a Limit or StopLimit order, or None if the limit price was not yet penetrated.

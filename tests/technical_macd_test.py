@@ -21,7 +21,7 @@
 from mooquant import dataseries
 from mooquant.technical import macd
 
-import common
+from . import common
 
 
 class MACDTestCase(common.TestCase):

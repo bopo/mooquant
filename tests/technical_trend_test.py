@@ -21,7 +21,7 @@
 from mooquant import dataseries
 from mooquant.technical import linreg
 
-import common
+from . import common
 
 
 class SlopeTest(common.TestCase):

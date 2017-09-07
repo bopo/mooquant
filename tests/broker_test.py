@@ -22,7 +22,7 @@ import datetime
 
 from mooquant import broker
 
-import common
+from . import common
 
 
 class DefaultTraits(broker.InstrumentTraits):

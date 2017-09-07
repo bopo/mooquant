@@ -23,7 +23,7 @@ import datetime
 from mooquant import eventprofiler
 from mooquant.barfeed import yahoofeed
 
-import common
+from . import common
 
 
 class Predicate(eventprofiler.Predicate):

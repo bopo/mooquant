@@ -21,7 +21,7 @@
 from mooquant import dataseries
 from mooquant.technical import bollinger
 
-import common
+from . import common
 
 
 class TestCase(common.TestCase):

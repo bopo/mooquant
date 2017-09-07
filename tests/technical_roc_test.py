@@ -21,7 +21,7 @@
 from mooquant import dataseries
 from mooquant.technical import roc
 
-import common
+from . import common
 
 
 class ROCTestCase(common.TestCase):

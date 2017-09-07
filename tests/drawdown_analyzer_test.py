@@ -24,8 +24,8 @@ from mooquant import bar, broker
 from mooquant.barfeed import membf, yahoofeed
 from mooquant.stratanalyzer import drawdown
 
-import common
-import strategy_test
+from . import common
+from . import strategy_test
 
 
 def build_bars_from_closing_prices(closingPrices):

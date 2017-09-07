@@ -21,7 +21,7 @@
 from mooquant.barfeed import yahoofeed
 from mooquant.technical import linebreak
 
-import common
+from . import common
 
 
 class LineBreakTestCase(common.TestCase):

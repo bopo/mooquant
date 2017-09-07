@@ -29,9 +29,9 @@ from mooquant.barfeed import csvfeed, ninjatraderfeed
 from mooquant.broker import backtesting
 from mooquant.stratanalyzer import trades
 
-import common
-import position_test
-import strategy_test
+from . import common
+from . import position_test
+from . import strategy_test
 
 
 def buildUTCDateTime(year, month, day, hour, minute):

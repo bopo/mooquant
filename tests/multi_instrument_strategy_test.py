@@ -22,7 +22,7 @@ from mooquant import bar, marketsession, strategy
 from mooquant.barfeed import sqlitefeed, yahoofeed
 from mooquant.technical import cross, ma
 
-import common
+from . import common
 
 
 class NikkeiSpyStrategy(strategy.BacktestingStrategy):
