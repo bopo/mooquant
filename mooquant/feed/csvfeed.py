@@ -79,12 +79,9 @@ class BaseFeed(memfeed.MemFeed):
     def addValuesFromCSV(self, path):
         # Load the values from the csv file
         values = []
-        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=self.__rowParser.getFieldNames(),
-                                         delimiter=self.__rowParser.getDelimiter())
-
+        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=self.__rowParser.getFieldNames(), delimiter=self.__rowParser.getDelimiter())
         for row in reader:
             dateTime, rowValues = self.__rowParser.parseRow(row)
-
             if dateTime is not None and (self.__rowFilter is None or self.__rowFilter.includeRow(dateTime, rowValues)):
                 values.append((dateTime, rowValues))
 
@@ -107,16 +104,12 @@ class BasicRowParser(RowParser):
         if self.__timezone is not None:
             if self.__timeDelta is not None:
                 dateTime += self.__timeDelta
-
             dateTime = dt.localize(dateTime, self.__timezone)
-
         # Convert the values
         values = {}
-
-        for key, value in list(csvRowDict.items()):
+        for key, value in csvRowDict.items():
             if key != self.__dateTimeColumn:
                 values[key] = self.__converter(key, value)
-
         return (dateTime, values)
 
     def getFieldNames(self):
@@ -157,8 +150,8 @@ class Feed(BaseFeed):
     def __init__(self, dateTimeColumn, dateTimeFormat, converter=None, delimiter=",", timezone=None, maxLen=None):
         if converter is None:
             converter = float_or_string
-
         self.__rowParser = BasicRowParser(dateTimeColumn, dateTimeFormat, converter, delimiter, timezone)
+
         super(Feed, self).__init__(self.__rowParser, maxLen)
 
     def addValuesFromCSV(self, path):

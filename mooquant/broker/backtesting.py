@@ -243,7 +243,7 @@ class Broker(broker.Broker):
 
         if not includeShort and self.__barFeed.getCurrentBars() is not None:
             bars = self.__barFeed.getCurrentBars()
-            for instrument, shares in six.iteritems(self.__shares):
+            for instrument, shares in self.__shares.items():
                 if shares < 0:
                     instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                     ret += instrumentPrice * shares
@@ -288,10 +288,9 @@ class Broker(broker.Broker):
 
     def getActiveOrders(self, instrument=None):
         if instrument is None:
-            ret = list(self.__activeOrders.values())
+            ret = self.__activeOrders.values()
         else:
-            ret = [order for order in list(self.__activeOrders.values()) if order.getInstrument() == instrument]
-
+            ret = [order for order in self.__activeOrders.values() if order.getInstrument() == instrument]
         return ret
 
     def _getCurrentDateTime(self):
@@ -312,10 +311,9 @@ class Broker(broker.Broker):
     def __getEquityWithBars(self, bars):
         ret = self.getCash()
         if bars is not None:
-            for instrument, shares in six.iteritems(self.__shares):
+            for instrument, shares in self.__shares.items():
                 instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                 ret += instrumentPrice * shares
-
         return ret
 
     def getEquity(self):
@@ -511,10 +509,8 @@ class Broker(broker.Broker):
 
     def cancelOrder(self, order):
         activeOrder = self.__activeOrders.get(order.getId())
-
         if activeOrder is None:
             raise Exception("The order is not active anymore")
-
         if activeOrder.isFilled():
             raise Exception("Can't cancel order that has already been filled")
 

@@ -52,10 +52,8 @@ class IntraDayRange(TimeRange):
         slot = int(ts / frequency)
         slotTs = slot * frequency
         self.__begin = dt.timestamp_to_datetime(slotTs, not dt.datetime_is_naive(dateTime))
-        
         if not dt.datetime_is_naive(dateTime):
             self.__begin = dt.localize(self.__begin, dateTime.tzinfo)
-        
         self.__end = self.__begin + datetime.timedelta(seconds=frequency)
 
     def belongs(self, dateTime):
@@ -72,10 +70,8 @@ class DayRange(TimeRange):
     def __init__(self, dateTime):
         super(DayRange, self).__init__()
         self.__begin = datetime.datetime(dateTime.year, dateTime.month, dateTime.day)
-        
         if not dt.datetime_is_naive(dateTime):
             self.__begin = dt.localize(self.__begin, dateTime.tzinfo)
-        
         self.__end = self.__begin + datetime.timedelta(days=1)
 
     def belongs(self, dateTime):

@@ -25,7 +25,6 @@ def get_change_percentage(actual, prev):
 
     diff = actual-prev
     ret = diff / float(abs(prev))
-    
     return ret
 
 

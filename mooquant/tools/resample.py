@@ -69,6 +69,9 @@ def resample_impl(barFeed, frequency, csvFile):
     def on_bar(ds, dateTime, value):
         csvWriter.writeBar(value)
 
+    if not(type(instruments) == list):
+        instruments = list(instruments)
+
     insrumentDS = barFeed[instruments[0]]
     resampledDS = resampled.ResampledBarDataSeries(insrumentDS, frequency)
     resampledDS.getNewValueEvent().subscribe(on_bar)

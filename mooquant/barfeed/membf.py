@@ -17,7 +17,7 @@
 """
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
-
+import sys
 from mooquant import bar, barfeed, utils
 
 # A non real-time BarFeed responsible for:
@@ -38,10 +38,8 @@ class BarFeed(barfeed.BaseBarFeed):
 
     def reset(self):
         self.__nextPos = {}
-
-        for instrument in list(self.__bars.keys()):
+        for instrument in self.__bars.keys():
             self.__nextPos.setdefault(instrument, 0)
-
         self.__currDateTime = None
         super(BarFeed, self).reset()
 
@@ -67,9 +65,13 @@ class BarFeed(barfeed.BaseBarFeed):
 
         # Add and sort the bars
         self.__bars[instrument].extend(bars)
-        # @todo
-        barCmp = lambda x, y: cmp(x.getDateTime(), y.getDateTime())
-        self.__bars[instrument].sort(barCmp)
+
+        if sys.version < '3':
+            barCmp = lambda x, y: cmp(x.getDateTime(), y.getDateTime())
+            self.__bars[instrument].sort(barCmp)
+        else:
+            barCmp = lambda x : x.getDateTime()
+            self.__bars[instrument].sort(key=barCmp)
 
         self.registerInstrument(instrument)
 
@@ -78,11 +80,9 @@ class BarFeed(barfeed.BaseBarFeed):
         # Check if there is at least one more bar to return.
         for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]
-
             if nextPos < len(bars):
                 ret = False
                 break
-
         return ret
 
     def peekDateTime(self):
@@ -92,7 +92,6 @@ class BarFeed(barfeed.BaseBarFeed):
             nextPos = self.__nextPos[instrument]
             if nextPos < len(bars):
                 ret = utils.safe_min(ret, bars[nextPos].getDateTime())
-        
         return ret
 
     def getNextBars(self):
@@ -111,7 +110,7 @@ class BarFeed(barfeed.BaseBarFeed):
                 self.__nextPos[instrument] += 1
 
         if self.__currDateTime == smallestDateTime:
-            raise Exception("Duplicate bars found for %s on %s" % (list(ret.keys()), smallestDateTime))
+            raise Exception("Duplicate bars found for %s on %s" % (ret.keys(), smallestDateTime))
 
         self.__currDateTime = smallestDateTime
         return bar.Bars(ret)

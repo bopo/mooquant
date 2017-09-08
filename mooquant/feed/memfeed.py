@@ -17,9 +17,11 @@
 """
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
-
+import sys
 from mooquant import dataseries, feed
 
+def cmp(a, b):
+    return (a > b) - (a < b)
 
 class MemFeed(feed.BaseFeed):
     def __init__(self, maxLen=None):
@@ -35,9 +37,13 @@ class MemFeed(feed.BaseFeed):
     def start(self):
         super(MemFeed, self).start()
         # Now that all the data is in place, sort it to dispatch it in order.
-        # @todo
-        cmpFun = lambda x, y: cmp(x[0], y[0])
-        self.__values.sort(cmpFun)
+
+        if sys.version < '3':
+            cmpFun = lambda x, y: cmp(x[0], y[0])
+            self.__values.sort(cmpFun)
+        else:
+            cmpFun = lambda x: x[0]
+            self.__values.sort(key=cmpFun)
 
     def stop(self):
         pass
@@ -53,10 +59,8 @@ class MemFeed(feed.BaseFeed):
 
     def peekDateTime(self):
         ret = None
-
         if self.__nextIdx < len(self.__values):
             ret = self.__values[self.__nextIdx][0]
-
         return ret
 
     def createDataSeries(self, key, maxLen):
@@ -64,11 +68,9 @@ class MemFeed(feed.BaseFeed):
 
     def getNextValues(self):
         ret = (None, None)
-
         if self.__nextIdx < len(self.__values):
             ret = self.__values[self.__nextIdx]
             self.__nextIdx += 1
-            
         return ret
 
     # Add values to the feed. values should be a sequence of tuples. The tuples should have two elements:
@@ -76,7 +78,7 @@ class MemFeed(feed.BaseFeed):
     # 2: dictionary or dict-like object.
     def addValues(self, values):
         # Register a dataseries for each item.
-        for key in list(values[0][1].keys()):
+        for key in values[0][1].keys():
             self.registerDataSeries(key)
 
         self.__values.extend(values)

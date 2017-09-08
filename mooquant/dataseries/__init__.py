@@ -121,10 +121,8 @@ class SequenceDataSeries(DataSeries):
 
     def getValueAbsolute(self, pos):
         ret = None
-        
         if pos >= 0 and pos < len(self.__values):
             ret = self.__values[pos]
-        
         return ret
 
     def append(self, value):

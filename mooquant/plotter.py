@@ -59,8 +59,7 @@ def _filter_datetimes(dateTimes, fromDate=None, toDate=None):
 
 def _post_plot_fun(subPlot, mplSubplot):
     # Legend
-    mplSubplot.legend(list(subPlot.getAllSeries().keys()), shadow=True, loc="best")
-    
+    mplSubplot.legend(subPlot.getAllSeries().keys(), shadow=True, loc="best")
     # Don't scale the Y axis
     mplSubplot.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
 
@@ -273,8 +272,7 @@ class Subplot(object):
 
     def onBars(self, bars):
         dateTime = bars.getDateTime()
-        
-        for cb, series in six.iteritems(self.__callbacks):
+        for cb, series in self.__callbacks.items():
             series.addValue(dateTime, cb(bars))
 
     def getSeries(self, name, defaultClass=LineMarker):
@@ -290,7 +288,7 @@ class Subplot(object):
         return self.getSeries(name, CustomMarker)
 
     def plot(self, mplSubplot, dateTimes, postPlotFun=_post_plot_fun):
-        for series in list(self.__series.values()):
+        for series in self.__series.values():
             color = None
             
             if series.needColor():
@@ -374,11 +372,11 @@ class StrategyPlotter(object):
                 self.__checkCreateInstrumentSubplot(instrument)
 
         # Notify named subplots.
-        for subplot in list(self.__namedSubplots.values()):
+        for subplot in self.__namedSubplots.values():
             subplot.onBars(bars)
 
         # Notify bar subplots.
-        for subplot in list(self.__barSubplots.values()):
+        for subplot in self.__barSubplots.values():
             subplot.onBars(bars)
 
         # Feed the portfolio evolution subplot.
@@ -389,7 +387,7 @@ class StrategyPlotter(object):
 
     def __onOrderEvent(self, broker_, orderEvent):
         # Notify BarSubplots
-        for subplot in list(self.__barSubplots.values()):
+        for subplot in self.__barSubplots.values():
             subplot.onOrderEvent(broker_, orderEvent)
 
     def getInstrumentSubplot(self, instrument):
@@ -432,19 +430,16 @@ class StrategyPlotter(object):
         dateTimes.sort()
 
         subplots = []
-        subplots.extend(list(self.__barSubplots.values()))
-        subplots.extend(list(self.__namedSubplots.values()))
-
+        subplots.extend(self.__barSubplots.values())
+        subplots.extend(self.__namedSubplots.values())
         if self.__portfolioSubplot is not None:
             subplots.append(self.__portfolioSubplot)
 
         # Build each subplot.
         fig, axes = plt.subplots(nrows=len(subplots), sharex=True, squeeze=False)
         mplSubplots = []
-
         for i, subplot in enumerate(subplots):
             axesSubplot = axes[i][0]
-
             if not subplot.isEmpty():
                 mplSubplots.append(axesSubplot)
                 subplot.plot(axesSubplot, dateTimes, postPlotFun=postPlotFun)
@@ -457,7 +452,6 @@ class StrategyPlotter(object):
         warninghelpers.deprecation_warning("buildFigure will be deprecated in the next version. Use buildFigureAndSubplots.", stacklevel=2)
 
         fig, _ = self.buildFigureAndSubplots(fromDateTime, toDateTime)
-        
         return fig
 
     def buildFigureAndSubplots(self, fromDateTime=None, toDateTime=None, postPlotFun=_post_plot_fun):
@@ -471,7 +465,6 @@ class StrategyPlotter(object):
         """
         fig, mplSubplots = self.__buildFigureImpl(fromDateTime, toDateTime, postPlotFun=postPlotFun)
         fig.autofmt_xdate()
-        
         return fig, mplSubplots
 
     def plot(self, fromDateTime=None, toDateTime=None, postPlotFun=_post_plot_fun):

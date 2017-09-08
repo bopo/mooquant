@@ -49,22 +49,18 @@ class ParameterSource(object):
         assert count > 0, "Invalid number of parameters"
 
         ret = []
-
         with self.__lock:
             if self.__iter is not None:
                 try:
                     while count > 0:
-                        params = six.next(self.__iter)
-                        
+                        params = next(self.__iter)
                         # Backward compatibility when parameters don't yield Parameters.
                         if not isinstance(params, Parameters):
                             params = Parameters(*params)
-                        
                         ret.append(params)
                         count -= 1
                 except StopIteration:
                     self.__iter = None
-
         return ret
 
     def eof(self):

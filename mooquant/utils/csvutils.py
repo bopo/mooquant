@@ -19,10 +19,9 @@
 """
 
 import csv
-import logging
 import requests
-import six
 
+import logging
 logging.getLogger("requests").setLevel(logging.ERROR)
 
 
@@ -31,9 +30,9 @@ class FastDictReader(object):
     def __init__(self, f, fieldnames=None, dialect="excel", *args, **kwargs):
         self.__fieldNames = fieldnames
         self.reader = csv.reader(f, dialect, *args, **kwargs)
-
+        
         if self.__fieldNames is None:
-            self.__fieldNames = six.next(self.reader)
+            self.__fieldNames = next(self.reader)
 
         self.__dict = {}
 
@@ -42,10 +41,26 @@ class FastDictReader(object):
 
     def __next__(self):
         # Skip empty rows.
-        row = six.next(self.reader)
+        row = next(self.reader)
+        
+        while row == []:
+            row = next(self.reader)
+
+        # Check that the row has the right number of columns.
+        assert(len(self.__fieldNames) == len(row))
+
+        # Copy the row values into the dict.
+        for i in range(len(self.__fieldNames)):
+            self.__dict[self.__fieldNames[i]] = row[i]
+
+        return self.__dict
+
+    def next(self):
+        # Skip empty rows.
+        row = next(self.reader)
 
         while row == []:
-            row = six.next(self.reader)
+            row = next(self.reader)
 
         # Check that the row has the right number of columns.
         assert(len(self.__fieldNames) == len(row))
@@ -59,7 +74,6 @@ class FastDictReader(object):
 
 def download_csv(url, url_params=None, content_type="text/csv"):
     response = requests.get(url, params=url_params)
-
     response.raise_for_status()
     response_content_type = response.headers['content-type']
 
@@ -80,5 +94,5 @@ def float_or_string(value):
         ret = float(value)
     except Exception:
         ret = value
-        
+
     return ret

@@ -484,6 +484,7 @@ class TestCase(common.TestCase):
 
     def testSMA(self):
         barDs = self.__loadBarDS()
+        print(type(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2]), indicator.SMA(barDs.getCloseDataSeries(), 252, 2))
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[1], 93.16))  # Original value 93.15
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2], 94.59))
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[3], 94.73))

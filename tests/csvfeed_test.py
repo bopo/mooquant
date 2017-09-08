@@ -94,7 +94,7 @@ class TestCase(common.TestCase):
         disp.addSubject(feed)
         disp.run()
 
-        keys = feed.getKeys()
+        keys = list(feed.getKeys())
         key = keys[0]
         values = feed[key]
 
@@ -106,8 +106,9 @@ class TestCase(common.TestCase):
         reloadedKeys = feed.getKeys()
         reloadedValues = feed[key]
 
-        self.assertEqual(keys.sort(), reloadedKeys.sort())
+        self.assertEqual(sorted(keys), sorted(reloadedKeys))
         self.assertNotEqual(values, reloadedValues)
         self.assertEqual(len(values), len(reloadedValues))
+
         for i in range(len(values)):
             self.assertEqual(values[i], reloadedValues[i])

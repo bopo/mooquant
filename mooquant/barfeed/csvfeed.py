@@ -18,12 +18,13 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import datetime
-
-import pytz
-from mooquant import bar
+from mooquant.utils import dt
+from mooquant.utils import csvutils
 from mooquant.barfeed import membf
-from mooquant.utils import csvutils, dt
+from mooquant import bar
+
+import datetime
+import pytz
 
 
 # Interface for csv row parsers.
@@ -52,10 +53,8 @@ class DateRangeFilter(BarFilter):
     def includeBar(self, bar_):
         if self.__toDate and bar_.getDateTime() > self.__toDate:
             return False
-
         if self.__fromDate and bar_.getDateTime() < self.__fromDate:
             return False
-        
         return True
 
 
@@ -139,7 +138,6 @@ class GenericRowParser(RowParser):
         self.__timezone = timezone
         self.__haveAdjClose = False
         self.__barClass = barClass
-
         # Column names.
         self.__dateTimeColName = columnNames["datetime"]
         self.__openColName = columnNames["open"]

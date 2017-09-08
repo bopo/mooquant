@@ -62,11 +62,13 @@ class TestSequenceDataSeries(common.TestCase):
     def testSeqLikeOps(self):
         seq = range(10)
         ds = dataseries.SequenceDataSeries()
+
         for value in seq:
             ds.append(value)
 
         # Test length and every item.
         self.assertEqual(len(ds), len(seq))
+
         for i in range(len(seq)):
             self.assertEqual(ds[i], seq[i])
 
@@ -76,10 +78,15 @@ class TestSequenceDataSeries(common.TestCase):
         self.assertEqual(ds[-9], seq[-9])
 
         # Test slices
+        ds = list(ds)
+        seq = list(seq)
+
         sl = slice(0, 1, 2)
         self.assertEqual(ds[sl], seq[sl])
+
         sl = slice(0, 9, 2)
         self.assertEqual(ds[sl], seq[sl])
+        
         sl = slice(0, -1, 1)
         self.assertEqual(ds[sl], seq[sl])
 

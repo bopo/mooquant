@@ -45,7 +45,6 @@ def localize(dateTime, timeZone):
         ret = timeZone.localize(dateTime)
     else:
         ret = dateTime.astimezone(timeZone)
-
     return ret
 
 
@@ -69,21 +68,17 @@ def timestamp_to_datetime(timeStamp, localized=True):
 
 def get_first_monday(year):
     ret = datetime.date(year, 1, 1)
-
     if ret.weekday() != 0:
         diff = 7 - ret.weekday()
         ret = ret + datetime.timedelta(days=diff)
-
     return ret
 
 
 def get_last_monday(year):
     ret = datetime.date(year, 12, 31)
-
     if ret.weekday() != 0:
         diff = ret.weekday() * -1
         ret = ret + datetime.timedelta(days=diff)
-        
     return ret
 
 

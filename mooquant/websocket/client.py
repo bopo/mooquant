@@ -176,7 +176,7 @@ class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
 
     def onUnhandledException(self, exception):
         logger.critical("Unhandled exception", exc_info=exception)
-        raise exception
+        raise
 
     def onOpened(self):
         pass

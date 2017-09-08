@@ -91,8 +91,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     :rtype: A :class:`Results` instance with the best results found.
     """
 
-    assert (workerCount is None or workerCount > 0)
-
+    assert(workerCount is None or workerCount > 0)
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
