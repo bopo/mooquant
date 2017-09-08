@@ -21,6 +21,8 @@
 import datetime
 import os
 
+import six
+
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import quandlfeed
@@ -132,7 +134,7 @@ def build_feed(sourceCode, tableCodes, fromYear, toYear, storage, frequency=bar.
         ret.setNoAdjClose()
 
     # Additional column names.
-    for col, name in columnNames.iteritems():
+    for col, name in six.iteritems(columnNames):
         ret.setColumnName(col, name)
 
     if not os.path.exists(storage):
@@ -152,7 +154,7 @@ def build_feed(sourceCode, tableCodes, fromYear, toYear, storage, frequency=bar.
                         download_weekly_bars(sourceCode, tableCode, year, fileName, authToken)
                     else:
                         raise Exception("Invalid frequency")
-                except Exception, e:
+                except Exception as e:
                     if skipErrors:
                         logger.error(str(e))
                         continue

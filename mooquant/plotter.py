@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from matplotlib import ticker
 from mooquant import warninghelpers
 
-import broker
+from . import broker
 
 
 def get_last_value(dataSeries):
@@ -54,12 +54,12 @@ def _filter_datetimes(dateTimes, fromDate=None, toDate=None):
             return True
 
     dateTimeFilter = DateTimeFilter(fromDate, toDate)
-    return filter(lambda x: dateTimeFilter.includeDateTime(x), dateTimes)
+    return [x for x in dateTimes if dateTimeFilter.includeDateTime(x)]
 
 
 def _post_plot_fun(subPlot, mplSubplot):
     # Legend
-    mplSubplot.legend(subPlot.getAllSeries().keys(), shadow=True, loc="best")
+    mplSubplot.legend(list(subPlot.getAllSeries().keys()), shadow=True, loc="best")
     
     # Don't scale the Y axis
     mplSubplot.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
@@ -274,7 +274,7 @@ class Subplot(object):
     def onBars(self, bars):
         dateTime = bars.getDateTime()
         
-        for cb, series in self.__callbacks.iteritems():
+        for cb, series in six.iteritems(self.__callbacks):
             series.addValue(dateTime, cb(bars))
 
     def getSeries(self, name, defaultClass=LineMarker):
@@ -290,7 +290,7 @@ class Subplot(object):
         return self.getSeries(name, CustomMarker)
 
     def plot(self, mplSubplot, dateTimes, postPlotFun=_post_plot_fun):
-        for series in self.__series.values():
+        for series in list(self.__series.values()):
             color = None
             
             if series.needColor():
@@ -374,11 +374,11 @@ class StrategyPlotter(object):
                 self.__checkCreateInstrumentSubplot(instrument)
 
         # Notify named subplots.
-        for subplot in self.__namedSubplots.values():
+        for subplot in list(self.__namedSubplots.values()):
             subplot.onBars(bars)
 
         # Notify bar subplots.
-        for subplot in self.__barSubplots.values():
+        for subplot in list(self.__barSubplots.values()):
             subplot.onBars(bars)
 
         # Feed the portfolio evolution subplot.
@@ -389,7 +389,7 @@ class StrategyPlotter(object):
 
     def __onOrderEvent(self, broker_, orderEvent):
         # Notify BarSubplots
-        for subplot in self.__barSubplots.values():
+        for subplot in list(self.__barSubplots.values()):
             subplot.onOrderEvent(broker_, orderEvent)
 
     def getInstrumentSubplot(self, instrument):
@@ -432,8 +432,8 @@ class StrategyPlotter(object):
         dateTimes.sort()
 
         subplots = []
-        subplots.extend(self.__barSubplots.values())
-        subplots.extend(self.__namedSubplots.values())
+        subplots.extend(list(self.__barSubplots.values()))
+        subplots.extend(list(self.__namedSubplots.values()))
 
         if self.__portfolioSubplot is not None:
             subplots.append(self.__portfolioSubplot)

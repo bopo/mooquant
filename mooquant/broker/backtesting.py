@@ -20,21 +20,23 @@
 
 import abc
 
+import six
+
 import mooquant.bar
 from mooquant import broker, logger
 from mooquant.broker import fillstrategy
 
+
 ######################################################################
 # Commission models
 
+@six.add_metaclass(abc.ABCMeta)
 class Commission(object):
     """Base class for implementing different commission schemes.
 
     .. note::
         This is a base class and should not be used directly.
     """
-
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def calculate(self, order, price, quantity):
@@ -64,13 +66,14 @@ class FixedPerTrade(Commission):
     :param amount: The commission for an order.
     :type amount: float.
     """
+
     def __init__(self, amount):
         super(FixedPerTrade, self).__init__()
         self.__amount = amount
 
     def calculate(self, order, price, quantity):
         ret = 0
-        
+
         # Only charge the first fill.
         if order.getExecutionInfo() is None:
             ret = self.__amount
@@ -84,9 +87,10 @@ class TradePercentage(Commission):
     :param percentage: The percentage to charge. 0.01 means 1%, and so on. It must be smaller than 1.
     :type percentage: float.
     """
+
     def __init__(self, percentage):
         super(TradePercentage, self).__init__()
-        assert(percentage < 1)
+        assert (percentage < 1)
         self.__percentage = percentage
 
     def calculate(self, order, price, quantity):
@@ -183,14 +187,14 @@ class Broker(broker.Broker):
     def __init__(self, cash, barFeed, commission=None):
         super(Broker, self).__init__()
 
-        assert(cash >= 0)
+        assert (cash >= 0)
         self.__cash = cash
 
         if commission is None:
             self.__commission = NoCommission()
         else:
             self.__commission = commission
-        
+
         self.__shares = {}
         self.__activeOrders = {}
         self.__useAdjustedValues = False
@@ -199,7 +203,7 @@ class Broker(broker.Broker):
 
         # It is VERY important that the broker subscribes to barfeed events before the strategy.
         barFeed.getNewValuesEvent().subscribe(self.onBars)
-        
+
         self.__barFeed = barFeed
         self.__allowNegativeCash = False
         self.__nextOrderId = 1
@@ -207,25 +211,25 @@ class Broker(broker.Broker):
     def _getNextOrderId(self):
         ret = self.__nextOrderId
         self.__nextOrderId += 1
-        
+
         return ret
 
     def _getBar(self, bars, instrument):
         ret = bars.getBar(instrument)
-        
+
         if ret is None:
             ret = self.__barFeed.getLastBar(instrument)
-        
+
         return ret
 
     def _registerOrder(self, order):
-        assert(order.getId() not in self.__activeOrders)
-        assert(order.getId() is not None)
+        assert (order.getId() not in self.__activeOrders)
+        assert (order.getId() is not None)
         self.__activeOrders[order.getId()] = order
 
     def _unregisterOrder(self, order):
-        assert(order.getId() in self.__activeOrders)
-        assert(order.getId() is not None)
+        assert (order.getId() in self.__activeOrders)
+        assert (order.getId() is not None)
         del self.__activeOrders[order.getId()]
 
     def getLogger(self):
@@ -236,14 +240,14 @@ class Broker(broker.Broker):
 
     def getCash(self, includeShort=True):
         ret = self.__cash
-        
+
         if not includeShort and self.__barFeed.getCurrentBars() is not None:
             bars = self.__barFeed.getCurrentBars()
-            for instrument, shares in self.__shares.iteritems():
+            for instrument, shares in six.iteritems(self.__shares):
                 if shares < 0:
                     instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                     ret += instrumentPrice * shares
-        
+
         return ret
 
     def setCash(self, cash):
@@ -284,10 +288,10 @@ class Broker(broker.Broker):
 
     def getActiveOrders(self, instrument=None):
         if instrument is None:
-            ret = self.__activeOrders.values()
+            ret = list(self.__activeOrders.values())
         else:
-            ret = [order for order in self.__activeOrders.values() if order.getInstrument() == instrument]
-        
+            ret = [order for order in list(self.__activeOrders.values()) if order.getInstrument() == instrument]
+
         return ret
 
     def _getCurrentDateTime(self):
@@ -303,15 +307,15 @@ class Broker(broker.Broker):
         return self.__shares
 
     def getActiveInstruments(self):
-        return [instrument for instrument, shares in self.__shares.iteritems() if shares != 0]
+        return [instrument for instrument, shares in self.__shares.items() if shares != 0]
 
     def __getEquityWithBars(self, bars):
         ret = self.getCash()
         if bars is not None:
-            for instrument, shares in self.__shares.iteritems():
+            for instrument, shares in six.iteritems(self.__shares):
                 instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                 ret += instrumentPrice * shares
-        
+
         return ret
 
     def getEquity(self):
@@ -325,14 +329,14 @@ class Broker(broker.Broker):
 
         if order.isBuy():
             cost = price * quantity * -1
-            assert(cost < 0)
+            assert (cost < 0)
             sharesDelta = quantity
         elif order.isSell():
             cost = price * quantity
-            assert(cost > 0)
+            assert (cost > 0)
             sharesDelta = quantity * -1
         else:  # Unknown action
-            assert(False)
+            assert (False)
 
         commission = self.getCommission().calculate(order, price, quantity)
         cost -= commission
@@ -348,11 +352,11 @@ class Broker(broker.Broker):
 
             # Commit the order execution.
             self.__cash = resultingCash
-            
+
             updatedShares = order.getInstrumentTraits().roundQuantity(
                 self.getShares(order.getInstrument()) + sharesDelta
             )
-            
+
             if updatedShares == 0:
                 del self.__shares[order.getInstrument()]
             else:
@@ -370,7 +374,7 @@ class Broker(broker.Broker):
                     broker.OrderEvent(order, broker.OrderEvent.Type.PARTIALLY_FILLED, orderExecutionInfo)
                 )
             else:
-                assert(False)
+                assert (False)
         else:
             self.__logger.debug("Not enough cash to fill %s order [%s] for %s share/s" % (
                 order.getInstrument(),
@@ -436,7 +440,7 @@ class Broker(broker.Broker):
         # IF WE'RE DEALING WITH MULTIPLE INSTRUMENTS WE SKIP ORDER PROCESSING IF THERE IS NO BAR FOR THE ORDER'S
         # INSTRUMENT TO GET THE SAME BEHAVIOUR AS IF WERE BE PROCESSING ONLY ONE INSTRUMENT.
         bar_ = bars.getBar(order.getInstrument())
-        
+
         if bar_ is not None:
             # Switch from SUBMITTED -> ACCEPTED
             if order.isSubmitted():
@@ -450,8 +454,8 @@ class Broker(broker.Broker):
             else:
                 # If an order is not active it should be because it was canceled in this same loop and it should
                 # have been removed.
-                assert(order.isCanceled())
-                assert(order not in self.__activeOrders)
+                assert (order.isCanceled())
+                assert (order not in self.__activeOrders)
 
     def onBars(self, dateTime, bars):
         # Let the fill strategy know that new bars are being processed.
@@ -459,7 +463,7 @@ class Broker(broker.Broker):
 
         # This is to froze the orders that will be processed in this event, to avoid new getting orders introduced
         # and processed on this very same event.
-        ordersToProcess = self.__activeOrders.values()
+        ordersToProcess = list(self.__activeOrders.values())
 
         for order in ordersToProcess:
             # This may trigger orders to be added/removed from __activeOrders.
@@ -510,7 +514,7 @@ class Broker(broker.Broker):
 
         if activeOrder is None:
             raise Exception("The order is not active anymore")
-        
+
         if activeOrder.isFilled():
             raise Exception("Can't cancel order that has already been filled")
 

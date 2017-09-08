@@ -35,6 +35,7 @@ class MemFeed(feed.BaseFeed):
     def start(self):
         super(MemFeed, self).start()
         # Now that all the data is in place, sort it to dispatch it in order.
+        # @todo
         cmpFun = lambda x, y: cmp(x[0], y[0])
         self.__values.sort(cmpFun)
 
@@ -75,7 +76,7 @@ class MemFeed(feed.BaseFeed):
     # 2: dictionary or dict-like object.
     def addValues(self, values):
         # Register a dataseries for each item.
-        for key in values[0][1].keys():
+        for key in list(values[0][1].keys()):
             self.registerDataSeries(key)
 
         self.__values.extend(values)

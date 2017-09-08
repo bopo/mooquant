@@ -23,7 +23,7 @@ import pickle
 import random
 import socket
 import time
-import xmlrpclib
+from xmlrpc.client import ServerProxy
 
 import mooquant.logger
 from mooquant import barfeed
@@ -49,7 +49,7 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 class Worker(object):
     def __init__(self, address, port, workerName=None):
         url = "http://%s:%s/PyAlgoTradeRPC" % (address, port)
-        self.__server = xmlrpclib.ServerProxy(url, allow_none=True)
+        self.__server = ServerProxy(url, allow_none=True)
         self.__logger = mooquant.logger.getLogger(workerName)
         
         if workerName is None:
@@ -100,7 +100,7 @@ class Worker(object):
             
             try:
                 result = self.runStrategy(feed, *parameters)
-            except Exception, e:
+            except Exception as e:
                 self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
             
             self.getLogger().info("Result %s" % result)
@@ -134,7 +134,7 @@ class Worker(object):
                 job = self.getNextJob()
             
             self.getLogger().info("Finished running")
-        except Exception, e:
+        except Exception as e:
             self.getLogger().exception("Finished running with errors: %s" % (e))
 
 

@@ -20,15 +20,16 @@
 
 import abc
 
+import six
 
+
+@six.add_metaclass(abc.ABCMeta)
 class SlippageModel(object):
     """Base class for slippage models.
 
     .. note::
         This is a base class and should not be used directly.
     """
-
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def calculatePrice(self, order, price, quantity, bar, volumeUsed):
@@ -84,5 +85,5 @@ class VolumeShareSlippage(SlippageModel):
             ret = price * (1 + impactPct)
         else:
             ret = price * (1 - impactPct)
-            
+
         return ret

@@ -18,7 +18,11 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import Queue
+try:
+    import Queue as queue
+except ImportError:
+    import queue
+
 import threading
 import time
 
@@ -37,7 +41,7 @@ def build_order_from_open_order(openOrder, instrumentTraits):
     ret = broker.LimitOrder(action, common.btc_symbol, openOrder.getPrice(), openOrder.getAmount(), instrumentTraits)
     ret.setSubmitted(openOrder.getId(), openOrder.getDateTime())
     ret.setState(broker.Order.State.ACCEPTED)
-    
+
     return ret
 
 
@@ -51,7 +55,7 @@ class TradeMonitor(threading.Thread):
         super(TradeMonitor, self).__init__()
         self.__lastTradeId = -1
         self.__httpClient = httpClient
-        self.__queue = Queue.Queue()
+        self.__queue = queue.Queue()
         self.__stop = False
 
     def _getNewTrades(self):
@@ -90,7 +94,7 @@ class TradeMonitor(threading.Thread):
                     self.__lastTradeId = trades[-1].getId()
                     common.logger.info("%d new trade/s found" % (len(trades)))
                     self.__queue.put((TradeMonitor.ON_USER_TRADE, trades))
-            except Exception, e:
+            except Exception as e:
                 common.logger.critical("Error retrieving user transactions", exc_info=e)
 
             time.sleep(TradeMonitor.POLL_FREQUENCY)
@@ -137,13 +141,13 @@ class LiveBroker(broker.Broker):
         self.__activeOrders = {}
 
     def _registerOrder(self, order):
-        assert(order.getId() not in self.__activeOrders)
-        assert(order.getId() is not None)
+        assert (order.getId() not in self.__activeOrders)
+        assert (order.getId() is not None)
         self.__activeOrders[order.getId()] = order
 
     def _unregisterOrder(self, order):
-        assert(order.getId() in self.__activeOrders)
-        assert(order.getId() is not None)
+        assert (order.getId() in self.__activeOrders)
+        assert (order.getId() is not None)
         del self.__activeOrders[order.getId()]
 
     # Factory method for testing purposes.
@@ -160,15 +164,15 @@ class LiveBroker(broker.Broker):
         # Cash
         self.__cash = round(balance.getUSDAvailable(), 2)
         common.logger.info("%s USD" % (self.__cash))
-        
+
         # BTC
         btc = balance.getBTCAvailable()
-        
+
         if btc:
             self.__shares = {common.btc_symbol: btc}
         else:
             self.__shares = {}
-        
+
         common.logger.info("%s BTC" % (btc))
 
         self.__stop = False  # No errors. Keep running.
@@ -177,7 +181,7 @@ class LiveBroker(broker.Broker):
         self.__stop = True  # Stop running in case of errors.
         common.logger.info("Retrieving open orders.")
         openOrders = self.__httpClient.getOpenOrders()
-        
+
         for openOrder in openOrders:
             self._registerOrder(build_order_from_open_order(openOrder, self.getInstrumentTraits(common.btc_symbol)))
 
@@ -193,7 +197,7 @@ class LiveBroker(broker.Broker):
     def _onUserTrades(self, trades):
         for trade in trades:
             order = self.__activeOrders.get(trade.getOrderId())
-            
+
             if order is not None:
                 fee = trade.getFee()
                 fillPrice = trade.getBTCUSD()
@@ -205,10 +209,10 @@ class LiveBroker(broker.Broker):
                 # Update the order.
                 orderExecutionInfo = broker.OrderExecutionInfo(fillPrice, abs(btcAmount), fee, dateTime)
                 order.addExecutionInfo(orderExecutionInfo)
-                
+
                 if not order.isActive():
                     self._unregisterOrder(order)
-                
+
                 # Notify that the order was updated.
                 if order.isFilled():
                     eventType = broker.OrderEvent.Type.FILLED
@@ -216,7 +220,8 @@ class LiveBroker(broker.Broker):
                     eventType = broker.OrderEvent.Type.PARTIALLY_FILLED
                 self.notifyOrderEvent(broker.OrderEvent(order, eventType, orderExecutionInfo))
             else:
-                common.logger.info("Trade %d refered to order %d that is not active" % (trade.getId(), trade.getOrderId()))
+                common.logger.info(
+                    "Trade %d refered to order %d that is not active" % (trade.getId(), trade.getOrderId()))
 
     # BEGIN observer.Subject interface
     def start(self):
@@ -239,7 +244,7 @@ class LiveBroker(broker.Broker):
 
     def dispatch(self):
         # Switch orders from SUBMITTED to ACCEPTED.
-        ordersToProcess = self.__activeOrders.values()
+        ordersToProcess = list(self.__activeOrders.values())
         for order in ordersToProcess:
             if order.isSubmitted():
                 order.switchState(broker.Order.State.ACCEPTED)
@@ -253,7 +258,7 @@ class LiveBroker(broker.Broker):
                 self._onUserTrades(eventData)
             else:
                 common.logger.error("Invalid event received to dispatch: %s - %s" % (eventType, eventData))
-        except Queue.Empty:
+        except queue.Empty:
             pass
 
     def peekDateTime(self):
@@ -277,7 +282,7 @@ class LiveBroker(broker.Broker):
         return self.__shares
 
     def getActiveOrders(self, instrument=None):
-        return self.__activeOrders.values()
+        return list(self.__activeOrders.values())
 
     def submitOrder(self, order):
         if order.isInitial():
@@ -317,7 +322,7 @@ class LiveBroker(broker.Broker):
         instrumentTraits = self.getInstrumentTraits(instrument)
         limitPrice = round(limitPrice, 2)
         quantity = instrumentTraits.roundQuantity(quantity)
-        
+
         return broker.LimitOrder(action, instrument, limitPrice, quantity, instrumentTraits)
 
     def createStopOrder(self, action, instrument, stopPrice, quantity):
@@ -328,10 +333,10 @@ class LiveBroker(broker.Broker):
 
     def cancelOrder(self, order):
         activeOrder = self.__activeOrders.get(order.getId())
-        
+
         if activeOrder is None:
             raise Exception("The order is not active anymore")
-        
+
         if activeOrder.isFilled():
             raise Exception("Can't cancel order that has already been filled")
 
@@ -345,4 +350,4 @@ class LiveBroker(broker.Broker):
         # Notify that the order was canceled.
         self.notifyOrderEvent(broker.OrderEvent(order, broker.OrderEvent.Type.CANCELED, "User requested cancellation"))
 
-    # END broker.Broker interface
+        # END broker.Broker interface

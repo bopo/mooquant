@@ -18,13 +18,14 @@
 import abc
 import datetime
 
+import six
+
 from mooquant import bar
 from mooquant.utils import dt
 
 
+@six.add_metaclass(abc.ABCMeta)
 class TimeRange(object):
-    __metaclass__ = abc.ABCMeta
-
     @abc.abstractmethod
     def belongs(self, dateTime):
         raise NotImplementedError()
@@ -144,9 +145,8 @@ def build_range(dateTime, frequency):
     return ret
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Grouper(object):
-    __metaclass__ = abc.ABCMeta
-
     def __init__(self, groupDateTime):
         self.__groupDateTime = groupDateTime
 

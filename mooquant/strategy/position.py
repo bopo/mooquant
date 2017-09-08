@@ -49,13 +49,13 @@ class WaitingEntryState(PositionState):
 
     def onOrderEvent(self, position, orderEvent):
         # Only entry order events are valid in this state.
-        assert(position.getEntryOrder().getId() == orderEvent.getOrder().getId())
+        assert (position.getEntryOrder().getId() == orderEvent.getOrder().getId())
 
         if orderEvent.getEventType() in (broker.OrderEvent.Type.FILLED, broker.OrderEvent.Type.PARTIALLY_FILLED):
             position.switchState(OpenState())
             position.getStrategy().onEnterOk(position)
         elif orderEvent.getEventType() == broker.OrderEvent.Type.CANCELED:
-            assert(position.getEntryOrder().getFilled() == 0)
+            assert (position.getEntryOrder().getFilled() == 0)
             position.switchState(ClosedState())
             position.getStrategy().onEnterCanceled(position)
 
@@ -63,9 +63,9 @@ class WaitingEntryState(PositionState):
         return True
 
     def exit(self, position, stopPrice=None, limitPrice=None, goodTillCanceled=None):
-        assert(position.getShares() == 0)
-        assert(position.getEntryOrder().isActive())
-        
+        assert (position.getShares() == 0)
+        assert (position.getEntryOrder().isActive())
+
         position.getStrategy().getBroker().cancelOrder(position.getEntryOrder())
 
 
@@ -85,11 +85,11 @@ class OpenState(PositionState):
                     position.switchState(ClosedState())
                     position.getStrategy().onExitOk(position)
             elif orderEvent.getEventType() == broker.OrderEvent.Type.CANCELED:
-                assert(position.getShares() != 0)
+                assert (position.getShares() != 0)
                 position.getStrategy().onExitCanceled(position)
         elif position.getEntryOrder().getId() == orderEvent.getOrder().getId():
             # Nothing to do since the entry order may be completely filled or canceled after a partial fill.
-            assert(position.getShares() != 0)
+            assert (position.getShares() != 0)
         else:
             raise Exception("Invalid order event '%s' in OpenState" % (orderEvent.getEventType()))
 
@@ -97,7 +97,7 @@ class OpenState(PositionState):
         return True
 
     def exit(self, position, stopPrice=None, limitPrice=None, goodTillCanceled=None):
-        assert(position.getShares() != 0)
+        assert (position.getShares() != 0)
 
         # Fail if a previous exit order is active.
         if position.exitActive():
@@ -117,7 +117,7 @@ class ClosedState(PositionState):
             exitDateTime = position.getExitOrder().getExecutionInfo().getDateTime()
             position.setExitDateTime(exitDateTime)
 
-        assert(position.getShares() == 0)
+        assert (position.getShares() == 0)
         position.getStrategy().unregisterPosition(position)
 
     def canSubmitOrder(self, position, order):
@@ -155,7 +155,7 @@ class Position(object):
 
     def __init__(self, strategy, entryOrder, goodTillCanceled, allOrNone):
         # The order must be created but not submitted.
-        assert(entryOrder.isInitial())
+        assert (entryOrder.isInitial())
 
         self.__state = None
         self.__activeOrders = {}
@@ -177,7 +177,7 @@ class Position(object):
         self.__entryOrder = entryOrder
 
     def __submitAndRegisterOrder(self, order):
-        assert(order.isInitial())
+        assert (order.isInitial())
 
         # Check if an order can be submitted in the current state.
         self.__state.canSubmitOrder(self, order)
@@ -206,7 +206,7 @@ class Position(object):
         return self.__strategy.getLastPrice(self.getInstrument())
 
     def getActiveOrders(self):
-        return self.__activeOrders.values()
+        return list(self.__activeOrders.values())
 
     def getShares(self):
         """Returns the number of shares.
@@ -253,14 +253,15 @@ class Position(object):
 
         # Deprecated in v0.18.
         if includeCommissions is False:
-            warninghelpers.deprecation_warning("includeCommissions will be deprecated in the next version.", stacklevel=2)
+            warninghelpers.deprecation_warning("includeCommissions will be deprecated in the next version.",
+                                               stacklevel=2)
 
         ret = 0
         price = self.getLastPrice()
 
         if price is not None:
             ret = self.__posTracker.getReturn(price, includeCommissions)
-        
+
         return ret
 
     def getPnL(self, includeCommissions=True):
@@ -271,14 +272,15 @@ class Position(object):
 
         # Deprecated in v0.18.
         if includeCommissions is False:
-            warninghelpers.deprecation_warning("includeCommissions will be deprecated in the next version.", stacklevel=2)
+            warninghelpers.deprecation_warning("includeCommissions will be deprecated in the next version.",
+                                               stacklevel=2)
 
         ret = 0
         price = self.getLastPrice()
 
         if price is not None:
             ret = self.__posTracker.getPnL(price=price, includeCommissions=includeCommissions)
-        
+
         return ret
 
     def cancelEntry(self):
@@ -356,14 +358,14 @@ class Position(object):
         self.__state.exit(self, stopPrice, limitPrice, goodTillCanceled)
 
     def _submitExitOrder(self, stopPrice, limitPrice, goodTillCanceled):
-        assert(not self.exitActive())
+        assert (not self.exitActive())
 
         exitOrder = self.buildExitOrder(stopPrice, limitPrice)
 
         # If goodTillCanceled was not set, match the entry order.
         if goodTillCanceled is None:
             goodTillCanceled = self.__entryOrder.getGoodTillCanceled()
-        
+
         exitOrder.setGoodTillCanceled(goodTillCanceled)
         exitOrder.setAllOrNone(self.__allOrNone)
 
@@ -380,7 +382,7 @@ class Position(object):
         # Update the number of shares.
         if orderEvent.getEventType() in (broker.OrderEvent.Type.PARTIALLY_FILLED, broker.OrderEvent.Type.FILLED):
             execInfo = orderEvent.getEventInfo()
-            
+
             # roundQuantity is used to prevent bugs like the one triggered in testcases.bitstamp_test:TestCase.testRoundingBug
             if order.isBuy():
                 self.__shares = order.getInstrumentTraits().roundQuantity(self.__shares + execInfo.getQuantity())
@@ -393,7 +395,7 @@ class Position(object):
         if orderEvent.getEventType() in (broker.OrderEvent.Type.PARTIALLY_FILLED, broker.OrderEvent.Type.FILLED):
             order = orderEvent.getOrder()
             execInfo = orderEvent.getEventInfo()
-            
+
             if order.isBuy():
                 self.__posTracker.buy(execInfo.getQuantity(), execInfo.getPrice(), execInfo.getCommission())
             else:
@@ -423,7 +425,7 @@ class Position(object):
             else:
                 last = self.__strategy.getCurrentDateTime()
             ret = last - self.__entryDateTime
-        
+
         return ret
 
 
@@ -433,30 +435,36 @@ class LongPosition(Position):
         if limitPrice is None and stopPrice is None:
             entryOrder = strategy.getBroker().createMarketOrder(broker.Order.Action.BUY, instrument, quantity, False)
         elif limitPrice is not None and stopPrice is None:
-            entryOrder = strategy.getBroker().createLimitOrder(broker.Order.Action.BUY, instrument, limitPrice, quantity)
+            entryOrder = strategy.getBroker().createLimitOrder(broker.Order.Action.BUY, instrument, limitPrice,
+                                                               quantity)
         elif limitPrice is None and stopPrice is not None:
             entryOrder = strategy.getBroker().createStopOrder(broker.Order.Action.BUY, instrument, stopPrice, quantity)
         elif limitPrice is not None and stopPrice is not None:
-            entryOrder = strategy.getBroker().createStopLimitOrder(broker.Order.Action.BUY, instrument, stopPrice, limitPrice, quantity)
+            entryOrder = strategy.getBroker().createStopLimitOrder(broker.Order.Action.BUY, instrument, stopPrice,
+                                                                   limitPrice, quantity)
         else:
-            assert(False)
+            assert (False)
 
         super(LongPosition, self).__init__(strategy, entryOrder, goodTillCanceled, allOrNone)
 
     def buildExitOrder(self, stopPrice, limitPrice):
         quantity = self.getShares()
-        assert(quantity > 0)
+        assert (quantity > 0)
 
         if limitPrice is None and stopPrice is None:
-            ret = self.getStrategy().getBroker().createMarketOrder(broker.Order.Action.SELL, self.getInstrument(), quantity, False)
+            ret = self.getStrategy().getBroker().createMarketOrder(broker.Order.Action.SELL, self.getInstrument(),
+                                                                   quantity, False)
         elif limitPrice is not None and stopPrice is None:
-            ret = self.getStrategy().getBroker().createLimitOrder(broker.Order.Action.SELL, self.getInstrument(), limitPrice, quantity)
+            ret = self.getStrategy().getBroker().createLimitOrder(broker.Order.Action.SELL, self.getInstrument(),
+                                                                  limitPrice, quantity)
         elif limitPrice is None and stopPrice is not None:
-            ret = self.getStrategy().getBroker().createStopOrder(broker.Order.Action.SELL, self.getInstrument(), stopPrice, quantity)
+            ret = self.getStrategy().getBroker().createStopOrder(broker.Order.Action.SELL, self.getInstrument(),
+                                                                 stopPrice, quantity)
         elif limitPrice is not None and stopPrice is not None:
-            ret = self.getStrategy().getBroker().createStopLimitOrder(broker.Order.Action.SELL, self.getInstrument(), stopPrice, limitPrice, quantity)
+            ret = self.getStrategy().getBroker().createStopLimitOrder(broker.Order.Action.SELL, self.getInstrument(),
+                                                                      stopPrice, limitPrice, quantity)
         else:
-            assert(False)
+            assert (False)
 
         return ret
 
@@ -465,31 +473,40 @@ class LongPosition(Position):
 class ShortPosition(Position):
     def __init__(self, strategy, instrument, stopPrice, limitPrice, quantity, goodTillCanceled, allOrNone):
         if limitPrice is None and stopPrice is None:
-            entryOrder = strategy.getBroker().createMarketOrder(broker.Order.Action.SELL_SHORT, instrument, quantity, False)
+            entryOrder = strategy.getBroker().createMarketOrder(broker.Order.Action.SELL_SHORT, instrument, quantity,
+                                                                False)
         elif limitPrice is not None and stopPrice is None:
-            entryOrder = strategy.getBroker().createLimitOrder(broker.Order.Action.SELL_SHORT, instrument, limitPrice, quantity)
+            entryOrder = strategy.getBroker().createLimitOrder(broker.Order.Action.SELL_SHORT, instrument, limitPrice,
+                                                               quantity)
         elif limitPrice is None and stopPrice is not None:
-            entryOrder = strategy.getBroker().createStopOrder(broker.Order.Action.SELL_SHORT, instrument, stopPrice, quantity)
+            entryOrder = strategy.getBroker().createStopOrder(broker.Order.Action.SELL_SHORT, instrument, stopPrice,
+                                                              quantity)
         elif limitPrice is not None and stopPrice is not None:
-            entryOrder = strategy.getBroker().createStopLimitOrder(broker.Order.Action.SELL_SHORT, instrument, stopPrice, limitPrice, quantity)
+            entryOrder = strategy.getBroker().createStopLimitOrder(broker.Order.Action.SELL_SHORT, instrument,
+                                                                   stopPrice, limitPrice, quantity)
         else:
-            assert(False)
+            assert (False)
 
         super(ShortPosition, self).__init__(strategy, entryOrder, goodTillCanceled, allOrNone)
 
     def buildExitOrder(self, stopPrice, limitPrice):
         quantity = self.getShares() * -1
-        assert(quantity > 0)
-        
+        assert (quantity > 0)
+
         if limitPrice is None and stopPrice is None:
-            ret = self.getStrategy().getBroker().createMarketOrder(broker.Order.Action.BUY_TO_COVER, self.getInstrument(), quantity, False)
+            ret = self.getStrategy().getBroker().createMarketOrder(broker.Order.Action.BUY_TO_COVER,
+                                                                   self.getInstrument(), quantity, False)
         elif limitPrice is not None and stopPrice is None:
-            ret = self.getStrategy().getBroker().createLimitOrder(broker.Order.Action.BUY_TO_COVER, self.getInstrument(), limitPrice, quantity)
+            ret = self.getStrategy().getBroker().createLimitOrder(broker.Order.Action.BUY_TO_COVER,
+                                                                  self.getInstrument(), limitPrice, quantity)
         elif limitPrice is None and stopPrice is not None:
-            ret = self.getStrategy().getBroker().createStopOrder(broker.Order.Action.BUY_TO_COVER, self.getInstrument(), stopPrice, quantity)
+            ret = self.getStrategy().getBroker().createStopOrder(broker.Order.Action.BUY_TO_COVER, self.getInstrument(),
+                                                                 stopPrice, quantity)
         elif limitPrice is not None and stopPrice is not None:
-            ret = self.getStrategy().getBroker().createStopLimitOrder(broker.Order.Action.BUY_TO_COVER, self.getInstrument(), stopPrice, limitPrice, quantity)
+            ret = self.getStrategy().getBroker().createStopLimitOrder(broker.Order.Action.BUY_TO_COVER,
+                                                                      self.getInstrument(), stopPrice, limitPrice,
+                                                                      quantity)
         else:
-            assert(False)
+            assert (False)
 
         return ret

@@ -20,16 +20,18 @@
 
 import abc
 import logging
+import six
 
 import mooquant.broker
-from mooquant.broker import backtesting
-from mooquant import observer
-from mooquant import dispatcher
 import mooquant.strategy.position
+from mooquant import dispatcher
 from mooquant import logger
+from mooquant import observer
 from mooquant.barfeed import resampled
+from mooquant.broker import backtesting
 
 
+@six.add_metaclass(abc.ABCMeta)
 class BaseStrategy(object):
     """Base class for strategies.
 
@@ -41,8 +43,6 @@ class BaseStrategy(object):
     .. note::
         This is a base class and should not be used directly.
     """
-
-    __metaclass__ = abc.ABCMeta
 
     LOGGER_NAME = "strategy"
 
@@ -102,14 +102,14 @@ class BaseStrategy(object):
 
     def registerPositionOrder(self, position, order):
         self.__activePositions.add(position)
-        assert(order.isActive())  # Why register an inactive order ?
+        assert (order.isActive())  # Why register an inactive order ?
         self.__orderToPosition[order.getId()] = position
 
     def unregisterPositionOrder(self, position, order):
         del self.__orderToPosition[order.getId()]
 
     def unregisterPosition(self, position):
-        assert(not position.isOpen())
+        assert (not position.isOpen())
         self.__activePositions.remove(position)
 
     def __notifyAnalyzers(self, lambdaExpression):
@@ -168,13 +168,14 @@ class BaseStrategy(object):
         if quantity > 0:
             ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.BUY, instrument, quantity, onClose)
         elif quantity < 0:
-            ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.SELL, instrument, quantity*-1, onClose)
-        
+            ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.SELL, instrument, quantity * -1,
+                                                     onClose)
+
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
             self.getBroker().submitOrder(ret)
-        
+
         return ret
 
     def limitOrder(self, instrument, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
@@ -198,13 +199,14 @@ class BaseStrategy(object):
         if quantity > 0:
             ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.BUY, instrument, limitPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.SELL, instrument, limitPrice, quantity*-1)
-        
+            ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.SELL, instrument, limitPrice,
+                                                    quantity * -1)
+
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
             self.getBroker().submitOrder(ret)
-        
+
         return ret
 
     def stopOrder(self, instrument, stopPrice, quantity, goodTillCanceled=False, allOrNone=False):
@@ -224,17 +226,18 @@ class BaseStrategy(object):
         """
 
         ret = None
-        
+
         if quantity > 0:
             ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice, quantity*-1)
-        
+            ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice,
+                                                   quantity * -1)
+
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
             self.getBroker().submitOrder(ret)
-        
+
         return ret
 
     def stopLimitOrder(self, instrument, stopPrice, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
@@ -258,15 +261,17 @@ class BaseStrategy(object):
         ret = None
 
         if quantity > 0:
-            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice, limitPrice, quantity)
+            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice,
+                                                        limitPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice, limitPrice, quantity*-1)
-        
+            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice,
+                                                        limitPrice, quantity * -1)
+
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
             self.getBroker().submitOrder(ret)
-        
+
         return ret
 
     def enterLong(self, instrument, quantity, goodTillCanceled=False, allOrNone=False):
@@ -283,7 +288,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.LongPosition(self, instrument, None, None, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.LongPosition(self, instrument, None, None, quantity, goodTillCanceled,
+                                                       allOrNone)
 
     def enterShort(self, instrument, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a sell short :class:`mooquant.broker.MarketOrder` to enter a short position.
@@ -299,7 +305,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.ShortPosition(self, instrument, None, None, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.ShortPosition(self, instrument, None, None, quantity, goodTillCanceled,
+                                                        allOrNone)
 
     def enterLongLimit(self, instrument, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a buy :class:`mooquant.broker.LimitOrder` to enter a long position.
@@ -317,7 +324,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.LongPosition(self, instrument, None, limitPrice, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.LongPosition(self, instrument, None, limitPrice, quantity, goodTillCanceled,
+                                                       allOrNone)
 
     def enterShortLimit(self, instrument, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a sell short :class:`mooquant.broker.LimitOrder` to enter a short position.
@@ -335,7 +343,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.ShortPosition(self, instrument, None, limitPrice, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.ShortPosition(self, instrument, None, limitPrice, quantity, goodTillCanceled,
+                                                        allOrNone)
 
     def enterLongStop(self, instrument, stopPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a buy :class:`mooquant.broker.StopOrder` to enter a long position.
@@ -353,7 +362,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.LongPosition(self, instrument, stopPrice, None, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.LongPosition(self, instrument, stopPrice, None, quantity, goodTillCanceled,
+                                                       allOrNone)
 
     def enterShortStop(self, instrument, stopPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a sell short :class:`mooquant.broker.StopOrder` to enter a short position.
@@ -371,7 +381,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.ShortPosition(self, instrument, stopPrice, None, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.ShortPosition(self, instrument, stopPrice, None, quantity, goodTillCanceled,
+                                                        allOrNone)
 
     def enterLongStopLimit(self, instrument, stopPrice, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a buy :class:`mooquant.broker.StopLimitOrder` order to enter a long position.
@@ -391,7 +402,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.LongPosition(self, instrument, stopPrice, limitPrice, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.LongPosition(self, instrument, stopPrice, limitPrice, quantity,
+                                                       goodTillCanceled, allOrNone)
 
     def enterShortStopLimit(self, instrument, stopPrice, limitPrice, quantity, goodTillCanceled=False, allOrNone=False):
         """Generates a sell short :class:`mooquant.broker.StopLimitOrder` order to enter a short position.
@@ -411,7 +423,8 @@ class BaseStrategy(object):
         :rtype: The :class:`mooquant.strategy.position.Position` entered.
         """
 
-        return mooquant.strategy.position.ShortPosition(self, instrument, stopPrice, limitPrice, quantity, goodTillCanceled, allOrNone)
+        return mooquant.strategy.position.ShortPosition(self, instrument, stopPrice, limitPrice, quantity,
+                                                        goodTillCanceled, allOrNone)
 
     def onEnterOk(self, position):
         """Override (optional) to get notified when the order submitted to enter a position was filled. The default implementation is empty.
@@ -448,6 +461,7 @@ class BaseStrategy(object):
         pass
 
     """Base class for strategies. """
+
     def onStart(self):
         """Override (optional) to get notified when the strategy starts executing. The default implementation is empty. """
         pass
@@ -571,7 +585,7 @@ class BaseStrategy(object):
         """
         ret = resampled.ResampledBarFeed(self.getFeed(), frequency)
         ret.getNewValuesEvent().subscribe(callback)
-        
+
         self.getDispatcher().addSubject(ret)
         self.__resampledBarFeeds.append(ret)
 
@@ -617,6 +631,6 @@ class BacktestingStrategy(BaseStrategy):
         """Enable/disable debug level messages in the strategy and backtesting broker.
         This is enabled by default."""
         level = logging.DEBUG if debugOn else logging.INFO
-        
+
         self.getLogger().setLevel(level)
         self.getBroker().getLogger().setLevel(level)

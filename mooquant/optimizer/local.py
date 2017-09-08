@@ -52,7 +52,7 @@ def worker_process(strategyClass, port, logLevel):
         w = Worker("localhost", port, name)
         w.getLogger().setLevel(logLevel)
         w.run()
-    except Exception, e:
+    except Exception as e:
         w.getLogger().exception("Failed to run worker: %s" % (e))
 
 
@@ -91,7 +91,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     :rtype: A :class:`Results` instance with the best results found.
     """
 
-    assert(workerCount is None or workerCount > 0)
+    assert (workerCount is None or workerCount > 0)
 
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
@@ -108,7 +108,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
     srv = xmlrpcserver.Server(paramSource, resultSinc, barFeed, "localhost", port, False)
-    
+
     serverThread = ServerThread(srv)
     serverThread.start()
 
@@ -137,7 +137,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
         serverThread.join()
 
         bestResult, bestParameters = resultSinc.getBest()
-        
+
         if bestResult is not None:
             ret = server.Results(bestParameters.args, bestResult)
 

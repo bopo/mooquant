@@ -19,7 +19,12 @@
 """
 
 import datetime
-import Queue
+
+try:
+    import Queue as queue
+except ImportError:
+    import queue
+
 import threading
 
 from mooquant.bitstamp import common
@@ -28,6 +33,7 @@ from mooquant.websocket import pusher
 
 def get_current_datetime():
     return datetime.datetime.now()
+
 
 # Bitstamp protocol reference: https://www.bitstamp.net/websocket/
 
@@ -103,7 +109,7 @@ class WebSocketClient(pusher.WebSocketClient):
 
     def __init__(self):
         super(WebSocketClient, self).__init__(WebSocketClient.PUSHER_APP_KEY, 5)
-        self.__queue = Queue.Queue()
+        self.__queue = queue.Queue()
 
     def getQueue(self):
         return self.__queue
@@ -132,7 +138,7 @@ class WebSocketClient(pusher.WebSocketClient):
         common.logger.warning("Disconnection detected.")
         try:
             self.stopClient()
-        except Exception, e:
+        except Exception as e:
             common.logger.error("Error stopping websocket client: %s." % (str(e)))
         self.__queue.put((WebSocketClient.ON_DISCONNECTED, None))
 
@@ -180,5 +186,5 @@ class WebSocketClientThread(threading.Thread):
         try:
             common.logger.info("Stopping websocket client.")
             self.__wsClient.stopClient()
-        except Exception, e:
+        except Exception as e:
             common.logger.error("Error stopping websocket client: %s." % (str(e)))

@@ -54,7 +54,7 @@ def get_limit_price_trigger(action, limitPrice, useAdjustedValues, bar):
             else:
                 ret = limitPrice
     else:  # Unknown action
-        assert(False)
+        assert (False)
 
     return ret
 
@@ -87,7 +87,7 @@ def get_stop_price_trigger(action, stopPrice, useAdjustedValues, bar):
             else:
                 ret = stopPrice
     else:  # Unknown action
-        assert(False)
+        assert (False)
 
     return ret
 
@@ -319,7 +319,7 @@ class DefaultStrategy(FillStrategy):
     def fillMarketOrder(self, broker_, order, bar):
         # Calculate the fill size for the order.
         fillSize = self.__calculateFillSize(broker_, order, bar)
-        
+
         if fillSize == 0:
             broker_.getLogger().debug(
                 "Not enough volume to fill %s market order [%s] for %s share/s" % (
@@ -335,7 +335,7 @@ class DefaultStrategy(FillStrategy):
             price = bar.getClose(broker_.getUseAdjustedValues())
         else:
             price = bar.getOpen(broker_.getUseAdjustedValues())
-        
+
         assert price is not None
 
         # Don't slip prices when the bar represents the trading activity of a single trade.
@@ -343,25 +343,25 @@ class DefaultStrategy(FillStrategy):
             price = self.__slippageModel.calculatePrice(
                 order, price, fillSize, bar, self.__volumeUsed[order.getInstrument()]
             )
-        
+
         return FillInfo(price, fillSize)
 
     def fillLimitOrder(self, broker_, order, bar):
         # Calculate the fill size for the order.
         fillSize = self.__calculateFillSize(broker_, order, bar)
-        
+
         if fillSize == 0:
             broker_.getLogger().debug("Not enough volume to fill %s limit order [%s] for %s share/s" % (
                 order.getInstrument(), order.getId(), order.getRemaining())
-            )
+                                      )
             return None
 
         ret = None
         price = get_limit_price_trigger(order.getAction(), order.getLimitPrice(), broker_.getUseAdjustedValues(), bar)
-        
+
         if price is not None:
             ret = FillInfo(price, fillSize)
-        
+
         return ret
 
     def fillStopOrder(self, broker_, order, bar):
@@ -369,7 +369,7 @@ class DefaultStrategy(FillStrategy):
 
         # First check if the stop price was hit so the market order becomes active.
         stopPriceTrigger = None
-        
+
         if not order.getStopHit():
             stopPriceTrigger = get_stop_price_trigger(
                 order.getAction(),
@@ -397,7 +397,7 @@ class DefaultStrategy(FillStrategy):
                 price = stopPriceTrigger
             else:
                 price = bar.getOpen(broker_.getUseAdjustedValues())
-            
+
             assert price is not None
 
             # Don't slip prices when the bar represents the trading activity of a single trade.
@@ -406,7 +406,7 @@ class DefaultStrategy(FillStrategy):
                     order, price, fillSize, bar, self.__volumeUsed[order.getInstrument()]
                 )
             ret = FillInfo(price, fillSize)
-        
+
         return ret
 
     def fillStopLimitOrder(self, broker_, order, bar):
@@ -414,7 +414,7 @@ class DefaultStrategy(FillStrategy):
 
         # First check if the stop price was hit so the limit order becomes active.
         stopPriceTrigger = None
-        
+
         if not order.getStopHit():
             stopPriceTrigger = get_stop_price_trigger(
                 order.getAction(),
@@ -428,14 +428,14 @@ class DefaultStrategy(FillStrategy):
         if order.getStopHit():
             # Calculate the fill size for the order.
             fillSize = self.__calculateFillSize(broker_, order, bar)
-            
+
             if fillSize == 0:
                 broker_.getLogger().debug("Not enough volume to fill %s stop limit order [%s] for %s share/s" % (
                     order.getInstrument(),
                     order.getId(),
                     order.getRemaining()
                 ))
-                
+
                 return None
 
             price = get_limit_price_trigger(
@@ -444,7 +444,7 @@ class DefaultStrategy(FillStrategy):
                 broker_.getUseAdjustedValues(),
                 bar
             )
-            
+
             if price is not None:
                 # If we just hit the stop price, we need to make additional checks.
                 if stopPriceTrigger is not None:

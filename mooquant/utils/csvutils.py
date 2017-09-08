@@ -21,6 +21,7 @@
 import csv
 import logging
 import requests
+import six
 
 logging.getLogger("requests").setLevel(logging.ERROR)
 
@@ -32,25 +33,25 @@ class FastDictReader(object):
         self.reader = csv.reader(f, dialect, *args, **kwargs)
 
         if self.__fieldNames is None:
-            self.__fieldNames = self.reader.next()
+            self.__fieldNames = six.next(self.reader)
 
         self.__dict = {}
 
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         # Skip empty rows.
-        row = self.reader.next()
+        row = six.next(self.reader)
 
         while row == []:
-            row = self.reader.next()
+            row = six.next(self.reader)
 
         # Check that the row has the right number of columns.
         assert(len(self.__fieldNames) == len(row))
 
         # Copy the row values into the dict.
-        for i in xrange(len(self.__fieldNames)):
+        for i in range(len(self.__fieldNames)):
             self.__dict[self.__fieldNames[i]] = row[i]
 
         return self.__dict

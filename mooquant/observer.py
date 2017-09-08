@@ -19,6 +19,7 @@
 """
 
 import abc
+import six
 
 from mooquant import dispatchprio
 
@@ -64,9 +65,8 @@ class Event(object):
             self.__applyChanges()
 
 
+@six.add_metaclass(abc.ABCMeta)
 class Subject(object):
-    __metaclass__ = abc.ABCMeta
-
     def __init__(self):
         self.__dispatchPrio = dispatchprio.LAST
 

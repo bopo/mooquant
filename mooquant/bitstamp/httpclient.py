@@ -225,9 +225,7 @@ class HTTPClient(object):
         jsonResponse = self._post(url, {})
         
         if transactionType is not None:
-            jsonUserTransactions = filter(
-                lambda jsonUserTransaction: jsonUserTransaction["type"] == transactionType, jsonResponse
-            )
+            jsonUserTransactions = [jsonUserTransaction for jsonUserTransaction in jsonResponse if jsonUserTransaction["type"] == transactionType]
         else:
             jsonUserTransactions = jsonResponse
         return [UserTransaction(jsonUserTransaction) for jsonUserTransaction in jsonUserTransactions]

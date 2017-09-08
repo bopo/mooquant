@@ -19,7 +19,13 @@
 """
 
 import pickle
-import SimpleXMLRPCServer
+
+# @todo
+try:
+    from SimpleXMLRPCServer import SimpleXMLRPCServer
+except ImportError:
+    from xmlrpc.server import SimpleXMLRPCServer
+
 import threading
 import time
 
@@ -62,11 +68,12 @@ class RequestHandler(SimpleXMLRPCServer.SimpleXMLRPCRequestHandler):
     rpc_paths = ('/PyAlgoTradeRPC',)
 
 
-class Server(SimpleXMLRPCServer.SimpleXMLRPCServer):
+class Server(SimpleXMLRPCServer):
     defaultBatchSize = 200
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
-        SimpleXMLRPCServer.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False,
+                                    allow_none=True)
         # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
@@ -78,7 +85,7 @@ class Server(SimpleXMLRPCServer.SimpleXMLRPCServer):
         self.__activeJobsLock = threading.Lock()
         self.__forcedStop = False
         self.__bestResult = None
-        
+
         if autoStop:
             self.__autoStopThread = AutoStopThread(self)
         else:
@@ -101,12 +108,12 @@ class Server(SimpleXMLRPCServer.SimpleXMLRPCServer):
 
         # Get the next set of parameters.
         params = self.__paramSource.getNext(self.defaultBatchSize)
-        params = map(lambda p: p.args, params)
+        params = [p.args for p in params]
 
         # Map the active job
         if len(params):
             ret = Job(params)
-            
+
             with self.__activeJobsLock:
                 self.__activeJobs[ret.getId()] = ret
 
@@ -150,12 +157,12 @@ class Server(SimpleXMLRPCServer.SimpleXMLRPCServer):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
-            
+
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
-            
+
             instruments = self.__barFeed.getRegisteredInstruments()
-            
+
             self.__instrumentsAndBars = pickle.dumps((instruments, loadedBars))
             self.__barsFreq = self.__barFeed.getFrequency()
 
