@@ -5,7 +5,8 @@
  
  
 -class Bar(object):
-+class Bar(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class Bar(object):
  
      """A Bar is a summary of the trading activity for a security in a given period.
  
@@ -22,7 +23,7 @@
          firstDateTime = None
          firstInstrument = None
 -        for instrument, currentBar in barDict.iteritems():
-+        for instrument, currentBar in barDict.items():
++        for instrument, currentBar in six.iteritems(barDict):
              if firstDateTime is None:
                  firstDateTime = currentBar.getDateTime()
                  firstInstrument = instrument
@@ -87,7 +88,8 @@
 -class Subject(object):
 -    __metaclass__ = abc.ABCMeta
 -
-+class Subject(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class Subject(object):
      def __init__(self):
          self.__dispatchPrio = dispatchprio.LAST
  
@@ -122,7 +124,7 @@
          dateTime = bars.getDateTime()
          
 -        for cb, series in self.__callbacks.iteritems():
-+        for cb, series in self.__callbacks.items():
++        for cb, series in six.iteritems(self.__callbacks):
              series.addValue(dateTime, cb(bars))
  
      def getSeries(self, name, defaultClass=LineMarker):
@@ -178,7 +180,8 @@
 -class TimeRange(object):
 -    __metaclass__ = abc.ABCMeta
 -
-+class TimeRange(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class TimeRange(object):
      @abc.abstractmethod
      def belongs(self, dateTime):
          raise NotImplementedError()
@@ -189,7 +192,8 @@
 -class Grouper(object):
 -    __metaclass__ = abc.ABCMeta
 -
-+class Grouper(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class Grouper(object):
      def __init__(self, groupDateTime):
          self.__groupDateTime = groupDateTime
  
@@ -200,7 +204,7 @@
          extra = {}
  
 -        for k, v in csvRowDict.iteritems():
-+        for k, v in csvRowDict.items():
++        for k, v in six.iteritems(csvRowDict):
              if k not in self.__columnNames:
                  extra[k] = csvutils.float_or_string(v)
  
@@ -297,7 +301,10 @@
  """
  
 -import Queue
-+import queue
++try:
++    import Queue as queue
++except ImportError:
++    import queue
  import threading
  import time
  
@@ -353,7 +360,10 @@
  
  import datetime
 -import Queue
-+import queue
++try:
++    import Queue as queue
++except ImportError:
++    import queue
  import time
  
  from mooquant import bar, barfeed, observer
@@ -391,7 +401,10 @@
  
  import datetime
 -import Queue
-+import queue
++try:
++    import Queue as queue
++except ImportError:
++    import queue
  import threading
  
  from mooquant.bitstamp import common
@@ -431,7 +444,8 @@
 -    __metaclass__ = abc.ABCMeta
 -
 -    # Return the floating point value number rounded.
-+class InstrumentTraits(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class InstrumentTraits(object):
 +
      @abc.abstractmethod
      def roundQuantity(self, quantity):
@@ -441,7 +455,7 @@
  ######################################################################
  # Base broker class
 -class Broker(observer.Subject):
-+class Broker(observer.Subject, metaclass=abc.ABCMeta):
++class Broker(observer.Subject):
      """Base class for brokers.
  
      .. note::
@@ -460,7 +474,8 @@
  # Commission models
  
 -class Commission(object):
-+class Commission(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class Commission(object):
      """Base class for implementing different commission schemes.
  
      .. note::
@@ -476,7 +491,7 @@
          if not includeShort and self.__barFeed.getCurrentBars() is not None:
              bars = self.__barFeed.getCurrentBars()
 -            for instrument, shares in self.__shares.iteritems():
-+            for instrument, shares in self.__shares.items():
++            for instrument, shares in six.iteritems(self.__shares):
                  if shares < 0:
                      instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                      ret += instrumentPrice * shares
@@ -503,7 +518,7 @@
          ret = self.getCash()
          if bars is not None:
 -            for instrument, shares in self.__shares.iteritems():
-+            for instrument, shares in self.__shares.items():
++            for instrument, shares in six.iteritems(self.__shares):
                  instrumentPrice = self._getBar(bars, instrument).getClose(self.getUseAdjustedValues())
                  ret += instrumentPrice * shares
          
@@ -532,7 +547,8 @@
  
  
 -class FillStrategy(object):
-+class FillStrategy(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class FillStrategy(object):
      """Base class for order filling strategies for the backtester."""
 -
 -    __metaclass__ = abc.ABCMeta
@@ -546,7 +562,8 @@
  
  
 -class SlippageModel(object):
-+class SlippageModel(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class SlippageModel(object):
      """Base class for slippage models.
  
      .. note::
@@ -564,7 +581,8 @@
  # It is important to inherit object to get __getitem__ to work properly.
  # Check http://code.activestate.com/lists/python-list/621258/
 -class DataSeries(object):
-+class DataSeries(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class DataSeries(object):
      """Base class for data series.
  
      .. note::
@@ -591,7 +609,7 @@
  
          # Process extra columns.
 -        for name, value in bar.getExtraColumns().iteritems():
-+        for name, value in bar.getExtraColumns().items():
++        for name, value in six.iteritems(bar.getExtraColumns()):
              extraDS = self.__getOrCreateExtraDS(name)
              extraDS.appendWithDateTime(dateTime, value)
  
@@ -604,7 +622,8 @@
 -class DSResampler(object):
 -    __metaclass__ = abc.ABCMeta
 -
-+class DSResampler(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class DSResampler(object):
      def initDSResampler(self, dataSeries, frequency):
          if not resamplebase.is_valid_frequency(frequency):
              raise Exception("Unsupported frequency")
@@ -644,7 +663,8 @@
  
  # Interface for csv row parsers.
 -class RowParser(object):
-+class RowParser(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class RowParser(object):
  
 -    __metaclass__ = abc.ABCMeta
 -
@@ -661,7 +681,8 @@
 -class RowFilter(object):
 -
 -    __metaclass__ = abc.ABCMeta
-+class RowFilter(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class RowFilter(object):
  
      @abc.abstractmethod
      def includeRow(self, dateTime, values):
@@ -692,7 +713,7 @@
                  try:
                      while count > 0:
 -                        params = self.__iter.next()
-+                        params = next(self.__iter)
++                        params = six.next(self.__iter)
                          
                          # Backward compatibility when parameters don't yield Parameters.
                          if not isinstance(params, Parameters):
@@ -714,7 +735,7 @@
  import socket
  import time
 -import xmlrpclib
-+import xmlrpc.client
++from xmlrpc.client import ServerProxy
  
  import mooquant.logger
  from mooquant import barfeed
@@ -723,7 +744,7 @@
      def __init__(self, address, port, workerName=None):
          url = "http://%s:%s/PyAlgoTradeRPC" % (address, port)
 -        self.__server = xmlrpclib.ServerProxy(url, allow_none=True)
-+        self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
++        self.__server = ServerProxy(url, allow_none=True)
          self.__logger = mooquant.logger.getLogger(workerName)
          
          if workerName is None:
@@ -752,7 +773,7 @@
  
  import pickle
 -import SimpleXMLRPCServer
-+import xmlrpc.server
++from xmlrpc.server import SimpleXMLRPCServer
  import threading
  import time
  
@@ -761,17 +782,17 @@
  
  # Restrict to a particular path.
 -class RequestHandler(SimpleXMLRPCServer.SimpleXMLRPCRequestHandler):
-+class RequestHandler(xmlrpc.server.SimpleXMLRPCRequestHandler):
++class RequestHandler(SimpleXMLRPCRequestHandler):
      rpc_paths = ('/PyAlgoTradeRPC',)
  
  
 -class Server(SimpleXMLRPCServer.SimpleXMLRPCServer):
-+class Server(xmlrpc.server.SimpleXMLRPCServer):
++class Server(SimpleXMLRPCServer):
      defaultBatchSize = 200
  
      def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
 -        SimpleXMLRPCServer.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
-+        xmlrpc.server.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
++        SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
          # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
  
          self.__paramSource = paramSource
@@ -791,7 +812,8 @@
  
  
 -class BaseStrategy(object):
-+class BaseStrategy(object, metaclass=abc.ABCMeta):
++@six.add_metaclass(abc.ABCMeta)
++class BaseStrategy(object):
      """Base class for strategies.
  
      :param barFeed: The bar feed that will supply the bars.
@@ -875,7 +897,7 @@
  
      # Additional column names.
 -    for col, name in columnNames.iteritems():
-+    for col, name in columnNames.items():
++    for col, name in six.iteritems(columnNames):
          ret.setColumnName(col, name)
  
      if not os.path.exists(storage):
@@ -906,7 +928,10 @@
  
  import json
 -import Queue
-+import queue
++try:
++    import Queue as queue
++except ImportError:
++    import queue
  import threading
  
  import mooquant.logger
@@ -944,7 +969,7 @@
  
          if self.__fieldNames is None:
 -            self.__fieldNames = self.reader.next()
-+            self.__fieldNames = next(self.reader)
++            self.__fieldNames = six.next(self.reader)
  
          self.__dict = {}
  
@@ -955,11 +980,11 @@
 +    def __next__(self):
          # Skip empty rows.
 -        row = self.reader.next()
-+        row = next(self.reader)
++        row = six.next(self.reader)
  
          while row == []:
 -            row = self.reader.next()
-+            row = next(self.reader)
++            row = six.next(self.reader)
  
          # Check that the row has the right number of columns.
          assert(len(self.__fieldNames) == len(row))
@@ -997,8 +1022,10 @@
  
  import json
 -import urllib
-+import urllib.request, urllib.parse, urllib.error
- 
++try:
++    from urllib import urlencode
++except ImportError:
++    from urllib.parse import urlencode
  import mooquant
  import mooquant.logger
 @@ -77,7 +77,7 @@
@@ -1006,7 +1033,7 @@
              }
  
 -        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urllib.urlencode(params))
-+        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urllib.parse.urlencode(params))
++        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urlencode(params))
          super(WebSocketClient, self).__init__(url)
          self.setKeepAliveMgr(PingKeepAliveMgr(self, maxInactivity, responseTimeout))
  
