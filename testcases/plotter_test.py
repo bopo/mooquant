@@ -21,7 +21,7 @@
 import sys
 import os
 
-import common
+from . import common
 
 from mooquant.barfeed import yahoofeed
 from mooquant import plotter

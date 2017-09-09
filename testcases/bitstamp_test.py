@@ -21,11 +21,11 @@
 import datetime
 import time
 import threading
-import Queue
 import json
 
-import common as tc_common
-import test_strategy
+
+from . import common as tc_common
+from . import test_strategy
 
 from mooquant import broker as basebroker
 from mooquant.bitstamp import barfeed
@@ -36,6 +36,11 @@ from mooquant.bitstamp import common
 from mooquant.bitcoincharts import barfeed as btcbarfeed
 from mooquant import strategy
 from mooquant import dispatcher
+
+try:
+    import Queue as queue
+except Exception as e:
+    import queue
 
 
 class WebSocketClientThreadMock(threading.Thread):

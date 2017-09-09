@@ -178,7 +178,7 @@ class IntersectTestCase(common.TestCase):
         values, ix1, ix2 = collections.intersect(dateTimes1, dateTimes2)
         self.assertEqual(values, dateTimes1)
         self.assertEqual(values, dateTimes2)
-        self.assertEqual(ix1, range(size))
+        self.assertEqual(ix1, list(range(size)))
         self.assertEqual(ix1, ix2)
 
 
