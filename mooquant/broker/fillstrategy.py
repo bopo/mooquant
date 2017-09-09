@@ -383,6 +383,7 @@ class DefaultStrategy(FillStrategy):
         if order.getStopHit():
             # Calculate the fill size for the order.
             fillSize = self.__calculateFillSize(broker_, order, bar)
+
             if fillSize == 0:
                 broker_.getLogger().debug("Not enough volume to fill %s stop order [%s] for %s share/s" % (
                     order.getInstrument(),

@@ -20,8 +20,10 @@
 import sys
 from mooquant import dataseries, feed
 
-def cmp(a, b):
-    return (a > b) - (a < b)
+
+# def cmp(a, b):
+#     return (a > b) - (a < b)
+
 
 class MemFeed(feed.BaseFeed):
     def __init__(self, maxLen=None):
@@ -39,11 +41,9 @@ class MemFeed(feed.BaseFeed):
         # Now that all the data is in place, sort it to dispatch it in order.
 
         if sys.version < '3':
-            cmpFun = lambda x, y: cmp(x[0], y[0])
-            self.__values.sort(cmpFun)
+            self.__values.sort(lambda x, y: cmp(x[0], y[0]))
         else:
-            cmpFun = lambda x: x[0]
-            self.__values.sort(key=cmpFun)
+            self.__values.sort(key=lambda x: x[0])
 
     def stop(self):
         pass
@@ -59,8 +59,10 @@ class MemFeed(feed.BaseFeed):
 
     def peekDateTime(self):
         ret = None
+
         if self.__nextIdx < len(self.__values):
             ret = self.__values[self.__nextIdx][0]
+
         return ret
 
     def createDataSeries(self, key, maxLen):
@@ -68,9 +70,11 @@ class MemFeed(feed.BaseFeed):
 
     def getNextValues(self):
         ret = (None, None)
+
         if self.__nextIdx < len(self.__values):
             ret = self.__values[self.__nextIdx]
             self.__nextIdx += 1
+
         return ret
 
     # Add values to the feed. values should be a sequence of tuples. The tuples should have two elements:

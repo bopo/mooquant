@@ -20,6 +20,10 @@
 
 
 class Database(object):
+    """
+    Database
+    """
+
     def addBars(self, bars, frequency):
         for instrument in bars.getInstruments():
             bar = bars.getBar(instrument)

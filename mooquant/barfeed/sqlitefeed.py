@@ -58,6 +58,7 @@ class Database(dbfeed.Database):
             ret = ret[0]
 
         cursor.close()
+
         return ret
 
     def __addInstrument(self, instrument):

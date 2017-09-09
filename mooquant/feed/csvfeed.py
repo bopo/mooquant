@@ -61,8 +61,10 @@ class DateRangeFilter(RowFilter):
     def includeRow(self, dateTime, values):
         if self.__toDate and dateTime > self.__toDate:
             return False
+
         if self.__fromDate and dateTime < self.__fromDate:
             return False
+
         return True
 
 
@@ -80,8 +82,10 @@ class BaseFeed(memfeed.MemFeed):
         # Load the values from the csv file
         values = []
         reader = csvutils.FastDictReader(open(path, "r"), fieldnames=self.__rowParser.getFieldNames(), delimiter=self.__rowParser.getDelimiter())
+
         for row in reader:
             dateTime, rowValues = self.__rowParser.parseRow(row)
+
             if dateTime is not None and (self.__rowFilter is None or self.__rowFilter.includeRow(dateTime, rowValues)):
                 values.append((dateTime, rowValues))
 
@@ -101,16 +105,21 @@ class BasicRowParser(RowParser):
     def parseRow(self, csvRowDict):
         dateTime = datetime.datetime.strptime(csvRowDict[self.__dateTimeColumn], self.__dateTimeFormat)
         # Localize the datetime if a timezone was given.
+
         if self.__timezone is not None:
             if self.__timeDelta is not None:
                 dateTime += self.__timeDelta
+
             dateTime = dt.localize(dateTime, self.__timezone)
+
         # Convert the values
         values = {}
+
         for key, value in csvRowDict.items():
             if key != self.__dateTimeColumn:
                 values[key] = self.__converter(key, value)
-        return (dateTime, values)
+
+        return [dateTime, values]
 
     def getFieldNames(self):
         return None
@@ -150,8 +159,8 @@ class Feed(BaseFeed):
     def __init__(self, dateTimeColumn, dateTimeFormat, converter=None, delimiter=",", timezone=None, maxLen=None):
         if converter is None:
             converter = float_or_string
-        self.__rowParser = BasicRowParser(dateTimeColumn, dateTimeFormat, converter, delimiter, timezone)
 
+        self.__rowParser = BasicRowParser(dateTimeColumn, dateTimeFormat, converter, delimiter, timezone)
         super(Feed, self).__init__(self.__rowParser, maxLen)
 
     def addValuesFromCSV(self, path):

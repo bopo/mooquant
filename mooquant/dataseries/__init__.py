@@ -34,7 +34,7 @@ def get_checked_max_len(maxLen):
 
     if not maxLen > 0:
         raise Exception("Invalid maximum length")
-    
+
     return maxLen
 
 
@@ -61,10 +61,10 @@ class DataSeries(object):
         elif isinstance(key, int):
             if key < 0:
                 key += len(self)
-            
+
             if key >= len(self) or key < 0:
                 raise IndexError("Index out of range")
-            
+
             return self.getValueAbsolute(key)
         else:
             raise TypeError("Invalid argument type")
@@ -121,7 +121,7 @@ class SequenceDataSeries(DataSeries):
 
     def getValueAbsolute(self, pos):
         ret = None
-        if pos >= 0 and pos < len(self.__values):
+        if (pos >= 0) and (pos < len(self.__values)):
             ret = self.__values[pos]
         return ret
 
@@ -140,7 +140,7 @@ class SequenceDataSeries(DataSeries):
         if dateTime is not None and len(self.__dateTimes) != 0 and self.__dateTimes[-1] >= dateTime:
             raise Exception("Invalid datetime. It must be bigger than that last one")
 
-        assert(len(self.__values) == len(self.__dateTimes))
+        assert (len(self.__values) == len(self.__dateTimes))
         self.__dateTimes.append(dateTime)
         self.__values.append(value)
 

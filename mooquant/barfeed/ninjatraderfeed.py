@@ -26,6 +26,7 @@ from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt
 
+
 ######################################################################
 ## NinjaTrader CSV parser
 # Each bar must be on its own line and fields must be separated by semicolon (;).
@@ -72,7 +73,7 @@ class RowParser(csvfeed.RowParser):
             if self.__dailyBarTime is not None:
                 ret = datetime.datetime.combine(ret, self.__dailyBarTime)
         else:
-            assert(False)
+            assert (False)
 
         # According to NinjaTrader documentation the exported data will be in UTC.
         ret = pytz.utc.localize(ret)
@@ -113,7 +114,8 @@ class Feed(csvfeed.BarFeed):
 
     def __init__(self, frequency, timezone=None, maxLen=None):
         if isinstance(timezone, int):
-            raise Exception("timezone as an int parameter is not supported anymore. Please use a pytz timezone instead.")
+            raise Exception(
+                "timezone as an int parameter is not supported anymore. Please use a pytz timezone instead.")
 
         if frequency not in [bar.Frequency.MINUTE, bar.Frequency.DAY]:
             raise Exception("Invalid frequency.")
@@ -138,7 +140,8 @@ class Feed(csvfeed.BarFeed):
         """
 
         if isinstance(timezone, int):
-            raise Exception("timezone as an int parameter is not supported anymore. Please use a pytz timezone instead.")
+            raise Exception(
+                "timezone as an int parameter is not supported anymore. Please use a pytz timezone instead.")
 
         if timezone is None:
             timezone = self.__timezone

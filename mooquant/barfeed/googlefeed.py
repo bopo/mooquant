@@ -26,6 +26,7 @@ from mooquant import bar
 from mooquant.barfeed import common, csvfeed
 from mooquant.utils import dt
 
+
 ######################################################################
 # Google Finance CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
@@ -42,14 +43,18 @@ def parse_date(date):
     month_abbr = {'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
                   'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
                   'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
+
     date = date.split("-")
     year = int(date[2]) + 2000
+
     if year > datetime.datetime.today().year:
         # it's probably 20th century
         year -= 100
+
     month = int(month_abbr[date[1]])
     day = int(date[0])
     ret = datetime.datetime(year, month, day)
+
     return ret
 
 
@@ -65,9 +70,11 @@ class RowParser(csvfeed.RowParser):
         # Time on Google Finance CSV files is empty. If told to set one, do it.
         if self.__dailyBarTime is not None:
             ret = datetime.datetime.combine(ret, self.__dailyBarTime)
+
         # Localize the datetime if a timezone was given.
         if self.__timezone:
             ret = dt.localize(ret, self.__timezone)
+
         return ret
 
     def getFieldNames(self):
@@ -89,8 +96,7 @@ class RowParser(csvfeed.RowParser):
         if self.__sanitize:
             open_, high, low, close = common.sanitize_ohlc(open_, high, low, close)
 
-        return bar.BasicBar(dateTime, open_, high, low, close, volume,
-                            adjClose, self.__frequency)
+        return bar.BasicBar(dateTime, open_, high, low, close, volume, adjClose, self.__frequency)
 
 
 class Feed(csvfeed.BarFeed):

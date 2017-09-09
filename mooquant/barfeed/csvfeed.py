@@ -53,8 +53,10 @@ class DateRangeFilter(BarFilter):
     def includeBar(self, bar_):
         if self.__toDate and bar_.getDateTime() > self.__toDate:
             return False
+
         if self.__fromDate and bar_.getDateTime() < self.__fromDate:
             return False
+
         return True
 
 
@@ -124,6 +126,7 @@ class BarFeed(membf.BarFeed):
         
         for row in reader:
             bar_ = rowParser.parseBar(row)
+
             if bar_ is not None and (self.__barFilter is None or self.__barFilter.includeBar(bar_)):
                 loadedBars.append(bar_)
 

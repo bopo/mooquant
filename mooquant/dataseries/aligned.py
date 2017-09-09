@@ -38,7 +38,7 @@ def datetime_aligned(ds1, ds2, maxLen=None):
     aligned2 = dataseries.SequenceDataSeries(maxLen)
 
     Syncer(ds1, ds2, aligned1, aligned2)
-    return (aligned1, aligned2)
+    return [aligned1, aligned2]
 
 
 # This class is responsible for filling 2 dataseries when 2 other dataseries get new values.

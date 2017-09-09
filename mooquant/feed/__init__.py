@@ -79,16 +79,20 @@ class BaseFeed(observer.Subject):
 
     def getNextValuesAndUpdateDS(self):
         dateTime, values = self.getNextValues()
+
         if dateTime is not None:
             for key, value in values.items():
                 # Get or create the datseries for each key.
+
                 try:
                     ds = self.__ds[key]
                 except KeyError:
                     ds = self.createDataSeries(key, self.__maxLen)
                     self.__ds[key] = ds
+
                 ds.appendWithDateTime(dateTime, value)
-        return (dateTime, values)
+
+        return [dateTime, values]
 
     def __iter__(self):
         return feed_iterator(self)
@@ -104,8 +108,10 @@ class BaseFeed(observer.Subject):
 
     def dispatch(self):
         dateTime, values = self.getNextValuesAndUpdateDS()
+
         if dateTime is not None:
             self.__event.emit(dateTime, values)
+
         return dateTime is not None
 
     def getKeys(self):
