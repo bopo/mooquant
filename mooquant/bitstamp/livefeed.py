@@ -187,6 +187,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
                 common.logger.error("Invalid event received to dispatch: %s - %s" % (eventType, eventData))
         except queue.Empty:
             pass
+
         return ret
 
     # Bar datetimes should not duplicate. In case trade object datetimes conflict, we just move one slightly forward.

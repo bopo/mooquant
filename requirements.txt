@@ -7,9 +7,15 @@
 --index-url http://mirrors.aliyun.com/pypi/simple/
 --trusted-host mirrors.aliyun.com
 
-click==6.7                # via flask
-flask==0.12.2
-itsdangerous==0.24        # via flask
-jinja2==2.9.6             # via flask
-markupsafe==1.0           # via jinja2
-werkzeug==0.12.2          # via flask
+python-dateutil
+matplotlib
+requests
+tornado
+tweepy
+ta-lib
+pytest
+numpy
+scipy
+ws4py
+pytz
+nose
