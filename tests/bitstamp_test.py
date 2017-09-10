@@ -238,6 +238,7 @@ class BacktestingTestCase(tc_common.TestCase):
         brk = broker.BacktestingBroker(100, barFeed)
         strat = TestStrategy(barFeed, brk)
         strat.run()
+        
         self.assertEquals(strat.pos.getShares(), 1)
         self.assertEquals(strat.pos.entryActive(), False)
         self.assertEquals(strat.pos.isOpen(), True)

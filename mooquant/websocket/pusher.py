@@ -19,7 +19,11 @@
 """
 
 import json
-import urllib
+
+try:
+    from urllib import urlencode
+except Exception as e:
+    from urllib.parse import urlencode
 
 import mooquant
 import mooquant.logger
@@ -67,7 +71,7 @@ class PingKeepAliveMgr(client.KeepAliveMgr):
 
         if ret:
             logger.debug("Received pusher:pong.")
-            
+
         return ret
 
 
@@ -79,7 +83,7 @@ class WebSocketClient(client.WebSocketClientBase):
             "version": mooquant.__version__
             }
 
-        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urllib.urlencode(params))
+        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urlencode(params))
         super(WebSocketClient, self).__init__(url)
         self.setKeepAliveMgr(PingKeepAliveMgr(self, maxInactivity, responseTimeout))
 

@@ -60,13 +60,15 @@ class TestSequenceDataSeries(common.TestCase):
         self.assertTrue(ds[9:] == [9])
 
     def testSeqLikeOps(self):
-        seq = range(10)
+        seq = list(range(10))
         ds = dataseries.SequenceDataSeries()
+
         for value in seq:
             ds.append(value)
 
         # Test length and every item.
         self.assertEqual(len(ds), len(seq))
+
         for i in range(len(seq)):
             self.assertEqual(ds[i], seq[i])
 
