@@ -9,7 +9,6 @@ site
 .ipynb_checkpoints
 .ropeproject
 
-data
 dist
 build
 *.egg-info
