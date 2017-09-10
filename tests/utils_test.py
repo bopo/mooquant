@@ -168,9 +168,7 @@ class IntersectTestCase(common.TestCase):
         size = 1000
         dateTimes1 = []
         dateTimes2 = []
-        
         now = datetime.datetime.now()
-
         for i in range(size):
             dateTimes1.append(now + datetime.timedelta(seconds=i))
             dateTimes2.append(now + datetime.timedelta(seconds=i))
@@ -178,7 +176,6 @@ class IntersectTestCase(common.TestCase):
         self.assertEqual(dateTimes1, dateTimes2)
 
         values, ix1, ix2 = collections.intersect(dateTimes1, dateTimes2)
-
         self.assertEqual(values, dateTimes1)
         self.assertEqual(values, dateTimes2)
         self.assertEqual(ix1, list(range(size)))

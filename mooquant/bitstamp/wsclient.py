@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -19,16 +19,11 @@
 """
 
 import datetime
-
-try:
-    import Queue as queue
-except ImportError:
-    import queue
-
 import threading
 
 from mooquant.bitstamp import common
 from mooquant.websocket import pusher
+from mooquant.utils.compat import queue
 
 
 def get_current_datetime():

@@ -432,12 +432,14 @@ class StrategyPlotter(object):
         subplots = []
         subplots.extend(self.__barSubplots.values())
         subplots.extend(self.__namedSubplots.values())
+
         if self.__portfolioSubplot is not None:
             subplots.append(self.__portfolioSubplot)
 
         # Build each subplot.
         fig, axes = plt.subplots(nrows=len(subplots), sharex=True, squeeze=False)
         mplSubplots = []
+
         for i, subplot in enumerate(subplots):
             axesSubplot = axes[i][0]
             if not subplot.isEmpty():
@@ -465,6 +467,7 @@ class StrategyPlotter(object):
         """
         fig, mplSubplots = self.__buildFigureImpl(fromDateTime, toDateTime, postPlotFun=postPlotFun)
         fig.autofmt_xdate()
+        
         return fig, mplSubplots
 
     def plot(self, fromDateTime=None, toDateTime=None, postPlotFun=_post_plot_fun):

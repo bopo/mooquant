@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -64,8 +64,10 @@ class PingKeepAliveMgr(client.KeepAliveMgr):
     # Return True if the response belongs to a keep alive message, False otherwise.
     def handleResponse(self, msg):
         ret = msg.get("event") == "pusher:pong"
+
         if ret:
             logger.debug("Received pusher:pong.")
+            
         return ret
 
 
@@ -73,7 +75,7 @@ class WebSocketClient(client.WebSocketClientBase):
     def __init__(self, appKey, protocol=5, maxInactivity=120, responseTimeout=30):
         params = {
             "protocol": protocol,
-            "client": "Python-PyAlgoTrade",
+            "client": "Python-MooQuant",
             "version": mooquant.__version__
             }
 

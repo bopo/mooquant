@@ -23,7 +23,6 @@ import six
 from mooquant import bar
 from mooquant.utils import dt
 
-
 @six.add_metaclass(abc.ABCMeta)
 class TimeRange(object):
     @abc.abstractmethod

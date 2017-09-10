@@ -29,20 +29,21 @@ try:
 except ImportError as e:
     import pickle
 
+
 class BasicBarTestCase(common.TestCase):
     def testInvalidConstruction(self):
         with self.assertRaises(Exception):
             bar.BasicBar(datetime.datetime.now(), 2, 1, 1, 1, 1, 1, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             bar.BasicBar(datetime.datetime.now(), 1, 1, 1, 2, 1, 1, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             bar.BasicBar(datetime.datetime.now(), 1, 2, 1.5, 1, 1, 1, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             bar.BasicBar(datetime.datetime.now(), 2, 2, 1.5, 1, 1, 1, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             bar.BasicBar(datetime.datetime.now(), 1, 1, 1.5, 1, 1, 1, bar.Frequency.DAY)
 
@@ -53,7 +54,7 @@ class BasicBarTestCase(common.TestCase):
     def testGetPrice(self):
         b = bar.BasicBar(datetime.datetime.now(), 2, 3, 1, 2.1, 10, 5, bar.Frequency.DAY)
         self.assertEqual(b.getPrice(), b.getClose())
-        
+
         b.setUseAdjustedValue(True)
         self.assertEqual(b.getPrice(), b.getAdjClose())
 
@@ -77,19 +78,19 @@ class BasicBarTestCase(common.TestCase):
 
     def testNoAdjClose(self):
         b = bar.BasicBar(datetime.datetime.now(), 2, 3, 1, 2.1, 10, None, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             b.setUseAdjustedValue(True)
-        
+
         with self.assertRaises(Exception):
             b.getOpen(True)
-        
+
         with self.assertRaises(Exception):
             b.getHigh(True)
-        
+
         with self.assertRaises(Exception):
             b.getLow(True)
-        
+
         with self.assertRaises(Exception):
             b.getClose(True)
 
@@ -102,7 +103,7 @@ class BarsTestCase(common.TestCase):
     def testInvalidDateTimes(self):
         b1 = bar.BasicBar(datetime.datetime.now(), 2, 3, 1, 2.1, 10, 5, bar.Frequency.DAY)
         b2 = bar.BasicBar(datetime.datetime.now() + datetime.timedelta(days=1), 2, 3, 1, 2.1, 10, 5, bar.Frequency.DAY)
-        
+
         with self.assertRaises(Exception):
             bar.Bars({"a": b1, "b": b2})
 
@@ -110,14 +111,14 @@ class BarsTestCase(common.TestCase):
         dt = datetime.datetime.now()
         b1 = bar.BasicBar(dt, 1, 1, 1, 1, 10, 1, bar.Frequency.DAY)
         b2 = bar.BasicBar(dt, 2, 2, 2, 2, 10, 2, bar.Frequency.DAY)
-        
+
         bars = bar.Bars({"a": b1, "b": b2})
 
         self.assertEqual(bars["a"].getClose(), 1)
         self.assertEqual(bars["b"].getClose(), 2)
-        
+
         self.assertTrue("a" in bars)
-        
+
         self.assertEqual(bars.items(), [("a", b1), ("b", b2)])
         self.assertEqual(bars.keys(), ["a", "b"])
         self.assertEqual(bars.getInstruments(), ["a", "b"])

@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -19,9 +19,9 @@
 """
 
 import csv
+import logging
 import requests
 
-import logging
 logging.getLogger("requests").setLevel(logging.ERROR)
 
 

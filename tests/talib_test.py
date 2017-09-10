@@ -183,28 +183,34 @@ class TestCase(common.TestCase):
 
     def __loadMedPriceDS(self):
         ret = dataseries.SequenceDataSeries()
+        
         for i in range(len(OPEN_VALUES)):
             ret.append(LOW_VALUES[i] + (HIGH_VALUES[i] - LOW_VALUES[i]) / 2.0)
+        
         return ret
 
     def __loadBarDS(self):
         seconds = 0
 
         ret = bards.BarDataSeries()
+        
         for i in range(len(OPEN_VALUES)):
             dateTime = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
             ret.append(bar.BasicBar(dateTime, OPEN_VALUES[i], HIGH_VALUES[i], LOW_VALUES[i], CLOSE_VALUES[i], VOLUME_VALUES[i], CLOSE_VALUES[i], bar.Frequency.DAY))
             seconds += 1
+        
         return ret
 
     def __loadSarTestBarDs(self):
         seconds = 0
 
         ret = bards.BarDataSeries()
+        
         for i in range(len(SAR_HIGH)):
             dateTime = datetime.datetime.now() + datetime.timedelta(seconds=seconds)
             ret.append(bar.BasicBar(dateTime, SAR_LOW[i], SAR_HIGH[i], SAR_LOW[i], SAR_HIGH[i], 0, SAR_LOW[i], bar.Frequency.DAY))
             seconds += 1
+        
         return ret
 
     def testAD(self):
@@ -484,7 +490,6 @@ class TestCase(common.TestCase):
 
     def testSMA(self):
         barDs = self.__loadBarDS()
-        print(type(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2]), indicator.SMA(barDs.getCloseDataSeries(), 252, 2))
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[1], 93.16))  # Original value 93.15
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2], 94.59))
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[3], 94.73))

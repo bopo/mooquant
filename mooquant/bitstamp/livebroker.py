@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -18,17 +18,14 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-try:
-    import Queue as queue
-except ImportError:
-    import queue
+
 
 import threading
 import time
 
 from mooquant import broker
 from mooquant.bitstamp import common, httpclient
-
+from mooquant.utils.compat import queue
 
 def build_order_from_open_order(openOrder, instrumentTraits):
     if openOrder.isBuy():

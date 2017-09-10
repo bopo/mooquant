@@ -26,7 +26,7 @@ from . import common
 
 class TestCase(common.TestCase):
     def testAvgGainLoss(self):
-        # We divide by 2 because N samples yield N-1 averages.
+        # We divide by 2 because N examples yield N-1 averages.
 
         # Gain only
         avgGain, avgLoss = rsi.avg_gain_loss([1, 2, 3], 0, 3)

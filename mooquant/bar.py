@@ -19,7 +19,6 @@
 """
 
 import abc
-
 import six
 
 
@@ -183,6 +182,7 @@ class BasicBar(Bar):
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted and self.__adjClose is None:
             raise Exception("Adjusted close is not available")
+        
         self.__useAdjustedValue = useAdjusted
 
     def getUseAdjValue(self):
@@ -195,6 +195,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+            
             return self.__adjClose * self.__open / float(self.__close)
         else:
             return self.__open
@@ -203,6 +204,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+            
             return self.__adjClose * self.__high / float(self.__close)
         else:
             return self.__high
@@ -211,6 +213,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+            
             return self.__adjClose * self.__low / float(self.__close)
         else:
             return self.__low
@@ -219,6 +222,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+            
             return self.__adjClose
         else:
             return self.__close
@@ -260,6 +264,7 @@ class Bars(object):
         # Check that bar datetimes are in sync
         firstDateTime = None
         firstInstrument = None
+        
         for instrument, currentBar in barDict.items():
             if firstDateTime is None:
                 firstDateTime = currentBar.getDateTime()

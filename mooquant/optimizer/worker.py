@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -18,12 +18,12 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import multiprocessing
+import xmlrpclib
 import pickle
-import random
-import socket
 import time
-from xmlrpc.client import ServerProxy
+import socket
+import random
+import multiprocessing
 
 import mooquant.logger
 from mooquant import barfeed
@@ -48,10 +48,9 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 
 class Worker(object):
     def __init__(self, address, port, workerName=None):
-        url = "http://%s:%s/PyAlgoTradeRPC" % (address, port)
-        self.__server = ServerProxy(url, allow_none=True)
+        url = "http://%s:%s/MooQuantRPC" % (address, port)
+        self.__server = xmlrpclib.ServerProxy(url, allow_none=True)
         self.__logger = mooquant.logger.getLogger(workerName)
-        
         if workerName is None:
             self.__workerName = socket.gethostname()
         else:
@@ -63,19 +62,16 @@ class Worker(object):
     def getInstrumentsAndBars(self):
         ret = call_and_retry_on_network_error(self.__server.getInstrumentsAndBars, 10)
         ret = pickle.loads(ret)
-        
         return ret
 
     def getBarsFrequency(self):
         ret = call_and_retry_on_network_error(self.__server.getBarsFrequency, 10)
         ret = int(ret)
-        
         return ret
 
     def getNextJob(self):
         ret = call_and_retry_on_network_error(self.__server.getNextJob, 10)
         ret = pickle.loads(ret)
-        
         return ret
 
     def pushJobResults(self, jobId, result, parameters):
@@ -83,32 +79,26 @@ class Worker(object):
         result = pickle.dumps(result)
         parameters = pickle.dumps(parameters)
         workerName = pickle.dumps(self.__workerName)
-        
         call_and_retry_on_network_error(self.__server.pushJobResults, 10, jobId, result, parameters, workerName)
 
     def __processJob(self, job, barsFreq, instruments, bars):
         bestResult = None
         parameters = job.getNextParameters()
         bestParams = parameters
-        
         while parameters is not None:
             # Wrap the bars into a feed.
             feed = barfeed.OptimizerBarFeed(barsFreq, instruments, bars)
             # Run the strategy.
             self.getLogger().info("Running strategy with parameters %s" % (str(parameters)))
             result = None
-            
             try:
                 result = self.runStrategy(feed, *parameters)
-            except Exception as e:
+            except Exception, e:
                 self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
-            
             self.getLogger().info("Result %s" % result)
-            
             if bestResult is None or result > bestResult:
                 bestResult = result
                 bestParams = parameters
-            
             # Run with the next set of parameters.
             parameters = job.getNextParameters()
 
@@ -128,13 +118,11 @@ class Worker(object):
 
             # Process jobs
             job = self.getNextJob()
-            
             while job is not None:
                 self.__processJob(job, barsFreq, instruments, bars)
                 job = self.getNextJob()
-            
             self.getLogger().info("Finished running")
-        except Exception as e:
+        except Exception, e:
             self.getLogger().exception("Finished running with errors: %s" % (e))
 
 
@@ -165,12 +153,10 @@ def run(strategyClass, address, port, workerCount=None, workerName=None):
     """
 
     assert(workerCount is None or workerCount > 0)
-    
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     workers = []
-    
     # Build the worker processes.
     for i in range(workerCount):
         workers.append(multiprocessing.Process(target=worker_process, args=(strategyClass, address, port, workerName)))

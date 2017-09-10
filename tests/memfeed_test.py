@@ -72,11 +72,13 @@ class MemFeedTestCase(common.TestCase):
         disp = dispatcher.Dispatcher()
         disp.addSubject(feed)
         disp.run()
+
         reloadedKeys = feed.getKeys()
         reloadedValues = feed[key]
 
         self.assertEqual(keys, reloadedKeys)
         self.assertNotEqual(values, reloadedValues)
         self.assertEqual(len(values), len(reloadedValues))
+        
         for i in range(len(values)):
             self.assertEqual(values[i], reloadedValues[i])

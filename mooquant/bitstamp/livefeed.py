@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -20,13 +20,8 @@
 
 import datetime
 
-try:
-    import Queue as queue
-except ImportError:
-    import queue
-
 import time
-
+from mooquant.utils.compat import queue
 from mooquant import bar, barfeed, observer
 from mooquant.bitstamp import common, wsclient
 
@@ -111,8 +106,8 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
     def __init__(self, maxLen=None):
         super(LiveTradeFeed, self).__init__(bar.Frequency.TRADE, maxLen)
-        self.__barDicts = []
         self.registerInstrument(common.btc_symbol)
+        self.__barDicts = []
         self.__prevTradeDateTime = None
         self.__thread = None
         self.__initializationOk = None
@@ -150,6 +145,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
             common.logger.info("Initialization ok.")
         else:
             common.logger.error("Initialization failed.")
+
         return self.__initializationOk
 
     def __onConnected(self):
@@ -158,9 +154,11 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
     def __onDisconnected(self):
         if self.__enableReconnection:
             initialized = False
+
             while not self.__stopped and not initialized:
                 common.logger.info("Reconnecting")
                 initialized = self.__initializeClient()
+
                 if not initialized:
                     time.sleep(5)
         else:
@@ -168,12 +166,15 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
     def __dispatchImpl(self, eventFilter):
         ret = False
+
         try:
             eventType, eventData = self.__thread.getQueue().get(True, LiveTradeFeed.QUEUE_TIMEOUT)
+            
             if eventFilter is not None and eventType not in eventFilter:
                 return False
 
             ret = True
+
             if eventType == wsclient.WebSocketClient.ON_TRADE:
                 self.__onTrade(eventData)
             elif eventType == wsclient.WebSocketClient.ON_ORDER_BOOK_UPDATE:
@@ -193,9 +194,12 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
     # Bar datetimes should not duplicate. In case trade object datetimes conflict, we just move one slightly forward.
     def __getTradeDateTime(self, trade):
         ret = trade.getDateTime()
+
         if ret == self.__prevTradeDateTime:
             ret += datetime.timedelta(microseconds=1)
+
         self.__prevTradeDateTime = ret
+
         return ret
 
     def __onTrade(self, trade):
@@ -210,8 +214,10 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
     def getNextBars(self):
         ret = None
+
         if len(self.__barDicts):
             ret = bar.Bars(self.__barDicts.pop(0))
+
         return ret
 
     def peekDateTime(self):
@@ -221,6 +227,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
     # This may raise.
     def start(self):
         super(LiveTradeFeed, self).start()
+
         if self.__thread is not None:
             raise Exception("Already running")
         elif not self.__initializeClient():
@@ -231,10 +238,13 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
         # Note that we may return True even if we didn't dispatch any Bar
         # event.
         ret = False
+        
         if self.__dispatchImpl(None):
             ret = True
+
         if super(LiveTradeFeed, self).dispatch():
             ret = True
+
         return ret
 
     # This should not raise.

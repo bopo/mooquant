@@ -24,10 +24,10 @@ import threading
 initLock = threading.Lock()
 rootLoggerInitialized = False
 
-log_format = "%(asctime)s %(name)s [%(levelname)s] %(message)s"
 level = logging.INFO
 file_log = None  # File name
 console_log = True
+log_format = "%(asctime)s %(name)s [%(levelname)s] %(message)s"
 
 
 def init_handler(handler):

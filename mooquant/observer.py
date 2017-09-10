@@ -36,11 +36,13 @@ class Event(object):
             for handler in self.__toSubscribe:
                 if handler not in self.__handlers:
                     self.__handlers.append(handler)
+                    
             self.__toSubscribe = []
 
         if len(self.__toUnsubscribe):
             for handler in self.__toUnsubscribe:
                 self.__handlers.remove(handler)
+
             self.__toUnsubscribe = []
 
     def subscribe(self, handler):

@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -62,7 +62,7 @@ class Job(object):
 
 # Restrict to a particular path.
 class RequestHandler(SimpleXMLRPCRequestHandler):
-    rpc_paths = ('/PyAlgoTradeRPC',)
+    rpc_paths = ('/MooQuantRPC',)
 
 
 class Server(SimpleXMLRPCServer):

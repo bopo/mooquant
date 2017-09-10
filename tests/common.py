@@ -57,6 +57,7 @@ def run_cmd(cmd):
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, universal_newlines=True)
     output, unused_err = process.communicate()
     retcode = process.poll()
+
     return RunResults(retcode, output)
 
 
@@ -65,14 +66,16 @@ def run_python_code(code):
     cmd.append("-u")
     cmd.append("-c")
     cmd.append(code)
+
     return run_cmd(cmd)
 
 
 def run_sample_script(script, params=[]):
     cmd = ["python"]
     cmd.append("-u")
-    cmd.append(os.path.join("samples", script))
+    cmd.append(os.path.join("examples", script))
     cmd.extend(params)
+
     return run_cmd(cmd)
 
 
@@ -81,25 +84,25 @@ def get_file_lines(fileName):
     return [rawLine.strip() for rawLine in rawLines]
 
 
-def compare_head(fileName, lines, path="samples"):
+def compare_head(fileName, lines, path="examples"):
     assert(len(lines) > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
     return fileLines[0:len(lines)] == lines
 
 
-def compare_tail(fileName, lines, path="samples"):
+def compare_tail(fileName, lines, path="examples"):
     assert(len(lines) > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
     return fileLines[len(lines)*-1:] == lines
 
 
-def head_file(fileName, line_count, path="samples"):
+def head_file(fileName, line_count, path="examples"):
     assert(line_count > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
     return fileLines[0:line_count]
 
 
-def tail_file(fileName, line_count, path="samples"):
+def tail_file(fileName, line_count, path="examples"):
     assert(line_count > 0)
     lines = get_file_lines(os.path.join(path, fileName))
     return lines[line_count*-1:]
@@ -110,13 +113,16 @@ def load_test_csv(path):
     expectedSeq = []
     csvFile = open(path, "r")
     reader = csv.DictReader(csvFile)
+
     for row in reader:
         inputSeq.append(float(row["Input"]))
         expected = row["Expected"]
+
         if not expected:
             expected = None
         else:
             expected = float(expected)
+            
         expectedSeq.append(expected)
 
     return inputSeq, expectedSeq

@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -45,6 +45,7 @@ def localize(dateTime, timeZone):
         ret = timeZone.localize(dateTime)
     else:
         ret = dateTime.astimezone(timeZone)
+        
     return ret
 
 
@@ -61,24 +62,30 @@ def datetime_to_timestamp(dateTime):
 def timestamp_to_datetime(timeStamp, localized=True):
     """ Converts a UTC timestamp to a datetime.datetime."""
     ret = datetime.datetime.utcfromtimestamp(timeStamp)
+    
     if localized:
         ret = localize(ret, pytz.utc)
+
     return ret
 
 
 def get_first_monday(year):
     ret = datetime.date(year, 1, 1)
+
     if ret.weekday() != 0:
         diff = 7 - ret.weekday()
         ret = ret + datetime.timedelta(days=diff)
+
     return ret
 
 
 def get_last_monday(year):
     ret = datetime.date(year, 12, 31)
+
     if ret.weekday() != 0:
         diff = ret.weekday() * -1
         ret = ret + datetime.timedelta(days=diff)
+
     return ret
 
 

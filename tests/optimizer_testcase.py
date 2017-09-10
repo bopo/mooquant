@@ -28,7 +28,7 @@ from mooquant.optimizer import local
 from . import common
 from . import sma_crossover
 
-sys.path.append("samples")
+sys.path.append("examples")
 
 
 def parameters_generator(instrument, smaFirst, smaLast):

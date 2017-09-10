@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #

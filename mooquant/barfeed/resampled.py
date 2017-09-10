@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -34,6 +34,7 @@ class BarsGrouper(resamplebase.Grouper):
         # Update or initialize BarGrouper instances for each instrument.
         for instrument, bar_ in list(value.items()):
             barGrouper = self.__barGroupers.get(instrument)
+            
             if barGrouper:
                 barGrouper.addValue(bar_)
             else:

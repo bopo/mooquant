@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -18,10 +18,10 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import datetime
-
-import mooquant.barfeed
 import pytz
+import datetime
+import mooquant.barfeed
+
 from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt
@@ -49,6 +49,7 @@ def parse_datetime(dateTime):
     hour = int(dateTime[9:11])
     minute = int(dateTime[11:13])
     sec = int(dateTime[13:15])
+
     return datetime.datetime(year, month, day, hour, minute, sec)
 
 
@@ -65,6 +66,7 @@ class RowParser(csvfeed.RowParser):
 
     def __parseDateTime(self, dateTime):
         ret = None
+
         if self.__frequency == mooquant.bar.Frequency.MINUTE:
             ret = parse_datetime(dateTime)
         elif self.__frequency == mooquant.bar.Frequency.DAY:
@@ -81,6 +83,7 @@ class RowParser(csvfeed.RowParser):
         # Localize bars if a market session was set.
         if self.__timezone:
             ret = dt.localize(ret, self.__timezone)
+
         return ret
 
     def getFieldNames(self):
@@ -96,6 +99,7 @@ class RowParser(csvfeed.RowParser):
         high = float(csvRowDict["High"])
         low = float(csvRowDict["Low"])
         volume = float(csvRowDict["Volume"])
+
         return bar.BasicBar(dateTime, open_, high, low, close, volume, None, self.__frequency)
 
 

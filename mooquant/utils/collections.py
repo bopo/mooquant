@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -24,10 +24,11 @@ import numpy as np
 def lt(v1, v2):
     if v1 is None:
         return True
-    elif v2 is None:
+
+    if v2 is None:
         return False
-    else:
-        return v1 < v2
+
+    return v1 < v2
 
 
 # Returns (values, ix1, ix2)
@@ -89,6 +90,7 @@ class NumPyDeque(object):
             ret = self.__values[0:self.__nextPos]
         else:
             ret = self.__values
+
         return ret
 
     def resize(self, maxLen):
@@ -98,9 +100,10 @@ class NumPyDeque(object):
         values = np.empty(maxLen, dtype=self.__values.dtype)
         lastValues = self.__values[0:self.__nextPos]
         values[0:min(maxLen, len(lastValues))] = lastValues[-1*min(maxLen, len(lastValues)):]
+        
         self.__values = values
-
         self.__maxLen = maxLen
+
         if self.__nextPos >= self.__maxLen:
             self.__nextPos = self.__maxLen
 
@@ -126,6 +129,7 @@ class ListDeque(object):
 
     def append(self, value):
         self.__values.append(value)
+        
         # Check bounds
         if len(self.__values) > self.__maxLen:
             self.__values.pop(0)

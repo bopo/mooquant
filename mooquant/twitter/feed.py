@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -19,14 +19,11 @@
 """
 
 import json
-try:
-    import Queue as queue
-except ImportError:
-    import queue
 import threading
 
 import mooquant.logger
 from mooquant import observer
+from mooquant.utils.compat import queue
 
 import tweepy
 from tweepy import streaming

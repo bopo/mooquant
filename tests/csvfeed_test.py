@@ -65,7 +65,7 @@ class TestCase(common.TestCase):
         feed = csvfeed.Feed("Date", "%Y-%m-%d", maxLen=40, timezone=marketsession.USEquities.timezone)
         feed.setRowFilter(RowFilter())
         feed.setTimeDelta(datetime.timedelta(hours=23, minutes=59, seconds=59))
-        feed.addValuesFromCSV(os.path.join("samples", "data", "quandl_gold_2.csv"))
+        feed.addValuesFromCSV(os.path.join("examples", "data", "quandl_gold_2.csv"))
 
         for col in ["USD", "GBP", "EUR"]:
             self.assertEqual(len(feed[col]), 0)
@@ -94,7 +94,7 @@ class TestCase(common.TestCase):
         disp.addSubject(feed)
         disp.run()
 
-        keys = list(feed.getKeys())
+        keys = feed.getKeys()
         key = keys[0]
         values = feed[key]
 
@@ -106,9 +106,8 @@ class TestCase(common.TestCase):
         reloadedKeys = feed.getKeys()
         reloadedValues = feed[key]
 
-        self.assertEqual(sorted(keys), sorted(reloadedKeys))
+        self.assertEqual(keys.sort(), reloadedKeys.sort())
         self.assertNotEqual(values, reloadedValues)
         self.assertEqual(len(values), len(reloadedValues))
-
         for i in range(len(values)):
             self.assertEqual(values[i], reloadedValues[i])
