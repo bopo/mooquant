@@ -17,17 +17,14 @@
 """
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
-try:
-    from SimpleXMLRPCServer import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-except ImportError:
-    from xmlrpc.server import SimpleXMLRPCServer
 
-import pickle
+# import pickle
 import threading
 import time
 
 import mooquant.logger
 from mooquant.optimizer import base
+from mooquant.utils.compat import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler,pickle
 
 logger = mooquant.logger.getLogger(__name__)
 
@@ -40,6 +37,7 @@ class AutoStopThread(threading.Thread):
     def run(self):
         while self.__server.jobsPending():
             time.sleep(1)
+            
         self.__server.stop()
 
 
@@ -55,8 +53,10 @@ class Job(object):
 
     def getNextParameters(self):
         ret = None
+
         if len(self.__strategyParameters):
             ret = self.__strategyParameters.pop()
+
         return ret
 
 
@@ -82,6 +82,7 @@ class Server(SimpleXMLRPCServer):
         self.__activeJobsLock = threading.Lock()
         self.__forcedStop = False
         self.__bestResult = None
+
         if autoStop:
             self.__autoStopThread = AutoStopThread(self)
         else:
@@ -153,9 +154,12 @@ class Server(SimpleXMLRPCServer):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
+
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
+
             instruments = self.__barFeed.getRegisteredInstruments()
+            
             self.__instrumentsAndBars = pickle.dumps((instruments, loadedBars))
             self.__barsFreq = self.__barFeed.getFrequency()
 

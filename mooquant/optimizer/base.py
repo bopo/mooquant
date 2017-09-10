@@ -49,6 +49,7 @@ class ParameterSource(object):
         assert count > 0, "Invalid number of parameters"
 
         ret = []
+
         with self.__lock:
             if self.__iter is not None:
                 try:
@@ -61,6 +62,7 @@ class ParameterSource(object):
                         count -= 1
                 except StopIteration:
                     self.__iter = None
+                    
         return ret
 
     def eof(self):
