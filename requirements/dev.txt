@@ -1,9 +1,9 @@
 flake8==2.6.0
-tox==2.3.1
+tox==2.8.1
 coverage==4.1
 cryptography==1.7
 PyYAML==3.11
-pytest==2.9.2
+pytest==3.2.2
 pytest-runner==2.11.1
 python-dateutil
 matplotlib
@@ -11,7 +11,6 @@ requests
 tornado
 tweepy
 ta-lib
-pytest
 numpy
 scipy
 ws4py
