@@ -23,13 +23,13 @@ except ImportError:
 
 setup(
     name='MooQuant',
-    version='0.1.0',
+    version='0.2.0',
     description='MooQuant',
     long_description='Python library for backtesting stock trading strategies.',
     author='Bopo Wang',
     author_email='ibopo@126.com',
     url='http://www.mooquant.com/',
-    download_url='http://www.mooquant.com/0.1.0/MooQuant-0.1.0.tar.gz/download',
+    download_url='http://www.mooquant.com/0.2.0/MooQuant-0.1.0.tar.gz/download',
     packages=[
         'mooquant',
     ],
