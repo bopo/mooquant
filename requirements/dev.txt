@@ -5,3 +5,15 @@ cryptography==1.7
 PyYAML==3.11
 pytest==2.9.2
 pytest-runner==2.11.1
+python-dateutil
+matplotlib
+requests
+tornado
+tweepy
+ta-lib
+pytest
+numpy
+scipy
+ws4py
+pytz
+nose
