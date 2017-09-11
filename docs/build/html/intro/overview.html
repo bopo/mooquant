@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>介绍 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="安装指南" href="install.html"/>
+        <link rel="prev" title="MooQuant 0.18 Documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id4">特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">MooQuant 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">数据获取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">生成样例策略</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">运行回测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">绘制回测结果</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">分析结果</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1"><a class="reference internal" href="under_ide.html">通过 PyCharm 运行/调试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_parameters.html">参数调优</a></li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>介绍</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/intro/overview.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="intro-overview">
+<span id="id1"></span><h1>介绍<a class="headerlink" href="#intro-overview" title="永久链接至标题">¶</a></h1>
+<p>MooQuant 从数据获取、算法交易、回测引擎，实盘模拟，实盘交易到数据分析，为程序化交易者提供了全套解决方案。</p>
+<p>MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常容易地定制专属于自己的程序化交易系统。</p>
+<div class="section" id="id4">
+<h2>特点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="83%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>易于使用</td>
+<td>让您集中于策略的开发，一行简单的命令就可以执行您的策略。</td>
+</tr>
+<tr class="row-even"><td>完善的文档</td>
+<td>您可以直接访问 <a class="reference external" href="http://mooquant.io">MooQuant 文档</a> 或者 <a class="reference external" href="https://www.ricequant.com/api/python/chn">MooQuant文档</a> 来获取您需要的信息。</td>
+</tr>
+<tr class="row-odd"><td>活跃的社区</td>
+<td>您可以通过访问 <a class="reference external" href="https://www.ricequant.com/community">MooQuant社区</a> 获取和询问有关 MooQuant 的一切问题，有很多优秀的童鞋会解答您的问题。</td>
+</tr>
+<tr class="row-even"><td>稳定的环境</td>
+<td>每天都有会大量的算法交易在 MooQuant上运行，无论是 MooQuant，还是数据，我们能会做到问题秒处理，秒解决。</td>
+</tr>
+<tr class="row-odd"><td>灵活的配置</td>
+<td>您可以使用多种方式来配置和运行策略，只需简单的配置就可以构建适合自己的交易系统。</td>
+</tr>
+<tr class="row-even"><td>强大的扩展性</td>
+<td>开发者可以基于我们提供的 Mod Hook 接口来进行扩展。</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">MooQuant 本身支持不同周期的回测和实盘交易，但是目前只免费开放A股市场日线数据，如果用户需要做分钟回测或者更细级别的回测可以在 <a class="reference external" href="https://www.ricequant.com/algorithms">Ricequant</a> 上进行，也通过实现数据层接口函数来使用自己的数据。自有数据源对接请参考 <a class="reference internal" href="../development/event_source.html#development-event-source"><span class="std std-ref">扩展事件源</span></a></p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>MooQuant 安装<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install mooquant
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">MooQuant 依赖一些需要 GCC 编译的库，如果您安装遇到问题请访问 <a class="reference internal" href="install.html#intro-install"><span class="std std-ref">安装指南</span></a> 来寻找详细的安装文档信息。</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p>我们强烈建议您在虚拟环境下安装MooQuant</p>
+<p class="last">虚拟环境的安装，请参考 <a class="reference internal" href="detail_install.html#intro-detail-install"><span class="std std-ref">环境搭建</span></a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>数据获取<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<p>当 MooQuant 安装完成后，可以通过如下命令获取我们提供的免费A股日线数据。获取数据的详细内容请参考 <a class="reference internal" href="install.html#intro-install-get-data"><span class="std std-ref">获取回测数据</span></a></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant update_bundle
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>生成样例策略<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<p>运行以下命令，将会在指定目录生成一个examples文件夹，其中包含几个有趣的样例策略:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant examples -d ./
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h2>运行回测<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<p>运行 MooQuant 需要传递一些参数，可以通过命令 <cite>mooquant help</cite> 查看，或者查看文档 <a class="reference internal" href="install.html#intro-config"><span class="std std-ref">获取配置文件</span></a> 来获取相关信息。</p>
+<p>运行如下命令:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> examples
+$ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m">2016</span>-01-01 -o result.pkl --plot --progress --account stock <span class="m">100000</span>
+</pre></div>
+</div>
+<p>等待回测结束后，将显示您的收益率和Risk。</p>
+</div>
+<div class="section" id="id9">
+<h2>绘制回测结果<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<p>如果运行完回测后，还需要再次绘制回测结果，可以运行以下命令:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant plot result.pkl
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>分析结果<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<p>MooQuant可以输出一个 pickle 文件，里面为一个 dict 。keys 包括</p>
+<ul class="simple">
+<li>summary               回测摘要</li>
+<li>stock_portfolios      股票帐号的市值</li>
+<li>future_portfolios     期货帐号的市值</li>
+<li>total_portfolios      总账号的的市值</li>
+<li>benchmark_portfolios  基准帐号的市值</li>
+<li>stock_positions       股票持仓</li>
+<li>future_positions      期货仓位</li>
+<li>benchmark_positions   基准仓位</li>
+<li>trades                交易详情（交割单）</li>
+<li>plots                 调用plot画图时，记录的值</li>
+</ul>
+<div class="highlight-python3"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+
+<span class="n">result_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/tmp/alpha.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>   <span class="c1"># 从输出pickle中读取数据</span>
+
+<span class="n">result_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="c1"># Out: dict_keys([&#39;stock_portfolios&#39;, &#39;total_portfolios&#39;, &#39;stock_positions&#39;,</span>
+<span class="c1">#                 &#39;benchmark_portfolios&#39;, &#39;plots&#39;, &#39;summary&#39;, &#39;trades&#39;, &#39;benchmark_positions&#39;])</span>
+
+<span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span>
+<span class="c1"># Out:</span>
+<span class="c1"># {&#39;alpha&#39;: 0.027,</span>
+<span class="c1">#  &#39;annualized_returns&#39;: 0.025000000000000001,</span>
+<span class="c1">#  &#39;benchmark&#39;: &#39;000001.XSHG&#39;,</span>
+<span class="c1">#  &#39;benchmark_annualized_returns&#39;: -0.057285289949864038,</span>
+<span class="c1">#  &#39;benchmark_total_returns&#39;: -0.059871893424000011,</span>
+<span class="c1">#  &#39;beta&#39;: 0.314,</span>
+<span class="c1">#  &#39;cash&#39;: -617.64200000000005,</span>
+<span class="c1">#  &#39;commission_multiplier&#39;: 1,</span>
+<span class="c1">#  &#39;dividend_receivable&#39;: 0.0,</span>
+<span class="c1">#  &#39;downside_risk&#39;: 0.14299999999999999,</span>
+<span class="c1">#  &#39;end_date&#39;: datetime.date(2017, 1, 19),</span>
+<span class="c1">#  &#39;frequency&#39;: &#39;1d&#39;,</span>
+<span class="c1">#  &#39;frozen_cash&#39;: 0.0,</span>
+<span class="c1">#  &#39;information_ratio&#39;: 0.45700000000000002,</span>
+<span class="c1">#  &#39;margin_multiplier&#39;: 1,</span>
+<span class="c1">#  &#39;market_value&#39;: 1027242.0,</span>
+<span class="c1">#  &#39;matching_type&#39;: &#39;CURRENT_BAR_CLOSE&#39;,</span>
+<span class="c1">#  &#39;max_drawdown&#39;: 0.087999999999999995,</span>
+<span class="c1">#  &#39;pnl&#39;: 26624.358,</span>
+<span class="c1">#  &#39;portfolio_value&#39;: 1026624.358,</span>
+<span class="c1">#  &#39;run_type&#39;: &#39;BACKTEST&#39;,</span>
+<span class="c1">#  &#39;sharpe&#39;: 0.016,</span>
+<span class="c1">#  &#39;slippage&#39;: 0,</span>
+<span class="c1">#  &#39;sortino&#39;: 0.014,</span>
+<span class="c1">#  &#39;start_date&#39;: datetime.date(2016, 1, 4),</span>
+<span class="c1">#  &#39;strategy_file&#39;: &#39;mooquant/examples/simple_macd.py&#39;,</span>
+<span class="c1">#  &#39;strategy_name&#39;: &#39;simple_macd&#39;,</span>
+<span class="c1">#  &#39;strategy_type&#39;: &#39;stock&#39;,</span>
+<span class="c1">#  &#39;total_returns&#39;: 0.027,</span>
+<span class="c1">#  &#39;tracking_error&#39;: 0.18099999999999999,</span>
+<span class="c1">#  &#39;transaction_cost&#39;: 27467.462,</span>
+<span class="c1">#  &#39;volatility&#39;: 0.125}</span>
+
+<span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;total_portfolios&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
+<span class="c1"># Out:</span>
+<span class="c1">#             annualized_returns     cash  daily_pnl  daily_returns  \</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13               0.024 -617.642     1119.0          0.001</span>
+<span class="c1"># 2017-01-16               0.021 -617.642    -2238.0         -0.002</span>
+<span class="c1"># 2017-01-17               0.022 -617.642     1119.0          0.001</span>
+<span class="c1"># 2017-01-18               0.024 -617.642     2238.0          0.002</span>
+<span class="c1"># 2017-01-19               0.025 -617.642     1119.0          0.001</span>
+<span class="c1">#             dividend_receivable  frozen_cash  market_value        pnl  \</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13                  0.0          0.0     1025004.0  24386.358</span>
+<span class="c1"># 2017-01-16                  0.0          0.0     1022766.0  22148.358</span>
+<span class="c1"># 2017-01-17                  0.0          0.0     1023885.0  23267.358</span>
+<span class="c1"># 2017-01-18                  0.0          0.0     1026123.0  25505.358</span>
+<span class="c1"># 2017-01-19                  0.0          0.0     1027242.0  26624.358</span>
+<span class="c1">#             portfolio_value  total_returns  transaction_cost</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13      1024386.358          0.024         27467.462</span>
+<span class="c1"># 2017-01-16      1022148.358          0.022         27467.462</span>
+<span class="c1"># 2017-01-17      1023267.358          0.023         27467.462</span>
+<span class="c1"># 2017-01-18      1025505.358          0.026         27467.462</span>
+<span class="c1"># 2017-01-19      1026624.358          0.027         27467.462</span>
+
+<span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;stock_positions&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span>
+<span class="c1"># Out[6]:</span>
+<span class="c1">#             average_cost  avg_price  bought_quantity  bought_value  \</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13          9.15       9.15           111900     1023885.0</span>
+<span class="c1"># 2017-01-16          9.15       9.15           111900     1023885.0</span>
+<span class="c1"># 2017-01-17          9.15       9.15           111900     1023885.0</span>
+<span class="c1"># 2017-01-18          9.15       9.15           111900     1023885.0</span>
+<span class="c1"># 2017-01-19          9.15       9.15           111900     1023885.0</span>
+<span class="c1">#             market_value order_book_id     pnl  quantity  sellable  \</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13     1025004.0   000001.XSHE  1119.0    111900    111900</span>
+<span class="c1"># 2017-01-16     1022766.0   000001.XSHE -1119.0    111900    111900</span>
+<span class="c1"># 2017-01-17     1023885.0   000001.XSHE     0.0    111900    111900</span>
+<span class="c1"># 2017-01-18     1026123.0   000001.XSHE  2238.0    111900    111900</span>
+<span class="c1"># 2017-01-19     1027242.0   000001.XSHE  3357.0    111900    111900</span>
+<span class="c1">#             sold_quantity  sold_value symbol  total_orders  total_trades  \</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13              0         0.0   平安银行             1             1</span>
+<span class="c1"># 2017-01-16              0         0.0   平安银行             1             1</span>
+<span class="c1"># 2017-01-17              0         0.0   平安银行             1             1</span>
+<span class="c1"># 2017-01-18              0         0.0   平安银行             1             1</span>
+<span class="c1"># 2017-01-19              0         0.0   平安银行             1             1</span>
+<span class="c1">#             transaction_cost  value_percent</span>
+<span class="c1"># date</span>
+<span class="c1"># 2017-01-13           819.108          1.001</span>
+<span class="c1"># 2017-01-16           819.108          1.001</span>
+<span class="c1"># 2017-01-17           819.108          1.001</span>
+<span class="c1"># 2017-01-18           819.108          1.001</span>
+<span class="c1"># 2017-01-19           819.108          1.001</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="安装指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="MooQuant 0.18 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>

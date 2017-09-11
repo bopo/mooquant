@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>参数调优 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="如何贡献代码" href="../development/make_contribute.html"/>
+        <link rel="prev" title="通过 PyCharm 运行/调试" href="under_ide.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1"><a class="reference internal" href="under_ide.html">通过 PyCharm 运行/调试</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">参数调优</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">通过函数调用传递参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">通过命令行传递参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">分析批量回测结果</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>参数调优</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/intro/optimizing_parameters.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="intro-optimizing-parameters">
+<span id="id1"></span><h1>参数调优<a class="headerlink" href="#intro-optimizing-parameters" title="永久链接至标题">¶</a></h1>
+<p>对于以下双均线策略，我们希望对其进行参数调优，我们可以通过命令行参数 <code class="code docutils literal"><span class="pre">--extra-vars</span></code> 或者通过配置 <code class="code docutils literal"><span class="pre">extra.context_vars</span></code> 传递变量到 <code class="code docutils literal"><span class="pre">context</span></code> 对象中。</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mooquant.api</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">talib</span>
+
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;000001.XSHE&quot;</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">SHORTPERIOD</span> <span class="o">=</span> <span class="mi">20</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">LONGPERIOD</span> <span class="o">=</span> <span class="mi">120</span>
+
+
+<span class="k">def</span> <span class="nf">handle_bar</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">bar_dict</span><span class="p">):</span>
+    <span class="n">prices</span> <span class="o">=</span> <span class="n">history_bars</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">s1</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">LONGPERIOD</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;1d&#39;</span><span class="p">,</span> <span class="s1">&#39;close&#39;</span><span class="p">)</span>
+
+    <span class="n">short_avg</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">SHORTPERIOD</span><span class="p">)</span>
+    <span class="n">long_avg</span> <span class="o">=</span> <span class="n">talib</span><span class="o">.</span><span class="n">SMA</span><span class="p">(</span><span class="n">prices</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">LONGPERIOD</span><span class="p">)</span>
+
+    <span class="n">cur_position</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">positions</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">s1</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+    <span class="n">shares</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">portfolio</span><span class="o">.</span><span class="n">cash</span> <span class="o">/</span> <span class="n">bar_dict</span><span class="p">[</span><span class="n">context</span><span class="o">.</span><span class="n">s1</span><span class="p">]</span><span class="o">.</span><span class="n">close</span>
+
+    <span class="k">if</span> <span class="n">short_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">long_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">short_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">long_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">cur_position</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">order_target_value</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">s1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">short_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">long_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">short_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">long_avg</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">order_shares</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">s1</span><span class="p">,</span> <span class="n">shares</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="id2">
+<h2>通过函数调用传递参数<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">from</span> <span class="nn">mooquant</span> <span class="kn">import</span> <span class="n">run</span>
+
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">short_period</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">long_period</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;context_vars&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;SHORTPERIOD&quot;</span><span class="p">:</span> <span class="n">short_period</span><span class="p">,</span>
+                    <span class="s2">&quot;LONGPERIOD&quot;</span><span class="p">:</span> <span class="n">long_period</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;log_level&quot;</span><span class="p">:</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;base&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;matching_type&quot;</span><span class="p">:</span> <span class="s2">&quot;current_bar&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2015-01-01&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;end_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-01-01&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;benchmark&quot;</span><span class="p">:</span> <span class="s2">&quot;000001.XSHE&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;frequency&quot;</span><span class="p">:</span> <span class="s2">&quot;1d&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;strategy_file&quot;</span><span class="p">:</span> <span class="s2">&quot;mooquant/examples/golden_cross.py&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;accounts&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;stock&quot;</span><span class="p">:</span> <span class="mi">100000</span>
+        <span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;mod&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;sys_progress&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                    <span class="s2">&quot;show&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;sys_analyser&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;enabled&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                    <span class="s2">&quot;output_file&quot;</span><span class="p">:</span> <span class="s2">&quot;results/out-{short_period}-{long_period}.pkl&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">short_period</span><span class="o">=</span><span class="n">short_period</span><span class="p">,</span>
+                        <span class="n">long_period</span><span class="o">=</span><span class="n">long_period</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">run_bt</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">run_bt</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>通过命令行传递参数<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">concurrent.futures</span>
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+
+
+<span class="n">tasks</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">short_period</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">long_period</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="n">extra_vars</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;SHORTPERIOD&quot;</span><span class="p">:</span> <span class="n">short_period</span><span class="p">,</span>
+            <span class="s2">&quot;LONGPERIOD&quot;</span><span class="p">:</span> <span class="n">long_period</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">vars_params</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">extra_vars</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;mooquant run -fq 1d -f mooquant/examples/golden_cross.py --start-date 2015-01-01 --end-date 2016-01-01 &quot;</span>
+               <span class="s2">&quot;-o results/out-{short_period}-{long_period}.pkl --account stock 100000 --progress -bm 000001.XSHE --extra-vars &#39;{params}&#39; &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                   <span class="n">short_period</span><span class="o">=</span><span class="n">short_period</span><span class="p">,</span>
+                   <span class="n">long_period</span><span class="o">=</span><span class="n">long_period</span><span class="p">,</span>
+                   <span class="n">params</span><span class="o">=</span><span class="n">vars_params</span><span class="p">)</span>
+
+        <span class="n">tasks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">run_bt</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+
+
+<span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">task</span> <span class="ow">in</span> <span class="n">tasks</span><span class="p">:</span>
+        <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">run_bt</span><span class="p">,</span> <span class="n">task</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2>分析批量回测结果<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;results/*.pkl&quot;</span><span class="p">):</span>
+    <span class="n">result_dict</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+        <span class="s2">&quot;annualized_returns&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;annualized_returns&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;sharpe&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;sharpe&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;max_drawdown&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;max_drawdown&quot;</span><span class="p">],</span>
+    <span class="p">})</span>
+
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sort by sharpe&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;sharpe&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)[:</span><span class="mi">10</span><span class="p">])</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Sort by annualized_returns&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;annualized_returns&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../development/make_contribute.html" class="btn btn-neutral float-right" title="如何贡献代码" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="under_ide.html" class="btn btn-neutral" title="通过 PyCharm 运行/调试" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>

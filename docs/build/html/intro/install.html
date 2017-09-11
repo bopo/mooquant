@@ -1,0 +1,469 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>安装指南 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="入门教程" href="tutorial.html"/>
+        <link rel="prev" title="介绍" href="overview.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">安装指南</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">安装前</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intro-install-get-data">获取回测数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#intro-config">获取配置文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bcolz">1.  Bcolz 相关问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#matplotlib">2.  Matplotlib 相关问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-2-7-windows">3.  Python 2.7 在 Windows 下产生中文乱码的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mac-os">4.  Mac OS 获取回测数据相关问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mac">5.  Mac 下安装中文字体相关问题：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#faq-examples-path">6.  策略样例以及数据路径相关问题：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1"><a class="reference internal" href="under_ide.html">通过 PyCharm 运行/调试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_parameters.html">参数调优</a></li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>安装指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/intro/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="intro-install">
+<span id="id1"></span><h1>安装指南<a class="headerlink" href="#intro-install" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id2">
+<h2>安装前<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<a class="reference external image-reference" href="https://pypi.python.org/pypi/mooquant"><img alt="Python Version Support" src="https://img.shields.io/pypi/pyversions/mooquant.svg" /></a>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<ul class="last simple">
+<li>我们强烈建议您使用虚拟环境安装MooQuant，以避免因为环境问题出现安装失败。虚拟环境的使用请参考：<a class="reference internal" href="detail_install.html#intro-detail-create-env"><span class="std std-ref">conda 虚拟环境</span></a></li>
+<li>如果安装过程中遇到了问题，先阅读该文档下面的 「FAQ」 章节来尝试着解决</li>
+<li>如果执行 <code class="code docutils literal"><span class="pre">pip</span> <span class="pre">install</span></code> 安装依赖库网络速度比较慢的话，推荐使用 <code class="code docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-i</span> <span class="pre">https://pypi.tuna.tsinghua.edu.cn/simple</span></code> 国内镜像来加速</li>
+</ul>
+</div>
+<ul class="simple">
+<li>更新您的 pip 和 setuptools :</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install -U pip setuptools cython -i https://pypi.tuna.tsinghua.edu.cn/simple
+</pre></div>
+</div>
+<ul class="simple">
+<li>安装 boclz</li>
+</ul>
+<p>bcolz 是 MooQuant 的依赖库，因为其编译时间较长，并且中间比较容易失败，建议先单独安装 bcolz 库，安装过程比较慢，请耐心等待。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install bcolz -i https://pypi.tuna.tsinghua.edu.cn/simple
+</pre></div>
+</div>
+<p>如果在安装的过程中出现问题，请参考 <a class="reference internal" href="#intro-faq"><span class="std std-ref">FAQ</span></a> 章节。</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p>Windows 环境下因为默认没有安装 <cite>Visual C++ Compiler</cite>, 需要自行下载并安装 <cite>visual-cpp-build-tools</cite>，如果觉得麻烦，也可以直接去 <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz">http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz</a> 下载相应版本的 <code class="code docutils literal"><span class="pre">bcolz</span> <span class="pre">wheel</span></code> 包，直接安装编译后的 bcolz 版本。</p>
+<p>除了 bcolz 库以外，line-profiler 安装时也同样需要 C++ 编译器，如果出现安装失败，也可以同样下载 <code class="code docutils literal"><span class="pre">line-profiler</span> <span class="pre">wheel</span></code> 包来进行安装。</p>
+<p>Mac OS 环境下默认没有安装`X-code`，需要自行运行安装以添加一个轻量级的C/C++ clang编译器，可在Terminal下输入：</p>
+<blockquote class="last">
+<div><div class="highlight-bash"><div class="highlight"><pre><span></span>$ xcode-select --install
+</pre></div>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install cython
+$ pip install bcolz
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple mooquant
+</pre></div>
+</div>
+<p>查看 MooQuant 是否安装成功可以通过如下方式:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant version
+</pre></div>
+</div>
+</div>
+<div class="section" id="intro-install-get-data">
+<span id="id4"></span><h2>获取回测数据<a class="headerlink" href="#intro-install-get-data" title="永久链接至标题">¶</a></h2>
+<p>RiceQuant 免费提供日级别的股票和期货数据供回测使用，可以通过以下命令来进行每日数据的增量更新:</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">Mac OS下执行 <code class="code docutils literal"><span class="pre">update_bundle</span></code> 出现问题，请参考：<a class="reference internal" href="#faq-update-bundle-mac"><span class="std std-ref">4.  Mac OS 获取回测数据相关问题</span></a></p>
+</div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant update_bundle
+</pre></div>
+</div>
+<p>bundle 默认存放在 <code class="code docutils literal"><span class="pre">~/.mooquant</span></code> 下，您也可以指定 bundle 的存放位置，</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant update_bundle -d target_bundle_path
+</pre></div>
+</div>
+<p>如果您使用了指定路径来存放 bundle，那么执行程序的时候也同样需要指定对应的 bundle 路径。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant run -d target_bundle_path .....
+</pre></div>
+</div>
+</div>
+<div class="section" id="intro-config">
+<span id="id5"></span><h2>获取配置文件<a class="headerlink" href="#intro-config" title="永久链接至标题">¶</a></h2>
+<p>如果运行 MooQuant 时不指定配置文件，会在 <code class="code docutils literal"><span class="pre">~/.mooquant/</span></code> 文件夹下创建 <code class="code docutils literal"><span class="pre">config.yml</span></code> 文件作为默认配置文件。</p>
+<p>如果您想要直接获得一份配置文件，也可以通过如下命令来获得。</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant generate_config
+</pre></div>
+</div>
+</div>
+<div class="section" id="faq">
+<span id="intro-faq"></span><h2>FAQ<a class="headerlink" href="#faq" title="永久链接至标题">¶</a></h2>
+<div class="section" id="bcolz">
+<h3>1.  Bcolz 相关问题<a class="headerlink" href="#bcolz" title="永久链接至标题">¶</a></h3>
+<p>请首先 <cite>pip install cython</cite> 来安装cython</p>
+<p><cite>bcolz</cite> 安装大部分问题都来自于没有安装 <cite>Visual C++ Compiler</cite>，建议您无论如何先成功安装 <cite>Visual C++ Compiler</cite>， 访问 <a class="reference external" href="https://wiki.python.org/moin/WindowsCompilers">https://wiki.python.org/moin/WindowsCompilers</a> 根据自己的机器环境和Python版本选择安装对应的编译工具。</p>
+<p>不进行编译安装，访问 <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz">http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz</a> 下载 <code class="code docutils literal"><span class="pre">bcolz</span></code> 直接进行安装。</p>
+<p>如果您按照 <a class="reference internal" href="detail_install.html#intro-detail-install"><span class="std std-ref">环境搭建</span></a> 进行环境搭建并安装了 <cite>anaconda</cite> 您可以使用如下方式进行免编译安装</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ conda install bcolz -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+</pre></div>
+</div>
+</div>
+<div class="section" id="matplotlib">
+<h3>2.  Matplotlib 相关问题<a class="headerlink" href="#matplotlib" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>运行回测时，matplotlib 报错怎么办？<code class="code docutils literal"><span class="pre">RuntimeError:</span> <span class="pre">Python</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">installed</span> <span class="pre">as</span> <span class="pre">a</span> <span class="pre">framework</span></code>:</li>
+</ol>
+<p>解决方案：创建文件 <code class="code docutils literal"><span class="pre">~/.matplotlib/matplotlibrc</span></code>，并加入代码 <code class="code docutils literal"><span class="pre">backend:</span> <span class="pre">TkAgg</span></code></p>
+<ol class="arabic simple" start="2">
+<li>在 Python 3.6 下没有任何报错，但是就是没有plot输出:</li>
+</ol>
+<p>解决方案：创建文件 <code class="code docutils literal"><span class="pre">~/.matplotlib/matplotlibrc</span></code>，并加入代码 <code class="code docutils literal"><span class="pre">backend:</span> <span class="pre">TkAgg</span></code></p>
+<ol class="arabic simple" start="3">
+<li>在Windows运行报 <code class="code docutils literal"><span class="pre">Error</span> <span class="pre">on</span> <span class="pre">import</span> <span class="pre">matplotlib.pyplot</span></code>:</li>
+</ol>
+<p>解决方案: 请访问 <a class="reference external" href="http://stackoverflow.com/questions/34004063/error-on-import-matplotlib-pyplot-on-anaconda3-for-windows-10-home-64-bit-pc">Error on import matplotlib.pyplot (on Anaconda3 for Windows 10 Home 64-bit PC)</a> 解决。</p>
+</div>
+<div class="section" id="python-2-7-windows">
+<h3>3.  Python 2.7 在 Windows 下产生中文乱码的问题<a class="headerlink" href="#python-2-7-windows" title="永久链接至标题">¶</a></h3>
+<p>MooQuant 运行在 Windows(Python 2.x) 可能会遇到中文乱码的问题，这个并不是MooQuant的问题，而是由于 Windows 的 cmd 本身是 <cite>gbk</cite> 编码而产生的，具体的解决方案可以参考 [Windows(Python 2.x) 命令行下输出日志中文乱码的问题](<a class="reference external" href="https://github.com/ricequant/mooquant/issues/80">https://github.com/ricequant/mooquant/issues/80</a>)</p>
+</div>
+<div class="section" id="mac-os">
+<span id="faq-update-bundle-mac"></span><h3>4.  Mac OS 获取回测数据相关问题<a class="headerlink" href="#mac-os" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>Finder中查看数据存放位置：</li>
+</ol>
+<p>Mac OS下默认关闭显示隐藏文件，如想在Finder中查看bundle，您需要打开显示隐藏文件：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ defaults write com.apple.finder AppleShowAllFiles -boolean <span class="nb">true</span> <span class="p">;</span> killall Finder
+</pre></div>
+</div>
+</div>
+<div class="section" id="mac">
+<span id="faq-chinese-fonts-mac"></span><h3>5.  Mac 下安装中文字体相关问题：<a class="headerlink" href="#mac" title="永久链接至标题">¶</a></h3>
+<ol class="arabic simple">
+<li>出现 <code class="code docutils literal"><span class="pre">Operation</span> <span class="pre">not</span> <span class="pre">permitted</span></code>:</li>
+</ol>
+<p>因为Mac OS 10.11 EI Capitan 后加入rootless机制，对系统的读写有了更严格的限制，在创建目录环节会出现“Operation not permitted”</p>
+<p>您可以通过关闭rootless来解决这个问题。</p>
+<p>请重启按住 <code class="code docutils literal"><span class="pre">command</span> <span class="pre">+</span> <span class="pre">R</span></code> ，进入恢复模式，打开Terminal：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ csrutil disable
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>出现 <code class="code docutils literal"><span class="pre">command</span> <span class="pre">not</span> <span class="pre">found</span></code>:</li>
+</ol>
+<p>Mac 下默认并没有安装很多命令，我们可以通过homebrew安装，如没有安装homebrew，请参考：</p>
+<p>在Terminal下输入：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>ruby -e <span class="s2">&quot;</span><span class="k">$(</span>curl --insecure -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install<span class="k">)</span><span class="s2">”</span>
+</pre></div>
+</div>
+<p>按照系统提示输入密码</p>
+<p><code class="code docutils literal"><span class="pre">wget</span></code> 命令没有安装：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ brew install wget
+</pre></div>
+</div>
+<p><code class="code docutils literal"><span class="pre">fc--cache</span></code> 命令没有安装：</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ brew install fontconfig
+</pre></div>
+</div>
+</div>
+<div class="section" id="faq-examples-path">
+<span id="id6"></span><h3>6.  策略样例以及数据路径相关问题：<a class="headerlink" href="#faq-examples-path" title="永久链接至标题">¶</a></h3>
+<p>1.策略样例存储路径：</p>
+<p>执行 <code class="code docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">mooquant</span></code> 后虽然会默认保存examples到python环境中，但路径相对复杂，我们建议您将examples目录重新保存到您认为方便的地方。</p>
+<p>2.数据存储的路径：</p>
+<p>如您没有指定路径，则会在您执行 <code class="code docutils literal"><span class="pre">mooquant</span> <span class="pre">update_bundle</span></code> 的当前目录创建 <code class="code docutils literal"><span class="pre">/.mooquant/bundle</span></code> 的文件夹.您可以在命令行内查看路径。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="入门教程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>

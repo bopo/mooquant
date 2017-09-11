@@ -1,0 +1,417 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>环境搭建 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="开箱即用虚拟机" href="virtual_machine.html"/>
+        <link rel="prev" title="策略示例" href="examples.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">环境搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#anaconda">Anaconda</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#for-gnu-linux">For GNU/Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">更改 Anaconda 源，提高下载速度</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conda">conda 虚拟环境</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ta-lib">安装 TA-Lib</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1"><a class="reference internal" href="under_ide.html">通过 PyCharm 运行/调试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_parameters.html">参数调优</a></li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>环境搭建</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/intro/detail_install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="intro-detail-install">
+<span id="id1"></span><h1>环境搭建<a class="headerlink" href="#intro-detail-install" title="永久链接至标题">¶</a></h1>
+<div class="section" id="anaconda">
+<h2>Anaconda<a class="headerlink" href="#anaconda" title="永久链接至标题">¶</a></h2>
+<p>Anaconda 是一个用于科学计算的 Python 发行版，支持 Linux, Mac, Windows, 包含了众多流行的科学计算、数据分析的 Python 包。</p>
+<p>Anaconda 环境包含了常用的 Python 科学计算库及依赖关系，而 MooQuant 有很多模块是依赖于这些科学计算库的，因此下载 Anaconda 可以轻松搭建出一个强大的 Python 量化研发的基础环境。</p>
+<div class="admonition note">
+<p class="first admonition-title">注解</p>
+<p class="last">安装 Anaconda 需要下载 <a class="reference external" href="https://www.continuum.io/downloads">最新的安装包</a>, 如果速度比较慢，建议从 <a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/">清华源</a> 下载。</p>
+</div>
+<p>当安装成功后，执行如下命令来查看是否安装成功:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda -V
+</pre></div>
+</div>
+<div class="section" id="for-gnu-linux">
+<h3>For GNU/Linux<a class="headerlink" href="#for-gnu-linux" title="永久链接至标题">¶</a></h3>
+<p>如果您使用 GNU/Linux 系统，可以使用如下方式进行 Anaconda 环境的安装，下面以 CentOS 为例:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 首先从清华的官方镜像下载 anaconda Linux64版本</span>
+$ wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-4.2.0-Linux-x86_64.sh
+
+<span class="c1"># 修改权限让脚本可以运行</span>
+$ chmod +x Anaconda3-4.2.0-Linux-x86_64.sh
+
+<span class="c1"># 运行该安装脚本</span>
+$ ./Anaconda3-4.2.0-Linux-x86_64.sh
+
+<span class="c1"># 剩下就是一路Yes或者Enter好了...</span>
+
+Welcome to Anaconda3 <span class="m">4</span>.2.0 <span class="o">(</span>by Continuum Analytics, Inc.<span class="o">)</span>
+
+
+In order to <span class="k">continue</span> the installation process, please review the license
+
+agreement.
+
+Please, press ENTER to <span class="k">continue</span>
+&gt;&gt;&gt;
+
+<span class="c1"># 重新加载一下 bash 就可以使用 `conda` 命令了</span>
+$ <span class="nb">source</span> ~/.bashrc
+
+<span class="c1">#然后尝试一下运行 `conda -V` 命令行看是否已经安装成功，如果返回对应的版本信息，则说明安装成功。</span>
+
+$ conda -V
+conda <span class="m">4</span>.2.13
+
+<span class="c1">#设置matplotlib的backend（没有图形化界面的情况下）</span>
+$ <span class="nb">echo</span> <span class="s2">&quot;backend: Agg&quot;</span> &gt; ~/.config/matplotlib/matplotlibrc
+</pre></div>
+</div>
+<p>安装中文字体: 将 <code class="code docutils literal"><span class="pre">WenQuanYi</span> <span class="pre">Micro</span> <span class="pre">Hei.ttf</span></code> 放到 <code class="code docutils literal"><span class="pre">/usr/share/fonts/chinese</span></code></p>
+<p>在执行以下命令如出现问题，请参考 <a class="reference internal" href="install.html#faq-chinese-fonts-mac"><span class="std std-ref">5.  Mac 下安装中文字体相关问题：</span></a></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir /usr/share/fonts/chinese
+<span class="nb">cd</span> /usr/share/fonts/chinese
+wget https://static.ricequant.com/data/WenQuanYi%20Micro%20Hei.ttf
+fc-cache -fv
+fc-list
+rm -rf ~/.cache/matplotlib
+rm -rf ~/.fontconfig
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>更改 Anaconda 源，提高下载速度<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>conda 官方的服务器在国外，因此国内的网络环境使用 <code class="code docutils literal"><span class="pre">conda</span></code> 可能会比较慢，建议您根据自己的网络环境选择是否更换 <cite>conda</cite> 源。</p>
+<p>清华大学提供了Anaconda的仓库镜像，我们只需要配置Anaconda的配置文件，添加清华的镜像源，然后将其设置为第一搜索渠道即可：
+运行以下命令行:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda config --add channels <span class="s1">&#39;https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/&#39;</span>
+conda config --set show_channel_urls yes
+</pre></div>
+</div>
+<p>设置好源后，就可以使用 <code class="code docutils literal"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">【包名】</span></code> 安装需要的 Python 库了。大部分情况下，建议使用 <code class="code docutils literal"><span class="pre">conda</span></code> 来安装 Python 数据分析相关的库，因为 conda 做了很多的优化和版本依赖关系的管理。如果没有相关的库，则使用 <code class="code docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">【包名】</span></code> 的方式来安装。</p>
+</div>
+<div class="section" id="conda">
+<span id="intro-detail-create-env"></span><h3>conda 虚拟环境<a class="headerlink" href="#conda" title="永久链接至标题">¶</a></h3>
+<ul class="simple">
+<li>构建 conda 虚拟环境</li>
+</ul>
+<p>我们强烈建议您去创建并使用Python虚拟环境，因为这样才能让您的开发环境更加独立，不会因为安装不同的包而出现问题，造成运行失败等。</p>
+<p>目前流行的Python虚拟环境有两种：<code class="code docutils literal"><span class="pre">conda</span></code> 和 <code class="code docutils literal"><span class="pre">pyenv</span></code>, 由于大部分的量化开发都是基于 Anaconda 的 python 技术栈，因此我们建议您使用 conda 作为默认的虚拟环境开发。</p>
+<p>一下有几个常用的虚拟环境命令可以使用:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># 创建 conda 虚拟环境（ :code:`env_name` 是您希望创建的虚拟环境名）</span>
+$ conda create --name env_name <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
+
+<span class="c1"># 如您想创建一个名为mooquant的虚拟环境</span>
+$ conda create --name mooquant <span class="nv">python</span><span class="o">=</span><span class="m">3</span>.5
+
+<span class="c1"># 使用 conda 虚拟环境</span>
+$ <span class="nb">source</span> activate env_name
+<span class="c1"># 如果是 Windows 环境下 直接执行 activcate</span>
+$ activate env_name
+
+<span class="c1"># 退出 conda 虚拟环境</span>
+$ <span class="nb">source</span> deactivate env_name
+<span class="c1"># 如果是 Windows 环境下 直接执行 deactivate</span>
+$ deactivate env_name
+
+<span class="c1"># 删除 conda 虚拟环境</span>
+$ conda-env remove --name env_name
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ta-lib">
+<span id="intro-detail-install-talib"></span><h2>安装 TA-Lib<a class="headerlink" href="#ta-lib" title="永久链接至标题">¶</a></h2>
+<p>您可以使用PyPI安装:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install TA-Lib
+</pre></div>
+</div>
+<p>如果发现无法通过 pip 安装，请访问 <a class="reference external" href="https://mrjbq7.github.io/ta-lib/install.html">https://mrjbq7.github.io/ta-lib/install.html</a> 解决。</p>
+<p>对于 Windows 用户，如果编译困难，可以根据您本地的Python版本下载指定的whl包，然后 <code class="code docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">TA_Lib-0.4.9-cp27-none-win_amd64.whl</span></code> 来完成安装。</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="virtual_machine.html" class="btn btn-neutral float-right" title="开箱即用虚拟机" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="examples.html" class="btn btn-neutral" title="策略示例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>

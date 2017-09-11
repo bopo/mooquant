@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>通过 PyCharm 运行/调试 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="参数调优" href="optimizing_parameters.html"/>
+        <link rel="prev" title="多种方式运行策略" href="run_algorithm.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">通过 PyCharm 运行/调试</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">下载并搭建PyCharm环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">在PyCharm下搭建开发环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.新建一个项目：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python">2.对项目进行对应的python解释器的虚拟环境配置：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mooquantconda">3.配置运行的命令行mooquant的在conda环境中的位置：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4.配置完成运行测试：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="optimizing_parameters.html">参数调优</a></li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>通过 PyCharm 运行/调试</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/intro/under_ide.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="pycharm">
+<span id="intro-under-ide"></span><h1>通过 PyCharm 运行/调试<a class="headerlink" href="#pycharm" title="永久链接至标题">¶</a></h1>
+<div class="section" id="id1">
+<h2>下载并搭建PyCharm环境<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<p>有众多Python IDE（集成开发环境）可以供您选择，但我们强烈建议您使用PyCharm，一方面PyCharm的功能强大且简洁易用，另一方面以下文档我们也选择PyCharm作为样例。</p>
+<p>您可以在选择在官网下载PyCharm：<a class="reference external" href="https://www.jetbrains.com/pycharm/">https://www.jetbrains.com/pycharm/</a></p>
+<p>选择community版本即可，如您有需要也可以购买专业版。</p>
+<p>安装好以后我们十分建议您将主题颜色更改为【Darcula】，没有什么，就是看着爽。</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/pycharm-theme.png" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/pycharm-theme.png" />
+</div>
+<div class="section" id="id2">
+<h2>在PyCharm下搭建开发环境<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<p>我们假设您已经使用Anaconda搭建虚拟环境【mooquant】，同时您已经成功安装了mooquant并能成功运行。</p>
+<p>如您在安装中遇到问题，请参考： <a class="reference internal" href="install.html#intro-install"><span class="std std-ref">安装指南</span></a></p>
+<div class="section" id="id3">
+<h3>1.新建一个项目：<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h3>
+<p>File→ New Project, 比如项目叫做mooquant-strategy</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/create-project.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/create-project.jpeg" />
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p class="last">在 Windows 环境下，并不存在 <cite>bin</cite> 目录，Interpreter 请指定 <cite>\anaconda\envs\mooquant\Scripts\python.exe</cite></p>
+</div>
+</div>
+<div class="section" id="python">
+<h3>2.对项目进行对应的python解释器的虚拟环境配置：<a class="headerlink" href="#python" title="永久链接至标题">¶</a></h3>
+<p>PyCharm Community Edition → Preferences → Project: mooquant-strategy → Project Interpreter, 然后选择您创建的conda的虚拟环境，这个例子里面的话是放在：~/anaconda/envs/mooquant/bin/python:</p>
+<img alt="https://github.com/ricequant/rq-resource/blob/master/mooquant/preferences.jpeg?raw=true" src="https://github.com/ricequant/rq-resource/blob/master/mooquant/preferences.jpeg?raw=true" />
+<p>项目创建好以后，新建立一个简单的 <code class="code docutils literal"><span class="pre">mooquant</span></code> 策略吧，比如叫做 <code class="code docutils literal"><span class="pre">test.py</span></code>: 右键点击mooquant-strategy项目→ New→ File→ test.py:</p>
+<p>在test.py策略里面import所有的mooquant支持的API: <code class="code docutils literal"><span class="pre">from</span> <span class="pre">mooquant.api</span> <span class="pre">import</span> <span class="pre">*</span></code>，那么可以享受到代码的自动补全了:</p>
+<p>策略必须添加 <code class="code docutils literal"><span class="pre">init,before_trading,ha`ndle_bar</span></code> 函数来补全整个策略：</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/import.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/import.jpeg" />
+</div>
+<div class="section" id="mooquantconda">
+<h3>3.配置运行的命令行mooquant的在conda环境中的位置：<a class="headerlink" href="#mooquantconda" title="永久链接至标题">¶</a></h3>
+<div class="admonition warning">
+<p class="first admonition-title">警告</p>
+<p>在 Windows 环境下</p>
+<p>如果是 Python 2.7 则没有对应的入口脚本，需要找到对应的 <cite>__main__.py</cite> 文件，参考路径: <cite>c:\Users\xxx\Anaconda2\envs\mooquant2_7\lib\site-packages\mooquant\__init__.py</cite></p>
+<p>如果是 Python 3.5 及以上，在 <cite>/Scripts/</cite> 目录下是存在 <cite>mooquant-script.py</cite> 文件的，其可以作为入口文件。参考路径: <cite>C:\Users\xxx\Anaconda2\envs\mooquant3_5\Scripts\mooquant-script.py</cite></p>
+<p class="last">相关 issue 讨论 请参考 <a class="reference external" href="https://github.com/ricequant/mooquant/issues/7">Issue 7</a></p>
+</div>
+<p>Run/Debug Configurations → 选择策略文件 → Configuration → Script → 找到对应的conda环境的mooquant命令</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-one.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-one.jpeg" />
+<p>配置mooquant-plus run的命令行：Run/Debug Configurations → 选择策略文件 → Configuration → Script parameters</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-two.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-two.jpeg" />
+<p>Python interpreter 内容可按以下格式并修改您对应的参数:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>run -f mooquant-strategy/test.py -d /Users/your_count/.mooquant/bundle -s <span class="m">2016</span>-06-01 -e <span class="m">2016</span>-12-01 --account stock <span class="m">100000</span> --benchmark <span class="m">000300</span>.XSHG
+</pre></div>
+</div>
+<p>注意：您需要运行的策略应当填写您当前project目录下的策略，bundle目录您可以通过在命令行中获取绝对路径填入。</p>
+</div>
+<div class="section" id="id4">
+<h3>4.配置完成运行测试：<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h3>
+<p>配置完成后点击运行</p>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/run.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/run.jpeg" />
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/after-run.jpeg" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/after-run.jpeg" />
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="optimizing_parameters.html" class="btn btn-neutral float-right" title="参数调优" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="run_algorithm.html" class="btn btn-neutral" title="多种方式运行策略" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>

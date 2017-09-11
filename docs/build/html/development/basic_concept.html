@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>基本概念 &mdash; mooquant 0.18 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="索引"
+              href="../genindex.html"/>
+        <link rel="search" title="搜索" href="../search.html"/>
+    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+        <link rel="next" title="Mod" href="mod.html"/>
+        <link rel="prev" title="如何贡献代码" href="make_contribute.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> mooquant
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">基础</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">安装指南</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">入门教程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">策略示例</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/detail_install.html">环境搭建</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/virtual_machine.html">开箱即用虚拟机</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/base_api.html">基础 API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/extend_api.html">扩展 API</a></li>
+</ul>
+<p class="caption"><span class="caption-text">进阶</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/run_algorithm.html">多种方式运行策略</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/under_ide.html">通过 PyCharm 运行/调试</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/optimizing_parameters.html">参数调优</a></li>
+</ul>
+<p class="caption"><span class="caption-text">开发</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="make_contribute.html">如何贡献代码</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">基本概念</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-mooquant.interface">接口</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#account">Account</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#position">Position</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#strategyloader">StrategyLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eventsource">EventSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#datasource">DataSource</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#broker">Broker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#priceboarder">PriceBoarder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mod">Mod</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#persistprovider">PersistProvider</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mod.html">Mod</a></li>
+<li class="toctree-l1"><a class="reference internal" href="event_source.html">扩展事件源</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_source.html">扩展数据源</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">mooquant</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>基本概念</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/development/basic_concept.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+/* nice headers on first paragraph of info/warning boxes */
+.admonition .first {
+    margin: -12px;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+    color: #fff;
+    line-height: 1;
+    display: block;
+}
+.admonition.warning .first {
+    background: #f0b37e;
+}
+.admonition.note .first {
+    background: #6ab0de;
+}
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="development-basic-concept">
+<span id="id1"></span><h1>基本概念<a class="headerlink" href="#development-basic-concept" title="永久链接至标题">¶</a></h1>
+<div class="section" id="module-mooquant.interface">
+<span id="id2"></span><h2>接口<a class="headerlink" href="#module-mooquant.interface" title="永久链接至标题">¶</a></h2>
+<p>我们将重要模块进行了抽离，使得通过 Mod 来替换核心组件成为了可能。</p>
+<ul class="simple">
+<li>策略加载模块(AbstractStrategyLoader): 加载策略，并将策略运行所需要的域环境传递给策略执行代码，可以通过扩展策略加载器来实现自定义策略源、自定义API载入等功能。</li>
+<li>事件生成模块(AbstractEventSource): 无论是回测还是实盘，都需要基于数据源生成对应的事件，而事件生成模块主要负责生成策略执行相应的事件。</li>
+<li>数据源模块(AbstractDataSource): 日线数据、分钟线数据、财务数据、债务数据等等都可以通过该模块进行扩展和使用。</li>
+<li>券商代理模块(AbstractBroker): 用户的所有下单、账户、撮合逻辑其实都来自于券商+交易所，即使是回测，也实际是一个回测模拟交易所。因此可以通过扩展该模块来自定义Broker，也可以通过该模块扩展实盘交易等。</li>
+</ul>
+<img alt="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/MooQuant_structure.png" src="https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/MooQuant_structure.png" />
+<p>详细的 MooQuant 结构图请查看 <a class="reference external" href="https://www.processon.com/view/link/58aa9809e4b07158582ebf13">Processon MooQuant Structure</a></p>
+<div class="section" id="account">
+<h3>Account<a class="headerlink" href="#account" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="position">
+<h3>Position<a class="headerlink" href="#position" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="strategyloader">
+<h3>StrategyLoader<a class="headerlink" href="#strategyloader" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="eventsource">
+<h3>EventSource<a class="headerlink" href="#eventsource" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="datasource">
+<h3>DataSource<a class="headerlink" href="#datasource" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="broker">
+<h3>Broker<a class="headerlink" href="#broker" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="priceboarder">
+<h3>PriceBoarder<a class="headerlink" href="#priceboarder" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="mod">
+<h3>Mod<a class="headerlink" href="#mod" title="永久链接至标题">¶</a></h3>
+</div>
+<div class="section" id="persistprovider">
+<h3>PersistProvider<a class="headerlink" href="#persistprovider" title="永久链接至标题">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mod.html" class="btn btn-neutral float-right" title="Mod" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="make_contribute.html" class="btn btn-neutral" title="如何贡献代码" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, MooQuant.
+      最后更新于 9月 12, 2017.
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+    console.log("RQAlpha Powered By RiceQuant.");
+</script>
+
+
+</body>
+</html>
