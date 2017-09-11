@@ -196,6 +196,7 @@ class HistogramMarker(Series):
         
         for dateTime in dateTimes:
             value = self.getValue(dateTime)
+            
             if value is not None:
                 validDateTimes.append(dateTime)
                 values.append(value)
@@ -272,6 +273,7 @@ class Subplot(object):
 
     def onBars(self, bars):
         dateTime = bars.getDateTime()
+        
         for cb, series in self.__callbacks.items():
             series.addValue(dateTime, cb(bars))
 

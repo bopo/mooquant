@@ -32,7 +32,7 @@ class Results(object):
 
         self.__lookBack = lookBack
         self.__lookForward = lookForward
-        self.__values = [[] for i in range(lookBack+lookForward+1)]
+        self.__values = [[] for i in range(lookBack + lookForward + 1)]
         self.__eventCount = 0
 
         # Process events.
@@ -169,6 +169,7 @@ class Profiler(object):
 
         for event, t in self.__futureRets[instrument]:
             event.setValue(t, self.__rets[instrument][-1])
+
             if t < event.getLookForward():
                 t += 1
                 nextTs.append((event, t))
@@ -234,6 +235,7 @@ def build_plot(profilerResults):
     # Calculate each value.
     x = []
     y = []
+    
     std = []
 
     for t in range(profilerResults.getLookBack()*-1, profilerResults.getLookForward()+1):
