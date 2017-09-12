@@ -65,7 +65,7 @@ class TestCase(common.TestCase):
         feed = csvfeed.Feed("Date", "%Y-%m-%d", maxLen=40, timezone=marketsession.USEquities.timezone)
         feed.setRowFilter(RowFilter())
         feed.setTimeDelta(datetime.timedelta(hours=23, minutes=59, seconds=59))
-        feed.addValuesFromCSV(os.path.join("examples", "data", "quandl_gold_2.csv"))
+        feed.addValuesFromCSV(common.get_data_file_path("quandl_gold_2.csv"))
 
         for col in ["USD", "GBP", "EUR"]:
             self.assertEqual(len(feed[col]), 0)

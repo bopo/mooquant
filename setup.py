@@ -17,33 +17,68 @@
 # limitations under the License.
 
 try:
-    from setuptools import setup
+    from setuptools import setup, find_packages
 except ImportError:
-    from distutils.core import setup
+    from distutils.core import setup, find_packages
+
+with open('README.rst') as readme_file:
+    readme = readme_file.read()
+
+with open('HISTORY.rst') as history_file:
+    history = history_file.read()
+
+requirements = [
+    'click>=6.0',
+    "python-dateutil",
+    "requests",
+    "numpy",
+    "pytz",    
+]
+
+setup_requirements = [
+    'pytest-runner',
+]
+
+test_requirements = [
+    'pytest',
+]
+
+from mooquant import __version__
 
 setup(
     name='MooQuant',
-    version='0.2.0',
+    version=__version__,
     description='MooQuant',
-    long_description='Python library for backtesting stock trading strategies.',
-    author='Bopo Wang',
+    long_description='',
+    author='bopowang',
     author_email='ibopo@126.com',
     url='http://www.mooquant.com/',
-    download_url='http://www.mooquant.com/0.2.0/MooQuant-0.1.0.tar.gz/download',
-    packages=[
-        'mooquant',
-    ],
-    install_requires=[
-        "python-dateutil",
-        "requests",
-        "numpy",
-        "pytz",
-    ],
+    download_url='https://github.com/bopo/mooquant/archive/master.zip',
+    packages=find_packages(include=['mooquant']),
     extras_require={
         'Scipy':  ["scipy"],
         'TALib':  ["Cython", "TA-Lib"],
         'Plotting':  ["matplotlib"],
         'Bitstamp':  ["ws4py>=0.3.4", "tornado"],
-        # 'Twitter':  ["tweepy"],
     },
+    install_requires=requirements,
+    license="MIT license",
+    zip_safe=False,
+    keywords='mooquant',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        "Programming Language :: Python :: 2",
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+    test_suite='tests',
+    tests_require=test_requirements,
+    setup_requires=setup_requirements,    
 )
