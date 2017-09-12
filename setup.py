@@ -54,7 +54,7 @@ setup(
     author_email='ibopo@126.com',
     url='http://www.mooquant.com/',
     download_url='https://github.com/bopo/mooquant/archive/master.zip',
-    packages=find_packages(include=['mooquant']),
+    packages=find_packages(include=['mooquant','mooquant.*']),
     extras_require={
         'Scipy':  ["scipy"],
         'TALib':  ["Cython", "TA-Lib"],
