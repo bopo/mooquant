@@ -23,7 +23,7 @@ import datetime
 import time
 from mooquant.utils.compat import queue
 from mooquant import bar, barfeed, observer
-from mooquant.bitstamp import common, wsclient
+from mooquant.providers.bitstamp import common, wsclient
 
 
 class TradeBar(bar.Bar):

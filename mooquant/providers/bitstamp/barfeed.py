@@ -19,6 +19,6 @@
 """
 
 
-from mooquant.bitstamp import livefeed
+from mooquant.providers.bitstamp import livefeed
 
 LiveTradeFeed = livefeed.LiveTradeFeed

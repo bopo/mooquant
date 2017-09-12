@@ -404,14 +404,14 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
             self._fill_today_bars()
 
 
-if __name__ == '__main__':
-    liveFeed = TuShareLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
-    liveFeed.start()
+# if __name__ == '__main__':
+#     liveFeed = TuShareLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
+#     liveFeed.start()
 
-    while not liveFeed.eof():
-        bars = liveFeed.getNextBars()
-        if bars is not None:
-            print bars['000581'].getHigh(), bars['000581'].getDateTime()
+#     while not liveFeed.eof():
+#         bars = liveFeed.getNextBars()
+#         if bars is not None:
+#             print bars['000581'].getHigh(), bars['000581'].getDateTime()
 
 
 

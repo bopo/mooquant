@@ -19,13 +19,13 @@ from unittest import TestCase
 import mock
 from pandas import DataFrame
 
-from pyalgotrade import dataseries
-from pyalgotrade.tushare.barfeed import TuShareLiveFeed
+from mooquant import dataseries
+from mooquant.providers.tushare.barfeed import TuShareLiveFeed
 
 
 class TestTuShareLiveFeed(TestCase):
-    @mock.patch('pyalgotrade.tushare.barfeed.is_holiday')
-    @mock.patch('pyalgotrade.tushare.barfeed.ts')
+    @mock.patch('mooquant.providers.tushare.barfeed.is_holiday')
+    @mock.patch('mooquant.providers.tushare.barfeed.ts')
     def test__fill_today_bars(self, mock_tushare, mock_is_holiday):
         data_list = [[u'09:33:45', 9.10, 100, 2000, 0.01],
                      [u'09:33:20', 9.20, 100, 2000, 0.01],
@@ -58,9 +58,9 @@ class TestTuShareLiveFeed(TestCase):
         bars = liveFeed.getNextBars()
         self.assertEqual(bars['000581'].getOpen(), 9.30)
 
-    @mock.patch('pyalgotrade.tushare.barfeed.is_holiday')
-    @mock.patch('pyalgotrade.tushare.barfeed.get_trading_days')
-    @mock.patch('pyalgotrade.tushare.barfeed.ts')
+    @mock.patch('mooquant.providers.tushare.barfeed.is_holiday')
+    @mock.patch('mooquant.providers.tushare.barfeed.get_trading_days')
+    @mock.patch('mooquant.providers.tushare.barfeed.ts')
     def test__fill_history_bars(self, mock_tushare, mock_days, mock_is_holiday):
         data_list = [[u'09:33:45', 9.10, 100, 2000, 0.01],
                      [u'09:33:20', 9.20, 100, 2000, 0.01],

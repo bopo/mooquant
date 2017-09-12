@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import abc
-
 import six
 
 from mooquant import bar, dataseries, resamplebase

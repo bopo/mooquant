@@ -21,7 +21,7 @@
 import datetime
 import threading
 
-from mooquant.bitstamp import common
+from mooquant.providers.bitstamp import common
 from mooquant.websocket import pusher
 from mooquant.utils.compat import queue
 

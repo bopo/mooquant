@@ -24,8 +24,8 @@ import time
 from collections import deque
 import pytz
 
-import tushare as ts
-# from tushare.util.dateu import is_holiday  # use our own is_holiday currently as tushare does not include 2016 holiday
+import pytdx as tdx
+# from PyTDX.util.dateu import is_holiday  # use our own is_holiday currently as PyTDX does not include 2016 holiday
 
 import mooquant.logger
 from mooquant.cn import bar
@@ -36,7 +36,7 @@ from mooquant.utils import dt
 from mooquant.bar import Frequency
 from mooquant.xignite.barfeed import utcnow
 
-logger = mooquant.logger.getLogger("tushare")
+logger = mooquant.logger.getLogger("PyTDX")
 
 
 def to_market_datetime(dateTime):
@@ -102,7 +102,7 @@ def get_trading_days(start_day, days):
     try:
         df = ts.get_hist_data('sh')
     except Exception, e:
-        logger.error("Tushare get hist data exception", exc_info=e)
+        logger.error("PyTDX get hist data exception", exc_info=e)
         return []
 
     trading_days = list()
@@ -137,13 +137,13 @@ def build_bar(dateTime, ds):
     return bar.BasicBar(dateTime, open_, high, low, close, volume, None, Frequency.DAY, amount)
 
 
-class TuSharePollingThread(threading.Thread):
+class PyTDXPollingThread(threading.Thread):
     # Not using xignite polling thread is because two underscores functions can't be override, e.g. __wait()
 
-    TUSHARE_INQUERY_PERIOD = 3 # tushare read period, default is 3s
+    PyTDX_INQUERY_PERIOD = 3 # PyTDX read period, default is 3s
 
     def __init__(self, identifiers):
-        super(TuSharePollingThread, self).__init__()
+        super(PyTDXPollingThread, self).__init__()
         self._identifiers = identifiers
         self._tickDSDict = {}
         self._last_quotation_time = {}
@@ -164,13 +164,13 @@ class TuSharePollingThread(threading.Thread):
         while not self.__stopped and utcnow() < nextCall:
             start_time = datetime.datetime.now()
 
-            self.get_tushare_tick_data()
+            self.get_PyTDX_tick_data()
 
             end_time = datetime.datetime.now()
             time_diff = (end_time - start_time).seconds
 
-            if time_diff < TuSharePollingThread.TUSHARE_INQUERY_PERIOD:
-                time.sleep(TuSharePollingThread.TUSHARE_INQUERY_PERIOD - time_diff)
+            if time_diff < PyTDXPollingThread.PyTDX_INQUERY_PERIOD:
+                time.sleep(PyTDXPollingThread.PyTDX_INQUERY_PERIOD - time_diff)
 
     def valid_tick_data(self, identifier, tick_info):
         if self._last_quotation_time[identifier] is None or \
@@ -181,7 +181,7 @@ class TuSharePollingThread(threading.Thread):
 
         return float(tick_info.pre_close) * 0.9 <= float(tick_info.price) <= float(tick_info.pre_close) * 1.1
 
-    def get_tushare_tick_data(self):
+    def get_PyTDX_tick_data(self):
         try:
             df = ts.get_realtime_quotes(self._identifiers)
 
@@ -189,11 +189,11 @@ class TuSharePollingThread(threading.Thread):
                 tick_info = df.ix[index]
 
                 if self.valid_tick_data(identifier, tick_info):
-                    # tushare use unicode type, another way is convert it to int/float here. refer to build_bar
+                    # PyTDX use unicode type, another way is convert it to int/float here. refer to build_bar
                     self._tickDSDict[identifier].append(tick_info.price, tick_info.volume, tick_info.amount,
                                                         tick_info.time)
         except Exception, e:
-            logger.error("Tushare polling exception", exc_info=e)
+            logger.error("PyTDX polling exception", exc_info=e)
 
     def stop(self):
         self.__stopped = True
@@ -203,13 +203,17 @@ class TuSharePollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
+        
         while not self.__stopped:
             self.__wait()
+        
             if not self.__stopped:
+        
                 try:
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
+        
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -220,12 +224,12 @@ class TuSharePollingThread(threading.Thread):
         raise NotImplementedError()
 
 
-class TushareBarFeedThread(TuSharePollingThread):
+class PyTDXBarFeedThread(PyTDXPollingThread):
     # Events
     ON_BARS = 1
 
     def __init__(self, queue, identifiers, frequency):
-        super(TushareBarFeedThread, self).__init__(identifiers)
+        super(PyTDXBarFeedThread, self).__init__(identifiers)
         self.__queue = queue
         self.__frequency = frequency
         self.__updateNextBarClose()
@@ -250,7 +254,7 @@ class TushareBarFeedThread(TuSharePollingThread):
 
         if len(bar_dict):
             bars = bar.Bars(bar_dict)
-            self.__queue.put((TushareBarFeedThread.ON_BARS, bars))
+            self.__queue.put((PyTDXBarFeedThread.ON_BARS, bars))
 
 
 def get_bar_list(df, frequency, date=None):
@@ -284,7 +288,7 @@ def get_bar_list(df, frequency, date=None):
     return bar_list
 
 
-class TuShareLiveFeed(barfeed.BaseBarFeed):
+class PyTDXLiveFeed(barfeed.BaseBarFeed):
     QUEUE_TIMEOUT = 0.01
 
     def __init__(self, identifiers, frequency, maxLen=dataseries.DEFAULT_MAX_LEN, replayDays=-1):
@@ -298,7 +302,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
         self.__fill_today_history_bars(replayDays) # should run before polling thread start
 
-        self.__thread = TushareBarFeedThread(self.__queue, identifiers, frequency)
+        self.__thread = PyTDXBarFeedThread(self.__queue, identifiers, frequency)
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -335,8 +339,8 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
     def getNextBars(self):
         ret = None
         try:
-            eventType, eventData = self.__queue.get(True, TuShareLiveFeed.QUEUE_TIMEOUT)
-            if eventType == TushareBarFeedThread.ON_BARS:
+            eventType, eventData = self.__queue.get(True, PyTDXLiveFeed.QUEUE_TIMEOUT)
+            if eventType == PyTDXBarFeedThread.ON_BARS:
                 ret = eventData
             else:
                 logger.error("Invalid event received: %s - %s" % (eventType, eventData))
@@ -345,7 +349,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
         return ret
 
     ######################################################################
-    # TuShareLiveFeed own interface
+    # PyTDXLiveFeed own interface
     def _fill_today_bars(self):
         today = datetime.date.today().isoformat()
 
@@ -377,7 +381,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
             if len(bar_dict):
                 bars = bar.Bars(bar_dict)
-                self.__queue.put((TushareBarFeedThread.ON_BARS, bars))
+                self.__queue.put((PyTDXBarFeedThread.ON_BARS, bars))
 
     def _fill_history_bars(self, replay_days):
         now = datetime.datetime.now()
@@ -403,14 +407,13 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
 
 if __name__ == '__main__':
-    liveFeed = TuShareLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
+    liveFeed = PyTDXLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
     liveFeed.start()
 
     while not liveFeed.eof():
         bars = liveFeed.getNextBars()
         if bars is not None:
             print bars['000581'].getHigh(), bars['000581'].getDateTime()
-            # test/
 
 
 

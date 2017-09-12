@@ -20,7 +20,7 @@
 
 
 from mooquant import broker
-from mooquant.bitstamp import common, livebroker
+from mooquant.providers.bitstamp import common, livebroker
 from mooquant.broker import backtesting
 
 LiveBroker = livebroker.LiveBroker

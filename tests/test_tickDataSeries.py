@@ -16,9 +16,9 @@
 .. moduleauthor:: ZackZK <silajoin@sina.com>
 """
 from unittest import TestCase
-from pyalgotrade.tushare.barfeed import TickDataSeries
-from pyalgotrade import bar
-from pyalgotrade.tushare.barfeed import build_bar
+from mooquant.providers.tushare.barfeed import TickDataSeries
+from mooquant import bar
+from mooquant.providers.tushare.barfeed import build_bar
 
 
 class TestBuild_bar(TestCase):

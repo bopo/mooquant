@@ -103,11 +103,9 @@ class FillInfo(object):
     def getQuantity(self):
         return self.__quantity
 
-
+@six.add_metaclass(abc.ABCMeta)
 class FillStrategy(object):
     """Base class for order filling strategies for the backtester."""
-
-    __metaclass__ = abc.ABCMeta
 
     def onBars(self, broker_, bars):
         """

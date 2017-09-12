@@ -18,7 +18,7 @@
 from unittest import TestCase
 from pandas import DataFrame
 
-from pyalgotrade.tushare.barfeed import TuSharePollingThread
+from mooquant.providers.tushare.barfeed import TuSharePollingThread
 
 class TestTuSharePollingThread(TestCase):
     def test_get_tushare_tick_data(self):

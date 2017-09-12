@@ -19,11 +19,11 @@ from unittest import TestCase
 import mock
 import pandas as pd
 import datetime
-from pyalgotrade.tushare.barfeed import get_trading_days
+from mooquant.providers.tushare.barfeed import get_trading_days
 
 
 class TestGet_trading_days(TestCase):
-    @mock.patch('pyalgotrade.tushare.barfeed.ts')
+    @mock.patch('mooquant.providers.tushare.barfeed.ts')
     def test_get_trading_days(self, mock_tushare):
         start_day = datetime.datetime(2015, 8, 8)
 
@@ -44,7 +44,7 @@ class TestGet_trading_days(TestCase):
         self.assertEqual(8, trading_days[1].month)
         self.assertEqual(7, trading_days[1].day)
 
-    @mock.patch('pyalgotrade.tushare.barfeed.ts')
+    @mock.patch('mooquant.providers.tushare.barfeed.ts')
     def test_get_trading_days_with_one_holiday(self, mock_tushare):
         start_day = datetime.datetime(2015, 8, 10)
 
@@ -65,7 +65,7 @@ class TestGet_trading_days(TestCase):
         self.assertEqual(8, trading_days[1].month)
         self.assertEqual(7, trading_days[1].day)
 
-    @mock.patch('pyalgotrade.tushare.barfeed.ts')
+    @mock.patch('mooquant.providers.tushare.barfeed.ts')
     def test_get_trading_days_with_two_holidays(self, mock_tushare):
         start_day = datetime.datetime(2015, 8, 18)
 

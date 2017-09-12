@@ -26,7 +26,7 @@ import threading
 import time
 
 import requests
-from mooquant.bitstamp import common
+from mooquant.providers.bitstamp import common
 from mooquant.utils import dt
 
 logging.getLogger("requests").setLevel(logging.ERROR)
