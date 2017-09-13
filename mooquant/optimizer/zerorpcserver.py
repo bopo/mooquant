@@ -17,10 +17,13 @@
 
 """
 .. moduleauthor:: bopo.wang <ibopo@126.com>
+
+@todo zerorpc 集成未完成
 """
 
 # import pickle
 import threading
+import zerorpc
 import time
 
 import mooquant.logger

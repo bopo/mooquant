@@ -1,21 +1,33 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Sep 03 16:52:59 2016
+# MooQuant
+#
+# Copyright 2017 bopo.wang<ibopo@126.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-@author: James
 """
-import pandas as pd
+.. moduleauthor:: bopo.wang <ibopo@126.com>
+"""
 from datetime import datetime
 
-from mooquant.barfeed import membf
-from mooquant import bar
-from mooquant import dataseries
-from mooquant.providers.bar import BasicBar
-from mooquant.providers.bar import Frequency
-from mooquant.providers.pandasfeed import dataframeToBar
-from mooquant.providers.pandasfeed import dataframeToTick
+import pandas as pd
 
-    
+from mooquant import bar, dataseries
+from mooquant.barfeed import membf
+from mooquant.providers.bar import BasicBar, Frequency
+from mooquant.providers.pandasfeed import dataframeToBar, dataframeToTick
+
+
 class Feed(membf.BarFeed):
     def __init__(self, frequency, maxLen=dataseries.DEFAULT_MAX_LEN):
         membf.BarFeed.__init__(self, frequency, maxLen)
@@ -39,9 +51,9 @@ class Feed(membf.BarFeed):
         idataframe = idataframe[(idataframe.datetime >= fromdate) & (idataframe.datetime <= todate)]
         bars = dataframeToBar(idataframe, self.__frequency)
         mooquant_id = instrument + '.' + exchange_id
+
         self.addBarsFromSequence(mooquant_id, bars)
-        return
-        
+
         
     def loadTicks(self, instrument, exchange_id, fromdate, todate, path):
         try:
@@ -56,19 +68,9 @@ class Feed(membf.BarFeed):
         idataframe = idataframe[(idataframe.datetime >= fromdate) & (idataframe.datetime <= todate)]
         bars = dataframeToTick(idataframe, self.__frequency)
         mooquant_id = instrument + '.' + exchange_id
+
         self.addBarsFromSequence(mooquant_id, bars)
-        return
         
             
     def closeDB(self):
         self.__db.closeDB()
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    

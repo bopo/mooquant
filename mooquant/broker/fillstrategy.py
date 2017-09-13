@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 # MooQuant
 #
-# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
+# Copyright 2017 bopo.wang<ibopo@126.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,10 +16,11 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
+.. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
 import abc
+import six
 
 import mooquant.bar
 from mooquant import broker
@@ -106,6 +108,8 @@ class FillInfo(object):
 @six.add_metaclass(abc.ABCMeta)
 class FillStrategy(object):
     """Base class for order filling strategies for the backtester."""
+
+    # __metaclass__ = abc.ABCMeta
 
     def onBars(self, broker_, bars):
         """

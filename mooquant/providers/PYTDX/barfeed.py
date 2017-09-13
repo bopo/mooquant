@@ -1,10 +1,13 @@
-# Copyright 2011-2015 ZackZK
+# -*- coding: utf-8 -*-
+# MooQuant
+#
+# Copyright 2017 bopo.wang<ibopo@126.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,53 +16,36 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: ZackZK <silajoin@sina.com>
+.. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
-from mooquant.utils.compat import queue
 import datetime
 import threading
 import time
 from collections import deque
-import pytz
 
-import pytdx as tdx
+import pytz
+# import pytdx as tdx
 # from PyTDX.util.dateu import is_holiday  # use our own is_holiday currently as PyTDX does not include 2016 holiday
+from pytdx.reader import TdxDailyBarReader, TdxFileNotFoundException
 
 import mooquant.logger
-from mooquant.cn import bar
-from mooquant import barfeed
-from mooquant import dataseries
-from mooquant import resamplebase
-from mooquant.utils import dt
+from mooquant import barfeed, dataseries, resamplebase
 from mooquant.bar import Frequency
-from mooquant.xignite.barfeed import utcnow
+from mooquant.providers import bar
+from mooquant.utils import dt
+from mooquant.utils.compat import queue
+from mooquant.providers.pytdx import livefeed
+from mooquant.providers.pytdx.common import to_market_datetime,is_holiday,holiday
+# reader = TdxDailyBarReader()
+# df = reader.get_df("/Users/rainx/tmp/vipdoc/sz/lday/sz000001.day")
+
 
 logger = mooquant.logger.getLogger("PyTDX")
 
-
-def to_market_datetime(dateTime):
-    timezone = pytz.timezone('Asia/Shanghai')
-    return dt.localize(dateTime, timezone)
+LiveTradeFeed = livefeed.LiveTradeFeed
 
 
-holiday = ['2015-01-01', '2015-01-02', '2015-02-18', '2015-02-19', '2015-02-20', '2015-02-23', '2015-02-24',
-           '2015-04-06', '2015-05-01', '2015-06-22', '2015-09-03', '2015-09-04', '2015-10-01', '2015-10-02',
-           '2015-10-05', '2015-10-06', '2015-10-07',
-           '2016-01-01', '2016-02-08', '2016-02-09', '2016-02-10', '2016-02-11', '2016-02-12', '2016-04-04',
-           '2016-05-02', '2016-06-09', '2016-06-10', '2016-09-15', '2016-09-16', '2016-10-03', '2016-10-04',
-           '2016-10-05', '2016-10-06', '2016-10-07']
-
-
-def is_holiday(date):
-    if isinstance(date, str):
-        today = datetime.datetime.strptime(date, '%Y-%m-%d')
-
-    if today.isoweekday() in [6, 7] or date in holiday:
-        return True
-    else:
-        return False
 
 
 class TickDataSeries(object):
@@ -100,7 +86,9 @@ class TickDataSeries(object):
 
 def get_trading_days(start_day, days):
     try:
-        df = ts.get_hist_data('sh')
+        # 获取个股历史交易数据（包括均线数据）
+        # df = ts.get_hist_data('sh')
+        reader = TdxDailyBarReader()
     except Exception, e:
         logger.error("PyTDX get hist data exception", exc_info=e)
         return []
@@ -121,7 +109,7 @@ def get_trading_days(start_day, days):
 
     return trading_days
 
-
+# 构建 bar 数据
 def build_bar(dateTime, ds):
     prices = ds.getPriceDS()
     volumes = ds.getVolumeDS()
@@ -136,14 +124,14 @@ def build_bar(dateTime, ds):
 
     return bar.BasicBar(dateTime, open_, high, low, close, volume, None, Frequency.DAY, amount)
 
-
-class PyTDXPollingThread(threading.Thread):
+# 轮询进程
+class PollingThread(threading.Thread):
     # Not using xignite polling thread is because two underscores functions can't be override, e.g. __wait()
 
     PyTDX_INQUERY_PERIOD = 3 # PyTDX read period, default is 3s
 
     def __init__(self, identifiers):
-        super(PyTDXPollingThread, self).__init__()
+        super(PollingThread, self).__init__()
         self._identifiers = identifiers
         self._tickDSDict = {}
         self._last_quotation_time = {}
@@ -164,13 +152,13 @@ class PyTDXPollingThread(threading.Thread):
         while not self.__stopped and utcnow() < nextCall:
             start_time = datetime.datetime.now()
 
-            self.get_PyTDX_tick_data()
+            self.get_tick_data()
 
             end_time = datetime.datetime.now()
             time_diff = (end_time - start_time).seconds
 
-            if time_diff < PyTDXPollingThread.PyTDX_INQUERY_PERIOD:
-                time.sleep(PyTDXPollingThread.PyTDX_INQUERY_PERIOD - time_diff)
+            if time_diff < PollingThread.PyTDX_INQUERY_PERIOD:
+                time.sleep(PollingThread.PyTDX_INQUERY_PERIOD - time_diff)
 
     def valid_tick_data(self, identifier, tick_info):
         if self._last_quotation_time[identifier] is None or \
@@ -181,7 +169,7 @@ class PyTDXPollingThread(threading.Thread):
 
         return float(tick_info.pre_close) * 0.9 <= float(tick_info.price) <= float(tick_info.pre_close) * 1.1
 
-    def get_PyTDX_tick_data(self):
+    def get_tick_data(self):
         try:
             df = ts.get_realtime_quotes(self._identifiers)
 
@@ -223,13 +211,13 @@ class PyTDXPollingThread(threading.Thread):
     def doCall(self):
         raise NotImplementedError()
 
-
-class PyTDXBarFeedThread(PyTDXPollingThread):
+# bar feed 进程
+class BarFeedThread(PollingThread):
     # Events
     ON_BARS = 1
 
     def __init__(self, queue, identifiers, frequency):
-        super(PyTDXBarFeedThread, self).__init__(identifiers)
+        super(BarFeedThread, self).__init__(identifiers)
         self.__queue = queue
         self.__frequency = frequency
         self.__updateNextBarClose()
@@ -254,15 +242,17 @@ class PyTDXBarFeedThread(PyTDXPollingThread):
 
         if len(bar_dict):
             bars = bar.Bars(bar_dict)
-            self.__queue.put((PyTDXBarFeedThread.ON_BARS, bars))
+            self.__queue.put((BarFeedThread.ON_BARS, bars))
 
 
 def get_bar_list(df, frequency, date=None):
     bar_list = []
 
     end_time = df.ix[0].time
+
     if date is None:
         date = datetime.datetime.now()
+    
     slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month , date.day, 9, 30, 0))
 
     while slice_start_time.strftime("%H:%M:%S") < end_time:
@@ -283,26 +273,28 @@ def get_bar_list(df, frequency, date=None):
                                          close, volume, 0, frequency, amount))
         else:
             bar_list.append(None)
+            
         slice_start_time = slice_end_time
 
     return bar_list
 
-
-class PyTDXLiveFeed(barfeed.BaseBarFeed):
+# 实时行情
+class LiveFeed(barfeed.BaseBarFeed):
     QUEUE_TIMEOUT = 0.01
 
     def __init__(self, identifiers, frequency, maxLen=dataseries.DEFAULT_MAX_LEN, replayDays=-1):
         barfeed.BaseBarFeed.__init__(self, frequency, maxLen)
+
         if not isinstance(identifiers, list):
             raise Exception("identifiers must be a list")
 
         self.__identifiers = identifiers
         self.__frequency = frequency
-        self.__queue = Queue.Queue()
+        self.__queue = queue.Queue()
 
         self.__fill_today_history_bars(replayDays) # should run before polling thread start
-
-        self.__thread = PyTDXBarFeedThread(self.__queue, identifiers, frequency)
+        self.__thread = BarFeedThread(self.__queue, identifiers, frequency)
+        
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -339,17 +331,18 @@ class PyTDXLiveFeed(barfeed.BaseBarFeed):
     def getNextBars(self):
         ret = None
         try:
-            eventType, eventData = self.__queue.get(True, PyTDXLiveFeed.QUEUE_TIMEOUT)
-            if eventType == PyTDXBarFeedThread.ON_BARS:
+            eventType, eventData = self.__queue.get(True, LiveFeed.QUEUE_TIMEOUT)
+            if eventType == BarFeedThread.ON_BARS:
                 ret = eventData
             else:
                 logger.error("Invalid event received: %s - %s" % (eventType, eventData))
-        except Queue.Empty:
+        except queue.Empty:
             pass
+
         return ret
 
     ######################################################################
-    # PyTDXLiveFeed own interface
+    # LiveFeed own interface
     def _fill_today_bars(self):
         today = datetime.date.today().isoformat()
 
@@ -363,6 +356,7 @@ class PyTDXLiveFeed(barfeed.BaseBarFeed):
 #            return
 
         today_bars = {}
+
         for identifier in self.__identifiers:
             try:
                 df = ts.get_today_ticks(identifier)
@@ -381,7 +375,7 @@ class PyTDXLiveFeed(barfeed.BaseBarFeed):
 
             if len(bar_dict):
                 bars = bar.Bars(bar_dict)
-                self.__queue.put((PyTDXBarFeedThread.ON_BARS, bars))
+                self.__queue.put((BarFeedThread.ON_BARS, bars))
 
     def _fill_history_bars(self, replay_days):
         now = datetime.datetime.now()
@@ -397,6 +391,7 @@ class PyTDXLiveFeed(barfeed.BaseBarFeed):
     def __fill_today_history_bars(self, replayDays):
         if replayDays < 0:  # only allow -1 and >=0 integer value
             replayDays = -1
+
         if replayDays == -1:
             pass
         elif replayDays == 0:  # replay today's quotation
@@ -407,22 +402,11 @@ class PyTDXLiveFeed(barfeed.BaseBarFeed):
 
 
 if __name__ == '__main__':
-    liveFeed = PyTDXLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
+    liveFeed = LiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
     liveFeed.start()
 
     while not liveFeed.eof():
         bars = liveFeed.getNextBars()
+
         if bars is not None:
-            print bars['000581'].getHigh(), bars['000581'].getDateTime()
-
-
-
-
-
-
-
-
-
-
-
-
+            print (bars['000581'].getHigh(), bars['000581'].getDateTime())

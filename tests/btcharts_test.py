@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
@@ -20,7 +21,7 @@
 
 import datetime
 
-from mooquant.bitcoincharts import barfeed
+from mooquant.providers.bitcoincharts import barfeed
 from mooquant.utils import dt
 
 from . import common

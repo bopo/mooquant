@@ -1,10 +1,13 @@
-# Copyright 2011-2015 ZackZK
+# -*- coding: utf-8 -*-
+# MooQuant
+#
+# Copyright 2017 bopo.wang<ibopo@126.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,28 +16,23 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: ZackZK <silajoin@sina.com>
+.. moduleauthor:: bopo.wang <ibopo@126.com>
 """
-
-
-# import Queue
-from mooquant.utils.compat import queue
 
 import datetime
 import threading
 import time
 from collections import deque
+
 import pytz
-
 import tushare as ts
-import mooquant.logger
 
-from mooquant.providers import bar
-from mooquant import barfeed
-from mooquant import dataseries
-from mooquant import resamplebase
-from mooquant.utils import dt
+import mooquant.logger
+from mooquant import barfeed, dataseries, resamplebase
 from mooquant.bar import Frequency
+from mooquant.providers import bar
+from mooquant.utils import dt
+from mooquant.utils.compat import queue
 
 logger = mooquant.logger.getLogger("tushare")
 
@@ -205,13 +203,16 @@ class TuSharePollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
+        
         while not self.__stopped:
             self.__wait()
+        
             if not self.__stopped:
                 try:
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
+        
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -257,10 +258,11 @@ class TushareBarFeedThread(TuSharePollingThread):
 
 def get_bar_list(df, frequency, date=None):
     bar_list = []
-
     end_time = df.ix[0].time
+    
     if date is None:
         date = datetime.datetime.now()
+
     slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month , date.day, 9, 30, 0))
 
     while slice_start_time.strftime("%H:%M:%S") < end_time:
@@ -277,10 +279,12 @@ def get_bar_list(df, frequency, date=None):
             volume = sum(ticks_slice.volume)
             amount = sum(ticks_slice.amount)
 
-            bar_list.append(bar.BasicBar(slice_start_time, open_, high, low,
-                                         close, volume, 0, frequency, amount))
+            bar_list.append(bar.BasicBar(
+                slice_start_time, open_, high, low, 
+                close, volume, 0, frequency, amount))
         else:
             bar_list.append(None)
+
         slice_start_time = slice_end_time
 
     return bar_list
@@ -291,6 +295,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
     def __init__(self, identifiers, frequency, maxLen=dataseries.DEFAULT_MAX_LEN, replayDays=-1):
         barfeed.BaseBarFeed.__init__(self, frequency, maxLen)
+        
         if not isinstance(identifiers, list):
             raise Exception("identifiers must be a list")
 
@@ -299,8 +304,8 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
         self.__queue = queue.Queue()
 
         self.__fill_today_history_bars(replayDays) # should run before polling thread start
-
         self.__thread = TushareBarFeedThread(self.__queue, identifiers, frequency)
+        
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -336,6 +341,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
     def getNextBars(self):
         ret = None
+
         try:
             eventType, eventData = self.__queue.get(True, TuShareLiveFeed.QUEUE_TIMEOUT)
             if eventType == TushareBarFeedThread.ON_BARS:
@@ -344,6 +350,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
                 logger.error("Invalid event received: %s - %s" % (eventType, eventData))
         except queue.Empty:
             pass
+
         return ret
 
     ######################################################################
@@ -361,6 +368,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 #            return
 
         today_bars = {}
+
         for identifier in self.__identifiers:
             try:
                 df = ts.get_today_ticks(identifier)
@@ -395,6 +403,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
     def __fill_today_history_bars(self, replayDays):
         if replayDays < 0:  # only allow -1 and >=0 integer value
             replayDays = -1
+
         if replayDays == -1:
             pass
         elif replayDays == 0:  # replay today's quotation
@@ -404,23 +413,11 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
             self._fill_today_bars()
 
 
-# if __name__ == '__main__':
-#     liveFeed = TuShareLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
-#     liveFeed.start()
+if __name__ == '__main__':
+    liveFeed = TuShareLiveFeed(['000581'], Frequency.MINUTE, dataseries.DEFAULT_MAX_LEN, 2)
+    liveFeed.start()
 
-#     while not liveFeed.eof():
-#         bars = liveFeed.getNextBars()
-#         if bars is not None:
-#             print bars['000581'].getHigh(), bars['000581'].getDateTime()
-
-
-
-
-
-
-
-
-
-
-
-
+    while not liveFeed.eof():
+        bars = liveFeed.getNextBars()
+        if bars is not None:
+            print bars['000581'].getHigh(), bars['000581'].getDateTime()

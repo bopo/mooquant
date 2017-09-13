@@ -1,12 +1,13 @@
-# PyAlgoTrade
+# -*- coding: utf-8 -*-
+# MooQuant
 #
-# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
+# Copyright 2017 bopo.wang<ibopo@126.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,17 +16,17 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
+.. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import urlparse
+import json
 import urllib
 import urllib2
-import json
+import urlparse
+
 import pytz
 
 from mooquant.utils import dt
-
 
 USE_SECURE_REQUESTS = False
 

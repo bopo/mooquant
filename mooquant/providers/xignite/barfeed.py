@@ -1,12 +1,13 @@
-# mooquant
+# -*- coding: utf-8 -*-
+# MooQuant
 #
-# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
+# Copyright 2017 bopo.wang<ibopo@126.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#   http://www.apache.org/licenses/LICENSE-2.0
+#    http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,22 +16,18 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
+.. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import time
 import datetime
 import threading
-from mooquant.utils.compat import queue
+import time
 
-from mooquant import bar
-from mooquant import barfeed
-from mooquant import dataseries
-from mooquant import resamplebase
 import mooquant.logger
+from mooquant import bar, barfeed, dataseries, resamplebase
 from mooquant.utils import dt
-from mooquant.xignite import api
-
+from mooquant.utils.compat import queue
+from mooquant.providers.xignite import api
 
 logger = mooquant.logger.getLogger("xignite")
 
@@ -47,6 +44,7 @@ class PollingThread(threading.Thread):
     def __wait(self):
         # Wait until getNextCallDateTime checking for cancelation every 0.5 second.
         nextCall = self.getNextCallDateTime()
+
         while not self.__stopped and utcnow() < nextCall:
             time.sleep(0.5)
 
@@ -58,6 +56,7 @@ class PollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
+        
         while not self.__stopped:
             self.__wait()
             if not self.__stopped:
@@ -65,6 +64,7 @@ class PollingThread(threading.Thread):
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
+        
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -92,6 +92,7 @@ def build_bar(barDict, identifier, frequency):
 
     startDate = barDict["StartDate"]
     startTime = barDict["StartTime"]
+
     startDateTimeStr = startDate + " " + startTime
     startDateTime = datetime.datetime.strptime(startDateTimeStr, "%m/%d/%Y %I:%M:%S %p")
 
@@ -186,11 +187,13 @@ class LiveFeed(barfeed.BaseBarFeed):
 
     def __init__(self, apiToken, identifiers, frequency, apiCallDelay=30, maxLen=dataseries.DEFAULT_MAX_LEN):
         barfeed.BaseBarFeed.__init__(self, frequency, maxLen)
+
         if not isinstance(identifiers, list):
             raise Exception("identifiers must be a list")
 
         self.__queue = queue.Queue()
         self.__thread = GetBarThread(self.__queue, apiToken, identifiers, frequency, datetime.timedelta(seconds=apiCallDelay))
+        
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -231,6 +234,7 @@ class LiveFeed(barfeed.BaseBarFeed):
 
         try:
             eventType, eventData = self.__queue.get(True, LiveFeed.QUEUE_TIMEOUT)
+            
             if eventType == GetBarThread.ON_BARS:
                 ret = eventData
             else:

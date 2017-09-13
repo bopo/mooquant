@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright 2011-2015 ZackZK
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +45,7 @@ class TestTuShareLiveFeed(TestCase):
         mock_is_holiday.return_value = False
 
         liveFeed = TuShareLiveFeed(['000581'], 60, dataseries.DEFAULT_MAX_LEN, 0)
-        #liveFeed.start()
+        # liveFeed.start()
 
         bars = liveFeed.getNextBars()
         self.assertEqual(bars['000581'].getHigh(), 9.03)
