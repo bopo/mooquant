@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>介绍 &mdash; mooquant 0.18 文档</title>
+  <title>基本介绍 &mdash; MooQuant 0.2.1 文档</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+    <link rel="top" title="MooQuant 0.2.1 文档" href="../index.html"/>
         <link rel="next" title="安装指南" href="install.html"/>
-        <link rel="prev" title="MooQuant 0.18 Documentation" href="../index.html"/> 
+        <link rel="prev" title="MooQuant 0.2.1 Documentation" href="../index.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -56,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> mooquant
+            <a href="../index.html" class="icon icon-home"> MooQuant
           
 
           
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.18
+                0.2.1
               </div>
             
           
@@ -92,21 +92,20 @@
             
               <p class="caption"><span class="caption-text">基础</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">介绍</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id4">特点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">MooQuant 安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">数据获取</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">生成样例策略</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">运行回测</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">绘制回测结果</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">分析结果</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">基本介绍</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id5">特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">快速安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">数据获取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">策略样例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">运行回测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">绘制结果</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id11">分析结果</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -123,9 +122,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+<p class="caption"><span class="caption-text">其他</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">更新记录</a></li>
 </ul>
 
             
@@ -140,7 +142,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">mooquant</a>
+          <a href="../index.html">MooQuant</a>
         
       </nav>
 
@@ -170,7 +172,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>介绍</li>
+      <li>基本介绍</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -224,11 +226,11 @@
 }
 </style>
 <div class="section" id="intro-overview">
-<span id="id1"></span><h1>介绍<a class="headerlink" href="#intro-overview" title="永久链接至标题">¶</a></h1>
+<span id="id1"></span><h1>基本介绍<a class="headerlink" href="#intro-overview" title="永久链接至标题">¶</a></h1>
 <p>MooQuant 从数据获取、算法交易、回测引擎，实盘模拟，实盘交易到数据分析，为程序化交易者提供了全套解决方案。</p>
 <p>MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常容易地定制专属于自己的程序化交易系统。</p>
-<div class="section" id="id4">
-<h2>特点<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id5">
+<h2>特点<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
 <col width="17%" />
@@ -239,10 +241,10 @@
 <td>让您集中于策略的开发，一行简单的命令就可以执行您的策略。</td>
 </tr>
 <tr class="row-even"><td>完善的文档</td>
-<td>您可以直接访问 <a class="reference external" href="http://mooquant.io">MooQuant 文档</a> 或者 <a class="reference external" href="https://www.ricequant.com/api/python/chn">MooQuant文档</a> 来获取您需要的信息。</td>
+<td>您可以直接访问 <a href="#id12"><span class="problematic" id="id13">`MooQuant 文档`_</span></a> 或者 <a href="#id14"><span class="problematic" id="id15">`MooQuant文档`_</span></a> 来获取您需要的信息。</td>
 </tr>
 <tr class="row-odd"><td>活跃的社区</td>
-<td>您可以通过访问 <a class="reference external" href="https://www.ricequant.com/community">MooQuant社区</a> 获取和询问有关 MooQuant 的一切问题，有很多优秀的童鞋会解答您的问题。</td>
+<td>您可以通过访问 <a href="#id16"><span class="problematic" id="id17">`MooQuant社区`_</span></a> 获取和询问有关 MooQuant 的一切问题，有很多优秀的童鞋会解答您的问题。</td>
 </tr>
 <tr class="row-even"><td>稳定的环境</td>
 <td>每天都有会大量的算法交易在 MooQuant上运行，无论是 MooQuant，还是数据，我们能会做到问题秒处理，秒解决。</td>
@@ -257,11 +259,11 @@
 </table>
 <div class="admonition warning">
 <p class="first admonition-title">警告</p>
-<p class="last">MooQuant 本身支持不同周期的回测和实盘交易，但是目前只免费开放A股市场日线数据，如果用户需要做分钟回测或者更细级别的回测可以在 <a class="reference external" href="https://www.ricequant.com/algorithms">Ricequant</a> 上进行，也通过实现数据层接口函数来使用自己的数据。自有数据源对接请参考 <a class="reference internal" href="../development/event_source.html#development-event-source"><span class="std std-ref">扩展事件源</span></a></p>
+<p class="last">MooQuant 本身支持不同周期的回测和实盘交易，但是目前只免费开放A股市场日线数据，如果用户需要做分钟回测或者更细级别的回测可以在 <a class="reference external" href="http://www.mooquant.com/algorithms">MooQuant</a> 上进行，也通过实现数据层接口函数来使用自己的数据。自有数据源对接请参考 <a class="reference internal" href="../development/event_source.html#development-event-source"><span class="std std-ref">扩展事件源</span></a></p>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>MooQuant 安装<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id6">
+<h2>快速安装<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install mooquant
 </pre></div>
 </div>
@@ -275,22 +277,22 @@
 <p class="last">虚拟环境的安装，请参考 <a class="reference internal" href="detail_install.html#intro-detail-install"><span class="std std-ref">环境搭建</span></a></p>
 </div>
 </div>
-<div class="section" id="id6">
-<h2>数据获取<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id7">
+<h2>数据获取<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
 <p>当 MooQuant 安装完成后，可以通过如下命令获取我们提供的免费A股日线数据。获取数据的详细内容请参考 <a class="reference internal" href="install.html#intro-install-get-data"><span class="std std-ref">获取回测数据</span></a></p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant update_bundle
 </pre></div>
 </div>
 </div>
-<div class="section" id="id7">
-<h2>生成样例策略<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id8">
+<h2>策略样例<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
 <p>运行以下命令，将会在指定目录生成一个examples文件夹，其中包含几个有趣的样例策略:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant examples -d ./
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant-quickstart 或者 mqs
 </pre></div>
 </div>
 </div>
-<div class="section" id="id8">
-<h2>运行回测<a class="headerlink" href="#id8" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id9">
+<h2>运行回测<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
 <p>运行 MooQuant 需要传递一些参数，可以通过命令 <cite>mooquant help</cite> 查看，或者查看文档 <a class="reference internal" href="install.html#intro-config"><span class="std std-ref">获取配置文件</span></a> 来获取相关信息。</p>
 <p>运行如下命令:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> examples
@@ -299,15 +301,15 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
 </div>
 <p>等待回测结束后，将显示您的收益率和Risk。</p>
 </div>
-<div class="section" id="id9">
-<h2>绘制回测结果<a class="headerlink" href="#id9" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id10">
+<h2>绘制结果<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
 <p>如果运行完回测后，还需要再次绘制回测结果，可以运行以下命令:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ mooquant plot result.pkl
 </pre></div>
 </div>
 </div>
-<div class="section" id="id10">
-<h2>分析结果<a class="headerlink" href="#id10" title="永久链接至标题">¶</a></h2>
+<div class="section" id="id11">
+<h2>分析结果<a class="headerlink" href="#id11" title="永久链接至标题">¶</a></h2>
 <p>MooQuant可以输出一个 pickle 文件，里面为一个 dict 。keys 包括</p>
 <ul class="simple">
 <li>summary               回测摘要</li>
@@ -324,7 +326,6 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
 <div class="highlight-python3"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
 
 <span class="n">result_dict</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/tmp/alpha.pkl&quot;</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">))</span>   <span class="c1"># 从输出pickle中读取数据</span>
-
 <span class="n">result_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 <span class="c1"># Out: dict_keys([&#39;stock_portfolios&#39;, &#39;total_portfolios&#39;, &#39;stock_positions&#39;,</span>
 <span class="c1">#                 &#39;benchmark_portfolios&#39;, &#39;plots&#39;, &#39;summary&#39;, &#39;trades&#39;, &#39;benchmark_positions&#39;])</span>
@@ -436,7 +437,7 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
         <a href="install.html" class="btn btn-neutral float-right" title="安装指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral" title="MooQuant 0.18 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral" title="MooQuant 0.2.1 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -446,7 +447,7 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, MooQuant.
-      最后更新于 9月 12, 2017.
+      最后更新于 9月 13, 2017.
 
     </p>
   </div> 
@@ -467,7 +468,7 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.18',
+            VERSION:'0.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -477,6 +478,7 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
 
   
 
@@ -495,7 +497,7 @@ $ mooquant run -f rsi.py -s <span class="m">2014</span>-01-01 -e <span class="m"
   
  
 <script type="text/javascript">
-    console.log("RQAlpha Powered By RiceQuant.");
+    console.log("Powered By MooQuant.");
 </script>
 
 

@@ -1,5 +1,3 @@
 .. _history:
 
-.. include:: ../../CHANGELOG.rst
-
-
+.. include:: ../../HISTORY.rst

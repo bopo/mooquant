@@ -68,7 +68,7 @@ For GNU/Linux
 
     mkdir /usr/share/fonts/chinese
     cd /usr/share/fonts/chinese
-    wget https://static.ricequant.com/data/WenQuanYi%20Micro%20Hei.ttf
+    wget https://static.mooquant.com/data/WenQuanYi%20Micro%20Hei.ttf
     fc-cache -fv
     fc-list
     rm -rf ~/.cache/matplotlib

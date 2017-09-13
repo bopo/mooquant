@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>环境搭建 &mdash; mooquant 0.18 文档</title>
+  <title>环境搭建 &mdash; MooQuant 0.2.1 文档</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
-        <link rel="next" title="开箱即用虚拟机" href="virtual_machine.html"/>
+    <link rel="top" title="MooQuant 0.2.1 文档" href="../index.html"/>
+        <link rel="next" title="基础 API" href="../api/base_api.html"/>
         <link rel="prev" title="策略示例" href="examples.html"/> 
 
   
@@ -56,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> mooquant
+            <a href="../index.html" class="icon icon-home"> MooQuant
           
 
           
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.18
+                0.2.1
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">基础</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">基本介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="install.html">安装指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
@@ -106,7 +106,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#ta-lib">安装 TA-Lib</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -123,9 +122,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+<p class="caption"><span class="caption-text">其他</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">更新记录</a></li>
 </ul>
 
             
@@ -140,7 +142,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">mooquant</a>
+          <a href="../index.html">MooQuant</a>
         
       </nav>
 
@@ -277,7 +279,7 @@ $ <span class="nb">echo</span> <span class="s2">&quot;backend: Agg&quot;</span> 
 <p>在执行以下命令如出现问题，请参考 <a class="reference internal" href="install.html#faq-chinese-fonts-mac"><span class="std std-ref">5.  Mac 下安装中文字体相关问题：</span></a></p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir /usr/share/fonts/chinese
 <span class="nb">cd</span> /usr/share/fonts/chinese
-wget https://static.ricequant.com/data/WenQuanYi%20Micro%20Hei.ttf
+wget https://static.mooquant.com/data/WenQuanYi%20Micro%20Hei.ttf
 fc-cache -fv
 fc-list
 rm -rf ~/.cache/matplotlib
@@ -347,7 +349,7 @@ $ conda-env remove --name env_name
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="virtual_machine.html" class="btn btn-neutral float-right" title="开箱即用虚拟机" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../api/base_api.html" class="btn btn-neutral float-right" title="基础 API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="examples.html" class="btn btn-neutral" title="策略示例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -360,7 +362,7 @@ $ conda-env remove --name env_name
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, MooQuant.
-      最后更新于 9月 12, 2017.
+      最后更新于 9月 13, 2017.
 
     </p>
   </div> 
@@ -381,7 +383,7 @@ $ conda-env remove --name env_name
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.18',
+            VERSION:'0.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -391,6 +393,7 @@ $ conda-env remove --name env_name
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
 
   
 
@@ -409,7 +412,7 @@ $ conda-env remove --name env_name
   
  
 <script type="text/javascript">
-    console.log("RQAlpha Powered By RiceQuant.");
+    console.log("Powered By MooQuant.");
 </script>
 
 

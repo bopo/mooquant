@@ -1,13 +1,13 @@
 .. _intro-overview:
 
 ====================
-介绍
+基本介绍
 ====================
 
-.. _Ricequant: https://www.ricequant.com/algorithms
-.. _MooQuant社区: https://www.ricequant.com/community
-.. _MooQuant 文档: http://mooquant.io
-.. _MooQuant文档: https://www.ricequant.com/api/python/chn
+.. _MooQuant: http://www.mooquant.com/algorithms
+.. _MooQuant 社区: http://www.mooquant.com/community
+.. _MooQuant 文档: http://www.mooquant.com/docs
+.. _MooQuant 文档: http://www.mooquant.com/api/python/chn
 
 
 MooQuant 从数据获取、算法交易、回测引擎，实盘模拟，实盘交易到数据分析，为程序化交易者提供了全套解决方案。
@@ -28,9 +28,9 @@ MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常�
 
 .. warning::
 
-    MooQuant 本身支持不同周期的回测和实盘交易，但是目前只免费开放A股市场日线数据，如果用户需要做分钟回测或者更细级别的回测可以在 `Ricequant`_ 上进行，也通过实现数据层接口函数来使用自己的数据。自有数据源对接请参考 :ref:`development-event-source`
+    MooQuant 本身支持不同周期的回测和实盘交易，但是目前只免费开放A股市场日线数据，如果用户需要做分钟回测或者更细级别的回测可以在 `MooQuant`_ 上进行，也通过实现数据层接口函数来使用自己的数据。自有数据源对接请参考 :ref:`development-event-source`
 
-MooQuant 安装
+快速安装
 ==================
 
 .. code-block:: bash
@@ -57,14 +57,14 @@ MooQuant 安装
 
     $ mooquant update_bundle
 
-生成样例策略
+策略样例
 ==================
 
 运行以下命令，将会在指定目录生成一个examples文件夹，其中包含几个有趣的样例策略:
 
 .. code-block:: bash
 
-    $ mooquant examples -d ./
+    $ mooquant-quickstart 或者 mqs
 
 运行回测
 ==================
@@ -80,7 +80,7 @@ MooQuant 安装
 
 等待回测结束后，将显示您的收益率和Risk。
 
-绘制回测结果
+绘制结果
 ==================
 
 如果运行完回测后，还需要再次绘制回测结果，可以运行以下命令:
@@ -110,7 +110,6 @@ MooQuant可以输出一个 pickle 文件，里面为一个 dict 。keys 包括
     import pickle
 
     result_dict = pickle.load(open("/tmp/alpha.pkl", "rb"))   # 从输出pickle中读取数据
-
     result_dict.keys()
     # Out: dict_keys(['stock_portfolios', 'total_portfolios', 'stock_positions',
     #                 'benchmark_portfolios', 'plots', 'summary', 'trades', 'benchmark_positions'])

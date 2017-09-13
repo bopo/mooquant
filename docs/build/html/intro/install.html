@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>安装指南 &mdash; mooquant 0.18 文档</title>
+  <title>安装指南 &mdash; MooQuant 0.2.1 文档</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+    <link rel="top" title="MooQuant 0.2.1 文档" href="../index.html"/>
         <link rel="next" title="入门教程" href="tutorial.html"/>
-        <link rel="prev" title="介绍" href="overview.html"/> 
+        <link rel="prev" title="基本介绍" href="overview.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -56,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> mooquant
+            <a href="../index.html" class="icon icon-home"> MooQuant
           
 
           
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.18
+                0.2.1
               </div>
             
           
@@ -92,7 +92,7 @@
             
               <p class="caption"><span class="caption-text">基础</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">基本介绍</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">安装指南</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">安装前</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">安装</a></li>
@@ -112,7 +112,6 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">入门教程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">策略示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="detail_install.html">环境搭建</a></li>
-<li class="toctree-l1"><a class="reference internal" href="virtual_machine.html">开箱即用虚拟机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul>
@@ -129,9 +128,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+<p class="caption"><span class="caption-text">其他</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">更新记录</a></li>
 </ul>
 
             
@@ -146,7 +148,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">mooquant</a>
+          <a href="../index.html">MooQuant</a>
         
       </nav>
 
@@ -258,18 +260,18 @@
 <p>如果在安装的过程中出现问题，请参考 <a class="reference internal" href="#intro-faq"><span class="std std-ref">FAQ</span></a> 章节。</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
-<p>Windows 环境下因为默认没有安装 <cite>Visual C++ Compiler</cite>, 需要自行下载并安装 <cite>visual-cpp-build-tools</cite>，如果觉得麻烦，也可以直接去 <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz">http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz</a> 下载相应版本的 <code class="code docutils literal"><span class="pre">bcolz</span> <span class="pre">wheel</span></code> 包，直接安装编译后的 bcolz 版本。</p>
-<p>除了 bcolz 库以外，line-profiler 安装时也同样需要 C++ 编译器，如果出现安装失败，也可以同样下载 <code class="code docutils literal"><span class="pre">line-profiler</span> <span class="pre">wheel</span></code> 包来进行安装。</p>
-<p>Mac OS 环境下默认没有安装`X-code`，需要自行运行安装以添加一个轻量级的C/C++ clang编译器，可在Terminal下输入：</p>
-<blockquote class="last">
-<div><div class="highlight-bash"><div class="highlight"><pre><span></span>$ xcode-select --install
+<ul class="simple">
+<li>Windows 环境下因为默认没有安装 <cite>Visual C++ Compiler</cite>, 需要自行下载并安装 <cite>visual-cpp-build-tools</cite>，如果觉得麻烦，也可以直接去 <a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz">http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz</a> 下载相应版本的 <code class="code docutils literal"><span class="pre">bcolz</span> <span class="pre">wheel</span></code> 包，直接安装编译后的 bcolz 版本。</li>
+<li>除了 bcolz 库以外，line-profiler 安装时也同样需要 C++ 编译器，如果出现安装失败，也可以同样下载 <code class="code docutils literal"><span class="pre">line-profiler</span> <span class="pre">wheel</span></code> 包来进行安装。</li>
+<li>Mac OS 环境下默认没有安装`X-code`，需要自行运行安装以添加一个轻量级的C/C++ clang编译器，可在Terminal下输入：</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ xcode-select --install
 </pre></div>
 </div>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install cython
+<div class="last highlight-bash"><div class="highlight"><pre><span></span>$ pip install cython
 $ pip install bcolz
 </pre></div>
 </div>
-</div></blockquote>
 </div>
 </div>
 <div class="section" id="id3">
@@ -284,7 +286,7 @@ $ pip install bcolz
 </div>
 <div class="section" id="intro-install-get-data">
 <span id="id4"></span><h2>获取回测数据<a class="headerlink" href="#intro-install-get-data" title="永久链接至标题">¶</a></h2>
-<p>RiceQuant 免费提供日级别的股票和期货数据供回测使用，可以通过以下命令来进行每日数据的增量更新:</p>
+<p>MooQuant 免费提供日级别的股票和期货数据供回测使用，可以通过以下命令来进行每日数据的增量更新:</p>
 <div class="admonition note">
 <p class="first admonition-title">注解</p>
 <p class="last">Mac OS下执行 <code class="code docutils literal"><span class="pre">update_bundle</span></code> 出现问题，请参考：<a class="reference internal" href="#faq-update-bundle-mac"><span class="std std-ref">4.  Mac OS 获取回测数据相关问题</span></a></p>
@@ -402,7 +404,7 @@ $ pip install bcolz
         <a href="tutorial.html" class="btn btn-neutral float-right" title="入门教程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="overview.html" class="btn btn-neutral" title="介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="overview.html" class="btn btn-neutral" title="基本介绍" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -412,7 +414,7 @@ $ pip install bcolz
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, MooQuant.
-      最后更新于 9月 12, 2017.
+      最后更新于 9月 13, 2017.
 
     </p>
   </div> 
@@ -433,7 +435,7 @@ $ pip install bcolz
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.18',
+            VERSION:'0.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -443,6 +445,7 @@ $ pip install bcolz
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
 
   
 
@@ -461,7 +464,7 @@ $ pip install bcolz
   
  
 <script type="text/javascript">
-    console.log("RQAlpha Powered By RiceQuant.");
+    console.log("Powered By MooQuant.");
 </script>
 
 

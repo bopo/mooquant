@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>扩展 API &mdash; mooquant 0.18 文档</title>
+  <title>扩展 API &mdash; MooQuant 0.2.1 文档</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="索引"
               href="../genindex.html"/>
         <link rel="search" title="搜索" href="../search.html"/>
-    <link rel="top" title="mooquant 0.18 文档" href="../index.html"/>
+    <link rel="top" title="MooQuant 0.2.1 文档" href="../index.html"/>
         <link rel="next" title="多种方式运行策略" href="../intro/run_algorithm.html"/>
         <link rel="prev" title="基础 API" href="base_api.html"/> 
 
@@ -56,7 +56,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> mooquant
+            <a href="../index.html" class="icon icon-home"> MooQuant
           
 
           
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.18
+                0.2.1
               </div>
             
           
@@ -92,12 +92,11 @@
             
               <p class="caption"><span class="caption-text">基础</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">介绍</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">基本介绍</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/install.html">安装指南</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">入门教程</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">策略示例</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../intro/detail_install.html">环境搭建</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../intro/virtual_machine.html">开箱即用虚拟机</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API</span></p>
 <ul class="current">
@@ -127,9 +126,12 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../development/make_contribute.html">如何贡献代码</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/basic_concept.html">基本概念</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../development/mod.html">Mod</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/event_source.html">扩展事件源</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../development/data_source.html">扩展数据源</a></li>
+</ul>
+<p class="caption"><span class="caption-text">其他</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">更新记录</a></li>
 </ul>
 
             
@@ -144,7 +146,7 @@
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">mooquant</a>
+          <a href="../index.html">MooQuant</a>
         
       </nav>
 
@@ -243,10 +245,10 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>query</strong> (<em>SQLAlchemyQueryObject</em>) -- SQLAlchmey的Query对象。其中可在'query'内填写需要查询的指标，'filter'内填写数据过滤条件。具体可参考 <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying">sqlalchemy's query documentation</a> 学习使用更多的方便的查询语句。从数据科学家的观点来看，sqlalchemy的使用比sql更加简单和强大</li>
-<li><strong>entry_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) -- 查询财务数据的基准日期，应早于策略当前日期。默认为策略当前日期前一天。</li>
-<li><strong>interval</strong> (<em>str</em>) -- 查询财务数据的间隔，默认为'1d'。例如，填写'5y'，则代表从entry_date开始（包括entry_date）回溯5年，返回数据时间以年为间隔。'd' - 天，'m' - 月， 'q' - 季，'y' - 年</li>
-<li><strong>report_quarter</strong> (<em>bool</em>) -- 是否显示报告期，默认为False，不显示。'Q1' - 一季报，'Q2' - 半年报，'Q3' - 三季报，'Q4' - 年报</li>
+<li><strong>query</strong> (<em>SQLAlchemyQueryObject</em>) – SQLAlchmey的Query对象。其中可在’query’内填写需要查询的指标，’filter’内填写数据过滤条件。具体可参考 <a class="reference external" href="http://docs.sqlalchemy.org/en/rel_1_0/orm/tutorial.html#querying">sqlalchemy’s query documentation</a> 学习使用更多的方便的查询语句。从数据科学家的观点来看，sqlalchemy的使用比sql更加简单和强大</li>
+<li><strong>entry_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) – 查询财务数据的基准日期，应早于策略当前日期。默认为策略当前日期前一天。</li>
+<li><strong>interval</strong> (<em>str</em>) – 查询财务数据的间隔，默认为‘1d’。例如，填写‘5y’，则代表从entry_date开始（包括entry_date）回溯5年，返回数据时间以年为间隔。’d’ - 天，’m’ - 月， ‘q’ - 季，’y’ - 年</li>
+<li><strong>report_quarter</strong> (<em>bool</em>) – 是否显示报告期，默认为False，不显示。’Q1’ - 一季报，’Q2’ - 半年报，’Q3’ - 三季报，’Q4’ - 年报</li>
 </ul>
 </td>
 </tr>
@@ -343,19 +345,19 @@
 <dl class="function">
 <dt id="get_price">
 <code class="descname">get_price</code><span class="sig-paren">(</span><em>order_book_id</em>, <em>start_date</em>, <em>end_date=None</em>, <em>frequency='1d'</em>, <em>fields=None</em>, <em>adjust_type='pre'</em>, <em>skip_suspended=False</em><span class="sig-paren">)</span><a class="headerlink" href="#get_price" title="永久链接至目标">¶</a></dt>
-<dd><p>获取指定合约或合约列表的历史行情（包含起止日期，日线或分钟线），不能在'handle_bar'函数中进行调用。</p>
+<dd><p>获取指定合约或合约列表的历史行情（包含起止日期，日线或分钟线），不能在’handle_bar’函数中进行调用。</p>
 <p>注意，这一函数主要是为满足在研究平台编写策略习惯而引入。在编写策略中，使用history_bars进行数据获取会更方便。</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>order_book_id</strong> (<cite>str</cite> | list[<cite>str</cite>]) -- 合约代码，合约代码，可传入order_book_id, order_book_id list, symbol, symbol list</li>
-<li><strong>start_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) -- 开始日期，用户必须指定</li>
-<li><strong>end_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) -- 结束日期，默认为策略当前日期前一天</li>
-<li><strong>frequency</strong> (<em>str</em>) -- 历史数据的频率。 现在支持日/分钟级别的历史数据，默认为'1d'。使用者可自由选取不同频率，例如'5m'代表5分钟线</li>
-<li><strong>adjust_type</strong> (<em>str</em>) -- 权息修复方案。前复权 - pre，后复权 - post，不复权 - none，回测使用 - internal 需要注意，internal数据与回测所使用数据保持一致，仅就拆分事件对价格以及成交量进行了前复权处理，并未考虑分红派息对于股价的影响。所以在分红前后，价格会出现跳跃</li>
-<li><strong>skip_suspended</strong> (<em>bool</em>) -- 是否跳过停牌数据。默认为False，不跳过，用停牌前数据进行补齐。True则为跳过停牌期。注意，当设置为True时，函数order_book_id只支持单个合约传入</li>
+<li><strong>order_book_id</strong> (<cite>str</cite> | list[<cite>str</cite>]) – 合约代码，合约代码，可传入order_book_id, order_book_id list, symbol, symbol list</li>
+<li><strong>start_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) – 开始日期，用户必须指定</li>
+<li><strong>end_date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) – 结束日期，默认为策略当前日期前一天</li>
+<li><strong>frequency</strong> (<em>str</em>) – 历史数据的频率。 现在支持日/分钟级别的历史数据，默认为‘1d’。使用者可自由选取不同频率，例如‘5m’代表5分钟线</li>
+<li><strong>adjust_type</strong> (<em>str</em>) – 权息修复方案。前复权 - pre，后复权 - post，不复权 - none，回测使用 - internal 需要注意，internal数据与回测所使用数据保持一致，仅就拆分事件对价格以及成交量进行了前复权处理，并未考虑分红派息对于股价的影响。所以在分红前后，价格会出现跳跃</li>
+<li><strong>skip_suspended</strong> (<em>bool</em>) – 是否跳过停牌数据。默认为False，不跳过，用停牌前数据进行补齐。True则为跳过停牌期。注意，当设置为True时，函数order_book_id只支持单个合约传入</li>
 </ul>
 </td>
 </tr>
@@ -489,7 +491,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>underlying_symbol</strong> (<em>str</em>) -- 期货合约品种，例如沪深300股指期货为'IF'</td>
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>underlying_symbol</strong> (<em>str</em>) – 期货合约品种，例如沪深300股指期货为’IF’</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Example:</th><td class="field-body"></td>
 </tr>
@@ -517,9 +519,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
-<li><strong>order_book_id</strong> (<cite>str</cite> | list[<cite>str</cite>]) -- 可输入order_book_id, order_book_id list, symbol, symbol list。另外，输入'XSHG'或'sh'代表整个上证整体情况；'XSHE'或'sz'代表深证整体情况</li>
-<li><strong>count</strong> (<em>int</em>) -- 回溯获取的数据个数。默认为当前能够获取到的最近的数据</li>
-<li><strong>fields</strong> (<em>str</em>) -- 默认为所有字段。见下方列表</li>
+<li><strong>order_book_id</strong> (<cite>str</cite> | list[<cite>str</cite>]) – 可输入order_book_id, order_book_id list, symbol, symbol list。另外，输入’XSHG’或’sh’代表整个上证整体情况；’XSHE’或’sz’代表深证整体情况</li>
+<li><strong>count</strong> (<em>int</em>) – 回溯获取的数据个数。默认为当前能够获取到的最近的数据</li>
+<li><strong>fields</strong> (<em>str</em>) – 默认为所有字段。见下方列表</li>
 </ul>
 </td>
 </tr>
@@ -672,9 +674,9 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first last simple">
-<li><strong>order_book_id</strong> (<em>str</em>) -- 可输入order_book_id或symbol</li>
-<li><strong>count</strong> (<em>int</em>) -- 回溯获取的数据个数。默认为当前能够获取到的最近的数据</li>
-<li><strong>fields</strong> (<em>str</em>) -- 默认为所有字段。见下方列表</li>
+<li><strong>order_book_id</strong> (<em>str</em>) – 可输入order_book_id或symbol</li>
+<li><strong>count</strong> (<em>int</em>) – 回溯获取的数据个数。默认为当前能够获取到的最近的数据</li>
+<li><strong>fields</strong> (<em>str</em>) – 默认为所有字段。见下方列表</li>
 </ul>
 </td>
 </tr>
@@ -862,8 +864,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>order_book_id</strong> (<em>str</em>) -- 指数代码，可传入order_book_id</li>
-<li><strong>date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) -- 查询日期，默认为策略当前日期。如指定，则应保证该日期不晚于策略当前日期</li>
+<li><strong>order_book_id</strong> (<em>str</em>) – 指数代码，可传入order_book_id</li>
+<li><strong>date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) – 查询日期，默认为策略当前日期。如指定，则应保证该日期不晚于策略当前日期</li>
 </ul>
 </td>
 </tr>
@@ -894,8 +896,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>order_book_id</strong> (<em>str</em>) -- 可输入order_book_id或symbol</li>
-<li><strong>date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) -- 查询日期，默认为策略当前日期。如指定，则应保证该日期不晚于策略当前日期</li>
+<li><strong>order_book_id</strong> (<em>str</em>) – 可输入order_book_id或symbol</li>
+<li><strong>date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) – 查询日期，默认为策略当前日期。如指定，则应保证该日期不晚于策略当前日期</li>
 </ul>
 </td>
 </tr>
@@ -945,8 +947,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>order_book_id</strong> (<em>str</em>) -- 证券代码，证券的独特的标识符，例如：'000001.XSHE'</li>
-<li><strong>start_date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) -- 开始日期，用户必须指定，需要早于策略当前日期</li>
+<li><strong>order_book_id</strong> (<em>str</em>) – 证券代码，证券的独特的标识符，例如：‘000001.XSHE’</li>
+<li><strong>start_date</strong> (<cite>str</cite> | <cite>date</cite> | <cite>datetime</cite> | <cite>pandas.Timestamp</cite>) – 开始日期，用户必须指定，需要早于策略当前日期</li>
 </ul>
 </td>
 </tr>
@@ -996,8 +998,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>current_yield</strong> (<em>float</em>) -- 本期利率，用户必须指定</li>
-<li><strong>listing</strong> (<em>bool</em>) -- 默认为True，该分级基金是否在交易所可交易</li>
+<li><strong>current_yield</strong> (<em>float</em>) – 本期利率，用户必须指定</li>
+<li><strong>listing</strong> (<em>bool</em>) – 默认为True，该分级基金是否在交易所可交易</li>
 </ul>
 </td>
 </tr>
@@ -1027,8 +1029,8 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>interest_rule</strong> (<em>str</em>) -- 利率规则，例如：&quot;+3.5%&quot;, &quot;+4%&quot;, &quot;=7%&quot;, &quot;*1.4+0.55%&quot;, &quot;利差&quot; etc. 您也可以在研究平台使用 <a class="reference internal" href="#fenji.get_all" title="fenji.get_all"><code class="xref py py-func docutils literal"><span class="pre">fenji.get_all()</span></code></a> 来进行查询所有的组合可能。用户必须填写</li>
-<li><strong>listing</strong> (<em>bool</em>) -- 该分级基金是否在交易所可交易，默认为True</li>
+<li><strong>interest_rule</strong> (<em>str</em>) – 利率规则，例如：”+3.5%”, “+4%”, “=7%”, “*1.4+0.55%”, “利差” etc. 您也可以在研究平台使用 <a class="reference internal" href="#fenji.get_all" title="fenji.get_all"><code class="xref py py-func docutils literal"><span class="pre">fenji.get_all()</span></code></a> 来进行查询所有的组合可能。用户必须填写</li>
+<li><strong>listing</strong> (<em>bool</em>) – 该分级基金是否在交易所可交易，默认为True</li>
 </ul>
 </td>
 </tr>
@@ -1057,7 +1059,7 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>field_list</strong> (list[<cite>str</cite>]) -- 希望输出的数据字段名（见下表），默认为所有字段</td>
+<tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><strong>field_list</strong> (list[<cite>str</cite>]) – 希望输出的数据字段名（见下表），默认为所有字段</td>
 </tr>
 <tr class="field-even field"><th class="field-name">返回:</th><td class="field-body"><cite>pandas.DataFrame</cite> - 分级基金各项数据</td>
 </tr>
@@ -1172,10 +1174,10 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">参数:</th><td class="field-body"><ul class="first simple">
-<li><strong>field</strong> (<em>str</em>) -- 目前支持的雪球数据统计指标有: 昨日新增评论 - <cite>new_comments</cite>，总评论 - <cite>total_comments</cite>，昨日新增关注者 - <cite>new_followers</cite>，总关注者数目 - <cite>total_followers</cite>，卖出行为 - <cite>sell_actions</cite>，买入行为 - <cite>buy_actions</cite></li>
-<li><strong>date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) -- 查询日期。默认为策略当前日期前一天。如指定，则该日期应早于策略当前日期。注意：我们最早支持的雪球数据只到2015年4月23日，之后的数据我们都会保持更新</li>
-<li><strong>frequency</strong> (<em>str</em>) -- 默认是1d，即每日的数据统计。也支持每周 - 1w和每月 - 1M的统计</li>
-<li><strong>count</strong> (<em>int</em>) -- 指定返回多少个结果，默认是10个</li>
+<li><strong>field</strong> (<em>str</em>) – 目前支持的雪球数据统计指标有: 昨日新增评论 - <cite>new_comments</cite>，总评论 - <cite>total_comments</cite>，昨日新增关注者 - <cite>new_followers</cite>，总关注者数目 - <cite>total_followers</cite>，卖出行为 - <cite>sell_actions</cite>，买入行为 - <cite>buy_actions</cite></li>
+<li><strong>date</strong> (<cite>str</cite> | <cite>datetime.date</cite> | <cite>datetime.datetime</cite> | <cite>pandas.Timestamp</cite>) – 查询日期。默认为策略当前日期前一天。如指定，则该日期应早于策略当前日期。注意：我们最早支持的雪球数据只到2015年4月23日，之后的数据我们都会保持更新</li>
+<li><strong>frequency</strong> (<em>str</em>) – 默认是1d，即每日的数据统计。也支持每周 - 1w和每月 - 1M的统计</li>
+<li><strong>count</strong> (<em>int</em>) – 指定返回多少个结果，默认是10个</li>
 </ul>
 </td>
 </tr>
@@ -1222,7 +1224,7 @@
   <div role="contentinfo">
     <p>
         &copy; Copyright 2017, MooQuant.
-      最后更新于 9月 12, 2017.
+      最后更新于 9月 13, 2017.
 
     </p>
   </div> 
@@ -1243,7 +1245,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.18',
+            VERSION:'0.2.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -1253,6 +1255,7 @@
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="../_static/translations.js"></script>
 
   
 
@@ -1271,7 +1274,7 @@
   
  
 <script type="text/javascript">
-    console.log("RQAlpha Powered By RiceQuant.");
+    console.log("Powered By MooQuant.");
 </script>
 
 
