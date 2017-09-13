@@ -24,19 +24,18 @@ import threading
 import time
 from collections import deque
 
-import pytz
 # import pytdx as tdx
 # from PyTDX.util.dateu import is_holiday  # use our own is_holiday currently as PyTDX does not include 2016 holiday
-from pytdx.reader import TdxDailyBarReader, TdxFileNotFoundException
+from pytdx.reader import TdxDailyBarReader
 
 import mooquant.logger
 from mooquant import barfeed, dataseries, resamplebase
 from mooquant.bar import Frequency
 from mooquant.providers import bar
-from mooquant.utils import dt
-from mooquant.utils.compat import queue
 from mooquant.providers.pytdx import livefeed
-from mooquant.providers.pytdx.common import to_market_datetime,is_holiday,holiday
+from mooquant.providers.pytdx.common import to_market_datetime, is_holiday
+from mooquant.utils.compat import queue
+
 # reader = TdxDailyBarReader()
 # df = reader.get_df("/Users/rainx/tmp/vipdoc/sz/lday/sz000001.day")
 
@@ -44,8 +43,6 @@ from mooquant.providers.pytdx.common import to_market_datetime,is_holiday,holida
 logger = mooquant.logger.getLogger("PyTDX")
 
 LiveTradeFeed = livefeed.LiveTradeFeed
-
-
 
 
 class TickDataSeries(object):
@@ -74,7 +71,7 @@ class TickDataSeries(object):
         return self.__dateTimes
 
     def append(self, price, volume, amount, dateTime):
-        assert(bar is not None)
+        assert (bar is not None)
         self.__priceDS.append(price)
         self.__volumeDS.append(volume)
         self.__amountDS.append(amount)
@@ -98,7 +95,7 @@ def get_trading_days(start_day, days):
 
     for i in range(days):
         while True:
-            day = start_day - datetime.timedelta(days=i+1+holiday)
+            day = start_day - datetime.timedelta(days=i + 1 + holiday)
             if day.date().isoformat() in df.index:
                 trading_days.append(day)
                 break
@@ -108,6 +105,7 @@ def get_trading_days(start_day, days):
     trading_days.reverse()  # oldest date is put to head
 
     return trading_days
+
 
 # 构建 bar 数据
 def build_bar(dateTime, ds):
@@ -124,11 +122,12 @@ def build_bar(dateTime, ds):
 
     return bar.BasicBar(dateTime, open_, high, low, close, volume, None, Frequency.DAY, amount)
 
+
 # 轮询进程
 class PollingThread(threading.Thread):
     # Not using xignite polling thread is because two underscores functions can't be override, e.g. __wait()
 
-    PyTDX_INQUERY_PERIOD = 3 # PyTDX read period, default is 3s
+    PyTDX_INQUERY_PERIOD = 3  # PyTDX read period, default is 3s
 
     def __init__(self, identifiers):
         super(PollingThread, self).__init__()
@@ -191,17 +190,17 @@ class PollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
-        
+
         while not self.__stopped:
             self.__wait()
-        
+
             if not self.__stopped:
-        
+
                 try:
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
-        
+
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -210,6 +209,7 @@ class PollingThread(threading.Thread):
 
     def doCall(self):
         raise NotImplementedError()
+
 
 # bar feed 进程
 class BarFeedThread(PollingThread):
@@ -252,8 +252,8 @@ def get_bar_list(df, frequency, date=None):
 
     if date is None:
         date = datetime.datetime.now()
-    
-    slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month , date.day, 9, 30, 0))
+
+    slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month, date.day, 9, 30, 0))
 
     while slice_start_time.strftime("%H:%M:%S") < end_time:
         slice_end_time = slice_start_time + datetime.timedelta(seconds=frequency)
@@ -273,10 +273,11 @@ def get_bar_list(df, frequency, date=None):
                                          close, volume, 0, frequency, amount))
         else:
             bar_list.append(None)
-            
+
         slice_start_time = slice_end_time
 
     return bar_list
+
 
 # 实时行情
 class LiveFeed(barfeed.BaseBarFeed):
@@ -292,9 +293,9 @@ class LiveFeed(barfeed.BaseBarFeed):
         self.__frequency = frequency
         self.__queue = queue.Queue()
 
-        self.__fill_today_history_bars(replayDays) # should run before polling thread start
+        self.__fill_today_history_bars(replayDays)  # should run before polling thread start
         self.__thread = BarFeedThread(self.__queue, identifiers, frequency)
-        
+
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -350,10 +351,10 @@ class LiveFeed(barfeed.BaseBarFeed):
             return
         elif datetime.date.today().weekday() in [5, 0]:
             return
-        
-#        #James:
-#        if datetime.datetime.now().hour * 60 + 30 < 9*60 + 30:
-#            return
+
+        #        #James:
+        #        if datetime.datetime.now().hour * 60 + 30 < 9*60 + 30:
+        #            return
 
         today_bars = {}
 
@@ -409,4 +410,4 @@ if __name__ == '__main__':
         bars = liveFeed.getNextBars()
 
         if bars is not None:
-            print (bars['000581'].getHigh(), bars['000581'].getDateTime())
+            print(bars['000581'].getHigh(), bars['000581'].getDateTime())
