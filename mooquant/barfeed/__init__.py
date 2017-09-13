@@ -26,7 +26,6 @@ from mooquant.dataseries import bards
 from mooquant import feed
 from mooquant import dispatchprio
 
-
 # This is only for backward compatibility since Frequency used to be defined here and not in bar.py.
 Frequency = bar.Frequency
 

@@ -22,10 +22,10 @@
 import json
 import time
 
-import mooquant.logger
 import tornado
-
 from ws4py.client import tornadoclient
+
+import mooquant.logger
 
 logger = mooquant.logger.getLogger("websocket.client")
 
@@ -34,8 +34,8 @@ logger = mooquant.logger.getLogger("websocket.client")
 # from the server.
 class KeepAliveMgr(object):
     def __init__(self, wsClient, maxInactivity, responseTimeout):
-        assert(maxInactivity > 0)
-        assert(responseTimeout > 0)
+        assert (maxInactivity > 0)
+        assert (responseTimeout > 0)
 
         self.__callback = None
         self.__wsClient = wsClient

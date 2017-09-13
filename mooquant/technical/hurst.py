@@ -20,6 +20,7 @@
 """
 
 import numpy as np
+
 from mooquant import technical
 
 
@@ -40,7 +41,7 @@ def hurst_exp(p, minLags, maxLags):
     # linear fit to double-log graph (gives power)
     m = np.polyfit(np.log10(lagvec), np.log10(tau), 1)
     # calculate hurst
-    hurst = m[0]*2
+    hurst = m[0] * 2
     return hurst
 
 
@@ -62,7 +63,7 @@ class HurstExponentEventWindow(technical.EventWindow):
 
         if self.windowFull():
             ret = hurst_exp(self.getValues(), self.__minLags, self.__maxLags)
-        
+
         return ret
 
 

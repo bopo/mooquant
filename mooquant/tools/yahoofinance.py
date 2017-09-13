@@ -21,7 +21,6 @@
 
 import datetime
 import os
-import six
 
 import mooquant.logger
 from mooquant import bar
@@ -38,7 +37,9 @@ def __adjust_month(month):
 
 
 def download_csv(instrument, begin, end, frequency):
-    url = "http://ichart.finance.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=%s&ignore=.csv" % (instrument, __adjust_month(begin.month), begin.day, begin.year, __adjust_month(end.month), end.day, end.year, frequency)
+    url = "http://ichart.finance.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=%s&ignore=.csv" % (
+    instrument, __adjust_month(begin.month), begin.day, begin.year, __adjust_month(end.month), end.day, end.year,
+    frequency)
     return csvutils.download_csv(url)
 
 
@@ -54,7 +55,7 @@ def download_daily_bars(instrument, year, csvFile):
     """
 
     bars = download_csv(instrument, datetime.date(year, 1, 1), datetime.date(year, 12, 31), "d")
-    
+
     with open(csvFile, "w") as f:
         f.write(bars)
 
@@ -75,7 +76,7 @@ def download_weekly_bars(instrument, year, csvFile):
     bars = download_csv(instrument, begin, end, "w")
 
     with open(csvFile, "w") as f:
-        f.write(bars)    
+        f.write(bars)
 
 
 def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.DAY, timezone=None, skipErrors=False):
@@ -106,7 +107,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
         logger.info("Creating %s directory" % (storage))
         os.mkdir(storage)
 
-    for year in range(fromYear, toYear+1):
+    for year in range(fromYear, toYear + 1):
         for instrument in instruments:
             fileName = os.path.join(storage, "%s-%d-yahoofinance.csv" % (instrument, year))
             if not os.path.exists(fileName):
@@ -126,5 +127,5 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
                         raise e
 
             ret.addBarsFromCSV(instrument, fileName)
-            
+
     return ret

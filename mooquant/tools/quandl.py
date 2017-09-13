@@ -22,12 +22,11 @@
 import datetime
 import os
 
-import six
-
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import quandlfeed
 from mooquant.utils import csvutils, dt
+
 
 # http://www.quandl.com/help/api
 
@@ -60,7 +59,8 @@ def download_daily_bars(sourceCode, tableCode, year, csvFile, authToken=None):
     :type authToken: string.
     """
 
-    bars = download_csv(sourceCode, tableCode, datetime.date(year, 1, 1), datetime.date(year, 12, 31), "daily", authToken)
+    bars = download_csv(sourceCode, tableCode, datetime.date(year, 1, 1), datetime.date(year, 12, 31), "daily",
+                        authToken)
     with open(csvFile, "w") as f:
         f.write(bars)
 
@@ -83,7 +83,7 @@ def download_weekly_bars(sourceCode, tableCode, year, csvFile, authToken=None):
     begin = dt.get_first_monday(year) - datetime.timedelta(days=1)  # Start on a sunday
     end = dt.get_last_monday(year) - datetime.timedelta(days=1)  # Start on a sunday
     bars = download_csv(sourceCode, tableCode, begin, end, "weekly", authToken)
-    
+
     with open(csvFile, "w") as f:
         f.write(bars)
 
@@ -142,10 +142,10 @@ def build_feed(sourceCode, tableCodes, fromYear, toYear, storage, frequency=bar.
         logger.info("Creating %s directory" % (storage))
         os.mkdir(storage)
 
-    for year in range(fromYear, toYear+1):
+    for year in range(fromYear, toYear + 1):
         for tableCode in tableCodes:
             fileName = os.path.join(storage, "%s-%s-%d-quandl.csv" % (sourceCode, tableCode, year))
-            
+
             if not os.path.exists(fileName) or forceDownload:
                 logger.info("Downloading %s %d to %s" % (tableCode, year, fileName))
                 try:

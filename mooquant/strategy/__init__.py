@@ -21,6 +21,7 @@
 
 import abc
 import logging
+
 import six
 
 import mooquant.broker
@@ -169,7 +170,8 @@ class BaseStrategy(object):
         if quantity > 0:
             ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.BUY, instrument, quantity, onClose)
         elif quantity < 0:
-            ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.SELL, instrument, quantity*-1, onClose)
+            ret = self.getBroker().createMarketOrder(mooquant.broker.Order.Action.SELL, instrument, quantity * -1,
+                                                     onClose)
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
@@ -198,7 +200,8 @@ class BaseStrategy(object):
         if quantity > 0:
             ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.BUY, instrument, limitPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.SELL, instrument, limitPrice, quantity*-1)
+            ret = self.getBroker().createLimitOrder(mooquant.broker.Order.Action.SELL, instrument, limitPrice,
+                                                    quantity * -1)
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
@@ -226,7 +229,8 @@ class BaseStrategy(object):
         if quantity > 0:
             ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice, quantity*-1)
+            ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice,
+                                                   quantity * -1)
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
@@ -255,9 +259,11 @@ class BaseStrategy(object):
         ret = None
 
         if quantity > 0:
-            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice, limitPrice, quantity)
+            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice,
+                                                        limitPrice, quantity)
         elif quantity < 0:
-            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice, limitPrice, quantity*-1)
+            ret = self.getBroker().createStopLimitOrder(mooquant.broker.Order.Action.SELL, instrument, stopPrice,
+                                                        limitPrice, quantity * -1)
         if ret:
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)

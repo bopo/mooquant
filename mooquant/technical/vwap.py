@@ -40,11 +40,11 @@ class VWAPEventWindow(technical.EventWindow):
                     cumTotal += bar.getTypicalPrice() * bar.getVolume()
                 else:
                     cumTotal += bar.getPrice() * bar.getVolume()
-                
+
                 cumVolume += bar.getVolume()
 
             ret = cumTotal / float(cumVolume)
-        
+
         return ret
 
 

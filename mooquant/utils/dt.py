@@ -20,6 +20,7 @@
 """
 
 import datetime
+
 import pytz
 
 
@@ -46,7 +47,7 @@ def localize(dateTime, timeZone):
         ret = timeZone.localize(dateTime)
     else:
         ret = dateTime.astimezone(timeZone)
-        
+
     return ret
 
 
@@ -63,7 +64,7 @@ def datetime_to_timestamp(dateTime):
 def timestamp_to_datetime(timeStamp, localized=True):
     """ Converts a UTC timestamp to a datetime.datetime."""
     ret = datetime.datetime.utcfromtimestamp(timeStamp)
-    
+
     if localized:
         ret = localize(ret, pytz.utc)
 

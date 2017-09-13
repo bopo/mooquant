@@ -25,9 +25,10 @@ import warnings
 class MooQuantDeprecationWarning(DeprecationWarning):
     pass
 
+
 warnings.simplefilter("default", MooQuantDeprecationWarning)
 
 
 # Deprecation warnings are disabled by default in Python 2.7, so this helper function enables them back.
 def deprecation_warning(msg, stacklevel=0):
-    warnings.warn(msg, category=MooQuantDeprecationWarning, stacklevel=stacklevel+1)
+    warnings.warn(msg, category=MooQuantDeprecationWarning, stacklevel=stacklevel + 1)

@@ -29,7 +29,7 @@ from mooquant.utils import stats
 def days_traded(begin, end):
     delta = end - begin
     ret = delta.days + 1
-    
+
     return ret
 
 
@@ -53,7 +53,7 @@ def sharpe_ratio(returns, riskFreeRate, tradingPeriods, annualized=True):
 
         if annualized:
             ret = ret * math.sqrt(tradingPeriods)
-    
+
     return ret
 
 
@@ -78,10 +78,10 @@ def sharpe_ratio_2(returns, riskFreeRate, firstDateTime, lastDateTime, annualize
 
         avgExcessReturns = stats.mean(returns) - rfPerReturn
         ret = avgExcessReturns / volatility
-        
+
         if annualized:
             ret = ret * math.sqrt(len(returns) / yearsTraded)
-    
+
     return ret
 
 
@@ -123,10 +123,10 @@ class SharpeRatio(stratanalyzer.StrategyAnalyzer):
                 self.__returns.append(netReturn)
         else:
             self.__returns.append(netReturn)
-            
+
             if self.__firstDateTime is None:
                 self.__firstDateTime = dateTime
-            
+
             self.__lastDateTime = dateTime
 
     def getSharpeRatio(self, riskFreeRate, annualized=True):
@@ -146,5 +146,5 @@ class SharpeRatio(stratanalyzer.StrategyAnalyzer):
             ret = sharpe_ratio(self.__returns, riskFreeRate, 252, annualized)
         else:
             ret = sharpe_ratio_2(self.__returns, riskFreeRate, self.__firstDateTime, self.__lastDateTime, annualized)
-        
+
         return ret

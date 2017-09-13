@@ -94,19 +94,19 @@ class PositionTracker(object):
 
         if price:
             ret += (price - self.__avgPrice) * self.__position
-        
+
         if includeCommissions:
             ret -= self.__commissions
-        
+
         return ret
 
     def getReturn(self, price=None, includeCommissions=True):
         ret = 0
         pnl = self.getPnL(price=price, includeCommissions=includeCommissions)
-        
+
         if self.__totalCommited != 0:
             ret = pnl / float(self.__totalCommited)
-        
+
         return ret
 
     def __openNewPosition(self, quantity, price):
@@ -116,7 +116,7 @@ class PositionTracker(object):
 
     def __extendCurrentPosition(self, quantity, price):
         newPosition = self.__instrumentTraits.roundQuantity(self.__position + quantity)
-        self.__avgPrice = (self.__avgPrice*abs(self.__position) + price*abs(quantity)) / abs(float(newPosition))
+        self.__avgPrice = (self.__avgPrice * abs(self.__position) + price * abs(quantity)) / abs(float(newPosition))
         self.__position = newPosition
         self.__totalCommited = self.__avgPrice * abs(self.__position)
 
@@ -127,7 +127,7 @@ class PositionTracker(object):
 
         self.__pnl += pnl
         self.__position = self.__instrumentTraits.roundQuantity(self.__position + quantity)
-        
+
         if self.__position == 0:
             self.__avgPrice = 0.0
 
@@ -154,7 +154,7 @@ class PositionTracker(object):
                     self.__reduceCurrentPosition(quantity, price)
                 else:
                     newPos = self.__position + quantity
-                    self.__reduceCurrentPosition(self.__position*-1, price)
+                    self.__reduceCurrentPosition(self.__position * -1, price)
                     self.__openNewPosition(newPos, price)
 
         self.__commissions += commission
@@ -179,11 +179,11 @@ class ReturnsAnalyzerBase(stratanalyzer.StrategyAnalyzer):
         name = cls.__name__
         # Get or create the shared ReturnsAnalyzerBase.
         ret = strat.getNamedAnalyzer(name)
-        
+
         if ret is None:
             ret = ReturnsAnalyzerBase()
             strat.attachAnalyzerEx(ret, name)
-        
+
         return ret
 
     def attached(self, strat):

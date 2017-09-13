@@ -21,6 +21,7 @@
 
 from mooquant import technical
 
+
 # RSI = 100 - 100 / (1 + RS)
 # RS = Average gain / Average loss
 # First Average Gain = Sum of Gains over the past 14 periods / 14
@@ -64,16 +65,16 @@ def avg_gain_loss(values, begin, end):
     gain = 0
     loss = 0
 
-    for i in range(begin+1, end):
-        currGain, currLoss = gain_loss_one(values[i-1], values[i])
+    for i in range(begin + 1, end):
+        currGain, currLoss = gain_loss_one(values[i - 1], values[i])
         gain += currGain
         loss += currLoss
 
-    return (gain/float(rangeLen-1), loss/float(rangeLen-1))
+    return (gain / float(rangeLen - 1), loss / float(rangeLen - 1))
 
 
 def rsi(values, period):
-    assert(period > 1)
+    assert (period > 1)
 
     if len(values) < period + 1:
         return None
@@ -81,7 +82,7 @@ def rsi(values, period):
     avgGain, avgLoss = avg_gain_loss(values, 0, period)
 
     for i in range(period, len(values)):
-        gain, loss = gain_loss_one(values[i-1], values[i])
+        gain, loss = gain_loss_one(values[i - 1], values[i])
         avgGain = (avgGain * (period - 1) + gain) / float(period)
         avgLoss = (avgLoss * (period - 1) + loss) / float(period)
 
@@ -89,13 +90,13 @@ def rsi(values, period):
         return 100
 
     rs = avgGain / avgLoss
-    
+
     return 100 - 100 / (1 + rs)
 
 
 class RSIEventWindow(technical.EventWindow):
     def __init__(self, period):
-        assert(period > 1)
+        assert (period > 1)
         # We need N + 1 samples to calculate N averages because they are calculated based on the diff with previous values.
         super(RSIEventWindow, self).__init__(period + 1)
         self.__value = None
@@ -109,16 +110,16 @@ class RSIEventWindow(technical.EventWindow):
         # Formula from http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
         if value is not None and self.windowFull():
             if self.__prevGain is None:
-                assert(self.__prevLoss is None)
+                assert (self.__prevLoss is None)
                 avgGain, avgLoss = avg_gain_loss(self.getValues(), 0, len(self.getValues()))
             else:
                 # Rest of averages are smoothed
-                assert(self.__prevLoss is not None)
+                assert (self.__prevLoss is not None)
                 prevValue = self.getValues()[-2]
                 currValue = self.getValues()[-1]
                 currGain, currLoss = gain_loss_one(prevValue, currValue)
-                avgGain = (self.__prevGain * (self.__period-1) + currGain) / float(self.__period)
-                avgLoss = (self.__prevLoss * (self.__period-1) + currLoss) / float(self.__period)
+                avgGain = (self.__prevGain * (self.__period - 1) + currGain) / float(self.__period)
+                avgLoss = (self.__prevLoss * (self.__period - 1) + currLoss) / float(self.__period)
 
             if avgLoss == 0:
                 self.__value = 100

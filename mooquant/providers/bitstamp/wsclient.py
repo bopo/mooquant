@@ -23,8 +23,8 @@ import datetime
 import threading
 
 from mooquant.providers.bitstamp import common
-from mooquant.websocket import pusher
 from mooquant.utils.compat import queue
+from mooquant.websocket import pusher
 
 
 def get_current_datetime():

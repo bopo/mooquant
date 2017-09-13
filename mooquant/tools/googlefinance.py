@@ -87,7 +87,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
         logger.info("Creating {dirname} directory".format(dirname=storage))
         os.mkdir(storage)
 
-    for year in range(fromYear, toYear+1):
+    for year in range(fromYear, toYear + 1):
         for instrument in instruments:
             fileName = os.path.join(
                 storage,
@@ -108,7 +108,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
                         continue
                     else:
                         raise e
-            
+
             ret.addBarsFromCSV(instrument, fileName)
-    
+
     return ret

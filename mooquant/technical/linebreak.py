@@ -93,16 +93,16 @@ class LineBreak(dataseries.SequenceDataSeries):
             self.appendWithDateTime(dateTime, line)
 
     def __isReversal(self, value, breakUp):
-        assert(len(self))
-        lines = self[self.__reversalLines*-1:]
-        
+        assert (len(self))
+        lines = self[self.__reversalLines * -1:]
+
         if breakUp:
             breakPoint = max([line.getHigh() for line in lines])
             ret = value > breakPoint
         else:
             breakPoint = min([line.getLow() for line in lines])
             ret = value < breakPoint
-        
+
         return ret
 
     def __getNextLine(self, bar):
@@ -111,7 +111,7 @@ class LineBreak(dataseries.SequenceDataSeries):
         if len(self) > 0:
             lastLine = self[-1]
             close = bar.getClose(self.__useAdjustedValues)
-            
+
             if lastLine.isWhite():
                 if close > lastLine.getHigh():
                     # Price extends in the same direction
@@ -128,16 +128,17 @@ class LineBreak(dataseries.SequenceDataSeries):
                     ret = Line(lastLine.getHigh(), close, bar.getDateTime(), True)
         else:
             white = False
-            
+
             if bar.getClose(self.__useAdjustedValues) >= bar.getOpen(self.__useAdjustedValues):
                 white = True
-            
-            ret = Line(bar.getLow(self.__useAdjustedValues), bar.getHigh(self.__useAdjustedValues), bar.getDateTime(), white)
-        
+
+            ret = Line(bar.getLow(self.__useAdjustedValues), bar.getHigh(self.__useAdjustedValues), bar.getDateTime(),
+                       white)
+
         return ret
 
     def setMaxLen(self, maxLen):
         if maxLen < self.__reversalLines:
             raise Exception("maxLen can't be smaller than reversalLines")
-        
+
         super(LineBreak, self).setMaxLen(maxLen)

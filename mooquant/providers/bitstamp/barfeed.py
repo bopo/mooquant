@@ -19,7 +19,6 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
 from mooquant.providers.bitstamp import livefeed
 
 LiveTradeFeed = livefeed.LiveTradeFeed

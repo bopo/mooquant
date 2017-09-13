@@ -19,12 +19,12 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
 from mooquant import broker
-from mooquant.providers.bitstamp import common, livebroker
 from mooquant.broker import backtesting
+from mooquant.providers.bitstamp import common, livebroker
 
 LiveBroker = livebroker.LiveBroker
+
 
 # In a backtesting or paper-trading scenario the BacktestingBroker dispatches events while processing events from the
 # BarFeed.
@@ -63,7 +63,7 @@ class BacktestingBroker(backtesting.Broker):
             # Override user settings based on Bitstamp limitations.
             order.setAllOrNone(False)
             order.setGoodTillCanceled(True)
-            
+
         return super(BacktestingBroker, self).submitOrder(order)
 
     def createMarketOrder(self, action, instrument, quantity, onClose=False):

@@ -25,9 +25,9 @@ import time
 
 import mooquant.logger
 from mooquant import bar, barfeed, dataseries, resamplebase
+from mooquant.providers.xignite import api
 from mooquant.utils import dt
 from mooquant.utils.compat import queue
-from mooquant.providers.xignite import api
 
 logger = mooquant.logger.getLogger("xignite")
 
@@ -56,7 +56,7 @@ class PollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
-        
+
         while not self.__stopped:
             self.__wait()
             if not self.__stopped:
@@ -64,7 +64,7 @@ class PollingThread(threading.Thread):
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
-        
+
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -99,11 +99,11 @@ def build_bar(barDict, identifier, frequency):
     instrument, exchange = api.parse_instrument_exchange(identifier)
     startDateTime = api.to_market_datetime(startDateTime, exchange)
 
-    return bar.BasicBar(startDateTime, barDict["Open"], barDict["High"], barDict["Low"], barDict["Close"], barDict["Volume"], None, frequency)
+    return bar.BasicBar(startDateTime, barDict["Open"], barDict["High"], barDict["Low"], barDict["Close"],
+                        barDict["Volume"], None, frequency)
 
 
 class GetBarThread(PollingThread):
-
     # Events
     ON_BARS = 1
 
@@ -145,8 +145,10 @@ class GetBarThread(PollingThread):
 
         for indentifier in self.__identifiers:
             try:
-                logger.debug("Requesting bars with precision %s and period %s for %s" % (self.__precision, self.__period, indentifier))
-                response = api.XigniteGlobalRealTime_GetBar(self.__apiToken, indentifier, "Symbol", endDateTime, self.__precision, self.__period)
+                logger.debug("Requesting bars with precision %s and period %s for %s" % (
+                self.__precision, self.__period, indentifier))
+                response = api.XigniteGlobalRealTime_GetBar(self.__apiToken, indentifier, "Symbol", endDateTime,
+                                                            self.__precision, self.__period)
                 # logger.debug(response)
                 barDict[indentifier] = build_bar(response["Bar"], indentifier, self.__frequency)
             except api.XigniteError, e:
@@ -192,8 +194,9 @@ class LiveFeed(barfeed.BaseBarFeed):
             raise Exception("identifiers must be a list")
 
         self.__queue = queue.Queue()
-        self.__thread = GetBarThread(self.__queue, apiToken, identifiers, frequency, datetime.timedelta(seconds=apiCallDelay))
-        
+        self.__thread = GetBarThread(self.__queue, apiToken, identifiers, frequency,
+                                     datetime.timedelta(seconds=apiCallDelay))
+
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -234,7 +237,7 @@ class LiveFeed(barfeed.BaseBarFeed):
 
         try:
             eventType, eventData = self.__queue.get(True, LiveFeed.QUEUE_TIMEOUT)
-            
+
             if eventType == GetBarThread.ON_BARS:
                 ret = eventData
             else:

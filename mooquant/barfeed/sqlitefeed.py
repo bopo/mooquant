@@ -45,7 +45,7 @@ class Database(dbfeed.Database):
 
         self.__connection = sqlite3.connect(dbFilePath)
         self.__connection.isolation_level = None  # To do auto-commit
-        
+
         if initialize:
             self.createSchema()
 
@@ -63,7 +63,7 @@ class Database(dbfeed.Database):
         return ret
 
     def __addInstrument(self, instrument):
-        ret = self.__connection.execute("insert into instrument (name) values (?)", [instrument])
+        ret = self.__connection.execute("INSERT INTO instrument (name) VALUES (?)", [instrument])
         return ret.lastrowid
 
     def __getOrCreateInstrument(self, instrument):
@@ -86,22 +86,22 @@ class Database(dbfeed.Database):
 
     def createSchema(self):
         self.__connection.execute(
-            "create table instrument ("
-            "instrument_id integer primary key autoincrement"
-            ", name text unique not null)")
+            "CREATE TABLE instrument ("
+            "instrument_id INTEGER PRIMARY KEY AUTOINCREMENT"
+            ", name TEXT UNIQUE NOT NULL)")
 
         self.__connection.execute(
-            "create table bar ("
-            "instrument_id integer references instrument (instrument_id)"
-            ", frequency integer not null"
-            ", timestamp integer not null"
-            ", open real not null"
-            ", high real not null"
-            ", low real not null"
-            ", close real not null"
-            ", volume real not null"
-            ", adj_close real"
-            ", primary key (instrument_id, frequency, timestamp))")
+            "CREATE TABLE bar ("
+            "instrument_id INTEGER REFERENCES instrument (instrument_id)"
+            ", frequency INTEGER NOT NULL"
+            ", timestamp INTEGER NOT NULL"
+            ", open REAL NOT NULL"
+            ", high REAL NOT NULL"
+            ", low REAL NOT NULL"
+            ", close REAL NOT NULL"
+            ", volume REAL NOT NULL"
+            ", adj_close REAL"
+            ", PRIMARY KEY (instrument_id, frequency, timestamp))")
 
     def addBar(self, instrument, bar, frequency):
         instrument = normalize_instrument(instrument)
@@ -110,19 +110,21 @@ class Database(dbfeed.Database):
 
         try:
             sql = "insert into bar (instrument_id, frequency, timestamp, open, high, low, close, volume, adj_close) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            params = [instrumentId, frequency, timeStamp, bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(), bar.getAdjClose()]
+            params = [instrumentId, frequency, timeStamp, bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(),
+                      bar.getVolume(), bar.getAdjClose()]
             self.__connection.execute(sql, params)
         except sqlite3.IntegrityError:
             sql = "update bar set open = ?, high = ?, low = ?, close = ?, volume = ?, adj_close = ?" \
-                " where instrument_id = ? and frequency = ? and timestamp = ?"
-            params = [bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(), bar.getAdjClose(), instrumentId, frequency, timeStamp]
+                  " where instrument_id = ? and frequency = ? and timestamp = ?"
+            params = [bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(), bar.getAdjClose(),
+                      instrumentId, frequency, timeStamp]
             self.__connection.execute(sql, params)
 
     def getBars(self, instrument, frequency, timezone=None, fromDateTime=None, toDateTime=None):
         instrument = normalize_instrument(instrument)
         sql = "select bar.timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adj_close, bar.frequency" \
-            " from bar join instrument on (bar.instrument_id = instrument.instrument_id)" \
-            " where instrument.name = ? and bar.frequency = ?"
+              " from bar join instrument on (bar.instrument_id = instrument.instrument_id)" \
+              " where instrument.name = ? and bar.frequency = ?"
         args = [instrument, frequency]
 
         if fromDateTime is not None:
@@ -140,12 +142,12 @@ class Database(dbfeed.Database):
 
         for row in cursor:
             dateTime = dt.timestamp_to_datetime(row[0])
-            
+
             if timezone:
                 dateTime = dt.localize(dateTime, timezone)
-            
+
             ret.append(bar.BasicBar(dateTime, row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
-        
+
         cursor.close()
         return ret
 

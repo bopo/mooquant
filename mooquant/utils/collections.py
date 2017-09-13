@@ -46,13 +46,13 @@ def intersect(values1, values2, skipNone=False):
     while i1 < len(values1) and i2 < len(values2):
         v1 = values1[i1]
         v2 = values2[i2]
-    
+
         if v1 == v2 and (v1 is not None or skipNone is False):
             ix1.append(i1)
             ix2.append(i2)
-            
+
             values.append(v1)
-    
+
             i1 += 1
             i2 += 1
         elif lt(v1, v2):
@@ -100,8 +100,8 @@ class NumPyDeque(object):
         # Create empty, copy last values and swap.
         values = np.empty(maxLen, dtype=self.__values.dtype)
         lastValues = self.__values[0:self.__nextPos]
-        values[0:min(maxLen, len(lastValues))] = lastValues[-1*min(maxLen, len(lastValues)):]
-        
+        values[0:min(maxLen, len(lastValues))] = lastValues[-1 * min(maxLen, len(lastValues)):]
+
         self.__values = values
         self.__maxLen = maxLen
 
@@ -130,7 +130,7 @@ class ListDeque(object):
 
     def append(self, value):
         self.__values.append(value)
-        
+
         # Check bounds
         if len(self.__values) > self.__maxLen:
             self.__values.pop(0)
@@ -142,7 +142,7 @@ class ListDeque(object):
         assert maxLen > 0, "Invalid maximum length"
 
         self.__maxLen = maxLen
-        self.__values = self.__values[-1*maxLen:]
+        self.__values = self.__values[-1 * maxLen:]
 
     def __len__(self):
         return len(self.__values)

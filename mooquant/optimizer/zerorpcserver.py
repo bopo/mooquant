@@ -21,14 +21,12 @@
 @todo zerorpc 集成未完成
 """
 
-# import pickle
 import threading
-import zerorpc
 import time
 
 import mooquant.logger
 from mooquant.optimizer import base
-from mooquant.utils.compat import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler,pickle
+from mooquant.utils.compat import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler, pickle
 
 logger = mooquant.logger.getLogger(__name__)
 
@@ -41,7 +39,7 @@ class AutoStopThread(threading.Thread):
     def run(self):
         while self.__server.jobsPending():
             time.sleep(1)
-            
+
         self.__server.stop()
 
 
@@ -74,7 +72,7 @@ class Server(SimpleXMLRPCServer):
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
         SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
-                                                       logRequests=False, allow_none=True)
+                                    logRequests=False, allow_none=True)
         # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
@@ -163,7 +161,7 @@ class Server(SimpleXMLRPCServer):
                 loadedBars.append(bars)
 
             instruments = self.__barFeed.getRegisteredInstruments()
-            
+
             self.__instrumentsAndBars = pickle.dumps((instruments, loadedBars))
             self.__barsFreq = self.__barFeed.getFrequency()
 

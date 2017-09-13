@@ -85,13 +85,13 @@ class USEquitiesRTH(DateRangeFilter):
 
             # Check time
             barTime = dt.localize(bar_.getDateTime(), USEquitiesRTH.timezone).time()
-            
+
             if barTime < self.__fromTime:
                 return False
-            
+
             if barTime > self.__toTime:
                 return False
-        
+
         return ret
 
 
@@ -123,8 +123,9 @@ class BarFeed(membf.BarFeed):
     def addBarsFromCSV(self, instrument, path, rowParser):
         # Load the csv file
         loadedBars = []
-        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=rowParser.getFieldNames(), delimiter=rowParser.getDelimiter())
-        
+        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=rowParser.getFieldNames(),
+                                         delimiter=rowParser.getDelimiter())
+
         for row in reader:
             bar_ = rowParser.parseBar(row)
 
@@ -142,7 +143,7 @@ class GenericRowParser(RowParser):
         self.__timezone = timezone
         self.__haveAdjClose = False
         self.__barClass = barClass
-        
+
         # Column names.
         self.__dateTimeColName = columnNames["datetime"]
         self.__openColName = columnNames["open"]
@@ -158,11 +159,11 @@ class GenericRowParser(RowParser):
 
         if self.__dailyBarTime is not None:
             ret = datetime.datetime.combine(ret, self.__dailyBarTime)
-        
+
         # Localize the datetime if a timezone was given.
         if self.__timezone:
             ret = dt.localize(ret, self.__timezone)
-        
+
         return ret
 
     def barsHaveAdjClose(self):
@@ -186,7 +187,7 @@ class GenericRowParser(RowParser):
 
         if self.__adjCloseColName is not None:
             adjCloseValue = csvRowDict.get(self.__adjCloseColName, "")
-            
+
             if len(adjCloseValue) > 0:
                 adjClose = float(adjCloseValue)
                 self.__haveAdjClose = True

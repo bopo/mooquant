@@ -27,9 +27,10 @@ from mooquant.technical import roc
 
 class Results(object):
     """Results from the profiler."""
+
     def __init__(self, eventsDict, lookBack, lookForward):
-        assert(lookBack > 0)
-        assert(lookForward > 0)
+        assert (lookBack > 0)
+        assert (lookForward > 0)
 
         self.__lookBack = lookBack
         self.__lookForward = lookForward
@@ -39,7 +40,7 @@ class Results(object):
         # Process events.
         for instrument, events in list(eventsDict.items()):
             for event in events:
-                
+
                 # Skip events which are on the boundary or for some reason are not complete.
                 if event.isComplete():
                     self.__eventCount += 1
@@ -47,12 +48,12 @@ class Results(object):
                     values = np.cumprod(event.getValues() + 1)
                     # Normalize everything to the time of the event
                     values = values / values[event.getLookBack()]
-                    
-                    for t in range(event.getLookBack()*-1, event.getLookForward()+1):
-                        self.setValue(t, values[t+event.getLookBack()])
+
+                    for t in range(event.getLookBack() * -1, event.getLookForward() + 1):
+                        self.setValue(t, values[t + event.getLookBack()])
 
     def __mapPos(self, t):
-        assert(t >= -1*self.__lookBack and t <= self.__lookForward)
+        assert (t >= -1 * self.__lookBack and t <= self.__lookForward)
         return t + self.__lookBack
 
     def setValue(self, t, value):
@@ -95,8 +96,8 @@ class Predicate(object):
 
 class Event(object):
     def __init__(self, lookBack, lookForward):
-        assert(lookBack > 0)
-        assert(lookForward > 0)
+        assert (lookBack > 0)
+        assert (lookForward > 0)
 
         self.__lookBack = lookBack
         self.__lookForward = lookForward
@@ -104,7 +105,7 @@ class Event(object):
         self.__values[:] = np.NAN
 
     def __mapPos(self, t):
-        assert(t >= -1*self.__lookBack and t <= self.__lookForward)
+        assert (t >= -1 * self.__lookBack and t <= self.__lookForward)
         return t + self.__lookBack
 
     def isComplete(self):
@@ -142,8 +143,8 @@ class Profiler(object):
     """
 
     def __init__(self, predicate, lookBack, lookForward):
-        assert(lookBack > 0)
-        assert(lookForward > 0)
+        assert (lookBack > 0)
+        assert (lookForward > 0)
 
         self.__predicate = predicate
         self.__lookBack = lookBack
@@ -161,7 +162,7 @@ class Profiler(object):
                 ret = self.__rets[instrument][t]
 
                 if ret is not None:
-                    event.setValue(t+1, ret)
+                    event.setValue(t + 1, ret)
             except IndexError:
                 pass
 
@@ -174,14 +175,14 @@ class Profiler(object):
             if t < event.getLookForward():
                 t += 1
                 nextTs.append((event, t))
-        
+
         self.__futureRets[instrument] = nextTs
 
     def __onBars(self, dateTime, bars):
         for instrument in bars.getInstruments():
             self.__addCurrentReturns(instrument)
             eventOccurred = self.__predicate.eventOccurred(instrument, self.__feed[instrument])
-            
+
             if eventOccurred:
                 event = Event(self.__lookBack, self.__lookForward)
                 self.__events[instrument].append(event)
@@ -212,16 +213,16 @@ class Profiler(object):
             self.__feed = feed
             self.__rets = {}
             self.__futureRets = {}
-            
+
             for instrument in feed.getRegisteredInstruments():
                 self.__events.setdefault(instrument, [])
                 self.__futureRets[instrument] = []
-                
+
                 if useAdjustedCloseForReturns:
                     ds = feed[instrument].getAdjCloseDataSeries()
                 else:
                     ds = feed[instrument].getCloseDataSeries()
-                
+
                 self.__rets[instrument] = roc.RateOfChange(ds, 1)
 
             feed.getNewValuesEvent().subscribe(self.__onBars)
@@ -236,10 +237,10 @@ def build_plot(profilerResults):
     # Calculate each value.
     x = []
     y = []
-    
+
     std = []
 
-    for t in range(profilerResults.getLookBack()*-1, profilerResults.getLookForward()+1):
+    for t in range(profilerResults.getLookBack() * -1, profilerResults.getLookForward() + 1):
         x.append(t)
         values = np.asarray(profilerResults.getValues(t))
         y.append(values.mean())
@@ -249,13 +250,14 @@ def build_plot(profilerResults):
     plt.clf()
     plt.plot(x, y, color='#0000FF')
     eventT = profilerResults.getLookBack()
-    
+
     # stdBegin = eventT + 1
     # plt.errorbar(x[stdBegin:], y[stdBegin:], std[stdBegin:], alpha=0, ecolor='#AAAAFF')
-    plt.errorbar(x[eventT+1:], y[eventT+1:], std[eventT+1:], alpha=0, ecolor='#AAAAFF')
+    plt.errorbar(x[eventT + 1:], y[eventT + 1:], std[eventT + 1:], alpha=0, ecolor='#AAAAFF')
     # plt.errorbar(x, y, std, alpha=0, ecolor='#AAAAFF')
-    plt.axhline(y=y[eventT], xmin=-1*profilerResults.getLookBack(), xmax=profilerResults.getLookForward(), color='#000000')
-    plt.xlim(profilerResults.getLookBack()*-1-0.5, profilerResults.getLookForward()+0.5)
+    plt.axhline(y=y[eventT], xmin=-1 * profilerResults.getLookBack(), xmax=profilerResults.getLookForward(),
+                color='#000000')
+    plt.xlim(profilerResults.getLookBack() * -1 - 0.5, profilerResults.getLookForward() + 0.5)
     plt.xlabel('Time')
     plt.ylabel('Cumulative returns')
 

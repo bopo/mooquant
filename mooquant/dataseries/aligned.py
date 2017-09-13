@@ -49,7 +49,7 @@ class Syncer(object):
         self.__values2 = []  # (datetime, value)
         self.__destDS1 = destDS1
         self.__destDS2 = destDS2
-        
+
         sourceDS1.getNewValueEvent().subscribe(self.__onNewValue1)
         sourceDS2.getNewValueEvent().subscribe(self.__onNewValue2)
         # Source dataseries will keep a reference to self and that will prevent from getting this destroyed.
@@ -58,7 +58,7 @@ class Syncer(object):
     def __findPosForDateTime(self, values, dateTime):
         ret = None
         i = len(values) - 1
-        
+
         while i >= 0:
             if values[i][0] == dateTime:
                 ret = i
@@ -66,19 +66,19 @@ class Syncer(object):
             elif values[i][0] < dateTime:
                 break
             i -= 1
-        
+
         return ret
 
     def __onNewValue1(self, dataSeries, dateTime, value):
         pos2 = self.__findPosForDateTime(self.__values2, dateTime)
         # If a value for dateTime was added to first dataseries, and a value for that same datetime is also in the second one
         # then append to both destination dataseries.
-        
+
         if pos2 is not None:
             self.__append(dateTime, value, self.__values2[pos2][1])
             # Reset buffers.
             self.__values1 = []
-            self.__values2 = self.__values2[pos2+1:]
+            self.__values2 = self.__values2[pos2 + 1:]
         else:
             # Since source dataseries may not hold all the values we need, we need to buffer manually.
             self.__values1.append((dateTime, value))
@@ -90,7 +90,7 @@ class Syncer(object):
         if pos1 is not None:
             self.__append(dateTime, self.__values1[pos1][1], value)
             # Reset buffers.
-            self.__values1 = self.__values1[pos1+1:]
+            self.__values1 = self.__values1[pos1 + 1:]
             self.__values2 = []
         else:
             # Since source dataseries may not hold all the values we need, we need to buffer manually.

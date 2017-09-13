@@ -39,11 +39,12 @@ class MACD(dataseries.SequenceDataSeries):
         opposite end. If None then dataseries.DEFAULT_MAX_LEN is used.
     :type maxLen: int.
     """
+
     def __init__(self, dataSeries, fastEMA, slowEMA, signalEMA, maxLen=None):
-        assert(fastEMA > 0)
-        assert(slowEMA > 0)
-        assert(fastEMA < slowEMA)
-        assert(signalEMA > 0)
+        assert (fastEMA > 0)
+        assert (slowEMA > 0)
+        assert (fastEMA < slowEMA)
+        assert (signalEMA > 0)
 
         super(MACD, self).__init__(maxLen)
 
@@ -89,7 +90,7 @@ class MACD(dataseries.SequenceDataSeries):
         # Make the first MACD value available as soon as the first signal value is available.
         # I'M FORCING THIS BEHAVIOUR ONLY TO MAKE THIS FITLER MATCH TA-Lib MACD VALUES.
         self.__signalEMAWindow.onNewValue(dateTime, diff)
-        
+
         if self.__signalEMAWindow.windowFull():
             macdValue = diff
             signalValue = self.__signalEMAWindow.getValue()

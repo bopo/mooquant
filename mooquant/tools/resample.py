@@ -70,7 +70,7 @@ def resample_impl(barFeed, frequency, csvFile):
     def on_bar(ds, dateTime, value):
         csvWriter.writeBar(value)
 
-    if not(type(instruments) == list):
+    if not (type(instruments) == list):
         instruments = list(instruments)
 
     insrumentDS = barFeed[instruments[0]]
@@ -81,7 +81,7 @@ def resample_impl(barFeed, frequency, csvFile):
     disp = dispatcher.Dispatcher()
     disp.addSubject(barFeed)
     disp.run()
-    
+
     resampledDS.pushLast()
 
 

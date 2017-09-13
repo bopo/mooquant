@@ -19,11 +19,10 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
-import time
-import socket
-import random
 import multiprocessing
+import random
+import socket
+import time
 
 import mooquant.logger
 from mooquant import barfeed
@@ -36,7 +35,7 @@ def call_function(function, *args, **kwargs):
 
 def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
     ret = None
-    
+
     while retryCount > 0:
         retryCount -= 1
 
@@ -47,14 +46,14 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
             time.sleep(random.randint(1, 3))
 
     ret = call_function(function, *args, **kwargs)
-    
+
     return ret
 
 
 class Worker(object):
     def __init__(self, address, port, workerName=None):
         url = "http://%s:%s/MooQuantRPC" % (address, port)
-        
+
         # self.__server = xmlrpclib.ServerProxy(url, allow_none=True)
         self.__server = ServerProxy(url, allow_none=True)
         self.__logger = mooquant.logger.getLogger(workerName)
@@ -91,7 +90,7 @@ class Worker(object):
 
         parameters = pickle.dumps(parameters)
         workerName = pickle.dumps(self.__workerName)
-        
+
         call_and_retry_on_network_error(self.__server.pushJobResults, 10, jobId, result, parameters, workerName)
 
     def __processJob(self, job, barsFreq, instruments, bars):
@@ -110,17 +109,17 @@ class Worker(object):
                 result = self.runStrategy(feed, *parameters)
             except Exception as e:
                 self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
-            
+
             self.getLogger().info("Result %s" % result)
-            
+
             if bestResult is None or result > bestResult:
                 bestResult = result
                 bestParams = parameters
-            
+
             # Run with the next set of parameters.
             parameters = job.getNextParameters()
 
-        assert(bestParams is not None)
+        assert (bestParams is not None)
         self.pushJobResults(job.getId(), bestResult, bestParams)
 
     # Run the strategy and return the result.
@@ -136,7 +135,7 @@ class Worker(object):
 
             # Process jobs
             job = self.getNextJob()
-            
+
             while job is not None:
                 self.__processJob(job, barsFreq, instruments, bars)
                 job = self.getNextJob()
@@ -173,13 +172,13 @@ def run(strategyClass, address, port, workerCount=None, workerName=None):
     :type workerName: string.
     """
 
-    assert(workerCount is None or workerCount > 0)
+    assert (workerCount is None or workerCount > 0)
 
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     workers = []
-    
+
     # Build the worker processes.
     for i in range(workerCount):
         workers.append(multiprocessing.Process(target=worker_process, args=(strategyClass, address, port, workerName)))

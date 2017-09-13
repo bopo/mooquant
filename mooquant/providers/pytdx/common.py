@@ -47,7 +47,8 @@ def is_holiday(date):
         return True
     else:
         return False
-        
+
+
 class BTCTraits(broker.InstrumentTraits):
     def roundQuantity(self, quantity):
         return round(quantity, 8)

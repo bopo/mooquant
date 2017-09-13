@@ -26,7 +26,6 @@ from mooquant.barfeed import common, csvfeed
 from mooquant.utils import dt
 
 
-######################################################################
 ## Yahoo Finance CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
 #
@@ -153,5 +152,6 @@ class Feed(csvfeed.BarFeed):
         if timezone is None:
             timezone = self.__timezone
 
-        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars, self.__barClass)
+        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars,
+                              self.__barClass)
         super(Feed, self).addBarsFromCSV(instrument, path, rowParser)

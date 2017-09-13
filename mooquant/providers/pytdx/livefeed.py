@@ -20,11 +20,11 @@
 """
 
 import datetime
-
 import time
-from mooquant.utils.compat import queue
+
 from mooquant import bar, barfeed, observer
 from mooquant.providers.bitstamp import common, wsclient
+from mooquant.utils.compat import queue
 
 
 class TradeBar(bar.Bar):
@@ -170,7 +170,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
         try:
             eventType, eventData = self.__thread.getQueue().get(True, LiveTradeFeed.QUEUE_TIMEOUT)
-            
+
             if eventFilter is not None and eventType not in eventFilter:
                 return False
 
@@ -239,7 +239,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
         # Note that we may return True even if we didn't dispatch any Bar
         # event.
         ret = False
-        
+
         if self.__dispatchImpl(None):
             ret = True
 

@@ -33,13 +33,13 @@ def get_low_high_values(useAdjusted, bars):
         currBar = bars[i]
         lowestLow = min(lowestLow, currBar.getLow(useAdjusted))
         highestHigh = max(highestHigh, currBar.getHigh(useAdjusted))
-    
+
     return (lowestLow, highestHigh)
 
 
 class SOEventWindow(technical.EventWindow):
     def __init__(self, period, useAdjustedValues):
-        assert(period > 1)
+        assert (period > 1)
         super(SOEventWindow, self).__init__(period, dtype=object)
         self.__useAdjusted = useAdjustedValues
 
@@ -50,12 +50,12 @@ class SOEventWindow(technical.EventWindow):
             lowestLow, highestHigh = get_low_high_values(self.__useAdjusted, self.getValues())
             currentClose = self.getValues()[-1].getClose(self.__useAdjusted)
             closeDelta = currentClose - lowestLow
-            
+
             if closeDelta:
                 ret = closeDelta / float(highestHigh - lowestLow) * 100
             else:
                 ret = 0.0
-                
+
         return ret
 
 

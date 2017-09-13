@@ -19,14 +19,13 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
-
 import threading
 import time
 
 from mooquant import broker
 from mooquant.providers.bitstamp import common, httpclient
 from mooquant.utils.compat import queue
+
 
 def build_order_from_open_order(openOrder, instrumentTraits):
     if openOrder.isBuy():

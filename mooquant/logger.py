@@ -77,5 +77,5 @@ class Formatter(logging.Formatter):
             ret = super(Formatter, self).formatTime(record, datefmt)
         else:
             ret = str(newDateTime)
-            
+
         return ret

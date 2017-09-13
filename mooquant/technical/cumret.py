@@ -37,7 +37,7 @@ class CumRetEventWindow(technical.EventWindow):
             netReturn = (actual - prev) / float(prev)
             ret = (1 + self.__prevCumRet) * (1 + netReturn) - 1
             self.__prevCumRet = ret
-        
+
         return ret
 
 

@@ -20,6 +20,7 @@
 """
 
 import abc
+
 import six
 
 from mooquant import dispatchprio
@@ -37,7 +38,7 @@ class Event(object):
             for handler in self.__toSubscribe:
                 if handler not in self.__handlers:
                     self.__handlers.append(handler)
-                    
+
             self.__toSubscribe = []
 
         if len(self.__toUnsubscribe):

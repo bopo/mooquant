@@ -27,6 +27,7 @@ import six
 from mooquant import bar
 from mooquant.utils import dt
 
+
 @six.add_metaclass(abc.ABCMeta)
 class TimeRange(object):
     @abc.abstractmethod
@@ -113,8 +114,8 @@ class MonthRange(TimeRange):
 
 
 def is_valid_frequency(frequency):
-    assert(isinstance(frequency, int))
-    assert(frequency > 1)
+    assert (isinstance(frequency, int))
+    assert (frequency > 1)
 
     if frequency < bar.Frequency.DAY:
         ret = True
@@ -124,13 +125,13 @@ def is_valid_frequency(frequency):
         ret = True
     else:
         ret = False
-    
+
     return ret
 
 
 def build_range(dateTime, frequency):
-    assert(isinstance(frequency, int))
-    assert(frequency > 1)
+    assert (isinstance(frequency, int))
+    assert (frequency > 1)
 
     if frequency < bar.Frequency.DAY:
         ret = IntraDayRange(dateTime, frequency)
@@ -140,7 +141,7 @@ def build_range(dateTime, frequency):
         ret = MonthRange(dateTime)
     else:
         raise Exception("Unsupported frequency")
-    
+
     return ret
 
 

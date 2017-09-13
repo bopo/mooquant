@@ -21,6 +21,7 @@
 
 import csv
 import logging
+
 import requests
 
 logging.getLogger("requests").setLevel(logging.ERROR)
@@ -31,7 +32,7 @@ class FastDictReader(object):
     def __init__(self, f, fieldnames=None, dialect="excel", *args, **kwargs):
         self.__fieldNames = fieldnames
         self.reader = csv.reader(f, dialect, *args, **kwargs)
-        
+
         if self.__fieldNames is None:
             self.__fieldNames = next(self.reader)
 
@@ -43,12 +44,12 @@ class FastDictReader(object):
     def __next__(self):
         # Skip empty rows.
         row = next(self.reader)
-        
+
         while row == []:
             row = next(self.reader)
 
         # Check that the row has the right number of columns.
-        assert(len(self.__fieldNames) == len(row))
+        assert (len(self.__fieldNames) == len(row))
 
         # Copy the row values into the dict.
         for i in range(len(self.__fieldNames)):
@@ -64,7 +65,7 @@ class FastDictReader(object):
             row = next(self.reader)
 
         # Check that the row has the right number of columns.
-        assert(len(self.__fieldNames) == len(row))
+        assert (len(self.__fieldNames) == len(row))
 
         # Copy the row values into the dict.
         for i in range(len(self.__fieldNames)):

@@ -82,7 +82,7 @@ class WebSocketClient(client.WebSocketClientBase):
             "protocol": protocol,
             "client": "Python-MooQuant",
             "version": mooquant.__version__
-            }
+        }
 
         url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urlencode(params))
         super(WebSocketClient, self).__init__(url)
@@ -90,7 +90,7 @@ class WebSocketClient(client.WebSocketClientBase):
 
     def sendEvent(self, eventType, eventData):
         msgDict = {"event": eventType}
-        
+
         if eventData:
             msgDict["data"] = eventData
 

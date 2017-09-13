@@ -19,8 +19,8 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-from mooquant.utils import collections
 from mooquant import dataseries
+from mooquant.utils import collections
 
 
 class EventWindow(object):
@@ -38,8 +38,8 @@ class EventWindow(object):
     """
 
     def __init__(self, windowSize, dtype=float, skipNone=True):
-        assert(windowSize > 0)
-        assert(isinstance(windowSize, int))
+        assert (windowSize > 0)
+        assert (isinstance(windowSize, int))
         self.__values = collections.NumPyDeque(windowSize, dtype)
         self.__windowSize = windowSize
         self.__skipNone = skipNone

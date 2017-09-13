@@ -44,11 +44,11 @@ class BarDataSeries(dataseries.SequenceDataSeries):
 
     def __getOrCreateExtraDS(self, name):
         ret = self.__extraDS.get(name)
-        
+
         if ret is None:
             ret = dataseries.SequenceDataSeries(self.getMaxLen())
             self.__extraDS[name] = ret
-        
+
         return ret
 
     def setUseAdjustedValues(self, useAdjusted):
@@ -58,9 +58,9 @@ class BarDataSeries(dataseries.SequenceDataSeries):
         self.appendWithDateTime(bar.getDateTime(), bar)
 
     def appendWithDateTime(self, dateTime, bar):
-        assert(dateTime is not None)
-        assert(bar is not None)
-        
+        assert (dateTime is not None)
+        assert (bar is not None)
+
         bar.setUseAdjustedValue(self.__useAdjustedValues)
         super(BarDataSeries, self).appendWithDateTime(dateTime, bar)
 

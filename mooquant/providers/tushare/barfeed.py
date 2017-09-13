@@ -36,8 +36,10 @@ from mooquant.utils.compat import queue
 
 logger = mooquant.logger.getLogger("tushare")
 
+
 def utcnow():
     return dt.as_utc(datetime.datetime.utcnow())
+
 
 def to_market_datetime(dateTime):
     timezone = pytz.timezone('Asia/Shanghai')
@@ -88,7 +90,7 @@ class TickDataSeries(object):
         return self.__dateTimes
 
     def append(self, price, volume, amount, dateTime):
-        assert(bar is not None)
+        assert (bar is not None)
         self.__priceDS.append(price)
         self.__volumeDS.append(volume)
         self.__amountDS.append(amount)
@@ -110,7 +112,7 @@ def get_trading_days(start_day, days):
 
     for i in range(days):
         while True:
-            day = start_day - datetime.timedelta(days=i+1+holiday)
+            day = start_day - datetime.timedelta(days=i + 1 + holiday)
             if day.date().isoformat() in df.index:
                 trading_days.append(day)
                 break
@@ -140,7 +142,7 @@ def build_bar(dateTime, ds):
 class TuSharePollingThread(threading.Thread):
     # Not using xignite polling thread is because two underscores functions can't be override, e.g. __wait()
 
-    TUSHARE_INQUERY_PERIOD = 3 # tushare read period, default is 3s
+    TUSHARE_INQUERY_PERIOD = 3  # tushare read period, default is 3s
 
     def __init__(self, identifiers):
         super(TuSharePollingThread, self).__init__()
@@ -203,16 +205,16 @@ class TuSharePollingThread(threading.Thread):
 
     def run(self):
         logger.debug("Thread started.")
-        
+
         while not self.__stopped:
             self.__wait()
-        
+
             if not self.__stopped:
                 try:
                     self.doCall()
                 except Exception, e:
                     logger.critical("Unhandled exception", exc_info=e)
-        
+
         logger.debug("Thread finished.")
 
     # Must return a non-naive datetime.
@@ -259,11 +261,11 @@ class TushareBarFeedThread(TuSharePollingThread):
 def get_bar_list(df, frequency, date=None):
     bar_list = []
     end_time = df.ix[0].time
-    
+
     if date is None:
         date = datetime.datetime.now()
 
-    slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month , date.day, 9, 30, 0))
+    slice_start_time = to_market_datetime(datetime.datetime(date.year, date.month, date.day, 9, 30, 0))
 
     while slice_start_time.strftime("%H:%M:%S") < end_time:
         slice_end_time = slice_start_time + datetime.timedelta(seconds=frequency)
@@ -280,7 +282,7 @@ def get_bar_list(df, frequency, date=None):
             amount = sum(ticks_slice.amount)
 
             bar_list.append(bar.BasicBar(
-                slice_start_time, open_, high, low, 
+                slice_start_time, open_, high, low,
                 close, volume, 0, frequency, amount))
         else:
             bar_list.append(None)
@@ -295,7 +297,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
 
     def __init__(self, identifiers, frequency, maxLen=dataseries.DEFAULT_MAX_LEN, replayDays=-1):
         barfeed.BaseBarFeed.__init__(self, frequency, maxLen)
-        
+
         if not isinstance(identifiers, list):
             raise Exception("identifiers must be a list")
 
@@ -303,9 +305,9 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
         self.__frequency = frequency
         self.__queue = queue.Queue()
 
-        self.__fill_today_history_bars(replayDays) # should run before polling thread start
+        self.__fill_today_history_bars(replayDays)  # should run before polling thread start
         self.__thread = TushareBarFeedThread(self.__queue, identifiers, frequency)
-        
+
         for instrument in identifiers:
             self.registerInstrument(instrument)
 
@@ -362,10 +364,10 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
             return
         elif datetime.date.today().weekday() in [5, 0]:
             return
-        
-#        #James:
-#        if datetime.datetime.now().hour * 60 + 30 < 9*60 + 30:
-#            return
+
+        #        #James:
+        #        if datetime.datetime.now().hour * 60 + 30 < 9*60 + 30:
+        #            return
 
         today_bars = {}
 
@@ -420,4 +422,5 @@ if __name__ == '__main__':
     while not liveFeed.eof():
         bars = liveFeed.getNextBars()
         if bars is not None:
-            print bars['000581'].getHigh(), bars['000581'].getDateTime()
+            print
+            bars['000581'].getHigh(), bars['000581'].getDateTime()

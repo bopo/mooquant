@@ -25,7 +25,6 @@ import six
 
 
 class Frequency(object):
-
     """Enum like class for bar frequencies. Valid values are:
 
     * **Frequency.TRADE**: The bar represents a single trade.
@@ -41,14 +40,14 @@ class Frequency(object):
     TRADE = -1
     SECOND = 1
     MINUTE = 60
-    HOUR = 60*60
-    DAY = 24*60*60
-    WEEK = 24*60*60*7
-    MONTH = 24*60*60*31
+    HOUR = 60 * 60
+    DAY = 24 * 60 * 60
+    WEEK = 24 * 60 * 60 * 7
+    MONTH = 24 * 60 * 60 * 31
+
 
 @six.add_metaclass(abc.ABCMeta)
 class Bar(object):
-
     """A Bar is a summary of the trading activity for a security in a given period.
 
     .. note::
@@ -92,7 +91,7 @@ class Bar(object):
     def getVolume(self):
         """Returns the volume."""
         raise NotImplementedError()
-        
+
     @abc.abstractmethod
     def getAmount(self):
         """Returns the volume."""
@@ -136,7 +135,7 @@ class BasicBar(Bar):
         '__useAdjustedValue',
         '__extra',
     )
-    
+
     def __init__(self, dateTime, open_, high, low, close, volume, amount, adjClose, frequency, extra={}):
         if high < low:
             raise Exception("high < low on %s" % (dateTime))
@@ -163,16 +162,16 @@ class BasicBar(Bar):
 
     def __setstate__(self, state):
         (self.__dateTime,
-            self.__open,
-            self.__close,
-            self.__high,
-            self.__low,
-            self.__volume,
-            self.__amount,
-            self.__adjClose,
-            self.__frequency,
-            self.__useAdjustedValue,
-            self.__extra) = state
+         self.__open,
+         self.__close,
+         self.__high,
+         self.__low,
+         self.__volume,
+         self.__amount,
+         self.__adjClose,
+         self.__frequency,
+         self.__useAdjustedValue,
+         self.__extra) = state
 
     def __getstate__(self):
         return (
@@ -234,7 +233,7 @@ class BasicBar(Bar):
 
     def getVolume(self):
         return self.__volume
-        
+
     def getAmount(self):
         return self.__amount
 
@@ -255,7 +254,6 @@ class BasicBar(Bar):
 
 
 class Bars(object):
-
     """A group of :class:`Bar` objects.
 
     :param barDict: A map of instrument to :class:`Bar` objects.
@@ -315,7 +313,6 @@ class Bars(object):
         return self.__barDict.get(instrument, None)
 
 
-
 class BasicTick(object):
     # Optimization to reduce memory footprint.
     __slots__ = (
@@ -340,10 +337,10 @@ class BasicTick(object):
         '__extra',
         '__useAdjustedValue',
     )
-    
-    def __init__(self, dateTime, open_, high, low, close, volume, amount, bp, bv, ap, av, preclose\
-               , new_price, bought_amount, sold_amount, bought_volume, sold_volume, frequency, extra={}):
-        
+
+    def __init__(self, dateTime, open_, high, low, close, volume, amount, bp, bv, ap, av, preclose \
+                 , new_price, bought_amount, sold_amount, bought_volume, sold_volume, frequency, extra={}):
+
         if high < low:
             raise Exception("high < low on %s" % (dateTime))
         elif high < open_:
@@ -374,53 +371,50 @@ class BasicTick(object):
         self.__frequency = frequency
         self.__extra = extra
         self.__useAdjustedValue = False
-        
 
     def __setstate__(self, state):
-        (        self.__dateTime,
-        self.__open,
-        self.__close,
-        self.__high,
-        self.__low,
-        self.__volume,
-        self.__amount,
-        self.__bp,
-        self.__ap,
-        self.__bv,
-        self.__av,
-        self.__preclose,
-        self.__bought_amount,
-        self.__sold_amount,
-        self.__bought_volume,
-        self.__sold_volume,
-        self.__frequency,
-        self.__extra) = state,
-        
+        (self.__dateTime,
+         self.__open,
+         self.__close,
+         self.__high,
+         self.__low,
+         self.__volume,
+         self.__amount,
+         self.__bp,
+         self.__ap,
+         self.__bv,
+         self.__av,
+         self.__preclose,
+         self.__bought_amount,
+         self.__sold_amount,
+         self.__bought_volume,
+         self.__sold_volume,
+         self.__frequency,
+         self.__extra) = state,
 
     def __getstate__(self):
-        return         (        self.__dateTime,
-        self.__open,
-        self.__close,
-        self.__high,
-        self.__low,
-        self.__volume,
-        self.__amount,
-        self.__bp,
-        self.__ap,
-        self.__bv,
-        self.__av,
-        self.__preclose,
-        self.__bought_amount,
-        self.__sold_amount,
-        self.__bought_volume,
-        self.__sold_volume,
-        self.__frequency,
-        self.__extra)
-        
+        return (self.__dateTime,
+                self.__open,
+                self.__close,
+                self.__high,
+                self.__low,
+                self.__volume,
+                self.__amount,
+                self.__bp,
+                self.__ap,
+                self.__bv,
+                self.__av,
+                self.__preclose,
+                self.__bought_amount,
+                self.__sold_amount,
+                self.__bought_volume,
+                self.__sold_volume,
+                self.__frequency,
+                self.__extra)
 
     def getDateTime(self):
         return self.__dateTime
-        
+
     def getOpen(self, adjusted=False):
         if adjusted:
             if self.__adjClose is None:
@@ -450,7 +444,7 @@ class BasicTick(object):
 
     def getVolume(self):
         return self.__volume
-        
+
     def getAmount(self):
         return self.__amount
 
@@ -459,34 +453,34 @@ class BasicTick(object):
 
     def getBp(self):
         return self.__bp
-        
+
     def getBv(self):
         return self.__bv
-        
+
     def getAp(self):
         return self.__ap
-        
+
     def getAv(self):
         return self.__av
-        
+
     def getPreclose(self):
         return self.__preclose
-        
+
     def getBoughtVolume(self):
         return self.__bought_volume
-        
+
     def getBoughtAmount(self):
         return self.__bought_amount
-        
+
     def getSoldVolume(self):
         return self.__sold_volume
-        
+
     def getSoldAmount(self):
         return self.__sold_amount
 
     def getExtraColumns(self):
         return self.__extra
-        
+
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted and self.__adjClose is None:
             raise Exception("Adjusted close is not available")
@@ -494,16 +488,15 @@ class BasicTick(object):
 
     def getUseAdjValue(self):
         return self.__useAdjustedValue
-        
+
     def getAdjClose(self):
         return self.__close
 
     def getPrice(self):
         return self.__close
-        
+
 
 class Ticks(object):
-
     """A group of :class:`Bar` objects.
 
     :param barDict: A map of instrument to :class:`Bar` objects.
@@ -534,7 +527,7 @@ class Ticks(object):
 
         self.__barDict = barDict
         self.__dateTime = firstDateTime
-        
+
     def __getitem__(self, instrument):
         """Returns the :class:`mooquant.bar.Bar` for the given instrument.
         If the instrument is not found an exception is raised."""

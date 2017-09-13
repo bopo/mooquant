@@ -20,9 +20,10 @@
 """
 
 import numpy as np
+from scipy import stats
+
 from mooquant import technical
 from mooquant.utils import collections, dt
-from scipy import stats
 
 
 # Using scipy.stats.linregress instead of numpy.linalg.lstsq because of this:
@@ -37,28 +38,28 @@ def lsreg(x, y):
 
 class LeastSquaresRegressionWindow(technical.EventWindow):
     def __init__(self, windowSize):
-        assert(windowSize > 1)
+        assert (windowSize > 1)
         super(LeastSquaresRegressionWindow, self).__init__(windowSize)
         self.__timestamps = collections.NumPyDeque(windowSize)
 
     def onNewValue(self, dateTime, value):
         technical.EventWindow.onNewValue(self, dateTime, value)
-        
+
         if value is not None:
             timestamp = dt.datetime_to_timestamp(dateTime)
-            
+
             if len(self.__timestamps):
-                assert(timestamp > self.__timestamps[-1])
-            
+                assert (timestamp > self.__timestamps[-1])
+
             self.__timestamps.append(timestamp)
 
     def __getValueAtImpl(self, timestamp):
         ret = None
-        
+
         if self.windowFull():
             a, b = lsreg(self.__timestamps.data(), self.getValues())
             ret = a * timestamp + b
-        
+
         return ret
 
     def getTimeStamps(self):
@@ -69,10 +70,10 @@ class LeastSquaresRegressionWindow(technical.EventWindow):
 
     def getValue(self):
         ret = None
-        
+
         if self.windowFull():
             ret = self.__getValueAtImpl(self.__timestamps.data()[-1])
-        
+
         return ret
 
 
@@ -88,6 +89,7 @@ class LeastSquaresRegression(technical.EventBasedFilter):
         opposite end. If None then dataseries.DEFAULT_MAX_LEN is used.
     :type maxLen: int.
     """
+
     def __init__(self, dataSeries, windowSize, maxLen=None):
         super(LeastSquaresRegression, self).__init__(dataSeries, LeastSquaresRegressionWindow(windowSize), maxLen)
 
@@ -108,11 +110,11 @@ class SlopeEventWindow(technical.EventWindow):
 
     def getValue(self):
         ret = None
-        
+
         if self.windowFull():
             y = self.getValues()
             ret = lsreg(self.__x, y)[0]
-        
+
         return ret
 
 
@@ -147,7 +149,7 @@ class TrendEventWindow(SlopeEventWindow):
 
     def getValue(self):
         ret = super(TrendEventWindow, self).getValue()
-        
+
         if ret is not None:
             if ret > self.__positiveThreshold:
                 ret = True
@@ -155,10 +157,11 @@ class TrendEventWindow(SlopeEventWindow):
                 ret = False
             else:  # Between negative and postive thresholds.
                 ret = None
-        
+
         return ret
 
 
 class Trend(technical.EventBasedFilter):
     def __init__(self, dataSeries, trendDays, positiveThreshold=0, negativeThreshold=0, maxLen=None):
-        super(Trend, self).__init__(dataSeries, TrendEventWindow(trendDays, positiveThreshold, negativeThreshold), maxLen)
+        super(Trend, self).__init__(dataSeries, TrendEventWindow(trendDays, positiveThreshold, negativeThreshold),
+                                    maxLen)

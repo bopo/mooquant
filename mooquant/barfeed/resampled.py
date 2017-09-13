@@ -19,7 +19,6 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
 from mooquant import bar, barfeed, resamplebase
 from mooquant.dataseries import resampled
 
@@ -39,7 +38,7 @@ class BarsGrouper(resamplebase.Grouper):
         # Update or initialize BarGrouper instances for each instrument.
         for instrument, bar_ in list(value.items()):
             barGrouper = self.__barGroupers.get(instrument)
-            
+
             if barGrouper:
                 barGrouper.addValue(bar_)
             else:

@@ -43,7 +43,7 @@ class DrawDownHelper(object):
         return (self.__lastLow - self.__highWatermark) / float(self.__highWatermark)
 
     def update(self, dateTime, low, high):
-        assert(low <= high)
+        assert (low <= high)
         self.__lastLow = low
         self.__lastDateTime = dateTime
 

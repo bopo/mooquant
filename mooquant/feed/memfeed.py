@@ -20,7 +20,9 @@
 """
 
 import sys
+
 from mooquant import dataseries, feed
+
 
 class MemFeed(feed.BaseFeed):
     def __init__(self, maxLen=None):

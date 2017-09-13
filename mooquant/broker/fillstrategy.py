@@ -20,12 +20,12 @@
 """
 
 import abc
+
 import six
 
 import mooquant.bar
 from mooquant import broker
-
-from . import slippage
+from mooquant.broker import slippage
 
 
 # Returns the trigger price for a Limit or StopLimit order, or None if the limit price was not yet penetrated.
@@ -104,6 +104,7 @@ class FillInfo(object):
 
     def getQuantity(self):
         return self.__quantity
+
 
 @six.add_metaclass(abc.ABCMeta)
 class FillStrategy(object):

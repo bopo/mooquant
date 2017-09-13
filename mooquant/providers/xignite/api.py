@@ -21,10 +21,10 @@
 
 import json
 import urllib
-import urllib2
-import urlparse
 
 import pytz
+import urllib2
+import urlparse
 
 from mooquant.utils import dt
 
@@ -38,11 +38,11 @@ USE_SECURE_REQUESTS = False
 #  https://www.xignite.com/product/XigniteGlobalExchanges/api/GetExchangeHours/
 
 MARKET_TIMEZONES = {
-    "ARCX": pytz.timezone("US/Eastern"),     # NYSE ARCA
+    "ARCX": pytz.timezone("US/Eastern"),  # NYSE ARCA
     "CHIX": pytz.timezone("Europe/London"),  # CHI-X EUROPE LIMITED
-    "XASE": pytz.timezone("US/Eastern"),     # NYSE MKT EQUITIES
-    "XNAS": pytz.timezone("US/Eastern"),     # NASDAQ
-    "XNYS": pytz.timezone("US/Eastern"),     # NEW YORK STOCK EXCHANGE, INC
+    "XASE": pytz.timezone("US/Eastern"),  # NYSE MKT EQUITIES
+    "XNAS": pytz.timezone("US/Eastern"),  # NASDAQ
+    "XNYS": pytz.timezone("US/Eastern"),  # NEW YORK STOCK EXCHANGE, INC
 }
 
 
@@ -105,9 +105,9 @@ def XigniteGlobalRealTime_GetBar(token, identifier, identifierType, endDateTime,
         "Precision": precision,
         "Period": period,
     }
-    
+
     parts = (scheme, "globalrealtime.xignite.com", "v3/xGlobalRealTime.json/GetBar", urllib.urlencode(params), "")
-    
+
     url = urlparse.urlunsplit(parts)
     ret = json_http_request(url)
 
@@ -116,7 +116,7 @@ def XigniteGlobalRealTime_GetBar(token, identifier, identifierType, endDateTime,
 
         if msg is None:
             msg = "Error %s" % (ret.get("Outcome"))
-        
+
         raise XigniteError(msg, ret)
 
     return ret

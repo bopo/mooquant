@@ -20,7 +20,9 @@
 """
 
 import numpy as np
+
 from mooquant import technical
+
 
 # This is the formula I'm using to calculate the averages based on previous ones.
 # 1 2 3 4
@@ -41,7 +43,7 @@ from mooquant import technical
 
 class SMAEventWindow(technical.EventWindow):
     def __init__(self, period):
-        assert(period > 0)
+        assert (period > 0)
         super(SMAEventWindow, self).__init__(period)
         self.__value = None
 
@@ -50,7 +52,7 @@ class SMAEventWindow(technical.EventWindow):
 
         if len(self.getValues()) > 0:
             firstValue = self.getValues()[0]
-            assert(firstValue is not None)
+            assert (firstValue is not None)
 
         super(SMAEventWindow, self).onNewValue(dateTime, value)
 
@@ -58,7 +60,8 @@ class SMAEventWindow(technical.EventWindow):
             if self.__value is None:
                 self.__value = self.getValues().mean()
             else:
-                self.__value = self.__value + value / float(self.getWindowSize()) - firstValue / float(self.getWindowSize())
+                self.__value = self.__value + value / float(self.getWindowSize()) - firstValue / float(
+                    self.getWindowSize())
 
     def getValue(self):
         return self.__value
@@ -76,13 +79,14 @@ class SMA(technical.EventBasedFilter):
         opposite end. If None then dataseries.DEFAULT_MAX_LEN is used.
     :type maxLen: int.
     """
+
     def __init__(self, dataSeries, period, maxLen=None):
         super(SMA, self).__init__(dataSeries, SMAEventWindow(period), maxLen)
 
 
 class EMAEventWindow(technical.EventWindow):
     def __init__(self, period):
-        assert(period > 1)
+        assert (period > 1)
         super(EMAEventWindow, self).__init__(period)
 
         self.__multiplier = (2.0 / (period + 1))
@@ -121,13 +125,13 @@ class EMA(technical.EventBasedFilter):
 
 class WMAEventWindow(technical.EventWindow):
     def __init__(self, weights):
-        assert(len(weights) > 0)
+        assert (len(weights) > 0)
         super(WMAEventWindow, self).__init__(len(weights))
         self.__weights = np.asarray(weights)
 
     def getValue(self):
         ret = None
-        
+
         if self.windowFull():
             accum = (self.getValues() * self.__weights).sum()
             weightSum = self.__weights.sum()

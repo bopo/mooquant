@@ -27,6 +27,7 @@ import threading
 import time
 
 import requests
+
 from mooquant.providers.bitstamp import common
 from mooquant.utils import dt
 
@@ -224,9 +225,10 @@ class HTTPClient(object):
     def getUserTransactions(self, transactionType=None):
         url = "https://www.bitstamp.net/api/user_transactions/"
         jsonResponse = self._post(url, {})
-        
+
         if transactionType is not None:
-            jsonUserTransactions = [jsonUserTransaction for jsonUserTransaction in jsonResponse if jsonUserTransaction["type"] == transactionType]
+            jsonUserTransactions = [jsonUserTransaction for jsonUserTransaction in jsonResponse if
+                                    jsonUserTransaction["type"] == transactionType]
         else:
             jsonUserTransactions = jsonResponse
         return [UserTransaction(jsonUserTransaction) for jsonUserTransaction in jsonUserTransactions]

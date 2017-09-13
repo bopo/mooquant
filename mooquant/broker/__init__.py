@@ -313,12 +313,15 @@ class Order(object):
 
     def addExecutionInfo(self, orderExecutionInfo):
         if orderExecutionInfo.getQuantity() > self.getRemaining():
-            raise Exception("Invalid fill size. %s remaining and %s filled" % (self.getRemaining(), orderExecutionInfo.getQuantity()))
+            raise Exception("Invalid fill size. %s remaining and %s filled" % (
+            self.getRemaining(), orderExecutionInfo.getQuantity()))
 
         if self.__avgFillPrice is None:
             self.__avgFillPrice = orderExecutionInfo.getPrice()
         else:
-            self.__avgFillPrice = (self.__avgFillPrice * self.__filled + orderExecutionInfo.getPrice() * orderExecutionInfo.getQuantity()) / float(self.__filled + orderExecutionInfo.getQuantity())
+            self.__avgFillPrice = (
+                                  self.__avgFillPrice * self.__filled + orderExecutionInfo.getPrice() * orderExecutionInfo.getQuantity()) / float(
+                self.__filled + orderExecutionInfo.getQuantity())
 
         self.__executionInfo = orderExecutionInfo
         self.__filled = self.getInstrumentTraits().roundQuantity(self.__filled + orderExecutionInfo.getQuantity())
@@ -327,13 +330,14 @@ class Order(object):
         if self.getRemaining() == 0:
             self.switchState(Order.State.FILLED)
         else:
-            assert(not self.__allOrNone)
+            assert (not self.__allOrNone)
             self.switchState(Order.State.PARTIALLY_FILLED)
 
     def switchState(self, newState):
         validTransitions = Order.VALID_TRANSITIONS.get(self.__state, [])
         if newState not in validTransitions:
-            raise Exception("Invalid order state transition from %s to %s" % (Order.State.toString(self.__state), Order.State.toString(newState)))
+            raise Exception("Invalid order state transition from %s to %s" % (
+            Order.State.toString(self.__state), Order.State.toString(newState)))
         else:
             self.__state = newState
 
@@ -432,6 +436,7 @@ class StopLimitOrder(Order):
 
 class OrderExecutionInfo(object):
     """Execution information for an order."""
+
     def __init__(self, price, quantity, commission, dateTime):
         self.__price = price
         self.__quantity = quantity
@@ -439,7 +444,8 @@ class OrderExecutionInfo(object):
         self.__dateTime = dateTime
 
     def __str__(self):
-        return "%s - Price: %s - Amount: %s - Fee: %s" % (self.__dateTime, self.__price, self.__quantity, self.__commission)
+        return "%s - Price: %s - Amount: %s - Fee: %s" % (
+        self.__dateTime, self.__price, self.__quantity, self.__commission)
 
     def getPrice(self):
         """Returns the fill price."""

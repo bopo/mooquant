@@ -21,8 +21,8 @@
 
 import abc
 
-from mooquant import observer
 from mooquant import dataseries
+from mooquant import observer
 
 
 def feed_iterator(feed):

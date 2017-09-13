@@ -112,7 +112,7 @@ class Dispatcher(object):
 
             while not self.__stop:
                 eof, eventsDispatched = self.__dispatch()
-                
+
                 if eof:
                     self.__stop = True
                 elif not eventsDispatched:
@@ -120,6 +120,6 @@ class Dispatcher(object):
         finally:
             for subject in self.__subjects:
                 subject.stop()
-                
+
             for subject in self.__subjects:
                 subject.join()

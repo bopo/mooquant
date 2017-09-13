@@ -37,7 +37,7 @@ class HighLowEventWindow(technical.EventWindow):
                 ret = values.min()
             else:
                 ret = values.max()
-        
+
         return ret
 
 

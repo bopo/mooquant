@@ -82,7 +82,8 @@ class BaseFeed(memfeed.MemFeed):
     def addValuesFromCSV(self, path):
         # Load the values from the csv file
         values = []
-        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=self.__rowParser.getFieldNames(), delimiter=self.__rowParser.getDelimiter())
+        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=self.__rowParser.getFieldNames(),
+                                         delimiter=self.__rowParser.getDelimiter())
 
         for row in reader:
             dateTime, rowValues = self.__rowParser.parseRow(row)

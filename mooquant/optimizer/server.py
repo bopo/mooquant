@@ -27,6 +27,7 @@ logger = mooquant.logger.getLogger(__name__)
 
 class Results(object):
     """The results of the strategy executions."""
+
     def __init__(self, parameters, result):
         self.__parameters = parameters
         self.__result = result
@@ -57,7 +58,7 @@ def serve(barFeed, strategyParameters, address, port):
     resultSinc = base.ResultSinc()
 
     logger.info("Starting server")
-    
+
     s = xmlrpcserver.Server(paramSource, resultSinc, barFeed, address, port)
     s.serve()
 
@@ -71,5 +72,5 @@ def serve(barFeed, strategyParameters, address, port):
         ret = Results(bestParameters.args, bestResult)
     else:
         logger.error("No results. All jobs failed or no jobs were processed.")
-    
+
     return ret
