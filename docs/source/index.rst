@@ -66,7 +66,6 @@ MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常�
 .. _Github Issue: https://github.com/bopo/mooquant/issues
 .. _MooQuant: https://www.mooquant.com/algorithms
 .. _MooQuant 文档: http://mooquant.readthedocs.io/zh_CN/latest/
-.. _MooQuant 文档: https://www.mooquant.com/api/python/chn
 .. _MooQuant 社区: https://www.mooquant.com/community/category/all/
 .. _FAQ: http://mooquant.readthedocs.io/zh_CN/latest/faq.html
 .. _索引: http://mooquant.readthedocs.io/zh_CN/latest/genindex.html
@@ -99,55 +98,4 @@ MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常�
 .. _tushare: https://github.com/mooquant/mooquant-mod-tushare
 .. _shipane: https://github.com/wh1100717/mooquant-mod-ShiPanE
 
-.. toctree::
-    :caption: 基础
-    :hidden:
-
-    intro/overview
-    intro/install
-    intro/tutorial
-    intro/examples
-    intro/detail_install
-
-
-.. toctree::
-    :caption: API
-    :hidden:
-
-    api/base_api
-    api/extend_api
-
-
-.. toctree::
-    :caption: IPython
-    :hidden:
-    :maxdepth: 3
-    :glob:
-
-    notebooks/run-mooquant-in-ipython.ipynb
-
-
-.. toctree::
-    :caption: 进阶
-    :hidden:
-
-    intro/run_algorithm
-    intro/under_ide
-    intro/optimizing_parameters
-
-
-.. toctree::
-    :caption: 开发
-    :hidden:
-
-    development/make_contribute
-    development/basic_concept
-    development/event_source
-    development/data_source
-
-
-.. toctree::
-    :caption: 其他
-    :hidden:
-
-    history
+.. include:: menus.rst
