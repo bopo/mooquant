@@ -103,7 +103,7 @@ class TickDataSeries(object):
 def get_trading_days(start_day, days):
     try:
         df = ts.get_hist_data('sh')
-    except Exception, e:
+    except Exception as e:
         logger.error("Tushare get hist data exception", exc_info=e)
         return []
 
@@ -194,7 +194,7 @@ class TuSharePollingThread(threading.Thread):
                     # tushare use unicode type, another way is convert it to int/float here. refer to build_bar
                     self._tickDSDict[identifier].append(tick_info.price, tick_info.volume, tick_info.amount,
                                                         tick_info.time)
-        except Exception, e:
+        except Exception as e:
             logger.error("Tushare polling exception", exc_info=e)
 
     def stop(self):
@@ -212,7 +212,7 @@ class TuSharePollingThread(threading.Thread):
             if not self.__stopped:
                 try:
                     self.doCall()
-                except Exception, e:
+                except Exception as e:
                     logger.critical("Unhandled exception", exc_info=e)
 
         logger.debug("Thread finished.")
@@ -250,7 +250,7 @@ class TushareBarFeedThread(TuSharePollingThread):
             try:
                 if not self._tickDSDict[identifier].empty():
                     bar_dict[identifier] = build_bar(to_market_datetime(endDateTime), self._tickDSDict[identifier])
-            except Exception, e:
+            except Exception as e:
                 logger.error(e)
 
         if len(bar_dict):
@@ -375,7 +375,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
             try:
                 df = ts.get_today_ticks(identifier)
                 today_bars[identifier] = get_bar_list(df, self.__frequency, None)
-            except Exception, e:
+            except Exception as e:
                 logger.error(e)
 
         self.__fill_bars(today_bars)

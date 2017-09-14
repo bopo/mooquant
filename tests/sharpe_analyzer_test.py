@@ -42,7 +42,7 @@ class SharpeRatioTestCase(common.TestCase):
     def testNoTrades(self):
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV("ige", common.get_data_file_path("sharpe-ratio-test-ige.csv"))
-        strat = strategy_test.TestStrategy(barFeed, 1000)
+        strat = strategy_test.MyTestStrategy(barFeed, 1000)
         stratAnalyzer = sharpe.SharpeRatio()
         strat.attachAnalyzer(stratAnalyzer)
 
@@ -58,7 +58,7 @@ class SharpeRatioTestCase(common.TestCase):
         # 'Quantitative Trading: How to Build Your Own Algorithmic Trading Business'
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV("ige", common.get_data_file_path("sharpe-ratio-test-ige.csv"))
-        strat = strategy_test.TestStrategy(barFeed, initialCash)
+        strat = strategy_test.MyTestStrategy(barFeed, initialCash)
         strat.setUseAdjustedValues(True)
         strat.setBrokerOrdersGTC(True)
         stratAnalyzer = sharpe.SharpeRatio()
@@ -92,7 +92,7 @@ class SharpeRatioTestCase(common.TestCase):
         # 'Quantitative Trading: How to Build Your Own Algorithmic Trading Business'
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV("ige", common.get_data_file_path("sharpe-ratio-test-ige.csv"))
-        strat = strategy_test.TestStrategy(barFeed, initialCash)
+        strat = strategy_test.MyTestStrategy(barFeed, initialCash)
         strat.getBroker().setCommission(backtesting.FixedPerTrade(commision))
         strat.setUseAdjustedValues(True)
         strat.setBrokerOrdersGTC(True)
@@ -119,7 +119,7 @@ class SharpeRatioTestCase(common.TestCase):
         barFeed = ninjatraderfeed.Feed(ninjatraderfeed.Frequency.MINUTE, marketsession.USEquities.getTimezone())
         barFeed.setBarFilter(csvfeed.USEquitiesRTH())
         barFeed.addBarsFromCSV("spy", common.get_data_file_path("nt-spy-minute-2011.csv"))
-        strat = strategy_test.TestStrategy(barFeed, 1000)
+        strat = strategy_test.MyTestStrategy(barFeed, 1000)
         stratAnalyzer = sharpe.SharpeRatio(False)
         strat.attachAnalyzer(stratAnalyzer)
         strat.marketOrder("spy", 1)

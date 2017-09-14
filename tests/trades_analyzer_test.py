@@ -53,21 +53,20 @@ class TradesAnalyzerTestCase(common.TestCase):
 
     def __createStrategy(self):
         barFeed = self.__loadBarFeed()
-        return strategy_test.TestStrategy(barFeed, 1000)
+        return strategy_test.MyTestStrategy(barFeed, 1000)
 
     def __createPositionStrategy(self):
         barFeed = self.__loadBarFeed()
-        return position_test.TestStrategy(barFeed, TradesAnalyzerTestCase.TestInstrument, 1000)
+        return position_test.MyTestStrategy(barFeed, TradesAnalyzerTestCase.TestInstrument, 1000)
 
     def testNoTrades(self):
         strat = self.__createStrategy()
         stratAnalyzer = trades.Trades()
-        strat.attachAnalyzer(stratAnalyzer)
 
+        strat.attachAnalyzer(stratAnalyzer)
         strat.run()
 
         self.assertTrue(strat.getBroker().getCash() == 1000)
-
         self.assertTrue(stratAnalyzer.getCount() == 0)
         self.assertTrue(stratAnalyzer.getEvenCount() == 0)
         self.assertTrue(stratAnalyzer.getProfitableCount() == 0)
@@ -92,7 +91,6 @@ class TradesAnalyzerTestCase(common.TestCase):
         strat.run()
 
         self.assertTrue(round(strat.getBroker().getCash(), 2) == round(1000 + (127.16 - 127.14) + (127.16 - 127.2) + (127.26 - 127.16) - 127.34, 2))
-
         self.assertTrue(stratAnalyzer.getCount() == 3)
         self.assertTrue(stratAnalyzer.getEvenCount() == 0)
         self.assertTrue(round(stratAnalyzer.getAll().mean(), 2) == 0.03)
@@ -108,10 +106,12 @@ class TradesAnalyzerTestCase(common.TestCase):
 
         self.assertTrue(stratAnalyzer.getUnprofitableCount() == 1)
         self.assertTrue(round(stratAnalyzer.getLosses().mean(), 2) == -0.04)
+        
         if version.LooseVersion(numpy.__version__) >= version.LooseVersion("1.6.2"):
             self.assertTrue(math.isnan(stratAnalyzer.getLosses().std(ddof=1)))
         else:
             self.assertTrue(stratAnalyzer.getLosses().std(ddof=1) == 0)
+        
         self.assertTrue(stratAnalyzer.getLosses().std(ddof=0) == 0)
         self.assertEqual(stratAnalyzer.getNegativeReturns()[0], (127.16 - 127.2) / 127.2)
 
@@ -134,7 +134,6 @@ class TradesAnalyzerTestCase(common.TestCase):
         strat.run()
 
         self.assertTrue(round(strat.getBroker().getCash(), 2) == round(1000 + (127.16 - 127.14) + (127.16 - 127.2) + (127.26 - 127.16) - 127.34, 2))
-
         self.assertTrue(stratAnalyzer.getCount() == 3)
         self.assertTrue(stratAnalyzer.getEvenCount() == 0)
         self.assertTrue(round(stratAnalyzer.getAll().mean(), 2) == 0.03)
@@ -148,10 +147,12 @@ class TradesAnalyzerTestCase(common.TestCase):
 
         self.assertTrue(stratAnalyzer.getUnprofitableCount() == 1)
         self.assertTrue(round(stratAnalyzer.getLosses().mean(), 2) == -0.04)
+        
         if version.LooseVersion(numpy.__version__) >= version.LooseVersion("1.6.2"):
             self.assertTrue(math.isnan(stratAnalyzer.getLosses().std(ddof=1)))
         else:
             self.assertTrue(stratAnalyzer.getLosses().std(ddof=1) == 0)
+        
         self.assertTrue(stratAnalyzer.getLosses().std(ddof=0) == 0)
 
     def testSomeTradesWithCommissions(self):
@@ -201,6 +202,7 @@ class TradesAnalyzerTestCase(common.TestCase):
 
         strat.run()
         allReturns = stratAnalyzer.getAllReturns()
+
         self.assertEqual(round(allReturns[0], 6), 0.000668)
         self.assertEqual(round(allReturns[1], 6), -0.000943)
         self.assertEqual(round(allReturns[2], 6), 0.000118)
@@ -331,15 +333,11 @@ class TradesAnalyzerTestCase(common.TestCase):
         strat.run()
 
         self.assertTrue(round(strat.getBroker().getCash(), 2) == round(1000 + (127.2 - 127.14) + (127.2 - 127.16), 2))
-
         self.assertTrue(stratAnalyzer.getCount() == 1)
         self.assertTrue(stratAnalyzer.getEvenCount() == 0)
-
         self.assertTrue(round(stratAnalyzer.getAll().mean(), 2) == 0.1)
-
         self.assertTrue(stratAnalyzer.getProfitableCount() == 1)
         self.assertTrue(round(stratAnalyzer.getProfits().mean(), 2) == 0.1)
-
         self.assertTrue(stratAnalyzer.getUnprofitableCount() == 0)
 
     def testLong3(self):

@@ -24,7 +24,7 @@ from mooquant import dataseries, technical
 from . import common
 
 
-class TestEventWindow(technical.EventWindow):
+class MyTestEventWindow(technical.EventWindow):
     def __init__(self):
         technical.EventWindow.__init__(self, 1, skipNone=False, dtype=object)
 
@@ -32,15 +32,15 @@ class TestEventWindow(technical.EventWindow):
         return self.getValues()[-1]
 
 
-class TestFilter(technical.EventBasedFilter):
+class MyTestFilter(technical.EventBasedFilter):
     def __init__(self, dataSeries):
-        technical.EventBasedFilter.__init__(self, dataSeries, TestEventWindow())
+        technical.EventBasedFilter.__init__(self, dataSeries, MyTestEventWindow())
 
 
 class DataSeriesFilterTest(common.TestCase):
     def testInvalidPosNotCached(self):
         ds = dataseries.SequenceDataSeries()
-        testFilter = TestFilter(ds)
+        testFilter = MyTestFilter(ds)
         for i in range(10):
             ds.append(i)
             ds.append(None)  # Interleave Nones.

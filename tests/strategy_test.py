@@ -34,7 +34,7 @@ def get_by_datetime_or_date(dict_, dateTimeOrDate):
     return ret
 
 
-class TestStrategy(strategy.BacktestingStrategy):
+class MyTestStrategy(strategy.BacktestingStrategy):
     def __init__(self, barFeed, cash):
         strategy.BacktestingStrategy.__init__(self, barFeed, cash)
 
@@ -86,7 +86,7 @@ class StrategyTestCase(common.TestCase):
 
     def createStrategy(self):
         barFeed = self.loadDailyBarFeed()
-        strat = TestStrategy(barFeed, 1000)
+        strat = MyTestStrategy(barFeed, 1000)
         return strat
 
 
