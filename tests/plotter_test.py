@@ -36,21 +36,26 @@ class PlotterTestCase(common.TestCase):
         instrument = "orcl"
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV(instrument, common.get_data_file_path("orcl-2000-yahoofinance.csv"))
+        
         strat = sma_crossover.SMACrossOver(barFeed, instrument, 20)
+        
         plt = plotter.StrategyPlotter(strat, True, True, True)
         plt.getInstrumentSubplot(instrument).addDataSeries("sma", strat.getSMA())
+        
         strat.run()
 
         with common.TmpDir() as tmpPath:
             fig, subplots = plt.buildFigureAndSubplots()
+
             self.assertIsNotNone(fig)
             self.assertIsNotNone(subplots)
-            
+
             fig = plt.buildFigure()
             fig.set_size_inches(10, 8)
 
             png = os.path.join(tmpPath, "plotter_test.png")
             fig.savefig(png)
+
             # Check that file size looks ok.
             # 118458 on Mac
             # 116210 on Linux
