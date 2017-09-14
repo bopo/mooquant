@@ -18,4 +18,5 @@ numpy
 scipy
 ws4py
 pytz
-noselogzero
+nose
+logzero

@@ -16,6 +16,7 @@ def parameters_generator():
     overSoldThreshold = range(5, 26)
     return itertools.product(instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
 
+
 # The if __name__ == '__main__' part is necessary if running on Windows.
 if __name__ == '__main__':
     # Load the feed from the CSV files.

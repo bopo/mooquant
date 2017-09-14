@@ -28,7 +28,7 @@ import pytz
 from mooquant import broker
 from mooquant.barfeed import csvfeed, ninjatraderfeed
 from mooquant.broker import backtesting
-from mooquant.stratanalyzer import trades
+from mooquant.analyzer import trades
 
 from . import common
 from . import position_test

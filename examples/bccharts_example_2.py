@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function, unicode_literals
 
-from mooquant import broker as basebroker
 from mooquant import bar, plotter, strategy
+from mooquant import broker as basebroker
 from mooquant.barfeed import csvfeed
-from mooquant.bitstamp import broker
+from mooquant.provider.bitstamp import broker
 from mooquant.technical import vwap
 
 
@@ -22,7 +22,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
         orders = self.getBroker().getActiveOrders()
         buy = filter(lambda o: o.isBuy(), orders)
         sell = filter(lambda o: o.isSell(), orders)
-        
+
         return buy, sell
 
     def _cancelOrders(self, orders):
@@ -39,10 +39,10 @@ class VWAPMomentum(strategy.BacktestingStrategy):
         brk = self.getBroker()
         cashAvail = brk.getCash() * 0.98
         size = round(cashAvail / price, 3)
-        
-        if len(buyOrders) == 0 and price*size > VWAPMomentum.MIN_TRADE:
+
+        if len(buyOrders) == 0 and price * size > VWAPMomentum.MIN_TRADE:
             self.info("Buy %s at %s" % (size, price))
-        
+
             try:
                 self.limitOrder(self.__instrument, price, size)
             except Exception as e:
@@ -54,22 +54,22 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
         brk = self.getBroker()
         shares = brk.getShares(self.__instrument)
-        
+
         if len(sellOrders) == 0 and shares > 0:
             self.info("Sell %s at %s" % (shares, price))
-            self.limitOrder(self.__instrument, price, shares*-1)
+            self.limitOrder(self.__instrument, price, shares * -1)
 
     def getVWAP(self):
         return self.__vwap
 
     def onBars(self, bars):
         vwap = self.__vwap[-1]
-        
+
         if vwap is None:
             return
 
         price = bars[self.__instrument].getClose()
-        
+
         if price > vwap * (1 + self.__buyThreshold):
             self._buySignal(price)
         elif price < vwap * (1 - self.__sellThreshold):
@@ -80,7 +80,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
             orderType = "Buy"
         else:
             orderType = "Sell"
-        
+
         self.info("%s order %d updated - Status: %s - %s" % (
             orderType,
             order.getId(),

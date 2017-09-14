@@ -545,7 +545,7 @@ class BaseStrategy(object):
         self.__dispatcher.stop()
 
     def attachAnalyzer(self, strategyAnalyzer):
-        """Adds a :class:`mooquant.stratanalyzer.StrategyAnalyzer`."""
+        """Adds a :class:`mooquant.analyzer.StrategyAnalyzer`."""
         self.attachAnalyzerEx(strategyAnalyzer)
 
     def getNamedAnalyzer(self, name):

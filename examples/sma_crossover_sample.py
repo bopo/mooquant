@@ -2,7 +2,7 @@
 from __future__ import division, print_function, unicode_literals
 
 from mooquant import plotter
-from mooquant.stratanalyzer import sharpe
+from mooquant.analyzer import sharpe
 from mooquant.tools import yahoofinance
 
 from sma_crossover import SMACrossOver

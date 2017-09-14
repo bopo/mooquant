@@ -2,7 +2,7 @@
 from __future__ import division, print_function, unicode_literals
 
 from mooquant import plotter, strategy
-from mooquant.stratanalyzer import sharpe
+from mooquant.analyzer import sharpe
 from mooquant.technical import vwap
 from mooquant.tools import yahoofinance
 

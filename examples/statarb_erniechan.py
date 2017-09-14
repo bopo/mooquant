@@ -5,7 +5,7 @@ import numpy as np
 import statsmodels.api as sm
 from mooquant import dataseries, plotter, strategy
 from mooquant.dataseries import aligned
-from mooquant.stratanalyzer import sharpe
+from mooquant.analyzer import sharpe
 from mooquant.tools import yahoofinance
 
 

@@ -21,12 +21,12 @@
 
 import numpy as np
 
-from mooquant import broker, stratanalyzer
-from mooquant.stratanalyzer import returns
+from mooquant import broker, analyzer
+from mooquant.analyzer import returns
 
 
-class Trades(stratanalyzer.StrategyAnalyzer):
-    """A :class:`mooquant.stratanalyzer.StrategyAnalyzer` that records the profit/loss
+class Trades(analyzer.StrategyAnalyzer):
+    """A :class:`mooquant.analyzer.StrategyAnalyzer` that records the profit/loss
     and returns of every completed trade.
 
     .. note::

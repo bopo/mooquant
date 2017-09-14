@@ -24,7 +24,7 @@ import datetime
 from mooquant import broker, marketsession
 from mooquant.barfeed import csvfeed, ninjatraderfeed, yahoofeed
 from mooquant.broker import backtesting
-from mooquant.stratanalyzer import sharpe
+from mooquant.analyzer import sharpe
 
 from . import common
 from . import strategy_test

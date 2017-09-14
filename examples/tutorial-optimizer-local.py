@@ -3,10 +3,9 @@ from __future__ import division, print_function, unicode_literals
 
 import itertools
 
+import rsi2
 from mooquant.barfeed import yahoofeed
 from mooquant.optimizer import local
-
-import rsi2
 
 
 def parameters_generator():

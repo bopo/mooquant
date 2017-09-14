@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function, unicode_literals
 
-from mooquant import strategy
 from mooquant.providers.bitstamp import barfeed, broker
+
+from mooquant import strategy
 from mooquant.technical import cross, ma
 
 
@@ -10,6 +11,7 @@ class Strategy(strategy.BaseStrategy):
     def __init__(self, feed, brk):
         strategy.BaseStrategy.__init__(self, feed, brk)
         smaPeriod = 20
+
         self.__instrument = "BTC"
         self.__prices = feed[self.__instrument].getCloseDataSeries()
         self.__sma = ma.SMA(self.__prices, smaPeriod)
@@ -67,9 +69,10 @@ class Strategy(strategy.BaseStrategy):
 def main():
     barFeed = barfeed.LiveTradeFeed()
     brk = broker.PaperTradingBroker(1000, barFeed)
-    strat = Strategy(barFeed, brk)
 
+    strat = Strategy(barFeed, brk)
     strat.run()
+
 
 if __name__ == "__main__":
     main()

@@ -21,7 +21,7 @@
 
 import datetime
 
-from mooquant.providers.bitcoincharts import barfeed
+from mooquant.provider.bitcoincharts import barfeed
 from mooquant.utils import dt
 
 from . import common

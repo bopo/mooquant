@@ -33,6 +33,7 @@ class BarDataSeries(dataseries.SequenceDataSeries):
 
     def __init__(self, maxLen=None):
         super(BarDataSeries, self).__init__(maxLen)
+
         self.__openDS = dataseries.SequenceDataSeries(maxLen)
         self.__closeDS = dataseries.SequenceDataSeries(maxLen)
         self.__highDS = dataseries.SequenceDataSeries(maxLen)
@@ -104,8 +105,8 @@ class BarDataSeries(dataseries.SequenceDataSeries):
         """Returns a :class:`mooquant.dataseries.DataSeries` with the close or adjusted close prices."""
         if self.__useAdjustedValues:
             return self.__adjCloseDS
-        else:
-            return self.__closeDS
+
+        return self.__closeDS
 
     def getExtraDataSeries(self, name):
         """Returns a :class:`mooquant.dataseries.DataSeries` for an extra column."""

@@ -22,6 +22,7 @@
 
 class StrategyAnalyzer(object):
     """Base class for strategy analyzers.
+    策略分析基类
 
     .. note::
 

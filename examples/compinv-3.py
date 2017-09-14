@@ -6,8 +6,8 @@ import datetime
 import os
 
 from mooquant import strategy
+from mooquant.analyzer import returns, sharpe
 from mooquant.barfeed import csvfeed, yahoofeed
-from mooquant.stratanalyzer import returns, sharpe
 from mooquant.utils import stats
 
 
@@ -20,11 +20,11 @@ class OrdersFile:
 
         # Load orders from the file.
         reader = csv.DictReader(open(ordersFile, "r"), fieldnames=["year", "month", "day", "symbol", "action", "qty"])
-        
+
         for row in reader:
             dateTime = datetime.datetime(int(row["year"]), int(row["month"]), int(row["day"]))
             self.__orders.setdefault(dateTime, [])
-            
+
             order = (row["symbol"], row["action"], int(row["qty"]))
             self.__orders[dateTime].append(order)
 
@@ -60,7 +60,7 @@ class MyStrategy(strategy.BacktestingStrategy):
         # Suscribe to the feed bars event before the broker just to place the orders properly.
         feed.getNewValuesEvent().subscribe(self.__onBarsBeforeBroker)
         strategy.BacktestingStrategy.__init__(self, feed, cash)
-        
+
         self.__ordersFile = ordersFile
         self.setUseAdjustedValues(useAdjustedClose)
         # We will allow buying more shares than cash allows.
@@ -71,7 +71,7 @@ class MyStrategy(strategy.BacktestingStrategy):
             if action.lower() == "buy":
                 self.marketOrder(instrument, quantity, onClose=True)
             else:
-                self.marketOrder(instrument, quantity*-1, onClose=True)
+                self.marketOrder(instrument, quantity * -1, onClose=True)
 
     def onOrderUpdated(self, order):
         if order.isCanceled():
@@ -86,9 +86,9 @@ def main():
     # Load the orders file.
     ordersFile = OrdersFile("orders.csv")
 
-    print ("First date", ordersFile.getFirstDate())
-    print ("Last date", ordersFile.getLastDate())
-    print ("Symbols", ordersFile.getInstruments())
+    print("First date", ordersFile.getFirstDate())
+    print("Last date", ordersFile.getLastDate())
+    print("Symbols", ordersFile.getInstruments())
 
     # Load the data from QSTK storage. QS environment variable has to be defined.
     if os.getenv("QS") is None:
@@ -97,7 +97,7 @@ def main():
     feed = yahoofeed.Feed()
     feed.setBarFilter(csvfeed.DateRangeFilter(ordersFile.getFirstDate(), ordersFile.getLastDate()))
     feed.setDailyBarTime(datetime.time(0, 0, 0))  # This is to match the dates loaded with the ones in the orders file.
-    
+
     for symbol in ordersFile.getInstruments():
         feed.addBarsFromCSV(symbol, os.path.join(os.getenv("QS"), "QSData", "Yahoo", symbol + ".csv"))
 
@@ -108,21 +108,20 @@ def main():
 
     # Attach returns and sharpe ratio analyzers.
     retAnalyzer = returns.Returns()
-    
+
     strat.attachAnalyzer(retAnalyzer)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
-    
+
     strat.attachAnalyzer(sharpeRatioAnalyzer)
     strat.run()
 
     # Print the results.
-    print ("Final portfolio value: $%.2f" % strat.getResult())
-    print ("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
-    print ("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
-    print ("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
-    print ("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+    print("Final portfolio value: $%.2f" % strat.getResult())
+    print("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
+    print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
+    print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
+    print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
 
 
 if __name__ == '__main__':
     main()
-

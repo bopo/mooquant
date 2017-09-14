@@ -20,19 +20,20 @@
 """
 from __future__ import unicode_literals
 
-import sys
-import abc
-import six
-
-if sys.version < '3':
+# if sys.version < '3':
+try:
     import Queue as queue
     import cPickle as pickle
 
+    from urllib import urlencode
     from xmlrpclib import ServerProxy
     from SimpleXMLRPCServer import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-else:
+# else:
+except ImportError as e:
     import queue
     import pickle
 
     from xmlrpc.client import ServerProxy
     from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
+
+    from urllib.parse import urlencode

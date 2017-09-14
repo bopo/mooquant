@@ -59,12 +59,13 @@ def serve(barFeed, strategyParameters, address, port):
 
     logger.info("Starting server")
 
-    s = xmlrpcserver.Server(paramSource, resultSinc, barFeed, address, port)
-    s.serve()
+    server = xmlrpcserver.Server(paramSource, resultSinc, barFeed, address, port)
+    server.serve()
 
     logger.info("Server finished")
 
     ret = None
+
     bestResult, bestParameters = resultSinc.getBest()
 
     if bestResult is not None:

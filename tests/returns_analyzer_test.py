@@ -23,7 +23,7 @@ import datetime
 
 from mooquant import broker, marketsession
 from mooquant.barfeed import csvfeed, yahoofeed
-from mooquant.stratanalyzer import returns
+from mooquant.analyzer import returns
 
 from . import common
 from . import position_test

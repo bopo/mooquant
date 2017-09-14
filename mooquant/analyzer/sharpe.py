@@ -21,8 +21,8 @@
 
 import math
 
-from mooquant import stratanalyzer
-from mooquant.stratanalyzer import returns
+from mooquant import analyzer
+from mooquant.analyzer import returns
 from mooquant.utils import stats
 
 
@@ -85,8 +85,8 @@ def sharpe_ratio_2(returns, riskFreeRate, firstDateTime, lastDateTime, annualize
     return ret
 
 
-class SharpeRatio(stratanalyzer.StrategyAnalyzer):
-    """A :class:`mooquant.stratanalyzer.StrategyAnalyzer` that calculates
+class SharpeRatio(analyzer.StrategyAnalyzer):
+    """A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates
     Sharpe ratio for the whole portfolio.
 
     :param useDailyReturns: True if daily returns should be used instead of the returns for each bar.

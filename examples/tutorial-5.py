@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function, unicode_literals
 
-from mooquant import plotter
-from mooquant.barfeed import yahoofeed
-from mooquant.stratanalyzer import returns
-
 import sma_crossover
+from mooquant import plotter
+from mooquant.analyzer import returns
+from mooquant.barfeed import yahoofeed
 
 # Load the yahoo feed from the CSV file
 feed = yahoofeed.Feed()

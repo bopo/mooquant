@@ -51,7 +51,7 @@ class Database(dbfeed.Database):
 
     def __findInstrumentId(self, instrument):
         cursor = self.__connection.cursor()
-        sql = "select instrument_id from instrument where name = ?"
+        sql = "SELECT [instrument_id] FROM [instrument] WHERE [name] = ?"
         cursor.execute(sql, [instrument])
         ret = cursor.fetchone()
 
@@ -63,7 +63,7 @@ class Database(dbfeed.Database):
         return ret
 
     def __addInstrument(self, instrument):
-        ret = self.__connection.execute("INSERT INTO instrument (name) VALUES (?)", [instrument])
+        ret = self.__connection.execute("INSERT INTO [instrument] ([name]) VALUES (?)", [instrument])
         return ret.lastrowid
 
     def __getOrCreateInstrument(self, instrument):
@@ -109,33 +109,33 @@ class Database(dbfeed.Database):
         timeStamp = dt.datetime_to_timestamp(bar.getDateTime())
 
         try:
-            sql = "insert into bar (instrument_id, frequency, timestamp, open, high, low, close, volume, adj_close) values (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            sql = "INSERT INTO bar (instrument_id, frequency, timestamp, open, high, low, close, volume, adj_close) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
             params = [instrumentId, frequency, timeStamp, bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(),
                       bar.getVolume(), bar.getAdjClose()]
             self.__connection.execute(sql, params)
         except sqlite3.IntegrityError:
-            sql = "update bar set open = ?, high = ?, low = ?, close = ?, volume = ?, adj_close = ?" \
-                  " where instrument_id = ? and frequency = ? and timestamp = ?"
+            sql = "UPDATE bar SET open = ?, high = ?, low = ?, close = ?, volume = ?, adj_close = ?" \
+                  " WHERE instrument_id = ? AND frequency = ? AND timestamp = ?"
             params = [bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(), bar.getAdjClose(),
                       instrumentId, frequency, timeStamp]
             self.__connection.execute(sql, params)
 
     def getBars(self, instrument, frequency, timezone=None, fromDateTime=None, toDateTime=None):
         instrument = normalize_instrument(instrument)
-        sql = "select bar.timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adj_close, bar.frequency" \
-              " from bar join instrument on (bar.instrument_id = instrument.instrument_id)" \
-              " where instrument.name = ? and bar.frequency = ?"
+        sql = "SELECT bar.timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adj_close, bar.frequency" \
+              " FROM bar JOIN instrument ON (bar.instrument_id = instrument.instrument_id)" \
+              " WHERE instrument.name = ? AND bar.frequency = ?"
         args = [instrument, frequency]
 
         if fromDateTime is not None:
-            sql += " and bar.timestamp >= ?"
+            sql += " AND bar.timestamp >= ?"
             args.append(dt.datetime_to_timestamp(fromDateTime))
 
         if toDateTime is not None:
-            sql += " and bar.timestamp <= ?"
+            sql += " AND bar.timestamp <= ?"
             args.append(dt.datetime_to_timestamp(toDateTime))
 
-        sql += " order by bar.timestamp asc"
+        sql += " ORDER by bar.timestamp ASC"
         cursor = self.__connection.cursor()
         cursor.execute(sql, args)
         ret = []

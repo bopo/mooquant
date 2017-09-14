@@ -23,7 +23,7 @@ import datetime
 
 from mooquant import bar, broker
 from mooquant.barfeed import membf, yahoofeed
-from mooquant.stratanalyzer import drawdown
+from mooquant.analyzer import drawdown
 
 from . import common
 from . import strategy_test

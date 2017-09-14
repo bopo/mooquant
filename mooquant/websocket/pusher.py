@@ -21,13 +21,9 @@
 
 import json
 
-try:
-    from urllib import urlencode
-except Exception as e:
-    from urllib.parse import urlencode
-
 import mooquant
 import mooquant.logger
+from mooquant.utils.compat import urlencode
 from mooquant.websocket import client
 
 logger = mooquant.logger.getLogger("pusher")

@@ -19,10 +19,11 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import pytz
 import datetime
-import mooquant.barfeed
 
+import pytz
+
+import mooquant.barfeed
 from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt

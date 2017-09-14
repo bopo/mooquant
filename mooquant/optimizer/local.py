@@ -45,6 +45,7 @@ def worker_process(strategyClass, port, logLevel):
         def runStrategy(self, barFeed, *args, **kwargs):
             strat = strategyClass(barFeed, *args, **kwargs)
             strat.run()
+
             return strat.getResult()
 
     # Create a worker and run it.
@@ -93,6 +94,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     """
 
     assert (workerCount is None or workerCount > 0)
+
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 

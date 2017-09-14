@@ -55,6 +55,7 @@ def run_strategy(smaPeriod):
     # Evaluate the strategy with the feed.
     myStrategy = MyStrategy(feed, "orcl", smaPeriod)
     myStrategy.run()
-    print ("Final portfolio value: $%.2f" % myStrategy.getBroker().getEquity())
+    print("Final portfolio value: $%.2f" % myStrategy.getBroker().getEquity())
+
 
 run_strategy(15)

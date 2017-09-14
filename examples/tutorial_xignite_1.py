@@ -1,8 +1,8 @@
 from mooquant import strategy
 from mooquant.bar import Frequency
 from mooquant.broker import backtesting
+from mooquant.provider.xignite import barfeed
 from mooquant.technical import ma
-from mooquant.providers.xignite import barfeed
 
 
 class Strategy(strategy.BaseStrategy):
@@ -15,7 +15,9 @@ class Strategy(strategy.BaseStrategy):
     def onBars(self, bars):
         for instrument in bars.getInstruments():
             bar = bars[instrument]
-            self.info("%s: Open: %s High: %s Low: %s Close: %s Volume: %s SMA: %s" % (instrument, bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(), self.__sma[instrument][-1]))
+            self.info("%s: Open: %s High: %s Low: %s Close: %s Volume: %s SMA: %s" % (
+            instrument, bar.getOpen(), bar.getHigh(), bar.getLow(), bar.getClose(), bar.getVolume(),
+            self.__sma[instrument][-1]))
 
 
 def main():
@@ -26,10 +28,11 @@ def main():
     # apiCallDelay is necessary because the bar may not be immediately available.
     apiCallDelay = 60
 
-    feed = barfeed.LiveFeed(apiToken, indentifiers, Frequency.MINUTE*5, apiCallDelay)
+    feed = barfeed.LiveFeed(apiToken, indentifiers, Frequency.MINUTE * 5, apiCallDelay)
     brk = backtesting.Broker(1000, feed)
     myStrategy = Strategy(feed, brk)
     myStrategy.run()
+
 
 if __name__ == "__main__":
     main()

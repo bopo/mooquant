@@ -21,7 +21,7 @@
 
 import math
 
-from mooquant import dataseries, observer, stratanalyzer
+from mooquant import dataseries, observer, analyzer
 
 
 # Helper class to calculate time-weighted returns in a portfolio.
@@ -168,7 +168,7 @@ class PositionTracker(object):
         self.update(quantity * -1, price, commission)
 
 
-class ReturnsAnalyzerBase(stratanalyzer.StrategyAnalyzer):
+class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
     def __init__(self):
         super(ReturnsAnalyzerBase, self).__init__()
         self.__event = observer.Event()
@@ -208,9 +208,9 @@ class ReturnsAnalyzerBase(stratanalyzer.StrategyAnalyzer):
         self.__event.emit(bars.getDateTime(), self)
 
 
-class Returns(stratanalyzer.StrategyAnalyzer):
+class Returns(analyzer.StrategyAnalyzer):
     """
-    A :class:`mooquant.stratanalyzer.StrategyAnalyzer` that calculates time-weighted returns for the
+    A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates time-weighted returns for the
     whole portfolio.
 
     :param maxLen: The maximum number of values to hold in net and cumulative returs dataseries.

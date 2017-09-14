@@ -2,12 +2,12 @@
 from __future__ import division, print_function, unicode_literals
 
 from mooquant import plotter, strategy
-from mooquant.stratanalyzer import sharpe
+from mooquant.analyzer import sharpe
 from mooquant.technical import bollinger
 from mooquant.tools import yahoofinance
 
 
-class BBands(strategy.BacktestingStrategy):
+class BBandsStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, bBandsPeriod):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.__instrument = instrument
@@ -19,7 +19,7 @@ class BBands(strategy.BacktestingStrategy):
     def onBars(self, bars):
         lower = self.__bbands.getLowerBand()[-1]
         upper = self.__bbands.getUpperBand()[-1]
-        
+
         if lower is None:
             return
 
@@ -30,7 +30,7 @@ class BBands(strategy.BacktestingStrategy):
             sharesToBuy = int(self.getBroker().getCash(False) / bar.getClose())
             self.marketOrder(self.__instrument, sharesToBuy)
         elif shares > 0 and bar.getClose() > upper:
-            self.marketOrder(self.__instrument, -1*shares)
+            self.marketOrder(self.__instrument, -1 * shares)
 
 
 def main(plot):
@@ -40,7 +40,7 @@ def main(plot):
     # Download the bars.
     feed = yahoofinance.build_feed([instrument], 2011, 2012, "data/")
 
-    strat = BBands(feed, instrument, bBandsPeriod)
+    strat = BBandsStrategy(feed, instrument, bBandsPeriod)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 
@@ -51,8 +51,8 @@ def main(plot):
         plt.getInstrumentSubplot(instrument).addDataSeries("lower", strat.getBollingerBands().getLowerBand())
 
     strat.run()
-    
-    print ("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
+
+    print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot:
         plt.plot()

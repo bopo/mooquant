@@ -22,7 +22,7 @@
 import datetime
 
 from mooquant import broker, warninghelpers
-from mooquant.stratanalyzer import returns
+from mooquant.analyzer import returns
 
 
 class PositionState(object):

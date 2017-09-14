@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function, unicode_literals
 
-from mooquant import strategy
-from mooquant.bitstamp import barfeed, broker
+from mooquant.provider.bitstamp import barfeed, broker
 from mooquant.twitter import feed as twitterfeed
+
+from mooquant import strategy
 
 
 class Strategy(strategy.BaseStrategy):
@@ -42,7 +43,8 @@ def main():
     track = ["bitcoin", "btc", "mtgox", "bitstamp", "xapo"]
     follow = []
     languages = ["en"]
-    twitterFeed = twitterfeed.TwitterFeed(consumer_key, consumer_secret, access_token, access_token_secret, track, follow, languages)
+    twitterFeed = twitterfeed.TwitterFeed(consumer_key, consumer_secret, access_token, access_token_secret, track,
+                                          follow, languages)
 
     barFeed = barfeed.LiveTradeFeed()
     brk = broker.PaperTradingBroker(1000, barFeed)
@@ -51,6 +53,7 @@ def main():
     # It is VERY important to add twitterFeed to the event dispatch loop before running the strategy.
     strat.getDispatcher().addSubject(twitterFeed)
     strat.run()
+
 
 if __name__ == "__main__":
     main()

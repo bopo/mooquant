@@ -9,7 +9,7 @@ class RSI2(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.__instrument = instrument
-        
+
         # We'll use adjusted close values, if available, instead of regular close values.
         if feed.barsHaveAdjClose():
             self.setUseAdjustedValues(True)
@@ -38,7 +38,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert(False)
+            assert (False)
 
     def onExitOk(self, position):
         if self.__longPos == position:
@@ -46,7 +46,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert(False)
+            assert (False)
 
     def onExitCanceled(self, position):
         # If the exit was canceled, re-submit it.

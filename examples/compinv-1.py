@@ -3,7 +3,7 @@ from __future__ import division, print_function, unicode_literals
 
 from mooquant import strategy
 from mooquant.barfeed import yahoofeed
-from mooquant.stratanalyzer import returns, sharpe
+from mooquant.analyzer import returns, sharpe
 from mooquant.utils import stats
 
 

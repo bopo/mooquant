@@ -21,10 +21,12 @@
 
 import datetime
 
-from mooquant import stratanalyzer
+from mooquant import analyzer
 
 
 class DrawDownHelper(object):
+    """A :class: `mooquant.analyzer.DrawDownHelper`"""
+
     def __init__(self):
         self.__highWatermark = None
         self.__lowWatermark = None
@@ -55,8 +57,8 @@ class DrawDownHelper(object):
             self.__lowWatermark = min(self.__lowWatermark, low)
 
 
-class DrawDown(stratanalyzer.StrategyAnalyzer):
-    """A :class:`mooquant.stratanalyzer.StrategyAnalyzer` that calculates
+class DrawDown(analyzer.StrategyAnalyzer):
+    """A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates
     max. drawdown and longest drawdown duration for the portfolio."""
 
     def __init__(self):
@@ -67,14 +69,6 @@ class DrawDown(stratanalyzer.StrategyAnalyzer):
 
     def calculateEquity(self, strat):
         return strat.getBroker().getEquity()
-        # ret = strat.getBroker().getCash()
-        # for instrument, shares in strat.getBroker().getPositions().iteritems():
-        #     _bar = strat.getFeed().getLastBar(instrument)
-        #     if shares > 0:
-        #         ret += strat.getBroker().getBarLow(_bar) * shares
-        #     elif shares < 0:
-        #         ret += strat.getBroker().getBarHigh(_bar) * shares
-        # return ret
 
     def beforeOnBars(self, strat, bars):
         equity = self.calculateEquity(strat)

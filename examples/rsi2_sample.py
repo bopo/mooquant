@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import division, print_function, unicode_literals
 
-from mooquant import plotter
-from mooquant.stratanalyzer import sharpe
-from mooquant.tools import yahoofinance
-
 import rsi2
+from mooquant import plotter
+from mooquant.analyzer import sharpe
+from mooquant.tools import yahoofinance
 
 
 def main(plot):
@@ -32,7 +31,7 @@ def main(plot):
         plt.getOrCreateSubplot("rsi").addLine("Oversold", overSoldThreshold)
 
     strat.run()
-    print ("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
+    print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot:
         plt.plot()

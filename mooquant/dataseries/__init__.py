@@ -142,6 +142,7 @@ class SequenceDataSeries(DataSeries):
             raise Exception("Invalid datetime. It must be bigger than that last one")
 
         assert (len(self.__values) == len(self.__dateTimes))
+
         self.__dateTimes.append(dateTime)
         self.__values.append(value)
 

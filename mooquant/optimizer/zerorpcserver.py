@@ -64,7 +64,7 @@ class Job(object):
 
 # Restrict to a particular path.
 class RequestHandler(SimpleXMLRPCRequestHandler):
-    rpc_paths = ('/MooQuantRPC',)
+    rpc_paths = ('/ZeroRPC',)
 
 
 class Server(SimpleXMLRPCServer):

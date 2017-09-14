@@ -8,11 +8,12 @@ from mooquant import dataseries, technical
 class Accumulator(technical.EventWindow):
     def getValue(self):
         ret = None
-        
+
         if self.windowFull():
             ret = self.getValues().sum()
 
         return ret
+
 
 # Build a sequence based DataSeries.
 seqDS = dataseries.SequenceDataSeries()
@@ -25,10 +26,10 @@ for i in range(0, 50):
     seqDS.append(i)
 
 # Get some values.
-print (accum[0])  # Not enough values yet.
-print (accum[1])  # Not enough values yet.
-print (accum[2])  # Ok, now we should have at least 3 values.
-print (accum[3])
+print(accum[0])  # Not enough values yet.
+print(accum[1])  # Not enough values yet.
+print(accum[2])  # Ok, now we should have at least 3 values.
+print(accum[3])
 
 # Get the last value, which should be equal to 49 + 48 + 47.
-print (accum[-1])
+print(accum[-1])
