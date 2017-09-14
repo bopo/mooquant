@@ -20,6 +20,7 @@ class OrdersFile:
 
         # Load orders from the file.
         reader = csv.DictReader(open(ordersFile, "r"), fieldnames=["year", "month", "day", "symbol", "action", "qty"])
+        
         for row in reader:
             dateTime = datetime.datetime(int(row["year"]), int(row["month"]), int(row["day"]))
             self.__orders.setdefault(dateTime, [])
@@ -84,6 +85,7 @@ class MyStrategy(strategy.BacktestingStrategy):
 def main():
     # Load the orders file.
     ordersFile = OrdersFile("orders.csv")
+
     print ("First date", ordersFile.getFirstDate())
     print ("Last date", ordersFile.getLastDate())
     print ("Symbols", ordersFile.getInstruments())
@@ -102,19 +104,19 @@ def main():
     # Run the strategy.
     cash = 1000000
     useAdjustedClose = True
-    myStrategy = MyStrategy(feed, cash, ordersFile, useAdjustedClose)
+    strat = MyStrategy(feed, cash, ordersFile, useAdjustedClose)
 
     # Attach returns and sharpe ratio analyzers.
     retAnalyzer = returns.Returns()
     
-    myStrategy.attachAnalyzer(retAnalyzer)
+    strat.attachAnalyzer(retAnalyzer)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     
-    myStrategy.attachAnalyzer(sharpeRatioAnalyzer)
-    myStrategy.run()
+    strat.attachAnalyzer(sharpeRatioAnalyzer)
+    strat.run()
 
     # Print the results.
-    print ("Final portfolio value: $%.2f" % myStrategy.getResult())
+    print ("Final portfolio value: $%.2f" % strat.getResult())
     print ("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
     print ("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
     print ("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))

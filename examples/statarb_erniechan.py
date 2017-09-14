@@ -69,7 +69,7 @@ class StatArbHelper:
             self.__updateZScore()
 
 
-class StatArb(strategy.BacktestingStrategy):
+class StatArbStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument1, instrument2, windowSize):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.setUseAdjustedValues(True)
@@ -138,9 +138,9 @@ def main(plot):
     windowSize = 50
 
     # Download the bars.
-    feed = yahoofinance.build_feed(instruments, 2006, 2012, ".")
+    feed = yahoofinance.build_feed(instruments, 2006, 2012, "data")
 
-    strat = StatArb(feed, instruments[0], instruments[1], windowSize)
+    strat = StatArbStrategy(feed, instruments[0], instruments[1], windowSize)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 

@@ -35,19 +35,18 @@ feed.addBarsFromCSV("glng", "data/glng-2011-yahoofinance.csv")
 feed.addBarsFromCSV("simo", "data/simo-2011-yahoofinance.csv")
 
 # Evaluate the strategy with the feed's bars.
-myStrategy = MyStrategy(feed)
+strat = MyStrategy(feed)
 
 # Attach returns and sharpe ratio analyzers.
 retAnalyzer = returns.Returns()
-myStrategy.attachAnalyzer(retAnalyzer)
+strat.attachAnalyzer(retAnalyzer)
 sharpeRatioAnalyzer = sharpe.SharpeRatio()
-myStrategy.attachAnalyzer(sharpeRatioAnalyzer)
 
-# Run the strategy
-myStrategy.run()
+strat.attachAnalyzer(sharpeRatioAnalyzer)
+strat.run()
 
 # Print the results.
-print ("Final portfolio value: $%.2f" % myStrategy.getResult())
+print ("Final portfolio value: $%.2f" % strat.getResult())
 print ("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
 print ("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
 print ("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))

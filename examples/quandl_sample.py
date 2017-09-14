@@ -32,7 +32,7 @@ def main(plot):
     instruments = ["GORO"]
 
     # Download GORO bars using WIKI source code.
-    feed = quandl.build_feed("WIKI", instruments, 2006, 2012, ".")
+    feed = quandl.build_feed("WIKI", instruments, 2006, 2012, "data")
 
     # Load Quandl CSV downloaded from http://www.quandl.com/OFDP-Open-Financial-Data-Project/GOLD_2-LBMA-Gold-Price-London-Fixings-P-M
     quandlFeed = csvfeed.Feed("Date", "%Y-%m-%d")

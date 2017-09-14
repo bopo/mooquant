@@ -2,7 +2,7 @@ from mooquant import strategy
 from mooquant.bar import Frequency
 from mooquant.broker import backtesting
 from mooquant.technical import ma
-from mooquant.xignite import barfeed
+from mooquant.providers.xignite import barfeed
 
 
 class Strategy(strategy.BaseStrategy):

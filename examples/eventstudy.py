@@ -7,8 +7,6 @@ from mooquant.tools import yahoofinance
 
 # Event inspired on an example from Ernie Chan's book:
 # 'Algorithmic Trading: Winning Strategies and Their Rationale'
-
-
 class BuyOnGap(eventprofiler.Predicate):
     def __init__(self, feed):
         stdDevPeriod = 90
@@ -62,7 +60,7 @@ class BuyOnGap(eventprofiler.Predicate):
 
 def main(plot):
     instruments = ["AA", "AES", "AIG"]
-    feed = yahoofinance.build_feed(instruments, 2008, 2009, ".")
+    feed = yahoofinance.build_feed(instruments, 2008, 2009, "data")
 
     predicate = BuyOnGap(feed)
     eventProfiler = eventprofiler.Profiler(predicate, 5, 5)

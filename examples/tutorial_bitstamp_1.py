@@ -2,7 +2,7 @@
 from __future__ import division, print_function, unicode_literals
 
 from mooquant import strategy
-from mooquant.bitstamp import barfeed, broker
+from mooquant.providers.bitstamp import barfeed, broker
 from mooquant.technical import cross, ma
 
 
