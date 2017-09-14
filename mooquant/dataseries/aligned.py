@@ -65,6 +65,7 @@ class Syncer(object):
                 break
             elif values[i][0] < dateTime:
                 break
+            
             i -= 1
 
         return ret

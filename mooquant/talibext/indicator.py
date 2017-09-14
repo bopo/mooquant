@@ -119,18 +119,22 @@ def call_talib_with_hlc(barDs, count, talibFunc, *args, **kwargs):
 
 def call_talib_with_ohlc(barDs, count, talibFunc, *args, **kwargs):
     open_ = bar_ds_open_to_numpy(barDs, count)
+    
     if open_ is None:
         return None
 
     high = bar_ds_high_to_numpy(barDs, count)
+
     if high is None:
         return None
 
     low = bar_ds_low_to_numpy(barDs, count)
+
     if low is None:
         return None
 
     close = bar_ds_close_to_numpy(barDs, count)
+
     if close is None:
         return None
 
@@ -139,6 +143,7 @@ def call_talib_with_ohlc(barDs, count, talibFunc, *args, **kwargs):
 
 def call_talib_with_hl(barDs, count, talibFunc, *args, **kwargs):
     high = bar_ds_high_to_numpy(barDs, count)
+
     if high is None:
         return None
 
@@ -661,8 +666,7 @@ def MACD(ds, count, fastperiod=-2 ** 31, slowperiod=-2 ** 31, signalperiod=-2 **
 def MACDEXT(ds, count, fastperiod=-2 ** 31, fastmatype=0, slowperiod=-2 ** 31, slowmatype=0, signalperiod=-2 ** 31,
             signalmatype=0):
     """MACD with controllable MA type"""
-    ret = call_talib_with_ds(ds, count, talib.MACDEXT, fastperiod, fastmatype, slowperiod, slowmatype, signalperiod,
-                             signalmatype)
+    ret = call_talib_with_ds(ds, count, talib.MACDEXT, fastperiod, fastmatype, slowperiod, slowmatype, signalperiod, signalmatype)
 
     if ret is None:
         ret = (None, None, None)
