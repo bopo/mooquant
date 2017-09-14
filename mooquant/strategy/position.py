@@ -259,8 +259,10 @@ class Position(object):
 
         ret = 0
         price = self.getLastPrice()
+
         if price is not None:
             ret = self.__posTracker.getReturn(price, includeCommissions)
+
         return ret
 
     def getPnL(self, includeCommissions=True):
@@ -276,8 +278,10 @@ class Position(object):
 
         ret = 0
         price = self.getLastPrice()
+
         if price is not None:
             ret = self.__posTracker.getPnL(price=price, includeCommissions=includeCommissions)
+
         return ret
 
     def cancelEntry(self):
@@ -421,6 +425,7 @@ class Position(object):
                 last = self.__exitDateTime
             else:
                 last = self.__strategy.getCurrentDateTime()
+
             ret = last - self.__entryDateTime
 
         return ret

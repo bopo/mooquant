@@ -26,9 +26,7 @@ import six
 
 import mooquant.broker
 import mooquant.strategy.position
-from mooquant import dispatcher
-from mooquant import logger
-from mooquant import observer
+from mooquant import dispatcher, observer, logger
 from mooquant.barfeed import resampled
 from mooquant.broker import backtesting
 
@@ -268,6 +266,7 @@ class BaseStrategy(object):
             ret.setGoodTillCanceled(goodTillCanceled)
             ret.setAllOrNone(allOrNone)
             self.getBroker().submitOrder(ret)
+
         return ret
 
     def enterLong(self, instrument, quantity, goodTillCanceled=False, allOrNone=False):

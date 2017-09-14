@@ -455,8 +455,8 @@ class StrategyPlotter(object):
     def buildFigure(self, fromDateTime=None, toDateTime=None):
         # Deprecated in v0.18.
         warninghelpers.deprecation_warning("buildFigure will be deprecated in the next version. Use buildFigureAndSubplots.", stacklevel=2)
-
         fig, _ = self.buildFigureAndSubplots(fromDateTime, toDateTime)
+
         return fig
 
     def buildFigureAndSubplots(self, fromDateTime=None, toDateTime=None, postPlotFun=_post_plot_fun):
