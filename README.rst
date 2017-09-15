@@ -1,50 +1,40 @@
-MooQuant
-===========
-
-[![Build Status](https://travis-ci.org/gbeced/mooquant.png?branch=master)](https://travis-ci.org/gbeced/mooquant)
-[![Coverage Status](https://coveralls.io/repos/gbeced/mooquant/badge.svg?branch=master)](https://coveralls.io/r/gbeced/mooquant?branch=master)
+==================
+Python Boilerplate
+==================
 
 
-MooQuant is an **event driven algorithmic trading** Python library. Although the initial focus
-was on **backtesting**, **paper trading** is now possible using:
+.. image:: https://img.shields.io/pypi/v/python_boilerplate.svg
+        :target: https://pypi.python.org/pypi/python_boilerplate
 
- * [Bitstamp](https://www.bitstamp.net/) for Bitcoins
+.. image:: https://img.shields.io/travis/audreyr/python_boilerplate.svg
+        :target: https://travis-ci.org/audreyr/python_boilerplate
 
-and **live trading** is now possible using:
+.. image:: https://readthedocs.org/projects/python-boilerplate/badge/?version=latest
+        :target: https://python-boilerplate.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
 
- * [Bitstamp](https://www.bitstamp.net/) for Bitcoins
+.. image:: https://pyup.io/repos/github/audreyr/python_boilerplate/shield.svg
+     :target: https://pyup.io/repos/github/audreyr/python_boilerplate/
+     :alt: Updates
 
-To get started with MooQuant take a look at the [tutorial](http://gbeced.github.io/mooquant/docs/v0.18/html/tutorial.html) and the [full documentation](http://gbeced.github.io/mooquant/docs/v0.18/html/index.html).
 
-Main Features
--------------
+Python Boilerplate contains all the boilerplate you need to create a Python package.
 
- * Event driven.
- * Supports Market, Limit, Stop and StopLimit orders.
- * Supports any type of time-series data in CSV format like Yahoo! Finance, Google Finance, Quandl and NinjaTrader.
- * Bitcoin trading support through [Bitstamp](https://www.bitstamp.net/).
- * Technical indicators and filters like SMA, WMA, EMA, RSI, Bollinger Bands, Hurst exponent and others.
- * Performance metrics like Sharpe ratio and drawdown analysis.
- * Handling Twitter events in realtime.
- * Event profiler.
- * TA-Lib integration.
 
-Installation
-------------
+* Free software: MIT license
+* Documentation: https://python-boilerplate.readthedocs.io.
 
-MooQuant is developed using Python 2.7 and depends on:
 
- * [NumPy and SciPy](http://numpy.scipy.org/).
- * [pytz](http://pytz.sourceforge.net/).
- * [dateutil](https://dateutil.readthedocs.org/en/latest/).
- * [requests](http://docs.python-requests.org/en/latest/).
- * [matplotlib](http://matplotlib.sourceforge.net/) for plotting support.
- * [ws4py](https://github.com/Lawouach/WebSocket-for-Python) for Bitstamp support.
- * [tornado](http://www.tornadoweb.org/en/stable/) for Bitstamp support.
- * [tweepy](https://github.com/tweepy/tweepy) for Twitter support.
+Features
+--------
 
-You can install MooQuant using pip like this:
+* TODO
 
-```
-pip install mooquant
-```
+Credits
+---------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+
