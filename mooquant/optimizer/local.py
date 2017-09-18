@@ -30,7 +30,7 @@ from mooquant.optimizer import base, server, worker, xmlrpcserver
 
 logger = logging.getLogger(__name__)
 
-
+# 服务器进程
 class ServerThread(threading.Thread):
     def __init__(self, server):
         super(ServerThread, self).__init__()
@@ -39,7 +39,7 @@ class ServerThread(threading.Thread):
     def run(self):
         self.__results = self.__server.serve()
 
-
+# 工作者进程
 def worker_process(strategyClass, port, logLevel):
     class Worker(worker.Worker):
         def runStrategy(self, barFeed, *args, **kwargs):
@@ -58,6 +58,7 @@ def worker_process(strategyClass, port, logLevel):
         w.getLogger().exception("Failed to run worker: %s" % (e))
 
 
+# 搜索端口
 def find_port():
     while True:
         ret = random.randint(1025, 65536)
@@ -70,7 +71,7 @@ def find_port():
         except socket.error:
             pass
 
-
+# 等候线程
 def wait_process(p):
     timeout = 10
     p.join(timeout)

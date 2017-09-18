@@ -19,6 +19,8 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
+"""fillstrategy 填充策略"""
+
 import abc
 
 import six
@@ -27,7 +29,7 @@ import mooquant.bar
 from mooquant import broker
 from mooquant.broker import slippage
 
-
+# slippage 滑点
 # Returns the trigger price for a Limit or StopLimit order, or None if the limit price was not yet penetrated.
 def get_limit_price_trigger(action, limitPrice, useAdjustedValues, bar):
     ret = None
@@ -62,6 +64,8 @@ def get_limit_price_trigger(action, limitPrice, useAdjustedValues, bar):
 
 
 # Returns the trigger price for a Stop or StopLimit order, or None if the stop price was not yet penetrated.
+# 返回一个停止或stoplimit顺序触发价格，或者如果没有止损价是没有渗透。
+# 应该是设置止盈止损
 def get_stop_price_trigger(action, stopPrice, useAdjustedValues, bar):
     ret = None
     open_ = bar.getOpen(useAdjustedValues)
@@ -93,7 +97,7 @@ def get_stop_price_trigger(action, stopPrice, useAdjustedValues, bar):
 
     return ret
 
-
+# 填充信息
 class FillInfo(object):
     def __init__(self, price, quantity):
         self.__price = price
@@ -105,7 +109,7 @@ class FillInfo(object):
     def getQuantity(self):
         return self.__quantity
 
-
+# 填充策略
 @six.add_metaclass(abc.ABCMeta)
 class FillStrategy(object):
     """Base class for order filling strategies for the backtester."""
@@ -126,6 +130,7 @@ class FillStrategy(object):
     def onOrderFilled(self, broker_, order):
         """
         Override (optional) to get notified when an order was filled, or partially filled.
+        覆盖（可选）在订单被建仓或部分建仓时得到通知。
 
         :param broker_: The broker.
         :type broker_: :class:`Broker`
@@ -138,6 +143,7 @@ class FillStrategy(object):
     def fillMarketOrder(self, broker_, order, bar):
         """Override to return the fill price and quantity for a market order or None if the order can't be filled
         at the given time.
+        如果订单不能建仓，则返回一个市场订单的建仓价格和数量。在给定的时间。
 
         :param broker_: The broker.
         :type broker_: :class:`Broker`
@@ -153,6 +159,7 @@ class FillStrategy(object):
     def fillLimitOrder(self, broker_, order, bar):
         """Override to return the fill price and quantity for a limit order or None if the order can't be filled
         at the given time.
+        如果订单不能在给定的时间内建仓，则返回一个限价订单的建仓价格和数量。
 
         :param broker_: The broker.
         :type broker_: :class:`Broker`
@@ -168,6 +175,7 @@ class FillStrategy(object):
     def fillStopOrder(self, broker_, order, bar):
         """Override to return the fill price and quantity for a stop order or None if the order can't be filled
         at the given time.
+        如果订单不能在给定的时间内填写，则返回一个停止订单或无订单的填充价格和数量。
 
         :param broker_: The broker.
         :type broker_: :class:`Broker`
@@ -183,6 +191,7 @@ class FillStrategy(object):
     def fillStopLimitOrder(self, broker_, order, bar):
         """Override to return the fill price and quantity for a stop limit order or None if the order can't be filled
         at the given time.
+        如果订单不能在给定的时间内填充，则取消返回限价或订单的数量。
 
         :param broker_: The broker.
         :type broker_: :class:`Broker`
@@ -198,6 +207,7 @@ class FillStrategy(object):
 class DefaultStrategy(FillStrategy):
     """
     Default fill strategy.
+    默认建仓策略
 
     :param volumeLimit: The proportion of the volume that orders can take up in a bar. Must be > 0 and <= 1.
         If None, then volume limit is not checked.
@@ -235,8 +245,10 @@ class DefaultStrategy(FillStrategy):
 
     def __init__(self, volumeLimit=0.25):
         super(DefaultStrategy, self).__init__()
+        
         self.__volumeLeft = {}
         self.__volumeUsed = {}
+
         self.setVolumeLimit(volumeLimit)
         self.setSlippageModel(slippage.NoSlippage())
 
@@ -295,6 +307,7 @@ class DefaultStrategy(FillStrategy):
     def setSlippageModel(self, slippageModel):
         """
         Set the slippage model to use.
+        设置滑点模型
 
         :param slippageModel: The slippage model.
         :type slippageModel: :class:`mooquant.broker.slippage.SlippageModel`
@@ -306,6 +319,7 @@ class DefaultStrategy(FillStrategy):
         ret = 0
 
         # If self.__volumeLimit is None then allow all the order to get filled.
+        # 如果 self.__volumeLimit 为空则运行全部订单建仓
         if self.__volumeLimit is not None:
             maxVolume = self.__volumeLeft.get(order.getInstrument(), 0)
             maxVolume = order.getInstrumentTraits().roundQuantity(maxVolume)
@@ -321,6 +335,7 @@ class DefaultStrategy(FillStrategy):
 
     def fillMarketOrder(self, broker_, order, bar):
         # Calculate the fill size for the order.
+        # 计算订单的建仓大小。
         fillSize = self.__calculateFillSize(broker_, order, bar)
 
         if fillSize == 0:

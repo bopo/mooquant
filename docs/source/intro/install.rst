@@ -4,7 +4,7 @@
 安装指南
 ==================
 
-安装前
+安装准备
 ==================
 
 ..  image:: https://img.shields.io/pypi/pyversions/mooquant.svg
@@ -48,7 +48,7 @@ bcolz 是 MooQuant 的依赖库，因为其编译时间较长，并且中间比�
         $ pip install cython
         $ pip install bcolz
 
-安装
+开始安装
 ==================
 
 .. code-block:: bash
@@ -63,7 +63,7 @@ bcolz 是 MooQuant 的依赖库，因为其编译时间较长，并且中间比�
 
 .. _intro-install-get-data:
 
-获取回测数据
+获取数据
 ==================
 
 MooQuant 免费提供日级别的股票和期货数据供回测使用，可以通过以下命令来进行每日数据的增量更新:
@@ -74,33 +74,20 @@ MooQuant 免费提供日级别的股票和期货数据供回测使用，可以�
 
 .. code-block:: bash
 
-    $ mooquant update_bundle
+    $ mooquant bundle
 
 
 bundle 默认存放在 :code:`~/.mooquant` 下，您也可以指定 bundle 的存放位置，
 
 .. code-block:: bash
 
-    $ mooquant update_bundle -d target_bundle_path
+    $ mooquant bundle -d target_bundle_path
 
 如果您使用了指定路径来存放 bundle，那么执行程序的时候也同样需要指定对应的 bundle 路径。
 
 .. code-block:: bash
 
-    $ mooquant run -d target_bundle_path .....
-
-.. _intro-config:
-
-获取配置文件
-==================
-
-如果运行 MooQuant 时不指定配置文件，会在 :code:`~/.mooquant/` 文件夹下创建 :code:`config.yml` 文件作为默认配置文件。
-
-如果您想要直接获得一份配置文件，也可以通过如下命令来获得。
-
-.. code-block:: bash
-
-    $ mooquant generate_config
+    $ mooquant run -d target_path .....
 
 .. _intro-faq:
 
@@ -116,7 +103,7 @@ FAQ
 
 不进行编译安装，访问 http://www.lfd.uci.edu/~gohlke/pythonlibs/#bcolz 下载 :code:`bcolz` 直接进行安装。
 
-如果您按照 :ref:`intro-detail-install` 进行环境搭建并安装了 `anaconda` 您可以使用如下方式进行免编译安装
+如果您按照 :ref:`intro-anaconda` 进行环境搭建并安装了 `anaconda` 您可以使用如下方式进行免编译安装
 
 .. code-block:: bash
 
@@ -141,7 +128,7 @@ FAQ
 3.  Python 2.7 在 Windows 下产生中文乱码的问题
 ------------------------------------------------------
 
-MooQuant 运行在 Windows(Python 2.x) 可能会遇到中文乱码的问题，这个并不是MooQuant的问题，而是由于 Windows 的 cmd 本身是 `gbk` 编码而产生的，具体的解决方案可以参考 [Windows(Python 2.x) 命令行下输出日志中文乱码的问题](https://github.com/ricequant/mooquant/issues/80)
+MooQuant 运行在 Windows(Python 2.x) 可能会遇到中文乱码的问题，这个并不是MooQuant的问题，而是由于 Windows 的 cmd 本身是 `gbk` 编码而产生的，具体的解决方案可以参考 [Windows(Python 2.x) 命令行下输出日志中文乱码的问题](https://github.com/mooquant/mooquant/issues/80)
 
 .. _FAQ-update-bundle-mac:
 

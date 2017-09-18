@@ -19,7 +19,7 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-
+# 数据序列化 ohlc (开高低收四价格)
 def sanitize_ohlc(open_, high, low, close):
     if low > open_:
         low = open_

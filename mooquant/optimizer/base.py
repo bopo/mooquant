@@ -21,13 +21,14 @@
 
 import threading
 
-
+# 参数类
 class Parameters(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
 
+# 参数源
 class ParameterSource(object):
     """
     Source for backtesting parameters. This class is thread safe.
@@ -70,7 +71,7 @@ class ParameterSource(object):
         with self.__lock:
             return self.__iter is None
 
-
+# 结果正弦值
 class ResultSinc(object):
     """
     Sinc for backtest results. This class is thread safe.

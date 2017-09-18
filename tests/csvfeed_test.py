@@ -41,6 +41,7 @@ class TestCase(common.TestCase):
         feed.addValuesFromCSV(common.get_data_file_path("orcl-2000-yahoofinance.csv"))
 
         self.assertEqual(len(feed.getKeys()), 6)
+        
         for col in ["Open", "High", "Low", "Close", "Volume", "Adj Close"]:
             self.assertEqual(len(feed[col]), 0)
 

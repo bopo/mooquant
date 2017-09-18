@@ -55,7 +55,9 @@ class OptimizerBarFeedTestCase(common.TestCase):
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 2), 1, 1, 1, 1, 1, 1, bar.Frequency.DAY)}),
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 1), 1, 1, 1, 1, 1, 1, bar.Frequency.DAY)}),
         ]
+        
         f = barfeed.OptimizerBarFeed(bar.Frequency.DAY, ["orcl"], bars)
+        
         with self.assertRaisesRegexp(Exception, "Bar date times are not in order.*"):
             for dt, b in f:
                 pass
@@ -65,6 +67,7 @@ class OptimizerBarFeedTestCase(common.TestCase):
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 1), 1, 1, 1, 1, 1, 1, bar.Frequency.DAY)}),
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 2), 1, 1, 1, 1, 1, 1, bar.Frequency.DAY)}),
         ]
+
         barFeed = barfeed.OptimizerBarFeed(bar.Frequency.DAY, ["orcl"], bars)
         check_base_barfeed(self, barFeed, True)
 
@@ -73,6 +76,7 @@ class OptimizerBarFeedTestCase(common.TestCase):
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 1), 1, 1, 1, 1, 1, None, bar.Frequency.DAY)}),
             bar.Bars({"orcl": bar.BasicBar(datetime.datetime(2001, 1, 2), 1, 1, 1, 1, 1, None, bar.Frequency.DAY)}),
         ]
+        
         barFeed = barfeed.OptimizerBarFeed(bar.Frequency.DAY, ["orcl"], bars)
         check_base_barfeed(self, barFeed, False)
 

@@ -45,6 +45,7 @@ class BaseBarFeed(feed.BaseFeed):
 
     def __init__(self, frequency, maxLen=None):
         super(BaseBarFeed, self).__init__(maxLen)
+
         self.__frequency = frequency
         self.__useAdjustedValues = False
         self.__defaultInstrument = None
@@ -54,6 +55,7 @@ class BaseBarFeed(feed.BaseFeed):
     def reset(self):
         self.__currentBars = None
         self.__lastBars = {}
+
         super(BaseBarFeed, self).reset()
 
     def setUseAdjustedValues(self, useAdjusted):
@@ -117,9 +119,11 @@ class BaseBarFeed(feed.BaseFeed):
 
         return (dateTime, bars)
 
+    # 频率分布, @todo 具体未研究
     def getFrequency(self):
         return self.__frequency
 
+    # 当天的，一天内的;
     def isIntraday(self):
         return self.__frequency < bar.Frequency.DAY
 

@@ -30,6 +30,7 @@ from mooquant.utils.compat import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
 logger = mooquant.logger.getLogger(__name__)
 
 
+# 自动停止进程
 class AutoStopThread(threading.Thread):
     def __init__(self, server):
         super(AutoStopThread, self).__init__()
@@ -42,6 +43,7 @@ class AutoStopThread(threading.Thread):
         self.__server.stop()
 
 
+# 工作任务
 class Job(object):
     def __init__(self, strategyParameters):
         self.__strategyParameters = strategyParameters

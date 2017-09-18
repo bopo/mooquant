@@ -25,7 +25,7 @@
 │   ├── livebroker.py
 │   ├── livefeed.py
 │   └── wsclient.py
-├── broker					# 代理商	
+├── broker					# 交易商	
 │   ├── __init__.py
 │   ├── backtesting.py
 │   ├── fillstrategy.py
@@ -37,13 +37,14 @@
 │   └── resampled.py
 ├── dispatcher.py			# 调度器
 ├── dispatchprio.py			# 调度器 io
-├── eventprofiler.py
-├── feed					# feed 接受器
+├── eventprofiler.py		# 事件分析器
+├── feed					# feed 收集器
 │   ├── __init__.py
+│   ├── pdafeed.py			# pandas 收集器
 │   ├── csvfeed.py			# csv 收集器
 │   └── memfeed.py			# mem 收集器
 ├── logger.py				# 日志管理
-├── marketsession.py
+├── marketsession.py		# 交易市场时间
 ├── observer.py				# 观察者
 ├── optimizer				# 优化器
 │   ├── __init__.py
@@ -56,12 +57,12 @@
 ├── resamplebase.py			# 数据重构 (分钟线变小时线之类)
 ├── stratanalyzer 			# 策略分析
 │   ├── __init__.py
-│   ├── drawdown.py			# 融资融券 (杠杆)
-│   ├── returns.py
-│   ├── sharpe.py			# 夏普绿？
-│   └── trades.py
-├── strategy				# 策略
-│   ├── __init__.py
+│   ├── drawdown.py			# 融资融券 (杠杆)？回撤吧
+│   ├── returns.py			# 返回值？
+│   ├── sharpe.py			# 夏普比率
+│   └── trades.py			# 交易什么玩意
+├── strategy				# 策略相关
+│   ├── __init__.py			# 基本策略等类
 │   └── position.py			# 头寸类
 ├── talibext				# talib 扩展
 │   ├── __init__.py
@@ -69,27 +70,27 @@
 ├── technical				# 技术指标
 │   ├── __init__.py
 │   ├── atr.py
-│   ├── bollinger.py
-│   ├── cross.py
+│   ├── bollinger.py		# 布林带
+│   ├── cross.py			# 交叉线
 │   ├── cumret.py
 │   ├── ene.py
 │   ├── highlow.py
 │   ├── hurst.py
 │   ├── linebreak.py
 │   ├── linreg.py
-│   ├── ma.py
-│   ├── macd.py
+│   ├── ma.py				# 移动均线
+│   ├── macd.py				# MACD
 │   ├── ratio.py
 │   ├── roc.py
-│   ├── rsi.py
+│   ├── rsi.py				# RSI
 │   ├── stats.py
 │   ├── stoch.py
-│   └── vwap.py
+│   └── vwap.py				# 动量策略
 ├── tools					# 工具脚本		
 │   ├── __init__.py
 │   ├── googlefinance.py
 │   ├── quandl.py
-│   ├── resample.py
+│   ├── resample.py			# 时间重整
 │   └── yahoofinance.py
 ├── twitter					
 │   ├── __init__.py
@@ -101,7 +102,7 @@
 │   ├── dt.py
 │   └── stats.py
 ├── warninghelpers.py
-└── websocket				# websocket 分布式
+└── websocket				# websocket 用来推送的，已经删除
     ├── __init__.py
     ├── client.py
     └── pusher.py

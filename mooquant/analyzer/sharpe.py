@@ -17,6 +17,7 @@
 
 """
 .. moduleauthor:: bopo.wang <ibopo@126.com>
+.. 夏普率分析
 """
 
 import math
@@ -114,6 +115,7 @@ class SharpeRatio(analyzer.StrategyAnalyzer):
 
     def __onReturns(self, dateTime, returnsAnalyzerBase):
         netReturn = returnsAnalyzerBase.getNetReturn()
+        
         if self.__useDailyReturns:
             # Calculate daily returns.
             if dateTime.date() == self.__currentDate:

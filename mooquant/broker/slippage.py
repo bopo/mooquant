@@ -23,7 +23,7 @@ import abc
 
 import six
 
-
+# 滑点模型
 @six.add_metaclass(abc.ABCMeta)
 class SlippageModel(object):
     """Base class for slippage models.
@@ -35,6 +35,7 @@ class SlippageModel(object):
     @abc.abstractmethod
     def calculatePrice(self, order, price, quantity, bar, volumeUsed):
         """
+        # 计算价格
         Returns the slipped price per share for an order.
 
         :param order: The order being filled.
@@ -53,7 +54,7 @@ class SlippageModel(object):
 
 
 class NoSlippage(SlippageModel):
-    """A no slippage model."""
+    """A no slippage model. 无滑点模型"""
 
     def calculatePrice(self, order, price, quantity, bar, volumeUsed):
         return price

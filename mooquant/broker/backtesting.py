@@ -30,7 +30,7 @@ from mooquant.broker import fillstrategy
 
 ######################################################################
 # Commission models
-
+# 手续费模型
 @six.add_metaclass(abc.ABCMeta)
 class Commission(object):
     """Base class for implementing different commission schemes.
@@ -53,14 +53,14 @@ class Commission(object):
         """
         raise NotImplementedError()
 
-
+# 无手续费模型 总是返回 0 
 class NoCommission(Commission):
     """A :class:`Commission` class that always returns 0."""
 
     def calculate(self, order, price, quantity):
         return 0
 
-
+# 整个交易额固定佣金
 class FixedPerTrade(Commission):
     """A :class:`Commission` class that charges a fixed amount for the whole trade.
 
@@ -81,7 +81,7 @@ class FixedPerTrade(Commission):
 
         return ret
 
-
+# 比例交易费用
 class TradePercentage(Commission):
     """A :class:`Commission` class that charges a percentage of the whole trade.
 
@@ -100,7 +100,7 @@ class TradePercentage(Commission):
 
 ######################################################################
 # Orders
-
+# 回测合约
 class BacktestingOrder(object):
     def __init__(self, *args, **kwargs):
         self.__accepted = None
@@ -116,7 +116,7 @@ class BacktestingOrder(object):
     def process(self, broker_, bar_):
         raise NotImplementedError()
 
-
+# 市场合约
 class MarketOrder(broker.MarketOrder, BacktestingOrder):
     def __init__(self, action, instrument, quantity, onClose, instrumentTraits):
         super(MarketOrder, self).__init__(action, instrument, quantity, onClose, instrumentTraits)
@@ -124,7 +124,7 @@ class MarketOrder(broker.MarketOrder, BacktestingOrder):
     def process(self, broker_, bar_):
         return broker_.getFillStrategy().fillMarketOrder(broker_, self, bar_)
 
-
+# 限定合约
 class LimitOrder(broker.LimitOrder, BacktestingOrder):
     def __init__(self, action, instrument, limitPrice, quantity, instrumentTraits):
         super(LimitOrder, self).__init__(action, instrument, limitPrice, quantity, instrumentTraits)
@@ -132,7 +132,7 @@ class LimitOrder(broker.LimitOrder, BacktestingOrder):
     def process(self, broker_, bar_):
         return broker_.getFillStrategy().fillLimitOrder(broker_, self, bar_)
 
-
+# 停止合约
 class StopOrder(broker.StopOrder, BacktestingOrder):
     def __init__(self, action, instrument, stopPrice, quantity, instrumentTraits):
         super(StopOrder, self).__init__(action, instrument, stopPrice, quantity, instrumentTraits)
@@ -171,7 +171,7 @@ class StopLimitOrder(broker.StopLimitOrder, BacktestingOrder):
 
 ######################################################################
 # Broker
-
+# 交易商
 class Broker(broker.Broker):
     """Backtesting broker.
 

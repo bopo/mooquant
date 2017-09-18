@@ -4,9 +4,9 @@
 策略示例
 ==========================================
 
-.. _Ricequant: https://www.ricequant.com/algorithms
+.. _MooQuant: https://www.mooquant.com/algorithms
 
-在下面我们列举一些常用的算法范例，您可以通过MooQuant运行，也可以直接登录 `Ricequant`_ 在线进行回测或模拟交易。
+在下面我们列举一些常用的算法范例，您可以通过 MooQuant 运行，也可以直接登录 `MooQuant`_ 在线进行回测或模拟交易。
 
 .. _intro-examples-buy-and-hold:
 
@@ -223,13 +223,13 @@ Golden Cross算法示例
             # 当RSI小于设置的下限阀值，用剩余cash的一定比例补仓该股
             if rsi_data < context.LOW_RSI:
                 logger.info("target available cash caled: " + str(target_available_cash))
-                # 如果剩余的现金不够一手 - 100shares，那么会被ricequant 的order management system reject掉
+                # 如果剩余的现金不够一手 - 100shares，那么会被mooquant 的order management system reject掉
                 order_value(stock, target_available_cash)
 
 海龟交易系统
 ------------------------------------------------------
 
-海龟交易系统也是非常经典的一种策略，我们也放出了范例代码如下，而关于海龟交易系统的介绍也可以参照 `这篇帖子 <https://www.ricequant.com/community/topic/62/%E8%B6%8B%E5%8A%BF%E7%AD%96%E7%95%A5%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80-%E6%B5%B7%E9%BE%9F%E4%BA%A4%E6%98%93%E4%BD%93%E7%B3%BB%E7%9A%84%E6%9E%84%E5%BB%BA>`_ 。
+海龟交易系统也是非常经典的一种策略，我们也放出了范例代码如下，而关于海龟交易系统的介绍也可以参照 `这篇帖子 <https://www.mooquant.com/community/topic/62/%E8%B6%8B%E5%8A%BF%E7%AD%96%E7%95%A5%E5%B0%8F%E8%AF%95%E7%89%9B%E5%88%80-%E6%B5%B7%E9%BE%9F%E4%BA%A4%E6%98%93%E4%BD%93%E7%B3%BB%E7%9A%84%E6%9E%84%E5%BB%BA>`_ 。
 
 ..  code-block:: python3
     :linenos:

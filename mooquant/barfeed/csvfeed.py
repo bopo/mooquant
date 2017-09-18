@@ -27,7 +27,7 @@ from mooquant import bar
 import datetime
 import pytz
 
-
+# CSV行解析器的接口
 # Interface for csv row parsers.
 class RowParser(object):
     def parseBar(self, csvRowDict):
@@ -40,12 +40,14 @@ class RowParser(object):
         raise NotImplementedError()
 
 
+# Bar 过滤器接口
 # Interface for bar filters.
 class BarFilter(object):
     def includeBar(self, bar_):
         raise NotImplementedError()
 
 
+# 时间区间过滤
 class DateRangeFilter(BarFilter):
     def __init__(self, fromDate=None, toDate=None):
         self.__fromDate = fromDate
@@ -60,10 +62,11 @@ class DateRangeFilter(BarFilter):
 
         return True
 
-
+# 使用股票工作时间
+# 股票交易时段过滤器 (米国)
 # US Equities Regular Trading Hours filter
 # Monday ~ Friday
-# 9:30 ~ 16 (GMT-5)
+# 9:30 ~ 16 (GMT-5) (中国到 15 点)
 class USEquitiesRTH(DateRangeFilter):
     timezone = pytz.timezone("US/Eastern")
 
@@ -95,6 +98,7 @@ class USEquitiesRTH(DateRangeFilter):
         return ret
 
 
+# 基于CSV文件的基类
 class BarFeed(membf.BarFeed):
     """Base class for CSV file based :class:`mooquant.barfeed.BarFeed`.
 
@@ -123,8 +127,9 @@ class BarFeed(membf.BarFeed):
     def addBarsFromCSV(self, instrument, path, rowParser):
         # Load the csv file
         loadedBars = []
-        reader = csvutils.FastDictReader(open(path, "r"), fieldnames=rowParser.getFieldNames(),
-                                         delimiter=rowParser.getDelimiter())
+        reader = csvutils.FastDictReader(
+            open(path, "r"), fieldnames=rowParser.getFieldNames(), 
+            delimiter=rowParser.getDelimiter())
 
         for row in reader:
             bar_ = rowParser.parseBar(row)
@@ -134,7 +139,7 @@ class BarFeed(membf.BarFeed):
 
         self.addBarsFromSequence(instrument, loadedBars)
 
-
+# 通用行分析器
 class GenericRowParser(RowParser):
     def __init__(self, columnNames, dateTimeFormat, dailyBarTime, frequency, timezone, barClass=bar.BasicBar):
         self.__dateTimeFormat = dateTimeFormat
@@ -166,16 +171,20 @@ class GenericRowParser(RowParser):
 
         return ret
 
+    # 含有复权价格
     def barsHaveAdjClose(self):
         return self.__haveAdjClose
 
+    # 获取文件名(多个)
     def getFieldNames(self):
         # It is expected for the first row to have the field names.
         return None
 
+    # 分隔符
     def getDelimiter(self):
         return ","
 
+    # 解析 bar 数据
     def parseBar(self, csvRowDict):
         dateTime = self._parseDate(csvRowDict[self.__dateTimeColName])
         open_ = float(csvRowDict[self.__openColName])
@@ -203,7 +212,7 @@ class GenericRowParser(RowParser):
             dateTime, open_, high, low, close, volume, adjClose, self.__frequency, extra=extra
         )
 
-
+# 通用 bar 提供
 class GenericBarFeed(BarFeed):
     """A BarFeed that loads bars from CSV files that have the following format:
     ::

@@ -7,8 +7,6 @@
 .. _MooQuant: http://www.mooquant.com/algorithms
 .. _MooQuant 社区: http://www.mooquant.com/community
 .. _MooQuant 文档: http://www.mooquant.com/docs
-.. _MooQuant 文档: http://www.mooquant.com/api/python/chn
-
 
 MooQuant 从数据获取、算法交易、回测引擎，实盘模拟，实盘交易到数据分析，为程序化交易者提供了全套解决方案。
 
@@ -19,8 +17,8 @@ MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常�
 
 ======================    =================================================================================
 易于使用                    让您集中于策略的开发，一行简单的命令就可以执行您的策略。
-完善的文档                   您可以直接访问 `MooQuant 文档`_ 或者 `MooQuant文档`_ 来获取您需要的信息。
-活跃的社区                   您可以通过访问 `MooQuant社区`_ 获取和询问有关 MooQuant 的一切问题，有很多优秀的童鞋会解答您的问题。
+完善的文档                   您可以直接访问 `MooQuant 文档`_ 或者 `MooQuant 文档`_ 来获取您需要的信息。
+活跃的社区                   您可以通过访问 `MooQuant 社区`_ 获取和询问有关 MooQuant 的一切问题，有很多优秀的童鞋会解答您的问题。
 稳定的环境                   每天都有会大量的算法交易在 MooQuant上运行，无论是 MooQuant，还是数据，我们能会做到问题秒处理，秒解决。
 灵活的配置                   您可以使用多种方式来配置和运行策略，只需简单的配置就可以构建适合自己的交易系统。
 强大的扩展性                 开发者可以基于我们提供的 Mod Hook 接口来进行扩展。
@@ -45,7 +43,7 @@ MooQuant 具有灵活的配置方式，强大的扩展性，用户可以非常�
 
     我们强烈建议您在虚拟环境下安装MooQuant
 
-    虚拟环境的安装，请参考 :ref:`intro-detail-install`
+    虚拟环境的安装，请参考 :ref:`intro-anaconda`
 
 
 数据获取

@@ -20,7 +20,6 @@
 """
 
 import abc
-
 import six
 
 from mooquant import observer
@@ -43,7 +42,7 @@ def get_checked_max_len(maxLen):
 # Check http://code.activestate.com/lists/python-list/621258/
 @six.add_metaclass(abc.ABCMeta)
 class DataSeries(object):
-    """Base class for data series.
+    """Base class for data series. 数据基类
 
     .. note::
         This is a base class and should not be used directly.
@@ -83,6 +82,7 @@ class DataSeries(object):
 
 class SequenceDataSeries(DataSeries):
     """A DataSeries that holds values in a sequence in memory.
+    数据序列
 
     :param maxLen: The maximum number of values to hold.
         Once a bounded length is full, when new items are added, a corresponding number of items are discarded from the

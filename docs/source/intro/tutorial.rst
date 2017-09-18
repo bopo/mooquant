@@ -36,7 +36,7 @@
 
     mooquant run -f ./mooquant/examples/buy_and_hold.py -d ./mooquant/bundle/ -s 2016-06-01 -e 2016-12-01 --account stock 100000 --benchmark 000300.XSHG --plot
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/buy_and_hold.png
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/buy_and_hold.png
 
 如果想把回测的数据保存下来，可以通过 :code:`-o` 参数将结果保存成 :code:`pkl` 文件。
 
@@ -118,7 +118,7 @@ MooQuant金融、财务、合约历史数据等数据接口请查看 :ref:`api-e
 
 *   bar_dict: 在 :func:`handle_bar` 中我们可以使用 `bar_dict` 来获取相应的 :class:`Bar` 数据，`bar_dict` 是一个字典类型变量，直接通过传 `key` 的方式就可以获取到对应的 :class:`Bar` 数据。
 
-*   我们可以引用第三方库来帮我们生成相应的指标序列，比如使用 `TA-Lib`_ 来获取移动平均线序列。`TA-Lib`_ 的安装可以参考 :ref:`intro-detail-install-talib` 相应文档。
+*   我们可以引用第三方库来帮我们生成相应的指标序列，比如使用 `TA-Lib`_ 来获取移动平均线序列。`TA-Lib`_ 的安装可以参考 :ref:`intro-anaconda-talib` 相应文档。
 
 .. _TA-Lib: https://github.com/mrjbq7/ta-lib
 
@@ -257,4 +257,4 @@ MooQuant金融、财务、合约历史数据等数据接口请查看 :ref:`api-e
     $ mooquant run -s 2014-01-01 -e 2016-01-01 -f mooquant/examples/golden_cross.py --account stock 100000 -p -bm 000001.XSHE
 
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/golden_cross.png
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/golden_cross.png

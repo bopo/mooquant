@@ -82,6 +82,7 @@ class BarFeed(barfeed.BaseBarFeed):
 
     def eof(self):
         ret = True
+        
         # Check if there is at least one more bar to return.
         for instrument, bars in self.__bars.items():
             nextPos = self.__nextPos[instrument]

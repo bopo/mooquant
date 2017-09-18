@@ -21,7 +21,7 @@
 
 from mooquant import dataseries
 
-
+# 时间对齐
 def datetime_aligned(ds1, ds2, maxLen=None):
     """
     Returns two dataseries that exhibit only those values whose datetimes are in both dataseries.

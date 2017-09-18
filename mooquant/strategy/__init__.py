@@ -224,6 +224,7 @@ class BaseStrategy(object):
         """
 
         ret = None
+        
         if quantity > 0:
             ret = self.getBroker().createStopOrder(mooquant.broker.Order.Action.BUY, instrument, stopPrice, quantity)
         elif quantity < 0:

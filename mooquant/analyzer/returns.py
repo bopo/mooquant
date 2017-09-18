@@ -23,7 +23,7 @@ import math
 
 from mooquant import dataseries, observer, analyzer
 
-
+# 时间加权收益率（Time-weighted Rate of Return）
 # Helper class to calculate time-weighted returns in a portfolio.
 # Check http://www.wikinvest.com/wiki/Time-weighted_return
 class TimeWeightedReturns(object):
@@ -33,16 +33,20 @@ class TimeWeightedReturns(object):
         self.__lastPeriodRet = 0.0
         self.__cumRet = 0.0
 
+    # 保证金
     def deposit(self, amount):
         self.__flows += amount
 
+    # 撤回
     def withdraw(self, amount):
         self.__flows -= amount
 
+    # 获得当前值
     def getCurrentValue(self):
         return self.__lastValue
 
     # Update the value of the portfolio.
+    # 更新投资组合的价值。
     def update(self, currentValue):
         if self.__lastValue:
             retSubperiod = (currentValue - self.__lastValue - self.__flows) / float(self.__lastValue)
@@ -54,14 +58,16 @@ class TimeWeightedReturns(object):
         self.__lastValue = currentValue
         self.__flows = 0.0
 
+    # 获取最后一个周期的返回
     def getLastPeriodReturns(self):
         return self.__lastPeriodRet
 
     # Note that this value is not annualized.
+    # 注意，这个值不是年度化的。
     def getCumulativeReturns(self):
         return self.__cumRet
 
-
+# 头寸跟踪 这个辅助类的计算在一个单一的投资品种，并返回（而不是整个组合）
 # Helper class to calculate PnL and returns over a single instrument (not the whole portfolio).
 class PositionTracker(object):
     def __init__(self, instrumentTraits):
@@ -75,17 +81,23 @@ class PositionTracker(object):
         self.__commissions = 0.0
         self.__totalCommited = 0.0  # The total amount commited to this position.
 
+    # 获得头寸
     def getPosition(self):
         return self.__position
 
+    # 获取均价
     def getAvgPrice(self):
         return self.__avgPrice
 
+    # 手续费
     def getCommissions(self):
         return self.__commissions
 
+    # 返回PNL所造成的如果关闭位置给定的价格。
+    # 请注意，如果交易执行时使用佣金，情况将有所不同。
     def getPnL(self, price=None, includeCommissions=True):
         """
+        @todo 还未知晓
         Return the PnL that would result if closing the position a the given price.
         Note that this will be different if commissions are used when the trade is executed.
         """
@@ -100,6 +112,7 @@ class PositionTracker(object):
 
         return ret
 
+    # 获得返回
     def getReturn(self, price=None, includeCommissions=True):
         ret = 0
         pnl = self.getPnL(price=price, includeCommissions=includeCommissions)
@@ -131,6 +144,7 @@ class PositionTracker(object):
         if self.__position == 0:
             self.__avgPrice = 0.0
 
+    # 更新操作
     def update(self, quantity, price, commission):
         assert quantity != 0, "Invalid quantity"
         assert price > 0, "Invalid price"
@@ -159,15 +173,17 @@ class PositionTracker(object):
 
         self.__commissions += commission
 
+    # 买入操作
     def buy(self, quantity, price, commission=0.0):
         assert quantity > 0, "Invalid quantity"
         self.update(quantity, price, commission)
 
+    # 卖出操作
     def sell(self, quantity, price, commission=0.0):
         assert quantity > 0, "Invalid quantity"
         self.update(quantity * -1, price, commission)
 
-
+# 回报率分析类
 class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
     def __init__(self):
         super(ReturnsAnalyzerBase, self).__init__()
@@ -186,6 +202,7 @@ class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
 
         return ret
 
+    # 附加策略操作
     def attached(self, strat):
         self.__portfolioReturns = TimeWeightedReturns(strat.getBroker().getEquity())
 
@@ -195,9 +212,11 @@ class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
     def getEvent(self):
         return self.__event
 
+    # 获得的净收益
     def getNetReturn(self):
         return self.__portfolioReturns.getLastPeriodReturns()
 
+    # 获取累计回报率
     def getCumulativeReturn(self):
         return self.__portfolioReturns.getCumulativeReturns()
 
@@ -207,7 +226,7 @@ class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
         # Notify that new returns are available.
         self.__event.emit(bars.getDateTime(), self)
 
-
+# 回报率
 class Returns(analyzer.StrategyAnalyzer):
     """
     A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates time-weighted returns for the
@@ -233,10 +252,12 @@ class Returns(analyzer.StrategyAnalyzer):
         self.__netReturns.appendWithDateTime(dateTime, returnsAnalyzerBase.getNetReturn())
         self.__cumReturns.appendWithDateTime(dateTime, returnsAnalyzerBase.getCumulativeReturn())
 
+    # 获取回报率
     def getReturns(self):
         """Returns a :class:`mooquant.dataseries.DataSeries` with the returns for each bar."""
         return self.__netReturns
 
+    # 获取累计回报率
     def getCumulativeReturns(self):
         """Returns a :class:`mooquant.dataseries.DataSeries` with the cumulative returns for each bar."""
         return self.__cumReturns

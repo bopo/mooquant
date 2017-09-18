@@ -59,6 +59,7 @@ class BaseFeed(observer.Subject):
     def reset(self):
         keys = self.__ds.keys()
         self.__ds = {}
+        
         for key in keys:
             self.registerDataSeries(key)
 

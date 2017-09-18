@@ -55,9 +55,8 @@ def download_daily_bars(instrument, year, csvFile):
                         datetime.date(year, 1, 1),
                         datetime.date(year, 12, 31))
 
-    f = open(csvFile, "w")
-    f.write(bars)
-    f.close()
+    with open(csvFile, "w") as f:
+        f.write(bars)
 
 
 def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.DAY, timezone=None, skipErrors=False):

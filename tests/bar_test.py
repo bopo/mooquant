@@ -22,14 +22,8 @@
 import datetime
 
 from mooquant import bar
-
+from mooquant.utils.compat import pickle
 from . import common
-
-try:
-    import cPickle as pickle
-except ImportError as e:
-    import pickle
-
 
 class BasicBarTestCase(common.TestCase):
     def testInvalidConstruction(self):

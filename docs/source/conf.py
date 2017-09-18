@@ -82,7 +82,7 @@ except ImportError:
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = 'zh_CN'
+language = 'zh_cn'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
@@ -143,6 +143,7 @@ todo_include_todos = True
 # html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
 if not on_rtd:  # only import and set the theme if we're building docs locally
     try:
         import sphinx_rtd_theme

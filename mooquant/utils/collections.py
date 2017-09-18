@@ -21,7 +21,7 @@
 
 import numpy as np
 
-
+# 小于算法
 def lt(v1, v2):
     if v1 is None:
         return True

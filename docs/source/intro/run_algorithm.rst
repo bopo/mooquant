@@ -87,11 +87,11 @@ N/A           `- -` signal                    [sys_simulation]开启信号模式
 通过 Mod 自定义扩展命令行参数
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-MooQuant 非常灵活，您可以在您的 Mod 中扩展命令行，我们以 `sys_analyser Mod <https://github.com/ricequant/mooquant/tree/master/mooquant/mod/mooquant_mod_sys_analyser>`_ 添加自定义option :code:`--plot` 来实现展示收益图为例，来介绍以下如何扩展您自己的命令行参数。
+MooQuant 非常灵活，您可以在您的 Mod 中扩展命令行，我们以 `sys_analyser Mod <https://github.com/mooquant/mooquant/tree/master/mooquant/mod/mooquant_mod_sys_analyser>`_ 添加自定义option :code:`--plot` 来实现展示收益图为例，来介绍以下如何扩展您自己的命令行参数。
 
 .. note::
 
-    mooquant_mod_sys_analyser 对应源码请访问 `这里 <https://github.com/ricequant/mooquant/blob/master/mooquant/mod/mooquant_mod_sys_analyser/__init__.py>`_ 进行查看。
+    mooquant_mod_sys_analyser 对应源码请访问 `这里 <https://github.com/mooquant/mooquant/blob/master/mooquant/mod/mooquant_mod_sys_analyser/__init__.py>`_ 进行查看。
 
 MooQuant 使用 `click <http://click.pocoo.org/5/>`_ 来实现命令行参数配置，您需要通过 click 来构建 option。
 通过 :code:`from mooquant import cli` 来获取命令行对象。
@@ -250,7 +250,7 @@ MooQuant 在运行策略时候会在当前目录下寻找 `config.yml` 或者  `
 策略内配置参数信息
 ------------------------------------------------------
 
-MooQuant 提供了策略内配置参数信息的功能，您可以方便的在策略文件中配置参数，我们以 `test_f_buy_and_hold 文件 <https://github.com/ricequant/mooquant/blob/master/tests/test_f_buy_and_hold.py>`_ 为例来介绍此种策略运行方式。
+MooQuant 提供了策略内配置参数信息的功能，您可以方便的在策略文件中配置参数，我们以 `test_f_buy_and_hold 文件 <https://github.com/mooquant/mooquant/blob/master/tests/test_f_buy_and_hold.py>`_ 为例来介绍此种策略运行方式。
 
 .. code-block:: python
 

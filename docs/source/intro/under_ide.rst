@@ -18,7 +18,7 @@
 
 安装好以后我们十分建议您将主题颜色更改为【Darcula】，没有什么，就是看着爽。
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/pycharm-theme.png
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/pycharm-theme.png
 
 
 在PyCharm下搭建开发环境
@@ -34,7 +34,7 @@
 
 File→ New Project, 比如项目叫做mooquant-strategy
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/create-project.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/create-project.jpeg
 
 .. warning::
 
@@ -46,7 +46,7 @@ File→ New Project, 比如项目叫做mooquant-strategy
 
 PyCharm Community Edition → Preferences → Project: mooquant-strategy → Project Interpreter, 然后选择您创建的conda的虚拟环境，这个例子里面的话是放在：~/anaconda/envs/mooquant/bin/python:
 
-.. image:: https://github.com/ricequant/rq-resource/blob/master/mooquant/preferences.jpeg?raw=true
+.. image:: https://github.com/mooquant/rq-resource/blob/master/mooquant/preferences.jpeg?raw=true
 
 项目创建好以后，新建立一个简单的 :code:`mooquant` 策略吧，比如叫做 :code:`test.py`: 右键点击mooquant-strategy项目→ New→ File→ test.py:
 
@@ -54,7 +54,7 @@ PyCharm Community Edition → Preferences → Project: mooquant-strategy → Pro
 
 策略必须添加 :code:`init,before_trading,ha`ndle_bar` 函数来补全整个策略：
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/import.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/import.jpeg
 
 
 3.配置运行的命令行mooquant的在conda环境中的位置：
@@ -68,15 +68,15 @@ PyCharm Community Edition → Preferences → Project: mooquant-strategy → Pro
 
     如果是 Python 3.5 及以上，在 `/Scripts/` 目录下是存在 `mooquant-script.py` 文件的，其可以作为入口文件。参考路径: `C:\\Users\\xxx\\Anaconda2\\envs\\mooquant3_5\\Scripts\\mooquant-script.py`
 
-    相关 issue 讨论 请参考 `Issue 7 <https://github.com/ricequant/mooquant/issues/7>`_
+    相关 issue 讨论 请参考 `Issue 7 <https://github.com/mooquant/mooquant/issues/7>`_
 
 Run/Debug Configurations → 选择策略文件 → Configuration → Script → 找到对应的conda环境的mooquant命令
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-one.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/config-one.jpeg
 
 配置mooquant-plus run的命令行：Run/Debug Configurations → 选择策略文件 → Configuration → Script parameters
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/config-two.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/config-two.jpeg
 
 Python interpreter 内容可按以下格式并修改您对应的参数:
 
@@ -92,6 +92,6 @@ Python interpreter 内容可按以下格式并修改您对应的参数:
 
 配置完成后点击运行
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/run.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/run.jpeg
 
-.. image:: https://raw.githubusercontent.com/ricequant/rq-resource/master/mooquant/after-run.jpeg
+.. image:: https://raw.githubusercontent.com/mooquant/rq-resource/master/mooquant/after-run.jpeg

@@ -24,7 +24,8 @@ import numpy as np
 from mooquant import broker, analyzer
 from mooquant.analyzer import returns
 
-
+# 交易分析
+# 记录每一笔已完成交易的盈利和亏损
 class Trades(analyzer.StrategyAnalyzer):
     """A :class:`mooquant.analyzer.StrategyAnalyzer` that records the profit/loss
     and returns of every completed trade.
@@ -151,58 +152,77 @@ class Trades(analyzer.StrategyAnalyzer):
     def attached(self, strat):
         strat.getBroker().getOrderUpdatedEvent().subscribe(self.__onOrderEvent)
 
+    # 返回交易总数
     def getCount(self):
         """Returns the total number of trades."""
         return len(self.__all)
 
+    # 返回可盈利的交易数量
     def getProfitableCount(self):
         """Returns the number of profitable trades."""
         return len(self.__profits)
 
+    # 获得无盈利的计数
     def getUnprofitableCount(self):
         """Returns the number of unprofitable trades."""
         return len(self.__losses)
 
+    # 获得事件数
     def getEvenCount(self):
-        """Returns the number of trades whose net profit was 0."""
+        """Returns the number of trades whose net profit was 0.
+        返回交易的净利润是0号"""
         return self.__evenTrades
 
     def getAll(self):
-        """Returns a numpy.array with the profits/losses for each trade."""
+        """Returns a numpy.array with the profits/losses for each trade.
+        返回一个与各贸易 numpy.array 盈利/亏损。"""
         return np.asarray(self.__all)
 
+    # 获得利润值
     def getProfits(self):
-        """Returns a numpy.array with the profits for each profitable trade."""
+        """Returns a numpy.array with the profits for each profitable trade.
+        返回一个与每个有利可图的贸易利润 numpy.array"""
         return np.asarray(self.__profits)
 
+    # 获得损失值
     def getLosses(self):
-        """Returns a numpy.array with the losses for each unprofitable trade."""
+        """Returns a numpy.array with the losses for each unprofitable trade.
+        返回一个 numpy.array 与每个无利可图的贸易损失"""
         return np.asarray(self.__losses)
 
+    # 获得全部回报
     def getAllReturns(self):
-        """Returns a numpy.array with the returns for each trade."""
+        """Returns a numpy.array with the returns for each trade.
+        返回一个对每个贸易收益 numpy.array
+        """
         return np.asarray(self.__allReturns)
 
     def getPositiveReturns(self):
-        """Returns a numpy.array with the positive returns for each trade."""
+        """Returns a numpy.array with the positive returns for each trade.
+        返回一个对每个交易的正收益 numpy.array"""
         return np.asarray(self.__positiveReturns)
 
     def getNegativeReturns(self):
-        """Returns a numpy.array with the negative returns for each trade."""
+        """Returns a numpy.array with the negative returns for each trade.
+        返回一个对每个交易的负收益 numpy.array"""
         return np.asarray(self.__negativeReturns)
 
+    # 返回一个全部交易的佣金
     def getCommissionsForAllTrades(self):
         """Returns a numpy.array with the commissions for each trade."""
         return np.asarray(self.__allCommissions)
 
+    # 返回一个与多个可盈利的交易佣金
     def getCommissionsForProfitableTrades(self):
         """Returns a numpy.array with the commissions for each profitable trade."""
         return np.asarray(self.__profitableCommissions)
 
+    # 返回一个与多个无盈利的交易佣金
     def getCommissionsForUnprofitableTrades(self):
         """Returns a numpy.array with the commissions for each unprofitable trade."""
         return np.asarray(self.__unprofitableCommissions)
 
+    # 返回一个对每个交易的净利润 numpy.array 佣金为 0 
     def getCommissionsForEvenTrades(self):
         """Returns a numpy.array with the commissions for each trade whose net profit was 0."""
         return np.asarray(self.__evenCommissions)
