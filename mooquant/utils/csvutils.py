@@ -72,7 +72,6 @@ class FastDictReader(object):
 
         return self.__dict
 
-
 def download_csv(url, url_params=None, content_type="text/csv"):
     response = requests.get(url, params=url_params)
     response.raise_for_status()
@@ -88,7 +87,6 @@ def download_csv(url, url_params=None, content_type="text/csv"):
         ret = ret[1:]
 
     return ret
-
 
 def float_or_string(value):
     try:
