@@ -9,8 +9,8 @@ Python MooQuant
 .. image:: https://img.shields.io/travis/bopo/mooquant.svg
         :target: https://travis-ci.org/bopo/mooquant
 
-.. image:: https://readthedocs.org/projects/python-boilerplate/badge/?version=latest
-        :target: https://python-boilerplate.readthedocs.io/en/latest/?badge=latest
+.. image:: https://readthedocs.org/projects/mooquant/badge/?version=latest
+        :target: https://mooquant.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
 .. image:: https://pyup.io/repos/github/bopo/mooquant/shield.svg
@@ -22,7 +22,7 @@ Python MooQuant contains all the boilerplate you need to create a Python package
 
 
 * Free software: MIT license
-* Documentation: https://python-boilerplate.readthedocs.io.
+* Documentation: https://mooquant.readthedocs.io.
 
 
 Features
@@ -33,8 +33,8 @@ Features
 Credits
 ---------
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+This package was created with Cookiecutter_ and the `bopo/mooquant`_ project template.
 
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _Cookiecutter: https://github.com/bopo/cookiecutter
+.. _`bopo/mooquant`: https://github.com/bopo/mooquant
 
