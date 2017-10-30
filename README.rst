@@ -1,5 +1,5 @@
 ==================
-Python MooQuant
+MooQuant
 ==================
 
 
@@ -18,23 +18,19 @@ Python MooQuant
      :alt: Updates
 
 
-Python MooQuant contains all the boilerplate you need to create a Python package.
+MooQuant 是一个基于 pyalgotrade 衍生而来的支持 py2 py3 的支持国内A股的量化交易框架。
 
 
-* Free software: MIT license
-* Documentation: https://mooquant.readthedocs.io.
+* 协议: MIT license
+* 文档: https://mooquant.readthedocs.io.
 
 
-Features
+功能
 --------
 
 * TODO
 
-Credits
+版权
 ---------
 
-This package was created with Cookiecutter_ and the `bopo/mooquant`_ project template.
-
-.. _Cookiecutter: https://github.com/bopo/cookiecutter
-.. _`bopo/mooquant`: https://github.com/bopo/mooquant
-
+* TODO
