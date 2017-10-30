@@ -18,19 +18,19 @@ MooQuant
      :alt: Updates
 
 
-MooQuant ÊÇÒ»¸ö»ùÓÚ pyalgotrade ÑÜÉú¶øÀ´µÄÖ§³Ö py2 py3 µÄÖ§³Ö¹úÄÚA¹ÉµÄÁ¿»¯½»Ò×¿ò¼Ü¡£
+MooQuant æ˜¯ä¸€ä¸ªåŸºäº pyalgotrade è¡ç”Ÿè€Œæ¥çš„æ”¯æŒ py2 py3 çš„æ”¯æŒå›½å†…Aè‚¡çš„é‡åŒ–äº¤æ˜“æ¡†æ¶ã€‚
 
 
-* Ğ­Òé: MIT license
-* ÎÄµµ: https://mooquant.readthedocs.io.
+* åè®®: MIT license
+* æ–‡æ¡£: https://mooquant.readthedocs.io.
 
 
-¹¦ÄÜ
+åŠŸèƒ½
 --------
 
 * TODO
 
-°æÈ¨
+ç‰ˆæƒ
 ---------
 
 * TODO

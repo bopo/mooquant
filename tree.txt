@@ -25,7 +25,7 @@
 │   ├── livebroker.py
 │   ├── livefeed.py
 │   └── wsclient.py
-├── broker					# 交易商	
+├── broker					# 交易商
 │   ├── __init__.py
 │   ├── backtesting.py
 │   ├── fillstrategy.py
@@ -86,23 +86,23 @@
 │   ├── stats.py
 │   ├── stoch.py
 │   └── vwap.py				# 动量策略
-├── tools					# 工具脚本		
+├── tools					# 工具脚本
 │   ├── __init__.py
 │   ├── googlefinance.py
 │   ├── quandl.py
 │   ├── resample.py			# 时间重整
 │   └── yahoofinance.py
-├── twitter					
+├── twitter
 │   ├── __init__.py
 │   └── feed.py
-├── utils					# 杂项
+├── utils					      # 杂项
 │   ├── __init__.py
 │   ├── collections.py
 │   ├── csvutils.py
 │   ├── dt.py
 │   └── stats.py
 ├── warninghelpers.py
-└── websocket				# websocket 用来推送的，已经删除
+└── websocket				   # websocket 用来推送的，已经删除
     ├── __init__.py
     ├── client.py
     └── pusher.py
