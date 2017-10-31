@@ -23,7 +23,8 @@ import numpy
 import talib
 
 
-# Returns the last values of a dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last values of a dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def value_ds_to_numpy(ds, count):
     ret = None
 
@@ -38,27 +39,32 @@ def value_ds_to_numpy(ds, count):
     return ret
 
 
-# Returns the last open values of a bar dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last open values of a bar dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def bar_ds_open_to_numpy(barDs, count):
     return value_ds_to_numpy(barDs.getOpenDataSeries(), count)
 
 
-# Returns the last high values of a bar dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last high values of a bar dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def bar_ds_high_to_numpy(barDs, count):
     return value_ds_to_numpy(barDs.getHighDataSeries(), count)
 
 
-# Returns the last low values of a bar dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last low values of a bar dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def bar_ds_low_to_numpy(barDs, count):
     return value_ds_to_numpy(barDs.getLowDataSeries(), count)
 
 
-# Returns the last close values of a bar dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last close values of a bar dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def bar_ds_close_to_numpy(barDs, count):
     return value_ds_to_numpy(barDs.getCloseDataSeries(), count)
 
 
-# Returns the last volume values of a bar dataseries as a numpy.array, or None if not enough values could be retrieved from the dataseries.
+# Returns the last volume values of a bar dataseries as a numpy.array,
+# or None if not enough values could be retrieved from the dataseries.
 def bar_ds_volume_to_numpy(barDs, count):
     return value_ds_to_numpy(barDs.getVolumeDataSeries(), count)
 
@@ -119,7 +125,7 @@ def call_talib_with_hlc(barDs, count, talibFunc, *args, **kwargs):
 
 def call_talib_with_ohlc(barDs, count, talibFunc, *args, **kwargs):
     open_ = bar_ds_open_to_numpy(barDs, count)
-    
+
     if open_ is None:
         return None
 
@@ -666,7 +672,8 @@ def MACD(ds, count, fastperiod=-2 ** 31, slowperiod=-2 ** 31, signalperiod=-2 **
 def MACDEXT(ds, count, fastperiod=-2 ** 31, fastmatype=0, slowperiod=-2 ** 31, slowmatype=0, signalperiod=-2 ** 31,
             signalmatype=0):
     """MACD with controllable MA type"""
-    ret = call_talib_with_ds(ds, count, talib.MACDEXT, fastperiod, fastmatype, slowperiod, slowmatype, signalperiod, signalmatype)
+    ret = call_talib_with_ds(ds, count, talib.MACDEXT, fastperiod, fastmatype, slowperiod, slowmatype, signalperiod,
+                             signalmatype)
 
     if ret is None:
         ret = (None, None, None)

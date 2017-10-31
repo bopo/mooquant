@@ -23,6 +23,7 @@ import abc
 
 import six
 
+
 # 滑点模型
 @six.add_metaclass(abc.ABCMeta)
 class SlippageModel(object):

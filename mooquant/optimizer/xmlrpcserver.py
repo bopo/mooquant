@@ -72,9 +72,9 @@ class Server(SimpleXMLRPCServer):
     defaultBatchSize = 200
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
-        SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
-                                    logRequests=False, allow_none=True)
-        # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        # SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
+        # logRequests=False, allow_none=True)
+        super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
         self.__resultSinc = resultSinc

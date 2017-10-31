@@ -17,6 +17,8 @@
 
 """
 .. moduleauthor:: bopo.wang <ibopo@126.com>
+
+头寸类
 """
 
 import datetime

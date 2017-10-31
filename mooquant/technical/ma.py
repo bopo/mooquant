@@ -41,6 +41,7 @@ from mooquant import technical
 # avg1 = avg0 - x
 # avg1 = avg0 + d/3 - a/3
 
+# 移动平均线
 class SMAEventWindow(technical.EventWindow):
     def __init__(self, period):
         assert (period > 0)

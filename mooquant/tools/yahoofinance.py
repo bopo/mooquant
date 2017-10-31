@@ -38,9 +38,9 @@ def __adjust_month(month):
 
 def download_csv(instrument, begin, end, frequency):
     url = "http://ichart.finance.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=%s&ignore=.csv" % (
-    instrument, __adjust_month(begin.month), begin.day, begin.year, __adjust_month(end.month), end.day, end.year,
-    frequency)
-    
+        instrument, __adjust_month(begin.month), begin.day, begin.year, __adjust_month(end.month), end.day, end.year,
+        frequency)
+
     return csvutils.download_csv(url)
 
 

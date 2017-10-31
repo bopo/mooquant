@@ -70,6 +70,7 @@ class BarGrouper(resamplebase.Grouper):
         ret.setUseAdjustedValue(self.__useAdjValue)
         return ret
 
+
 # 重复取样;
 @six.add_metaclass(abc.ABCMeta)
 class DSResampler(object):

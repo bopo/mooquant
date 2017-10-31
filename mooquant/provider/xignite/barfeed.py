@@ -62,7 +62,7 @@ class PollingThread(threading.Thread):
             if not self.__stopped:
                 try:
                     self.doCall()
-                except Exception, e:
+                except Exception as e:
                     logger.critical("Unhandled exception", exc_info=e)
 
         logger.debug("Thread finished.")
@@ -146,12 +146,12 @@ class GetBarThread(PollingThread):
         for indentifier in self.__identifiers:
             try:
                 logger.debug("Requesting bars with precision %s and period %s for %s" % (
-                self.__precision, self.__period, indentifier))
+                    self.__precision, self.__period, indentifier))
                 response = api.XigniteGlobalRealTime_GetBar(self.__apiToken, indentifier, "Symbol", endDateTime,
                                                             self.__precision, self.__period)
                 # logger.debug(response)
                 barDict[indentifier] = build_bar(response["Bar"], indentifier, self.__frequency)
-            except api.XigniteError, e:
+            except api.XigniteError as e:
                 logger.error(e)
 
         if len(barDict):

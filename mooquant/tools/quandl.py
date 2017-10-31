@@ -131,7 +131,7 @@ def build_feed(sourceCode, tableCodes, fromYear, toYear, storage, frequency=bar.
 
     logger = mooquant.logger.getLogger("quandl")
     ret = quandlfeed.Feed(frequency, timezone)
-    
+
     if noAdjClose:
         ret.setNoAdjClose()
 

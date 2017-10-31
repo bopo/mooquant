@@ -21,7 +21,7 @@
 
 from mooquant import technical
 
-
+#
 class CumRetEventWindow(technical.EventWindow):
     def __init__(self):
         super(CumRetEventWindow, self).__init__(2)

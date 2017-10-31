@@ -23,6 +23,7 @@ from mooquant import dataseries
 from mooquant.technical import ma, stats
 
 
+# ENE 管道
 class ENE(object):
     """Bollinger Bands filter as described in http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:bollinger_bands.
 

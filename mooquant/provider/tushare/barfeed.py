@@ -365,7 +365,7 @@ class TuShareLiveFeed(barfeed.BaseBarFeed):
         elif datetime.date.today().weekday() in [5, 0]:
             return
 
-        #        #James:
+        # #James:
         #        if datetime.datetime.now().hour * 60 + 30 < 9*60 + 30:
         #            return
 

@@ -23,6 +23,7 @@ import math
 
 from mooquant import dataseries, observer, analyzer
 
+
 # 时间加权收益率（Time-weighted Rate of Return）
 # Helper class to calculate time-weighted returns in a portfolio.
 # Check http://www.wikinvest.com/wiki/Time-weighted_return
@@ -66,6 +67,7 @@ class TimeWeightedReturns(object):
     # 注意，这个值不是年度化的。
     def getCumulativeReturns(self):
         return self.__cumRet
+
 
 # 头寸跟踪 这个辅助类的计算在一个单一的投资品种，并返回（而不是整个组合）
 # Helper class to calculate PnL and returns over a single instrument (not the whole portfolio).
@@ -183,6 +185,7 @@ class PositionTracker(object):
         assert quantity > 0, "Invalid quantity"
         self.update(quantity * -1, price, commission)
 
+
 # 回报率分析类
 class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
     def __init__(self):
@@ -225,6 +228,7 @@ class ReturnsAnalyzerBase(analyzer.StrategyAnalyzer):
 
         # Notify that new returns are available.
         self.__event.emit(bars.getDateTime(), self)
+
 
 # 回报率
 class Returns(analyzer.StrategyAnalyzer):

@@ -24,6 +24,7 @@ import numpy as np
 from mooquant import broker, analyzer
 from mooquant.analyzer import returns
 
+
 # 交易分析
 # 记录每一笔已完成交易的盈利和亏损
 class Trades(analyzer.StrategyAnalyzer):

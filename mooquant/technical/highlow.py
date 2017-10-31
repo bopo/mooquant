@@ -21,7 +21,7 @@
 
 from mooquant import technical
 
-
+# 高低价指标
 class HighLowEventWindow(technical.EventWindow):
     def __init__(self, windowSize, useMin):
         super(HighLowEventWindow, self).__init__(windowSize)

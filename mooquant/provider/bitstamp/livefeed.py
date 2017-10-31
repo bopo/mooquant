@@ -205,9 +205,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
     def __onTrade(self, trade):
         # Build a bar for each trade.
-        barDict = {
-            common.btc_symbol: TradeBar(self.__getTradeDateTime(trade), trade)
-        }
+        barDict = {common.btc_symbol: TradeBar(self.__getTradeDateTime(trade), trade)}
         self.__barDicts.append(barDict)
 
     def barsHaveAdjClose(self):

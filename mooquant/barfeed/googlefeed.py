@@ -51,7 +51,7 @@ def parse_date(date):
         year -= 100
 
     month = int(month_abbr[date[1]])
-    
+
     day = int(date[0])
     ret = datetime.datetime(year, month, day)
 
@@ -117,6 +117,7 @@ class Feed(csvfeed.BarFeed):
             * If all the instruments loaded are in the same timezone, then the timezone parameter may not be specified.
             * If any of the instruments loaded are in different timezones, then the timezone parameter must be set.
     """
+
     # frequency == 频率
     def __init__(self, frequency=bar.Frequency.DAY, timezone=None, maxLen=None):
         if frequency not in [bar.Frequency.DAY]:

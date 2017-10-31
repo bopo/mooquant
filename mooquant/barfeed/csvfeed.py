@@ -27,6 +27,7 @@ from mooquant import bar
 import datetime
 import pytz
 
+
 # CSV行解析器的接口
 # Interface for csv row parsers.
 class RowParser(object):
@@ -61,6 +62,7 @@ class DateRangeFilter(BarFilter):
             return False
 
         return True
+
 
 # 使用股票工作时间
 # 股票交易时段过滤器 (米国)
@@ -128,7 +130,7 @@ class BarFeed(membf.BarFeed):
         # Load the csv file
         loadedBars = []
         reader = csvutils.FastDictReader(
-            open(path, "r"), fieldnames=rowParser.getFieldNames(), 
+            open(path, "r"), fieldnames=rowParser.getFieldNames(),
             delimiter=rowParser.getDelimiter())
 
         for row in reader:
@@ -138,6 +140,7 @@ class BarFeed(membf.BarFeed):
                 loadedBars.append(bar_)
 
         self.addBarsFromSequence(instrument, loadedBars)
+
 
 # 通用行分析器
 class GenericRowParser(RowParser):
@@ -211,6 +214,7 @@ class GenericRowParser(RowParser):
         return self.__barClass(
             dateTime, open_, high, low, close, volume, adjClose, self.__frequency, extra=extra
         )
+
 
 # 通用 bar 提供
 class GenericBarFeed(BarFeed):

@@ -23,6 +23,7 @@ import datetime
 
 from mooquant import analyzer
 
+
 # 最大回撤率辅助类
 # https://baike.baidu.com/item/%E6%9C%80%E5%A4%A7%E5%9B%9E%E6%92%A4%E7%8E%87/3645063?fr=aladdin
 class DrawDownHelper(object):
@@ -64,6 +65,7 @@ class DrawDownHelper(object):
             self.__highDateTime = dateTime
         else:
             self.__lowWatermark = min(self.__lowWatermark, low)
+
 
 # 回撤
 class DrawDown(analyzer.StrategyAnalyzer):

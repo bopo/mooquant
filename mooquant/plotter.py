@@ -89,10 +89,10 @@ class Series(object):
 
     def plot(self, mplSubplot, dateTimes, color):
         values = []
-        
+
         for dateTime in dateTimes:
             values.append(self.getValue(dateTime))
-        
+
         mplSubplot.plot(dateTimes, values, color=color, marker=self.getMarker())
 
 
@@ -151,7 +151,7 @@ class LineMarker(Series):
 class InstrumentMarker(Series):
     def __init__(self):
         super(InstrumentMarker, self).__init__()
-        
+
         self.__useAdjClose = None
         self.__marker = " "
 
@@ -171,7 +171,7 @@ class InstrumentMarker(Series):
     def getValue(self, dateTime):
         # If not using candlesticks, the return the closing price.
         ret = Series.getValue(self, dateTime)
-        
+
         if ret is not None:
             if self.__useAdjClose is None:
                 ret = ret.getPrice()
@@ -179,7 +179,7 @@ class InstrumentMarker(Series):
                 ret = ret.getAdjClose()
             else:
                 ret = ret.getClose()
-        
+
         return ret
 
 
@@ -194,27 +194,27 @@ class HistogramMarker(Series):
         validDateTimes = []
         values = []
         colors = []
-        
+
         for dateTime in dateTimes:
             value = self.getValue(dateTime)
-            
+
             if value is not None:
                 validDateTimes.append(dateTime)
                 values.append(value)
                 colors.append(self.getColorForValue(value, color))
-        
+
         mplSubplot.bar(validDateTimes, values, color=colors)
 
 
 class MACDMarker(HistogramMarker):
     def getColorForValue(self, value, default):
         ret = default
-        
+
         if value >= 0:
             ret = "g"
         else:
             ret = "r"
-        
+
         return ret
 
 
@@ -229,11 +229,11 @@ class Subplot(object):
 
     def __getColor(self, series):
         ret = series.getColor()
-        
+
         if ret is None:
             ret = Subplot.colors[self.__nextColor % len(Subplot.colors)]
             self.__nextColor += 1
-        
+
         return ret
 
     def isEmpty(self):
@@ -274,7 +274,7 @@ class Subplot(object):
 
     def onBars(self, bars):
         dateTime = bars.getDateTime()
-        
+
         for cb, series in self.__callbacks.items():
             series.addValue(dateTime, cb(bars))
 
@@ -284,7 +284,7 @@ class Subplot(object):
         except KeyError:
             ret = defaultClass()
             self.__series[name] = ret
-        
+
         return ret
 
     def getCustomMarksSeries(self, name):
@@ -293,10 +293,10 @@ class Subplot(object):
     def plot(self, mplSubplot, dateTimes, postPlotFun=_post_plot_fun):
         for series in self.__series.values():
             color = None
-            
+
             if series.needColor():
                 color = self.__getColor(series)
-            
+
             series.plot(mplSubplot, dateTimes, color)
 
         postPlotFun(self, mplSubplot)
@@ -304,9 +304,10 @@ class Subplot(object):
 
 class InstrumentSubplot(Subplot):
     """A Subplot responsible for plotting an instrument."""
+
     def __init__(self, instrument, plotBuySell):
         super(InstrumentSubplot, self).__init__()
-        
+
         self.__instrument = instrument
         self.__plotBuySell = plotBuySell
         self.__instrumentSeries = self.getSeries(instrument, InstrumentMarker)
@@ -317,18 +318,19 @@ class InstrumentSubplot(Subplot):
     def onBars(self, bars):
         super(InstrumentSubplot, self).onBars(bars)
         bar = bars.getBar(self.__instrument)
-        
+
         if bar:
             dateTime = bars.getDateTime()
             self.__instrumentSeries.addValue(dateTime, bar)
 
     def onOrderEvent(self, broker_, orderEvent):
         order = orderEvent.getOrder()
-        
-        if self.__plotBuySell and orderEvent.getEventType() in (broker.OrderEvent.Type.PARTIALLY_FILLED, broker.OrderEvent.Type.FILLED) and order.getInstrument() == self.__instrument:
+
+        if self.__plotBuySell and orderEvent.getEventType() in (broker.OrderEvent.Type.PARTIALLY_FILLED,
+                                                                broker.OrderEvent.Type.FILLED) and order.getInstrument() == self.__instrument:
             action = order.getAction()
             execInfo = orderEvent.getEventInfo()
-            
+
             if action in [broker.Order.Action.BUY, broker.Order.Action.BUY_TO_COVER]:
                 self.getSeries("Buy", BuyMarker).addValue(execInfo.getDateTime(), execInfo.getPrice())
             elif action in [broker.Order.Action.SELL, broker.Order.Action.SELL_SHORT]:
@@ -403,7 +405,7 @@ class StrategyPlotter(object):
         except KeyError:
             ret = InstrumentSubplot(instrument, self.__plotBuySell)
             self.__barSubplots[instrument] = ret
-        
+
         return ret
 
     def getOrCreateSubplot(self, name):
@@ -454,7 +456,8 @@ class StrategyPlotter(object):
 
     def buildFigure(self, fromDateTime=None, toDateTime=None):
         # Deprecated in v0.18.
-        warninghelpers.deprecation_warning("buildFigure will be deprecated in the next version. Use buildFigureAndSubplots.", stacklevel=2)
+        warninghelpers.deprecation_warning(
+            "buildFigure will be deprecated in the next version. Use buildFigureAndSubplots.", stacklevel=2)
         fig, _ = self.buildFigureAndSubplots(fromDateTime, toDateTime)
 
         return fig
@@ -470,7 +473,7 @@ class StrategyPlotter(object):
         """
         fig, mplSubplots = self.__buildFigureImpl(fromDateTime, toDateTime, postPlotFun=postPlotFun)
         fig.autofmt_xdate()
-        
+
         return fig, mplSubplots
 
     def plot(self, fromDateTime=None, toDateTime=None, postPlotFun=_post_plot_fun):

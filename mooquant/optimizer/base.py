@@ -21,6 +21,7 @@
 
 import threading
 
+
 # 参数类
 class Parameters(object):
     def __init__(self, *args, **kwargs):
@@ -70,6 +71,7 @@ class ParameterSource(object):
     def eof(self):
         with self.__lock:
             return self.__iter is None
+
 
 # 结果正弦值
 class ResultSinc(object):

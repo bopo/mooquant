@@ -40,7 +40,7 @@ def __adjust_month(month):
 def download_json(begin, end, frequency):
     ver = str(arrow.now().timestamp * 1000)
     url = 'http://fa.163.com/interfaces/ngxcache/priceinfo/kline/getMinDefaultList.do?partnerId=njs&goodsId=AG&v=%s' % v
-    
+
     response = requests.get(url)
     response.raise_for_status()
 
@@ -53,11 +53,12 @@ def download_json(begin, end, frequency):
 
     return ret
 
+
 # def download_json(instrument, begin, end, frequency):
 #     url = "http://ichart.finance.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=%s&ignore=.csv" % (
 #     instrument, __adjust_month(begin.month), begin.day, begin.year, __adjust_month(end.month), end.day, end.year,
 #     frequency)
-    
+
 #     return csvutils.download_json(url)
 
 

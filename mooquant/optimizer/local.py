@@ -30,6 +30,7 @@ from mooquant.optimizer import base, server, worker, xmlrpcserver
 
 logger = logging.getLogger(__name__)
 
+
 # 服务器进程
 class ServerThread(threading.Thread):
     def __init__(self, server):
@@ -38,6 +39,7 @@ class ServerThread(threading.Thread):
 
     def run(self):
         self.__results = self.__server.serve()
+
 
 # 工作者进程
 def worker_process(strategyClass, port, logLevel):
@@ -70,6 +72,7 @@ def find_port():
             return ret
         except socket.error:
             pass
+
 
 # 等候线程
 def wait_process(p):

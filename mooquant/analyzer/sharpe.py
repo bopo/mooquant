@@ -115,7 +115,7 @@ class SharpeRatio(analyzer.StrategyAnalyzer):
 
     def __onReturns(self, dateTime, returnsAnalyzerBase):
         netReturn = returnsAnalyzerBase.getNetReturn()
-        
+
         if self.__useDailyReturns:
             # Calculate daily returns.
             if dateTime.date() == self.__currentDate:

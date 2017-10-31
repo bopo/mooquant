@@ -19,6 +19,7 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
+
 # 数据库数据操作 增删改查
 class Database(object):
     """

@@ -22,7 +22,7 @@
 from mooquant import dataseries
 from mooquant.technical import ma, stats
 
-
+# 布林带指标
 class BollingerBands(object):
     """Bollinger Bands filter as described in http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:bollinger_bands.
 

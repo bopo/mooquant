@@ -21,6 +21,7 @@
 
 from mooquant import dataseries
 
+
 # 时间对齐
 def datetime_aligned(ds1, ds2, maxLen=None):
     """
@@ -65,7 +66,7 @@ class Syncer(object):
                 break
             elif values[i][0] < dateTime:
                 break
-            
+
             i -= 1
 
         return ret

@@ -53,12 +53,14 @@ class Commission(object):
         """
         raise NotImplementedError()
 
-# 无手续费模型 总是返回 0 
+
+# 无手续费模型 总是返回 0
 class NoCommission(Commission):
     """A :class:`Commission` class that always returns 0."""
 
     def calculate(self, order, price, quantity):
         return 0
+
 
 # 整个交易额固定佣金
 class FixedPerTrade(Commission):
@@ -80,6 +82,7 @@ class FixedPerTrade(Commission):
             ret = self.__amount
 
         return ret
+
 
 # 比例交易费用
 class TradePercentage(Commission):
@@ -116,6 +119,7 @@ class BacktestingOrder(object):
     def process(self, broker_, bar_):
         raise NotImplementedError()
 
+
 # 市场合约
 class MarketOrder(broker.MarketOrder, BacktestingOrder):
     def __init__(self, action, instrument, quantity, onClose, instrumentTraits):
@@ -124,6 +128,7 @@ class MarketOrder(broker.MarketOrder, BacktestingOrder):
     def process(self, broker_, bar_):
         return broker_.getFillStrategy().fillMarketOrder(broker_, self, bar_)
 
+
 # 限定合约
 class LimitOrder(broker.LimitOrder, BacktestingOrder):
     def __init__(self, action, instrument, limitPrice, quantity, instrumentTraits):
@@ -131,6 +136,7 @@ class LimitOrder(broker.LimitOrder, BacktestingOrder):
 
     def process(self, broker_, bar_):
         return broker_.getFillStrategy().fillLimitOrder(broker_, self, bar_)
+
 
 # 停止合约
 class StopOrder(broker.StopOrder, BacktestingOrder):

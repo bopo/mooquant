@@ -20,6 +20,10 @@
 """
 from __future__ import unicode_literals
 
+'''
+各种兼容性代码
+'''
+
 # if sys.version < '3':
 try:
     import Queue as queue

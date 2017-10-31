@@ -29,6 +29,7 @@ import mooquant.bar
 from mooquant import broker
 from mooquant.broker import slippage
 
+
 # slippage 滑点
 # Returns the trigger price for a Limit or StopLimit order, or None if the limit price was not yet penetrated.
 def get_limit_price_trigger(action, limitPrice, useAdjustedValues, bar):
@@ -97,6 +98,7 @@ def get_stop_price_trigger(action, stopPrice, useAdjustedValues, bar):
 
     return ret
 
+
 # 填充信息
 class FillInfo(object):
     def __init__(self, price, quantity):
@@ -108,6 +110,7 @@ class FillInfo(object):
 
     def getQuantity(self):
         return self.__quantity
+
 
 # 填充策略
 @six.add_metaclass(abc.ABCMeta)
@@ -245,7 +248,7 @@ class DefaultStrategy(FillStrategy):
 
     def __init__(self, volumeLimit=0.25):
         super(DefaultStrategy, self).__init__()
-        
+
         self.__volumeLeft = {}
         self.__volumeUsed = {}
 

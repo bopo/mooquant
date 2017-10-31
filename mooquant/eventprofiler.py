@@ -21,6 +21,7 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
+
 from mooquant import dispatcher
 from mooquant.technical import roc
 
@@ -53,7 +54,7 @@ class Results(object):
                         self.setValue(t, values[t + event.getLookBack()])
 
     def __mapPos(self, t):
-        assert (t >= -1 * self.__lookBack and t <= self.__lookForward)
+        assert (t >= -1 * self.__lookBack) and (t <= self.__lookForward)
         return t + self.__lookBack
 
     def setValue(self, t, value):
