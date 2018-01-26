@@ -1,0 +1,32 @@
+[[source]]
+
+url = "http://mirrors.aliyun.com/pypi/simple/"
+verify_ssl = false
+name = "pypi"
+
+
+[packages]
+
+python-dateutil = "*"
+matplotlib = "*"
+requests = "*"
+tornado = "*"
+tweepy = "*"
+ta-lib = "*"
+numpy = "*"
+"ws4py" = "*"
+pytz = "*"
+logzero = "*"
+
+
+[dev-packages]
+
+pytest = "*"
+mock = "*"
+nose = "*"
+ddt = "*"
+
+
+[requires]
+
+python_version = "3.6"
