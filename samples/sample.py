@@ -4,6 +4,7 @@ from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.bar import Frequency
 from mooquant.barfeed.csvfeed import GenericBarFeed
 from mooquant.technical import ma
+import coloredlogs
 
 
 # 1.构建一个策略
@@ -65,13 +66,15 @@ def main():
     strat.attachAnalyzer(ratio)
     plter = plotter.StrategyPlotter(strat)
 
+    coloredlogs.install(level='DEBUG')
+    
     # 5.运行策略
     strat.run()
     strat.info("最终收益: %.2f" % strat.getResult())
 
     # 6.输出夏普率、绘图
     strat.info("夏普比率: " + str(ratio.getSharpeRatio(0)))
-    # plter.plot()
+    plter.plot()
 
 if __name__ == '__main__':
     main()

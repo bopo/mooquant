@@ -1,4 +1,4 @@
-# MooQuant
+# PyAlgoTrade
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -362,8 +362,8 @@ class TestCase(common.TestCase):
     def testMA(self):
         barDs = self.__loadBarDS()
         self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[1], 93.16))  # Original value 93.15
-        self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[2], 94.59))
-        self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[3], 94.73))
+        self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[2], 94.60))
+        self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[3], 94.74))
         self.assertTrue(compare(indicator.MA(barDs.getCloseDataSeries(), 252, 2, talib.MA_Type.SMA)[-1], 108.31))
 
     def testMACD(self):
@@ -388,8 +388,8 @@ class TestCase(common.TestCase):
 
     def testMAX(self):
         barDs = self.__loadBarDS()
-        self.assertTrue(compare(indicator.MAX(barDs.getOpenDataSeries(), 252, 14)[13], 98.815))
-        self.assertTrue(compare(indicator.MAX(barDs.getOpenDataSeries(), 252, 14)[14], 98.815))
+        self.assertTrue(compare(indicator.MAX(barDs.getOpenDataSeries(), 252, 14)[13], 98.82))
+        self.assertTrue(compare(indicator.MAX(barDs.getOpenDataSeries(), 252, 14)[14], 98.82))
         self.assertTrue(compare(indicator.MAX(barDs.getOpenDataSeries(), 252, 14)[-1], 110.69))
 
     def testMFI(self):
@@ -487,8 +487,9 @@ class TestCase(common.TestCase):
     def testSMA(self):
         barDs = self.__loadBarDS()
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[1], 93.16))  # Original value 93.15
-        self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2], 94.59))
-        self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[3], 94.73))
+        self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[2], 94.60))
+
+        self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[3], 94.74))
         self.assertTrue(compare(indicator.SMA(barDs.getCloseDataSeries(), 252, 2)[-1], 108.31))
 
     def testSTDDEV(self):
