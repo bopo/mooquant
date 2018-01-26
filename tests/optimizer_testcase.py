@@ -50,8 +50,8 @@ class OptimizerTestCase(common.TestCase):
         
         res = local.run(SMACrossOver, barFeed, parameters_generator("orcl", 5, 100), logLevel=logging.DEBUG )
         
-        self.assertEquals(round(res.getResult(), 2), 1295462.6)
-        self.assertEquals(res.getParameters()[1], 20)
+        self.assertEqual(round(res.getResult(), 2), 1295462.6)
+        self.assertEqual(res.getParameters()[1], 20)
 
     def testFailingStrategy(self):
         barFeed = yahoofeed.Feed()

@@ -87,5 +87,5 @@ class TrendTest(common.TestCase):
 
     def testInvalidThreshold(self):
         seqDS = dataseries.SequenceDataSeries()
-        with self.assertRaisesRegexp(Exception, "Invalid thresholds"):
+        with self.assertRaisesRegex(Exception, "Invalid thresholds"):
             linreg.Trend(seqDS, 10, 0.2, 0.5, 5)

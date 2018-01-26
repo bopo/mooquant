@@ -20,9 +20,9 @@
 """
 
 import datetime
-import arrow
 import os
 
+import arrow
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import yahoofeed

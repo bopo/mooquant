@@ -33,7 +33,7 @@ from mooquant import barfeed, dataseries, resamplebase
 from mooquant.bar import Frequency
 from mooquant.provider import bar
 from mooquant.provider.pytdx import livefeed
-from mooquant.provider.pytdx.common import to_market_datetime, is_holiday
+from mooquant.provider.pytdx.common import is_holiday, to_market_datetime
 from mooquant.utils.compat import queue
 
 # reader = TdxDailyBarReader()

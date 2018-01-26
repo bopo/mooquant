@@ -23,8 +23,6 @@
 
 import abc
 
-import six
-
 import mooquant.bar
 from mooquant import broker
 from mooquant.broker import slippage
@@ -113,8 +111,8 @@ class FillInfo(object):
 
 
 # 填充策略
-@six.add_metaclass(abc.ABCMeta)
-class FillStrategy(object):
+# @six.add_metaclass(abc.ABCMeta)
+class FillStrategy(object, metaclass=abc.ABCMeta):
     """Base class for order filling strategies for the backtester."""
 
     # __metaclass__ = abc.ABCMeta

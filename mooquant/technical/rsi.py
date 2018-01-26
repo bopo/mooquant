@@ -21,7 +21,6 @@
 
 from mooquant import technical
 
-
 # RSI = 100 - 100 / (1 + RS)
 # RS = Average gain / Average loss
 # First Average Gain = Sum of Gains over the past 14 periods / 14

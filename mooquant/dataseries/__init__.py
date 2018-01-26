@@ -20,7 +20,6 @@
 """
 
 import abc
-import six
 
 from mooquant import observer
 from mooquant.utils import collections
@@ -40,8 +39,7 @@ def get_checked_max_len(maxLen):
 
 # It is important to inherit object to get __getitem__ to work properly.
 # Check http://code.activestate.com/lists/python-list/621258/
-@six.add_metaclass(abc.ABCMeta)
-class DataSeries(object):
+class DataSeries(object, metaclass=abc.ABCMeta):
     """Base class for data series. 数据基类
 
     .. note::

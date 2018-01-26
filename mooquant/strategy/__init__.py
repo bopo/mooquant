@@ -31,8 +31,8 @@ from mooquant.barfeed import resampled
 from mooquant.broker import backtesting
 
 
-@six.add_metaclass(abc.ABCMeta)
-class BaseStrategy(object):
+# @six.add_metaclass(abc.ABCMeta)
+class BaseStrategy(object, metaclass=abc.ABCMeta):
     """Base class for strategies.
 
     :param barFeed: The bar feed that will supply the bars.

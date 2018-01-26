@@ -28,7 +28,6 @@ from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt
 
-
 ######################################################################
 ## NinjaTrader CSV parser
 # Each bar must be on its own line and fields must be separated by semicolon (;).

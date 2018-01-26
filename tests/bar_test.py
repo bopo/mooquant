@@ -115,7 +115,7 @@ class BarsTestCase(common.TestCase):
         self.assertTrue("a" in bars)
 
         self.assertEqual(list(bars.items()), [("a", b1), ("b", b2)])
-        self.assertEqual(bars.keys(), ["a", "b"])
+        self.assertEqual(list(bars.keys()), ["a", "b"])
         self.assertEqual(bars.getInstruments(), ["a", "b"])
         self.assertEqual(bars.getDateTime(), dt)
         self.assertEqual(bars.getBar("a").getClose(), 1)

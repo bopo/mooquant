@@ -21,7 +21,6 @@
 
 import abc
 
-import six
 
 import mooquant.bar
 from mooquant import broker, logger
@@ -31,8 +30,8 @@ from mooquant.broker import fillstrategy
 ######################################################################
 # Commission models
 # 手续费模型
-@six.add_metaclass(abc.ABCMeta)
-class Commission(object):
+# @six.add_metaclass(abc.ABCMeta)
+class Commission(object, metaclass=abc.ABCMeta):
     """Base class for implementing different commission schemes.
 
     .. note::

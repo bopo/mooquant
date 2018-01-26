@@ -19,13 +19,13 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-from mooquant.utils import dt
-from mooquant.utils import csvutils
-from mooquant.barfeed import membf
-from mooquant import bar
-
 import datetime
+
 import pytz
+
+from mooquant import bar
+from mooquant.barfeed import membf
+from mooquant.utils import csvutils, dt
 
 
 # CSV行解析器的接口

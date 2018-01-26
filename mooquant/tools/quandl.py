@@ -27,7 +27,6 @@ from mooquant import bar
 from mooquant.barfeed import quandlfeed
 from mooquant.utils import csvutils, dt
 
-
 # http://www.quandl.com/help/api
 
 def download_csv(sourceCode, tableCode, begin, end, frequency, authToken):

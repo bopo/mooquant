@@ -21,7 +21,7 @@
 
 import numpy as np
 
-from mooquant import broker, analyzer
+from mooquant import analyzer, broker
 from mooquant.analyzer import returns
 
 

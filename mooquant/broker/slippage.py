@@ -21,12 +21,11 @@
 
 import abc
 
-import six
 
 
 # 滑点模型
-@six.add_metaclass(abc.ABCMeta)
-class SlippageModel(object):
+# @six.add_metaclass(abc.ABCMeta)
+class SlippageModel(object, metaclass=abc.ABCMeta):
     """Base class for slippage models.
 
     .. note::

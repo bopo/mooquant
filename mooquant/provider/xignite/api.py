@@ -21,10 +21,10 @@
 
 import json
 import urllib
-
-import pytz
 import urllib2
 import urlparse
+
+import pytz
 
 from mooquant.utils import dt
 

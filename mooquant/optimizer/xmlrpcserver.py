@@ -25,7 +25,8 @@ import time
 
 import mooquant.logger
 from mooquant.optimizer import base
-from mooquant.utils.compat import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler, pickle
+from mooquant.utils.compat import (SimpleXMLRPCRequestHandler,
+                                   SimpleXMLRPCServer, pickle)
 
 logger = mooquant.logger.getLogger(__name__)
 

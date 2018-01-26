@@ -25,7 +25,6 @@ from mooquant import bar
 from mooquant.barfeed import common, csvfeed
 from mooquant.utils import dt
 
-
 ## Yahoo Finance CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
 #

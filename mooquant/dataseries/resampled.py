@@ -21,8 +21,6 @@
 
 import abc
 
-import six
-
 from mooquant import bar, dataseries, resamplebase
 from mooquant.dataseries import bards
 
@@ -72,8 +70,8 @@ class BarGrouper(resamplebase.Grouper):
 
 
 # 重复取样;
-@six.add_metaclass(abc.ABCMeta)
-class DSResampler(object):
+# @six.add_metaclass(abc.ABCMeta)
+class DSResampler(object, metaclass=abc.ABCMeta):
     def initDSResampler(self, dataSeries, frequency):
         if not resamplebase.is_valid_frequency(frequency):
             raise Exception("Unsupported frequency")

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import BaseHTTPServer
+import http.server
 import threading
 
 
@@ -16,7 +16,7 @@ class WebServerThread(threading.Thread):
         def handler_cls_builder(*args, **kwargs):
             return self.__handlerClass(*args, **kwargs)
 
-        self.__server = BaseHTTPServer.HTTPServer((self.__host, self.__port), handler_cls_builder)
+        self.__server = http.server.HTTPServer((self.__host, self.__port), handler_cls_builder)
         self.__server.serve_forever()
 
     def stop(self):

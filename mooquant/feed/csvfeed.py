@@ -22,15 +22,13 @@
 import abc
 import datetime
 
-import six
-
 from mooquant.feed import memfeed
 from mooquant.utils import csvutils, dt
 
 
 # Interface for csv row parsers.
-@six.add_metaclass(abc.ABCMeta)
-class RowParser(object):
+
+class RowParser(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def parseRow(self, csvRowDict):
         raise NotImplementedError()
@@ -47,8 +45,8 @@ class RowParser(object):
 
 
 # Interface for bar filters.
-@six.add_metaclass(abc.ABCMeta)
-class RowFilter(object):
+# @six.add_metaclass(abc.ABCMeta)
+class RowFilter(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def includeRow(self, dateTime, values):
         raise NotImplementedError()

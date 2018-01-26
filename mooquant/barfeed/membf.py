@@ -20,8 +20,8 @@
 """
 
 import sys
-from mooquant import bar, barfeed, utils
 
+from mooquant import bar, barfeed, utils
 
 # A non real-time BarFeed responsible for:
 # - Holding bars in memory.

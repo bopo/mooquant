@@ -20,24 +20,12 @@
 """
 from __future__ import unicode_literals
 
+import pickle
+import queue
+from urllib.parse import urlencode
+from xmlrpc.client import ServerProxy
+from xmlrpc.server import SimpleXMLRPCRequestHandler, SimpleXMLRPCServer
+
 '''
 各种兼容性代码
 '''
-
-# if sys.version < '3':
-try:
-    import Queue as queue
-    import cPickle as pickle
-
-    from urllib import urlencode
-    from xmlrpclib import ServerProxy
-    from SimpleXMLRPCServer import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-# else:
-except ImportError as e:
-    import queue
-    import pickle
-
-    from xmlrpc.client import ServerProxy
-    from xmlrpc.server import SimpleXMLRPCServer, SimpleXMLRPCRequestHandler
-
-    from urllib.parse import urlencode

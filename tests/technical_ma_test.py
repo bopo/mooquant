@@ -79,7 +79,7 @@ class SMATestCase(common.TestCase):
 
     def testMultipleValues(self):
         period = 5
-        values = range(1, 10)
+        values = list(range(1, 10))
         sma = self.__buildSMA(period, values)
         for i in range(period-1, len(values)):
             expected = sum(values[i-(period-1):i+1]) / float(period)
@@ -88,7 +88,7 @@ class SMATestCase(common.TestCase):
     def testMultipleValuesSkippingOne(self):
         # Test SMA invalidating fast sma calculation.
         period = 5
-        values = range(1, 10)
+        values = list(range(1, 10))
         sma = self.__buildSMA(period, values)
         for i in range(period-1, len(values), 2):
             expected = sum(values[i-(period-1):i+1]) / float(period)

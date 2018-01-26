@@ -19,9 +19,10 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import requests
 import datetime
 import time
+
+import requests
 
 from mooquant import bar, barfeed, observer
 from mooquant.provider.netease import common, wsclient

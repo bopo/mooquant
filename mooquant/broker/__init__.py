@@ -21,7 +21,6 @@
 
 import abc
 
-import six
 
 from mooquant import observer, dispatchprio
 
@@ -30,8 +29,8 @@ from mooquant import observer, dispatchprio
 # Why not use decimal.Decimal instead ?
 # 1: I'd have to expose this to users. They'd have to deal with decimal.Decimal and it'll break existing users.
 # 2: numpy arrays built using decimal.Decimal instances have dtype=object.
-@six.add_metaclass(abc.ABCMeta)
-class InstrumentTraits(object):
+# @six.add_metaclass(abc.ABCMeta)
+class InstrumentTraits(object, metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def roundQuantity(self, quantity):
         raise NotImplementedError()
@@ -494,8 +493,8 @@ class OrderEvent(object):
 
 ######################################################################
 # Base broker class
-@six.add_metaclass(abc.ABCMeta)
-class Broker(observer.Subject):
+# @six.add_metaclass(abc.ABCMeta)
+class Broker(observer.Subject, metaclass=abc.ABCMeta):
     """Base class for brokers.
 
     .. note::

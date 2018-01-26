@@ -24,8 +24,7 @@ import collections
 import matplotlib.pyplot as plt
 from matplotlib import ticker
 
-from mooquant import broker
-from mooquant import warninghelpers
+from mooquant import broker, warninghelpers
 
 
 def get_last_value(dataSeries):

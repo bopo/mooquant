@@ -37,7 +37,7 @@ class UtilsTestCase(common.TestCase):
         self.assertEqual(utils.get_change_percentage(1, -1), 2)
         self.assertEqual(utils.get_change_percentage(-2, -1), -1)
         self.assertEqual(utils.get_change_percentage(-1.5, -1), -0.5)
-        with self.assertRaisesRegexp(Exception, "Invalid values"):
+        with self.assertRaisesRegex(Exception, "Invalid values"):
             utils.get_change_percentage(-1.5, 0)
 
     def testSafeMin(self):
@@ -330,9 +330,9 @@ class DateTimeTestCase(common.TestCase):
         self.assertEqual(dt.timestamp_to_datetime(dt.datetime_to_timestamp(dateTime), True), dateTime)
 
     def testGetFirstMonday(self):
-        self.assertEquals(dt.get_first_monday(2010), datetime.date(2010, 1, 4))
-        self.assertEquals(dt.get_first_monday(2011), datetime.date(2011, 1, 3))
+        self.assertEqual(dt.get_first_monday(2010), datetime.date(2010, 1, 4))
+        self.assertEqual(dt.get_first_monday(2011), datetime.date(2011, 1, 3))
 
     def testGetLastMonday(self):
-        self.assertEquals(dt.get_last_monday(2010), datetime.date(2010, 12, 27))
-        self.assertEquals(dt.get_last_monday(2011), datetime.date(2011, 12, 26))
+        self.assertEqual(dt.get_last_monday(2010), datetime.date(2010, 12, 27))
+        self.assertEqual(dt.get_last_monday(2011), datetime.date(2011, 12, 26))

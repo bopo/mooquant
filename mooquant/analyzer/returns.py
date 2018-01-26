@@ -21,7 +21,7 @@
 
 import math
 
-from mooquant import dataseries, observer, analyzer
+from mooquant import analyzer, dataseries, observer
 
 
 # 时间加权收益率（Time-weighted Rate of Return）

@@ -21,8 +21,6 @@
 
 import abc
 
-import six
-
 
 class Frequency(object):
     """Enum like class for bar frequencies. Valid values are:
@@ -46,8 +44,7 @@ class Frequency(object):
     MONTH = 24 * 60 * 60 * 31
 
 
-@six.add_metaclass(abc.ABCMeta)
-class Bar(object):
+class Bar(object, metaclass=abc.ABCMeta):
     """A Bar is a summary of the trading activity for a security in a given period.
 
     .. note::
