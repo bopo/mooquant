@@ -18,7 +18,7 @@ MooQuant
      :alt: Updates
 
 
-MooQuant 是一个基于 pyalgotrade 衍生而来的支持 py2 py3 的支持国内A股的量化交易框架。
+MooQuant 是一个基于 mooquant 衍生而来的支持 py2 py3 的支持国内A股的量化交易框架。
 
 
 * 协议: MIT license
