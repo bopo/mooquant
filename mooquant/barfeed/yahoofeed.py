@@ -151,6 +151,5 @@ class Feed(csvfeed.BarFeed):
         if timezone is None:
             timezone = self.__timezone
 
-        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars,
-                              self.__barClass)
+        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars, self.__barClass)
         super(Feed, self).addBarsFromCSV(instrument, path, rowParser)

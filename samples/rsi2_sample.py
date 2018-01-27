@@ -1,11 +1,10 @@
 import rsi2
 from mooquant import plotter
-from mooquant.tools import yahoofinance
 from mooquant.analyzer import sharpe
-
+from mooquant.tools import quandl
 
 def main(plot):
-    instrument = "DIA"
+    instrument = "GORO"
     entrySMA = 200
     exitSMA = 5
     rsiPeriod = 2
@@ -13,7 +12,7 @@ def main(plot):
     overSoldThreshold = 10
 
     # Download the bars.
-    feed = yahoofinance.build_feed([instrument], 2009, 2012, ".")
+    feed = quandl.build_feed("WIKI", [instrument], 2009, 2012, "./data")
 
     strat = rsi2.RSI2(feed, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

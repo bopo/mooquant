@@ -50,8 +50,10 @@ def run_strategy(smaPeriod):
     feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
 
     # Evaluate the strategy with the feed.
-    myStrategy = MyStrategy(feed, "orcl", smaPeriod)
-    myStrategy.run()
-    print("Final portfolio value: $%.2f" % myStrategy.getBroker().getEquity())
+    strat = MyStrategy(feed, "orcl", smaPeriod)
+    strat.run()
 
-run_strategy(15)
+    print("Final portfolio value: $%.2f" % strat.getBroker().getEquity())
+
+if __name__ == '__main__':
+    run_strategy(15)

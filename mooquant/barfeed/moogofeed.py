@@ -31,7 +31,7 @@ def normalize_instrument(instrument):
     return instrument.upper()
 
 
-# SQLite DB.
+# MoogoDB.
 # Timestamps are stored in UTC.
 class Database(dbfeed.Database):
     def __init__(self, dbFilePath):

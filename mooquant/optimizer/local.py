@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# MooQuant
+# PyAlgoTrade
 #
-# Copyright 2017 bopo.wang<ibopo@126.com>
+# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,7 +15,7 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: bopo.wang <ibopo@126.com>
+.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
 import logging
@@ -26,12 +25,14 @@ import random
 import socket
 import threading
 
-from mooquant.optimizer import base, server, worker, xmlrpcserver
+from mooquant.optimizer import base
+from mooquant.optimizer import server
+from mooquant.optimizer import worker
+from mooquant.optimizer import xmlrpcserver
 
 logger = logging.getLogger(__name__)
 
 
-# 服务器进程
 class ServerThread(threading.Thread):
     def __init__(self, server):
         super(ServerThread, self).__init__()
@@ -41,13 +42,11 @@ class ServerThread(threading.Thread):
         self.__results = self.__server.serve()
 
 
-# 工作者进程
 def worker_process(strategyClass, port, logLevel):
     class Worker(worker.Worker):
         def runStrategy(self, barFeed, *args, **kwargs):
             strat = strategyClass(barFeed, *args, **kwargs)
             strat.run()
-
             return strat.getResult()
 
     # Create a worker and run it.
@@ -60,11 +59,9 @@ def worker_process(strategyClass, port, logLevel):
         w.getLogger().exception("Failed to run worker: %s" % (e))
 
 
-# 搜索端口
 def find_port():
     while True:
         ret = random.randint(1025, 65536)
-
         try:
             s = socket.socket()
             s.bind(("localhost", ret))
@@ -74,11 +71,9 @@ def find_port():
             pass
 
 
-# 等候线程
 def wait_process(p):
     timeout = 10
     p.join(timeout)
-
     while p.is_alive():
         p.join(timeout)
 
@@ -97,15 +92,13 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     :rtype: A :class:`Results` instance with the best results found.
     """
 
-    assert (workerCount is None or workerCount > 0)
-
+    assert(workerCount is None or workerCount > 0)
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     ret = None
     workers = []
     port = find_port()
-
     if port is None:
         raise Exception("Failed to find a port to listen")
 
@@ -114,7 +107,6 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
     srv = xmlrpcserver.Server(paramSource, resultSinc, barFeed, "localhost", port, False)
-
     serverThread = ServerThread(srv)
     serverThread.start()
 
@@ -143,7 +135,6 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
         serverThread.join()
 
         bestResult, bestParameters = resultSinc.getBest()
-
         if bestResult is not None:
             ret = server.Results(bestParameters.args, bestResult)
 

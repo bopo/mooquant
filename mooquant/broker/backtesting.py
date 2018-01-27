@@ -30,7 +30,6 @@ from mooquant.broker import fillstrategy
 ######################################################################
 # Commission models
 # 手续费模型
-# @six.add_metaclass(abc.ABCMeta)
 class Commission(object, metaclass=abc.ABCMeta):
     """Base class for implementing different commission schemes.
 
@@ -518,6 +517,7 @@ class Broker(broker.Broker):
 
     def cancelOrder(self, order):
         activeOrder = self.__activeOrders.get(order.getId())
+        
         if activeOrder is None:
             raise Exception("The order is not active anymore")
 

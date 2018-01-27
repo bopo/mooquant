@@ -1,5 +1,5 @@
-from mooquant.bitstamp import barfeed
-from mooquant.bitstamp import broker
+from mooquant.provider.bitstamp import barfeed
+from mooquant.provider.bitstamp import broker
 from mooquant import strategy
 from mooquant.technical import ma
 from mooquant.technical import cross
@@ -66,8 +66,8 @@ class Strategy(strategy.BaseStrategy):
 def main():
     barFeed = barfeed.LiveTradeFeed()
     brk = broker.PaperTradingBroker(1000, barFeed)
+    
     strat = Strategy(barFeed, brk)
-
     strat.run()
 
 if __name__ == "__main__":

@@ -80,7 +80,7 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 def main():
     # Load the orders file.
-    ordersFile = OrdersFile("orders.csv")
+    ordersFile = OrdersFile("../tests/data/orders.csv")
     print("First date", ordersFile.getFirstDate())
     print("Last date", ordersFile.getLastDate())
     print("Symbols", ordersFile.getInstruments())
@@ -88,6 +88,7 @@ def main():
     # Load the data from QSTK storage. QS environment variable has to be defined.
     if os.getenv("QS") is None:
         raise Exception("QS environment variable not defined")
+    
     feed = yahoofeed.Feed()
     feed.setBarFilter(csvfeed.DateRangeFilter(ordersFile.getFirstDate(), ordersFile.getLastDate()))
     feed.setDailyBarTime(datetime.time(0, 0, 0))  # This is to match the dates loaded with the ones in the orders file.
@@ -114,4 +115,6 @@ def main():
     print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
     print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
 
-main()
+if __name__ == '__main__':
+    main()
+

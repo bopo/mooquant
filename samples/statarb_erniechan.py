@@ -2,7 +2,7 @@ from mooquant import strategy
 from mooquant import dataseries
 from mooquant.dataseries import aligned
 from mooquant import plotter
-from mooquant.tools import yahoofinance
+from mooquant.tools import quandl
 from mooquant.analyzer import sharpe
 
 import numpy as np
@@ -134,11 +134,11 @@ class StatArb(strategy.BacktestingStrategy):
 
 
 def main(plot):
-    instruments = ["gld", "gdx"]
+    instruments = ["GORO",]
     windowSize = 50
 
     # Download the bars.
-    feed = yahoofinance.build_feed(instruments, 2006, 2012, ".")
+    feed = quandl.build_feed('WIKI', instruments, 2006, 2012, ".")
 
     strat = StatArb(feed, instruments[0], instruments[1], windowSize)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

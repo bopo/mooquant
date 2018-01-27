@@ -16,9 +16,9 @@ def parameters_generator():
 if __name__ == '__main__':
     # Load the feed from the CSV files.
     feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("dia", "../tests/data/dia-2009.csv")
-    feed.addBarsFromCSV("dia", "../tests/data/dia-2010.csv")
-    feed.addBarsFromCSV("dia", "../tests/data/dia-2011.csv")
+    feed.addBarsFromCSV("dia", "../tests/data/DIA-2009-yahoofinance.csv")
+    feed.addBarsFromCSV("dia", "../tests/data/DIA-2010-yahoofinance.csv")
+    feed.addBarsFromCSV("dia", "../tests/data/DIA-2011-yahoofinance.csv")
 
     # Run the server.
     server.serve(feed, parameters_generator(), "localhost", 5000)

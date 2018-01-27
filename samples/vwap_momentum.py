@@ -1,6 +1,6 @@
 from mooquant import strategy
 from mooquant import plotter
-from mooquant.tools import yahoofinance
+from mooquant.tools import quandl
 from mooquant.technical import vwap
 from mooquant.analyzer import sharpe
 
@@ -31,12 +31,12 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
 
 def main(plot):
-    instrument = "aapl"
+    instrument = "AAPL"
     vwapWindowSize = 5
     threshold = 0.01
 
     # Download the bars.
-    feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
+    feed = quandl.build_feed('WIKI',[instrument], 2011, 2012, ".")
 
     strat = VWAPMomentum(feed, instrument, vwapWindowSize, threshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

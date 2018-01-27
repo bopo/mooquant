@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# MooQuant
+# PyAlgoTrade
 #
-# Copyright 2017 bopo.wang<ibopo@126.com>
+# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,25 +15,22 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: bopo.wang <ibopo@126.com>
+.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
 import threading
 
 
-# 参数类
 class Parameters(object):
     def __init__(self, *args, **kwargs):
         self.args = args
         self.kwargs = kwargs
 
 
-# 参数源
 class ParameterSource(object):
     """
     Source for backtesting parameters. This class is thread safe.
     """
-
     def __init__(self, params):
         self.__iter = iter(params)
         self.__lock = threading.Lock()
@@ -52,7 +48,6 @@ class ParameterSource(object):
         assert count > 0, "Invalid number of parameters"
 
         ret = []
-
         with self.__lock:
             if self.__iter is not None:
                 try:
@@ -65,7 +60,6 @@ class ParameterSource(object):
                         count -= 1
                 except StopIteration:
                     self.__iter = None
-
         return ret
 
     def eof(self):
@@ -73,12 +67,10 @@ class ParameterSource(object):
             return self.__iter is None
 
 
-# 结果正弦值
 class ResultSinc(object):
     """
     Sinc for backtest results. This class is thread safe.
     """
-
     def __init__(self):
         self.__lock = threading.Lock()
         self.__bestResult = None
@@ -101,5 +93,4 @@ class ResultSinc(object):
     def getBest(self):
         with self.__lock:
             ret = self.__bestResult, self.__bestParameters
-
         return ret

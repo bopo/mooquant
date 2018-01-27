@@ -2,8 +2,7 @@ from mooquant import eventprofiler
 from mooquant.technical import stats
 from mooquant.technical import roc
 from mooquant.technical import ma
-from mooquant.tools import yahoofinance
-
+from mooquant.barfeed import yahoofeed
 # Event inspired on an example from Ernie Chan's book:
 # 'Algorithmic Trading: Winning Strategies and Their Rationale'
 
@@ -50,15 +49,18 @@ class BuyOnGap(eventprofiler.Predicate):
 
 
 def main(plot):
-    instruments = ["AA", "AES", "AIG"]
-    feed = yahoofinance.build_feed(instruments, 2008, 2009, ".")
+    instruments = ["orcl", ]
+    # feed = yahoofinance.build_feed(instruments, 2008, 2009, ".")
+
+    feed = yahoofeed.Feed()
+    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
 
     predicate = BuyOnGap(feed)
     eventProfiler = eventprofiler.Profiler(predicate, 5, 5)
     eventProfiler.run(feed, True)
 
     results = eventProfiler.getResults()
-    eventProfiler.info("%d events found" % (results.getEventCount()))
+    print("%d events found" % (results.getEventCount()))
     
     if plot:
         eventprofiler.plot(results)

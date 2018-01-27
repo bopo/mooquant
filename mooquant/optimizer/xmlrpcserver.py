@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# MooQuant
+# PyAlgoTrade
 #
-# Copyright 2017 bopo.wang<ibopo@126.com>
+# Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#   http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -16,22 +15,20 @@
 # limitations under the License.
 
 """
-.. moduleauthor:: bopo.wang <ibopo@126.com>
+.. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-# import pickle
+import xmlrpc.server
+import pickle
 import threading
 import time
 
 import mooquant.logger
 from mooquant.optimizer import base
-from mooquant.utils.compat import (SimpleXMLRPCRequestHandler,
-                                   SimpleXMLRPCServer, pickle)
 
 logger = mooquant.logger.getLogger(__name__)
 
 
-# 自动停止进程
 class AutoStopThread(threading.Thread):
     def __init__(self, server):
         super(AutoStopThread, self).__init__()
@@ -40,11 +37,9 @@ class AutoStopThread(threading.Thread):
     def run(self):
         while self.__server.jobsPending():
             time.sleep(1)
-
         self.__server.stop()
 
 
-# 工作任务
 class Job(object):
     def __init__(self, strategyParameters):
         self.__strategyParameters = strategyParameters
@@ -57,25 +52,22 @@ class Job(object):
 
     def getNextParameters(self):
         ret = None
-
         if len(self.__strategyParameters):
             ret = self.__strategyParameters.pop()
-
         return ret
 
 
 # Restrict to a particular path.
-class RequestHandler(SimpleXMLRPCRequestHandler):
-    rpc_paths = ('/MooQuantRPC',)
+class RequestHandler(xmlrpc.server.SimpleXMLRPCRequestHandler):
+    rpc_paths = ('/PyAlgoTradeRPC',)
 
 
-class Server(SimpleXMLRPCServer):
+class Server(xmlrpc.server.SimpleXMLRPCServer):
     defaultBatchSize = 200
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
-        # SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
-        # logRequests=False, allow_none=True)
-        super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        xmlrpc.server.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
         self.__resultSinc = resultSinc
@@ -86,7 +78,6 @@ class Server(SimpleXMLRPCServer):
         self.__activeJobsLock = threading.Lock()
         self.__forcedStop = False
         self.__bestResult = None
-
         if autoStop:
             self.__autoStopThread = AutoStopThread(self)
         else:
@@ -109,7 +100,6 @@ class Server(SimpleXMLRPCServer):
 
         # Get the next set of parameters.
         params = self.__paramSource.getNext(self.defaultBatchSize)
-        # params = map(lambda p: p.args, params)
         params = [p.args for p in params]
 
         # Map the active job
@@ -158,12 +148,9 @@ class Server(SimpleXMLRPCServer):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
-
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
-
             instruments = self.__barFeed.getRegisteredInstruments()
-
             self.__instrumentsAndBars = pickle.dumps((instruments, loadedBars))
             self.__barsFreq = self.__barFeed.getFrequency()
 

@@ -1,9 +1,8 @@
 from mooquant import strategy
 from mooquant import plotter
-from mooquant.tools import yahoofinance
 from mooquant.technical import bollinger
 from mooquant.analyzer import sharpe
-
+from mooquant.barfeed import yahoofeed
 
 class BBands(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, bBandsPeriod):
@@ -30,11 +29,13 @@ class BBands(strategy.BacktestingStrategy):
 
 
 def main(plot):
-    instrument = "yhoo"
+    instrument = "orcl"
     bBandsPeriod = 40
 
     # Download the bars.
-    feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
+    # feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
+    feed = yahoofeed.Feed()
+    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
 
     strat = BBands(feed, instrument, bBandsPeriod)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

@@ -135,10 +135,11 @@ class Database(dbfeed.Database):
             sql += " AND bar.timestamp <= ?"
             args.append(dt.datetime_to_timestamp(toDateTime))
 
+        ret = []
         sql += " ORDER by bar.timestamp ASC"
+        
         cursor = self.__connection.cursor()
         cursor.execute(sql, args)
-        ret = []
 
         for row in cursor:
             dateTime = dt.timestamp_to_datetime(row[0])

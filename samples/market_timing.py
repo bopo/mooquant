@@ -1,6 +1,6 @@
 from mooquant import strategy
 from mooquant import plotter
-from mooquant.tools import yahoofinance
+from mooquant.barfeed import yahoofeed
 from mooquant.technical import ma
 from mooquant.technical import cumret
 from mooquant.analyzer import sharpe
@@ -81,6 +81,7 @@ class MarketTiming(strategy.BacktestingStrategy):
     def _logPosSize(self):
         totalEquity = self.getBroker().getEquity()
         positions = self.getBroker().getPositions()
+        
         for instrument in self.getBroker().getPositions():
             posSize = positions[instrument] * self.getLastPrice(instrument) / totalEquity * 100
             self.info("%s - %0.2f %%" % (instrument, posSize))
@@ -97,9 +98,11 @@ class MarketTiming(strategy.BacktestingStrategy):
 
         # Calculate which positions should be open during the next period.
         topByClass = self._getTop()
+        
         for assetClass in topByClass:
             instrument = topByClass[assetClass]
             self.info("Best for class %s: %s" % (assetClass, instrument))
+            
             if instrument is not None:
                 lastPrice = self.getLastPrice(instrument)
                 cashForInstrument = cashPerAssetClass - self.getBroker().getShares(instrument) * lastPrice
@@ -138,12 +141,14 @@ def main(plot):
     }
 
     # Download the bars.
-    instruments = ["SPY"]
+    instruments = ["orcl"]
 
     for assetClass in instrumentsByClass:
         instruments.extend(instrumentsByClass[assetClass])
     
-    feed = yahoofinance.build_feed(instruments, 2007, 2013, "data", skipErrors=True)
+    # feed = yahoofinance.build_feed(instruments, 2007, 2013, "data", skipErrors=True)
+    feed = yahoofeed.Feed()
+    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
 
     strat = MarketTiming(feed, instrumentsByClass, initialCash)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
@@ -159,7 +164,7 @@ def main(plot):
         plt.getOrCreateSubplot("returns").addDataSeries("Strategy", returnsAnalyzer.getCumulativeReturns())
 
     strat.run()
-    
+
     print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
     print("Returns: %.2f %%" % (returnsAnalyzer.getCumulativeReturns()[-1] * 100))
 
