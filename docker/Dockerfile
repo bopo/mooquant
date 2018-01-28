@@ -1,26 +1,29 @@
 FROM ubuntu:latest
 MAINTAINER BoPo Wang <ibopo@126.com>
 
+COPY sources.list /etc/apt/sources.list
+
 RUN apt-get update
 RUN apt-get install -y build-essential
-RUN apt-get install -y python-setuptools python-dev
-RUN apt-get install -y python-pip
+RUN apt-get install -y python3-setuptools python3-dev
+RUN apt-get install -y python3-pip
 
 RUN apt-get install -y gfortran libopenblas-dev liblapack-dev
+RUN apt-get install -y libfreetype6-dev
 RUN apt-get install -y pkg-config
 RUN apt-get install -y wget
 
-RUN pip install numpy
-RUN pip install scipy
-RUN pip install pandas
-RUN pip install patsy
-RUN pip install statsmodels
-RUN apt-get install -y libfreetype6-dev; 
-RUN pip install matplotlib
-RUN pip install ws4py
-RUN pip install tornado
-RUN pip install tweepy
-RUN pip install cython
+RUN pip3 install --upgrade pip
+RUN pip3 install numpy
+RUN pip3 install scipy
+RUN pip3 install pandas
+RUN pip3 install patsy
+RUN pip3 install statsmodels
+RUN pip3 install matplotlib
+RUN pip3 install ws4py
+RUN pip3 install tornado
+RUN pip3 install tweepy
+RUN pip3 install cython
 
 # TA-Lib
 RUN cd /tmp; \
