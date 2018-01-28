@@ -35,5 +35,5 @@ RUN cd /tmp; \
 	rm ta-lib-0.4.0-src.tar.gz; \
 	rm -rf ta-lib
 
-RUN pip install TA-Lib
-RUN pip install mooquant==0.2.5
+RUN pip3 install TA-Lib
+RUN pip3 install mooquant==0.2.5
