@@ -58,6 +58,12 @@ setup(
         'Plotting':  ["matplotlib"],
         'Bitstamp':  ["ws4py>=0.3.4", "tornado"],
     },
+    entry_points={
+        'console_scripts': [
+            'moo = mooquant.console:main',
+            'mooquant = mooquant.console:main',
+        ]
+    },    
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,

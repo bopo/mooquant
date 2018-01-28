@@ -36,4 +36,4 @@ RUN cd /tmp; \
 	rm -rf ta-lib
 
 RUN pip3 install TA-Lib
-RUN pip3 install mooquant==0.2.5
+RUN pip3 install mooquant==0.2.6
