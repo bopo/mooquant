@@ -22,7 +22,7 @@ import mooquant.logger
 from mooquant.optimizer import base
 from mooquant.optimizer import xmlrpcserver
 
-logger = mooquant.logger.getLogger(__name__)
+logger = mooquant.logger.getLogger('optimizer.server')
 
 
 class Results(object):

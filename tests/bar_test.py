@@ -22,7 +22,7 @@
 import datetime
 
 from mooquant import bar
-from mooquant.utils.compat import pickle
+import pickle
 from . import common
 
 class BasicBarTestCase(common.TestCase):

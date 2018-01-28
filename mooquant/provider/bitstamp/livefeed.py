@@ -24,7 +24,7 @@ import time
 
 from mooquant import bar, barfeed, observer
 from mooquant.provider.bitstamp import common, wsclient
-from mooquant.utils.compat import queue
+import queue
 
 
 class TradeBar(bar.Bar):

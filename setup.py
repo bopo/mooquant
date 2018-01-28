@@ -60,8 +60,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'moo = mooquant.console:main',
-            'mooquant = mooquant.console:main',
+            'moo = mooquant.cli:main',
+            'mooquant = mooquant.cli:main',
         ]
     },    
     install_requires=requirements,

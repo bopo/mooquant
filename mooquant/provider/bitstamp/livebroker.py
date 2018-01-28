@@ -24,7 +24,7 @@ import time
 
 from mooquant import broker
 from mooquant.provider.bitstamp import common, httpclient
-from mooquant.utils.compat import queue
+import queue
 
 
 def build_order_from_open_order(openOrder, instrumentTraits):

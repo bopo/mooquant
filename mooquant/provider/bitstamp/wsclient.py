@@ -23,7 +23,7 @@ import datetime
 import threading
 
 from mooquant.provider.bitstamp import common
-from mooquant.utils.compat import queue
+import queue
 from mooquant.websocket import pusher
 
 
