@@ -24,10 +24,17 @@
 import threading
 import time
 
+import zerorpc
 import mooquant.logger
 from mooquant.optimizer import base
-from mooquant.utils.compat import (SimpleXMLRPCRequestHandler,
-                                   SimpleXMLRPCServer, pickle)
+
+# class HelloRPC(object):
+#     def hello(self, name):
+#         return "Hello, %s" % name
+
+# s = zerorpc.Server(HelloRPC())
+# s.bind("tcp://0.0.0.0:4242")
+# s.run()
 
 logger = mooquant.logger.getLogger(__name__)
 
@@ -68,13 +75,13 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
     rpc_paths = ('/ZeroRPC',)
 
 
-class Server(SimpleXMLRPCServer):
+class RPCService(object):
     defaultBatchSize = 200
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
         # SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
         # logRequests=False, allow_none=True)
-        super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
         self.__resultSinc = resultSinc
@@ -91,11 +98,11 @@ class Server(SimpleXMLRPCServer):
         else:
             self.__autoStopThread = None
 
-        self.register_introspection_functions()
-        self.register_function(self.getInstrumentsAndBars, 'getInstrumentsAndBars')
-        self.register_function(self.getBarsFrequency, 'getBarsFrequency')
-        self.register_function(self.getNextJob, 'getNextJob')
-        self.register_function(self.pushJobResults, 'pushJobResults')
+        # self.register_introspection_functions()
+        # self.register_function(self.getInstrumentsAndBars, 'getInstrumentsAndBars')
+        # self.register_function(self.getBarsFrequency, 'getBarsFrequency')
+        # self.register_function(self.getNextJob, 'getNextJob')
+        # self.register_function(self.pushJobResults, 'pushJobResults')
 
     def getInstrumentsAndBars(self):
         return self.__instrumentsAndBars
@@ -149,10 +156,21 @@ class Server(SimpleXMLRPCServer):
 
         self.__resultSinc.push(result, base.Parameters(*parameters))
 
+class Server(object):
+    """docstring for Server"""
+
+    def __init__(self, arg):
+        super(Server, self).__init__()
+        self.arg = arg
+        
     def stop(self):
         self.shutdown()
 
     def serve(self):
+        s = zerorpc.Server(RPCService())
+        s.bind("tcp://0.0.0.0:4242")
+        s.run()
+
         try:
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")

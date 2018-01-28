@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -55,16 +55,20 @@ def serve(barFeed, strategyParameters, address, port):
 
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
+    
     s = xmlrpcserver.Server(paramSource, resultSinc, barFeed, address, port)
     logger.info("Starting server")
+    
     s.serve()
     logger.info("Server finished")
 
     ret = None
     bestResult, bestParameters = resultSinc.getBest()
+    
     if bestResult is not None:
         logger.info("Best final result %s with parameters %s" % (bestResult, bestParameters.args))
         ret = Results(bestParameters.args, bestResult)
     else:
         logger.error("No results. All jobs failed or no jobs were processed.")
+    
     return ret

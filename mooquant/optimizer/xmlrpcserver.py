@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -59,7 +59,7 @@ class Job(object):
 
 # Restrict to a particular path.
 class RequestHandler(xmlrpc.server.SimpleXMLRPCRequestHandler):
-    rpc_paths = ('/PyAlgoTradeRPC',)
+    rpc_paths = ('/MQRPC',)
 
 
 class Server(xmlrpc.server.SimpleXMLRPCServer):
@@ -78,6 +78,7 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
         self.__activeJobsLock = threading.Lock()
         self.__forcedStop = False
         self.__bestResult = None
+
         if autoStop:
             self.__autoStopThread = AutoStopThread(self)
         else:
@@ -122,9 +123,9 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
         return jobsPending or activeJobs
 
     def pushJobResults(self, jobId, result, parameters, workerName):
-        jobId = pickle.loads(jobId)
-        result = pickle.loads(result)
-        parameters = pickle.loads(parameters)
+        jobId = pickle.loads(jobId.data)
+        result = pickle.loads(result.data)
+        parameters = pickle.loads(parameters.data)
 
         # Remove the job mapping.
         with self.__activeJobsLock:
@@ -134,7 +135,15 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
                 # The job's results were already submitted.
                 return
 
-        if result is None or result > self.__bestResult:
+        # if result is None or result > self.__bestResult:
+        
+        if result is None:
+            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            self.__bestResult = result
+        elif self.__bestResult is None and result is not None:
+            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            self.__bestResult = result            
+        elif result > self.__bestResult:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
             self.__bestResult = result
 
@@ -148,10 +157,13 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
+            
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
+            
             instruments = self.__barFeed.getRegisteredInstruments()
-            self.__instrumentsAndBars = pickle.dumps((instruments, loadedBars))
+
+            self.__instrumentsAndBars = pickle.dumps((list(instruments), loadedBars))
             self.__barsFreq = self.__barFeed.getFrequency()
 
             if self.__autoStopThread:

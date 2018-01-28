@@ -1,4 +1,4 @@
-# PyAlgoTrade
+# MooQuant
 #
 # Copyright 2011-2015 Gabriel Martin Becedillas Ruiz
 #
@@ -35,22 +35,28 @@ def call_function(function, *args, **kwargs):
 
 def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
     ret = None
+    
     while retryCount > 0:
         retryCount -= 1
+    
         try:
             ret = call_function(function, *args, **kwargs)
             return ret
         except socket.error:
             time.sleep(random.randint(1, 3))
+    
     ret = call_function(function, *args, **kwargs)
+    
     return ret
 
 
 class Worker(object):
     def __init__(self, address, port, workerName=None):
-        url = "http://%s:%s/PyAlgoTradeRPC" % (address, port)
+        url = "http://%s:%s/MQRPC" % (address, port)
+        
         self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
         self.__logger = mooquant.logger.getLogger(workerName)
+        
         if workerName is None:
             self.__workerName = socket.gethostname()
         else:
@@ -61,7 +67,7 @@ class Worker(object):
 
     def getInstrumentsAndBars(self):
         ret = call_and_retry_on_network_error(self.__server.getInstrumentsAndBars, 10)
-        ret = pickle.loads(ret)
+        ret = pickle.loads(ret.data)
         return ret
 
     def getBarsFrequency(self):
@@ -71,34 +77,44 @@ class Worker(object):
 
     def getNextJob(self):
         ret = call_and_retry_on_network_error(self.__server.getNextJob, 10)
-        ret = pickle.loads(ret)
+        ret = pickle.loads(ret.data)
         return ret
 
     def pushJobResults(self, jobId, result, parameters):
+        print(jobId, result, parameters, self.__workerName)
+        
         jobId = pickle.dumps(jobId)
         result = pickle.dumps(result)
+
         parameters = pickle.dumps(parameters)
         workerName = pickle.dumps(self.__workerName)
+
         call_and_retry_on_network_error(self.__server.pushJobResults, 10, jobId, result, parameters, workerName)
 
     def __processJob(self, job, barsFreq, instruments, bars):
         bestResult = None
         parameters = job.getNextParameters()
         bestParams = parameters
+        
         while parameters is not None:
             # Wrap the bars into a feed.
             feed = barfeed.OptimizerBarFeed(barsFreq, instruments, bars)
+            
             # Run the strategy.
             self.getLogger().info("Running strategy with parameters %s" % (str(parameters)))
             result = None
+            
             try:
                 result = self.runStrategy(feed, *parameters)
             except Exception as e:
                 self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
+            
             self.getLogger().info("Result %s" % result)
+            
             if bestResult is None or result > bestResult:
                 bestResult = result
                 bestParams = parameters
+            
             # Run with the next set of parameters.
             parameters = job.getNextParameters()
 
@@ -118,9 +134,11 @@ class Worker(object):
 
             # Process jobs
             job = self.getNextJob()
+
             while job is not None:
                 self.__processJob(job, barsFreq, instruments, bars)
                 job = self.getNextJob()
+            
             self.getLogger().info("Finished running")
         except Exception as e:
             self.getLogger().exception("Finished running with errors: %s" % (e))
