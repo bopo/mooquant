@@ -48,6 +48,7 @@ class ParameterSource(object):
         assert count > 0, "Invalid number of parameters"
 
         ret = []
+
         with self.__lock:
             if self.__iter is not None:
                 try:
@@ -93,4 +94,5 @@ class ResultSinc(object):
     def getBest(self):
         with self.__lock:
             ret = self.__bestResult, self.__bestParameters
+        
         return ret

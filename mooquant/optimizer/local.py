@@ -93,12 +93,14 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     """
 
     assert(workerCount is None or workerCount > 0)
+    
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     ret = None
     workers = []
     port = find_port()
+    
     if port is None:
         raise Exception("Failed to find a port to listen")
 
@@ -107,6 +109,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
     srv = xmlrpcserver.Server(paramSource, resultSinc, barFeed, "localhost", port, False)
+    
     serverThread = ServerThread(srv)
     serverThread.start()
 
@@ -133,8 +136,8 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
         # Stop and wait the server to finish.
         srv.stop()
         serverThread.join()
-
         bestResult, bestParameters = resultSinc.getBest()
+        
         if bestResult is not None:
             ret = server.Results(bestParameters.args, bestResult)
 
