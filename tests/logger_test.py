@@ -34,6 +34,9 @@ logger_test_1.main()
                 "2000-01-01 00:00:00 strategy [INFO] bla",
                 "2000-01-01 00:00:00 custom [INFO] ble",
             ]
+            
+            print(res.get_output_lines())
+
             self.assertEqual(res.get_output_lines(), expectedLines)
             self.assertTrue(res.exit_ok())
 

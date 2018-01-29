@@ -33,7 +33,6 @@ from mooquant import dataseries
 matplotlib.use('Agg')
 
 
-
 class RunResults(object):
     def __init__(self, retcode, output):
         self.__retcode = retcode

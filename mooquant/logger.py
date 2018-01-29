@@ -22,11 +22,6 @@
 import logging
 import threading
 
-try:
-    import coloredlogs
-except Exception as e:
-    raise e
-
 initLock = threading.Lock()
 rootLoggerInitialized = False
 
@@ -52,8 +47,6 @@ def init_logger(logger):
         consoleHandler = logging.StreamHandler()
         init_handler(consoleHandler)
         logger.addHandler(consoleHandler)
-        # coloredlogs.install(level='DEBUG', logger=logger)
-
 
 
 def initialize():

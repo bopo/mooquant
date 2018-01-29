@@ -4,19 +4,17 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
-#--index-url http://mirrors.aliyun.com/pypi/simple/
-#--trusted-host mirrors.aliyun.com
+--index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
-python-dateutil
+coloredlogs
 matplotlib
 requests
 tornado
-tweepy
+tushare
+mootdx
 ta-lib
 pytest
 numpy
 scipy
 ws4py
 pytz
-nose
-logzero
