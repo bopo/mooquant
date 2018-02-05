@@ -60,9 +60,9 @@ def fetch(symbol, ktype, begin, end):
 	df2.insert(5, 'Volume', volume)
 
 	# 新格式数据存盘，不保存索引编号
-	df2.to_csv("%s.csv" % symbol, index=False, date_format='%Y-%m-%d %H:%M:%S')
+	df2.to_csv("%s-%s.csv" % (symbol, ktype), index=False, date_format='%Y-%m-%d %H:%M:%S')
 
-	logger.info('save file.')
+	logger.info("save %s-%s.csv" % (symbol, ktype))
 
 def main():
 	cli(obj={})
