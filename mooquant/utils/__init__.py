@@ -35,8 +35,8 @@ def safe_min(left, right):
         return right
     elif right is None:
         return left
-    else:
-        return min(left, right)
+
+    return min(left, right)
 
 
 def safe_max(left, right):
@@ -44,5 +44,5 @@ def safe_max(left, right):
         return right
     elif right is None:
         return left
-    else:
-        return max(left, right)
+
+    return max(left, right)

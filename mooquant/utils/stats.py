@@ -22,6 +22,7 @@
 import numpy
 
 
+# 取平均值
 def mean(values):
     ret = None
 
@@ -31,6 +32,7 @@ def mean(values):
     return ret
 
 
+# 取方差值
 def stddev(values, ddof=1):
     ret = None
 

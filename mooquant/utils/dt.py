@@ -23,19 +23,19 @@ import datetime
 
 import pytz
 
-
+# 时间转原生格式
 def datetime_is_naive(dateTime):
     """ Returns True if dateTime is naive."""
     return dateTime.tzinfo is None or dateTime.tzinfo.utcoffset(dateTime) is None
 
-
-# Remove timezone information.
+# 移除时区信息
 def unlocalize(dateTime):
     return dateTime.replace(tzinfo=None)
 
-
+# 本地化时间转换
 def localize(dateTime, timeZone):
     """Returns a datetime adjusted to a timezone:
+       返回将一个日期时间调整到一个时区
 
      * If dateTime is a naive datetime (datetime with no timezone information), timezone information is added but date
        and time remains the same.
@@ -54,13 +54,13 @@ def localize(dateTime, timeZone):
 def as_utc(dateTime):
     return localize(dateTime, pytz.utc)
 
-
+# 时间转时间戳
 def datetime_to_timestamp(dateTime):
     """ Converts a datetime.datetime to a UTC timestamp."""
     diff = as_utc(dateTime) - epoch_utc
     return diff.total_seconds()
 
-
+# 时间戳转时间
 def timestamp_to_datetime(timeStamp, localized=True):
     """ Converts a UTC timestamp to a datetime.datetime."""
     ret = datetime.datetime.utcfromtimestamp(timeStamp)
@@ -70,7 +70,7 @@ def timestamp_to_datetime(timeStamp, localized=True):
 
     return ret
 
-
+# 获取第一个星期一
 def get_first_monday(year):
     ret = datetime.date(year, 1, 1)
 

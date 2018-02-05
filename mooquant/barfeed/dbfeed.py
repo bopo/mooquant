@@ -22,9 +22,7 @@
 
 # 数据库数据操作 增删改查
 class Database(object):
-    """
-    Database
-    """
+    """ 数据库数据操作 增删改查 """
 
     def addBars(self, bars, frequency):
         for instrument in bars.getInstruments():

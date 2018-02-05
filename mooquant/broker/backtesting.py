@@ -28,7 +28,6 @@ from mooquant.broker import fillstrategy
 
 
 ######################################################################
-# Commission models
 # 手续费模型
 class Commission(object, metaclass=abc.ABCMeta):
     """Base class for implementing different commission schemes.
@@ -100,7 +99,6 @@ class TradePercentage(Commission):
 
 
 ######################################################################
-# Orders
 # 回测合约
 class BacktestingOrder(object):
     def __init__(self, *args, **kwargs):
@@ -174,7 +172,6 @@ class StopLimitOrder(broker.StopLimitOrder, BacktestingOrder):
 
 
 ######################################################################
-# Broker
 # 交易商
 class Broker(broker.Broker):
     """Backtesting broker.
@@ -328,8 +325,9 @@ class Broker(broker.Broker):
         """Returns the portfolio value (cash + shares)."""
         return self.__getEquityWithBars(self.__barFeed.getCurrentBars())
 
-    # Tries to commit an order execution.
     def commitOrderExecution(self, order, dateTime, fillInfo):
+        """Tries to commit an order execution. """
+
         price = fillInfo.getPrice()
         quantity = fillInfo.getQuantity()
 

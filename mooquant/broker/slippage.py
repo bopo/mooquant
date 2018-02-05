@@ -53,7 +53,7 @@ class SlippageModel(object, metaclass=abc.ABCMeta):
 
 
 class NoSlippage(SlippageModel):
-    """A no slippage model. 无滑点模型"""
+    """无滑点模型"""
 
     def calculatePrice(self, order, price, quantity, bar, volumeUsed):
         return price
