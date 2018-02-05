@@ -20,7 +20,6 @@
 
 import mooquant.logger
 from mooquant.optimizer import base
-from mooquant.optimizer import xmlrpcserver
 
 logger = mooquant.logger.getLogger('optimizer.server')
 
@@ -40,9 +39,10 @@ class Results(object):
         return self.__result
 
 
-def serve(barFeed, strategyParameters, address, port):
+def serve(barFeed, strategyParameters, address, port, drivce='zmq'):
     """Executes a server that will provide bars and strategy parameters for workers to use.
 
+    :param drivce: backend server drivce.
     :param barFeed: The bar feed that each worker will use to backtest the strategy.
     :type barFeed: :class:`mooquant.barfeed.BarFeed`.
     :param strategyParameters: The set of parameters to use for backtesting. An iterable object where **each element is a tuple that holds parameter values**.
@@ -55,10 +55,21 @@ def serve(barFeed, strategyParameters, address, port):
 
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
+
+    if not drivce in ('xml', 'zmq'):
+        logger.error('drivce not found')
+        raise Execute('drivce not found')
     
-    s = xmlrpcserver.Server(paramSource, resultSinc, barFeed, address, port)
+    print(drivce)
+    
+    if drivce == 'xml':
+        from mooquant.optimizer import xmlrpcserver as server
+    elif drivce == 'zmq':
+        from mooquant.optimizer import zmqrpcserver as server
+
+    s = server.Server(paramSource, resultSinc, barFeed, address, port)
     logger.info("Starting server")
-    
+
     s.serve()
     logger.info("Server finished")
 

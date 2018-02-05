@@ -55,8 +55,9 @@ class Strategy(strategy.BacktestingStrategy):
             self.__position.exitMarket()
 
 def main():
+    import sys
     feeds = GenericBarFeed(Frequency.DAY, None, None)
-    feeds.addBarsFromCSV("feeds", "feedbar.csv")
+    feeds.addBarsFromCSV("feeds", sys.argv[1])
 
     # 3.实例化策略
     strat = Strategy(feeds, "feeds")
@@ -64,8 +65,16 @@ def main():
     # 4.设置指标和绘图
     ratio = sharpe.SharpeRatio()
     strat.attachAnalyzer(ratio)
-    plter = plotter.StrategyPlotter(strat)
+    # plter = plotter.StrategyPlotter(strat)
 
+    # 4.设置指标和绘图
+    draws = drawdown.DrawDown()
+    strat.attachAnalyzer(draws)
+
+    tradeAnalyzer = trades.Trades()
+    strat.attachAnalyzer(tradeAnalyzer)
+
+    plter = plotter.StrategyPlotter(strat)
     coloredlogs.install(level='DEBUG')
     
     # 5.运行策略
@@ -74,6 +83,8 @@ def main():
 
     # 6.输出夏普率、绘图
     strat.info("夏普比率: " + str(ratio.getSharpeRatio(0)))
+    strat.info("最大回撤: " + str(draws.getMaxDrawDown()))
+    strat.info("回撤时间: " + str(draws.getLongestDrawDownDuration()))
     plter.plot()
 
 if __name__ == '__main__':

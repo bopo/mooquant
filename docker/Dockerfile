@@ -27,12 +27,12 @@ RUN pip3 install cython
 
 # TA-Lib
 RUN cd /tmp; \
-	wget http://sourceforge.net/projects/ta-lib/files/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz; \
+	wget https://jaist.dl.sourceforge.net/project/ta-lib/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz; \
 	tar -xzf ta-lib-0.4.0-src.tar.gz; \
 	cd ta-lib; \
 	./configure ; make; make install; \
-	cd ..; \
-	rm ta-lib-0.4.0-src.tar.gz; \
+	ln -s /usr/local/lib/libta_lib.so /usr/lib/libta_lib.so.0; \
+	cd ..; rm ta-lib-0.4.0-src.tar.gz; \
 	rm -rf ta-lib
 
 RUN pip3 install TA-Lib

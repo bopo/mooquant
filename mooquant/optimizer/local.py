@@ -74,6 +74,7 @@ def find_port():
 def wait_process(p):
     timeout = 10
     p.join(timeout)
+
     while p.is_alive():
         p.join(timeout)
 
@@ -108,6 +109,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     # We'll manually stop the server once workers have finished.
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
+    
     srv = xmlrpcserver.Server(paramSource, resultSinc, barFeed, "localhost", port, False)
     
     serverThread = ServerThread(srv)

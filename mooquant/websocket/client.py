@@ -35,6 +35,7 @@ class KeepAliveMgr(object):
     def __init__(self, wsClient, maxInactivity, responseTimeout):
         assert(maxInactivity > 0)
         assert(responseTimeout > 0)
+
         self.__callback = None
         self.__wsClient = wsClient
         self.__activityTimeout = maxInactivity
@@ -48,6 +49,7 @@ class KeepAliveMgr(object):
 
         # Check if we're under the inactivity threshold.
         inactivity = (time.time() - self.__lastSeen)
+        
         if inactivity <= self.__activityTimeout:
             return
 
@@ -100,10 +102,12 @@ class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
     # This is to avoid a stack trace because TornadoWebSocketClient is not implementing _cleanup.
     def _cleanup(self):
         ret = None
+        
         try:
             ret = super(WebSocketClientBase, self)._cleanup()
         except Exception:
             pass
+
         return ret
 
     def getIOLoop(self):

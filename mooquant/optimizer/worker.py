@@ -24,6 +24,7 @@ import time
 import socket
 import random
 import multiprocessing
+import zerorpc
 
 import mooquant.logger
 from mooquant import barfeed
@@ -51,10 +52,14 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 
 
 class Worker(object):
-    def __init__(self, address, port, workerName=None):
-        url = "http://%s:%s/MQRPC" % (address, port)
-        
-        self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
+    def __init__(self, address, port, workerName=None, drivce='zmq'):
+        if drivce  == 'xml':
+            url = "http://%s:%s/MQRPC" % (address, port)
+            self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
+        elif drivce  == 'zmq':
+            self.__server = zerorpc.Client()
+            self.__server.connect("tcp://%s:%s" % (address, port))
+                
         self.__logger = mooquant.logger.getLogger(workerName)
         
         if workerName is None:
@@ -67,7 +72,8 @@ class Worker(object):
 
     def getInstrumentsAndBars(self):
         ret = call_and_retry_on_network_error(self.__server.getInstrumentsAndBars, 10)
-        ret = pickle.loads(ret.data)
+        ret = getattr(ret, 'data') if hasattr(ret, 'data') else ret
+        ret = pickle.loads(ret)
         return ret
 
     def getBarsFrequency(self):
@@ -77,7 +83,8 @@ class Worker(object):
 
     def getNextJob(self):
         ret = call_and_retry_on_network_error(self.__server.getNextJob, 10)
-        ret = pickle.loads(ret.data)
+        ret = getattr(ret, 'data') if hasattr(ret, 'data') else ret
+        ret = pickle.loads(ret)
         return ret
 
     def pushJobResults(self, jobId, result, parameters):
@@ -144,7 +151,7 @@ class Worker(object):
             self.getLogger().exception("Finished running with errors: %s" % (e))
 
 
-def worker_process(strategyClass, address, port, workerName):
+def worker_process(strategyClass, address, port, workerName, drivce):
     class MyWorker(Worker):
         def runStrategy(self, barFeed, *args, **kwargs):
             strat = strategyClass(barFeed, *args, **kwargs)
@@ -152,11 +159,11 @@ def worker_process(strategyClass, address, port, workerName):
             return strat.getResult()
 
     # Create a worker and run it.
-    w = MyWorker(address, port, workerName)
+    w = MyWorker(address, port, workerName, drivce)
     w.run()
 
 
-def run(strategyClass, address, port, workerCount=None, workerName=None):
+def run(strategyClass, address, port, workerCount=None, workerName=None, drivce='xml'):
     """Executes one or more worker processes that will run a strategy with the bars and parameters supplied by the server.
 
     :param strategyClass: The strategy class.
@@ -169,15 +176,18 @@ def run(strategyClass, address, port, workerCount=None, workerName=None):
     :param workerName: A name for the worker. A name that identifies the worker. If None, the hostname is used.
     :type workerName: string.
     """
+    print(drivce)
 
     assert(workerCount is None or workerCount > 0)
+    
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     workers = []
+
     # Build the worker processes.
     for i in range(workerCount):
-        workers.append(multiprocessing.Process(target=worker_process, args=(strategyClass, address, port, workerName)))
+        workers.append(multiprocessing.Process(target=worker_process, args=(strategyClass, address, port, workerName, drivce)))
 
     # Start workers
     for process in workers:
