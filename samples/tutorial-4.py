@@ -47,7 +47,7 @@ class MyStrategy(strategy.BacktestingStrategy):
 def run_strategy(smaPeriod):
     # Load the yahoo feed from the CSV file
     feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
+    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
     # Evaluate the strategy with the feed.
     strat = MyStrategy(feed, "orcl", smaPeriod)

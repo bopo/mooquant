@@ -37,7 +37,7 @@ def main(plot):
     # Download the bars.
     # feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
     feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
+    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
     strat = BBands(feed, instrument, bBandsPeriod)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

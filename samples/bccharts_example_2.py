@@ -88,7 +88,7 @@ def main(plot):
     sellThreshold = 0.01
 
     barFeed = csvfeed.GenericBarFeed(bar.Frequency.MINUTE*30)
-    barFeed.addBarsFromCSV(instrument, "../tests/data/30min-bitstampUSD.csv")
+    barFeed.addBarsFromCSV(instrument, "./tests/data/30min-bitstampUSD.csv")
     brk = broker.BacktestingBroker(initialCash, barFeed)
     strat = VWAPMomentum(barFeed, brk, instrument, vwapWindowSize, buyThreshold, sellThreshold)
 

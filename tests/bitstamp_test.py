@@ -34,6 +34,7 @@ from mooquant.provider.bitstamp import wsclient
 from mooquant.provider.bitstamp import httpclient
 from mooquant.provider.bitstamp import common
 from mooquant.provider.bitcoincharts import barfeed as btcbarfeed
+
 from mooquant import strategy
 from mooquant import dispatcher
 
@@ -182,8 +183,6 @@ class HTTPClientMock(object):
 class TestingLiveBroker(broker.LiveBroker):
     def __init__(self, clientId, key, secret):
         self.__httpClient = HTTPClientMock()
-        # broker.LiveBroker.__init__(self, clientId, key, secret)
-        # super(TestingLiveBroker, self).__init__(clientId, key, secret)
         super().__init__(clientId, key, secret)
 
     def buildHTTPClient(self, clientId, key, secret):
@@ -214,6 +213,7 @@ class TestStrategy(test_strategy.BaseTestStrategy):
 class InstrumentTraitsTestCase(tc_common.TestCase):
     def testInstrumentTraits(self):
         traits = common.BTCTraits()
+        
         self.assertEqual(traits.roundQuantity(0), 0)
         self.assertEqual(traits.roundQuantity(1), 1)
         self.assertEqual(traits.roundQuantity(1.1 + 1.1 + 1.1), 3.3)
@@ -259,6 +259,7 @@ class BacktestingTestCase(tc_common.TestCase):
         barFeed.addBarsFromCSV(tc_common.get_data_file_path("bitstampUSD.csv"))
         brk = broker.BacktestingBroker(100, barFeed)
         strat = TestStrategy(barFeed, brk)
+        
         with self.assertRaisesRegex(Exception, "Trade must be >= 5"):
             strat.run()
 
@@ -307,6 +308,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
+        
         barFeed.addTrade(datetime.datetime(2000, 1, 3), 1, 100, 0.2)
         barFeed.addTrade(datetime.datetime(2000, 1, 4), 1, 100, 0.2)
         barFeed.addTrade(datetime.datetime(2000, 1, 5), 1, 101, 0.2)
@@ -338,6 +340,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
+        
         barFeed.addTrade(datetime.datetime(2000, 1, 3), 1, 100, 0.2)
         barFeed.addTrade(datetime.datetime(2000, 1, 4), 1, 100, 0.2)
         barFeed.addTrade(datetime.datetime(2000, 1, 5), 1, 101, 0.2)
@@ -384,6 +387,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         self.assertEqual(strat.pos.getExitOrder().getAvgFillPrice(), 1000)
         self.assertEqual(strat.pos.getEntryOrder().getFilled(), 0.01)
         self.assertEqual(strat.pos.getExitOrder().getFilled(), 0.01)
+        
         self.assertEqual(strat.pos.getEntryOrder().getRemaining(), 0)
         self.assertEqual(strat.pos.getExitOrder().getRemaining(), 0)
         self.assertEqual(strat.pos.getEntryOrder().getSubmitDateTime().date(), wsclient.get_current_datetime().date())
@@ -396,14 +400,19 @@ class PaperTradingTestCase(tc_common.TestCase):
     def testInvalidOrders(self):
         barFeed = TestingLiveTradeFeed()
         brk = broker.PaperTradingBroker(1000, barFeed)
+
         with self.assertRaises(Exception):
             brk.createLimitOrder(basebroker.Order.Action.BUY, "none", 1, 1)
+        
         with self.assertRaises(Exception):
             brk.createLimitOrder(basebroker.Order.Action.SELL_SHORT, "none", 1, 1)
+        
         with self.assertRaises(Exception):
             brk.createMarketOrder(basebroker.Order.Action.BUY, "none", 1)
+        
         with self.assertRaises(Exception):
             brk.createStopOrder(basebroker.Order.Action.BUY, "none", 1, 1)
+        
         with self.assertRaises(Exception):
             brk.createStopLimitOrder(basebroker.Order.Action.BUY, "none", 1, 1, 1)
 
@@ -523,7 +532,6 @@ class LiveTradingTestCase(tc_common.TestCase):
                 self.stop()
 
         barFeed = TestingLiveTradeFeed()
-        # This is to hit onBars and stop strategy execution.
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
         brk = TestingLiveBroker(None, None, None)
@@ -545,6 +553,7 @@ class LiveTradingTestCase(tc_common.TestCase):
         self.assertEqual(strat.orderExecutionInfo[0].getQuantity(), 0.04557395)
         self.assertEqual(strat.orderExecutionInfo[0].getCommission(), 0.14)
         self.assertEqual(strat.orderExecutionInfo[0].getDateTime().date(), datetime.datetime.now().date())
+
         self.assertEqual(strat.orderExecutionInfo[1].getPrice(), 567.21)
         self.assertEqual(strat.orderExecutionInfo[1].getQuantity(), 0.04601436)
         self.assertEqual(strat.orderExecutionInfo[1].getCommission(), 0.14)
@@ -561,7 +570,6 @@ class LiveTradingTestCase(tc_common.TestCase):
                 self.stop()
 
         barFeed = TestingLiveTradeFeed()
-        # This is to hit onBars and stop strategy execution.
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
         brk = TestingLiveBroker(None, None, None)
@@ -603,7 +611,6 @@ class LiveTradingTestCase(tc_common.TestCase):
                     brk.getHTTPClient().addUserTransaction(self.buyOrder.getId(), 0.5, -5, 10, 0.01)
 
         barFeed = TestingLiveTradeFeed()
-        # This is to get onBars called once.
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
         brk = TestingLiveBroker(None, None, None)
@@ -616,13 +623,14 @@ class LiveTradingTestCase(tc_common.TestCase):
 
         self.assertTrue(strat.buyOrder.isPartiallyFilled())
         self.assertTrue(strat.sellOrder.isFilled())
-        # 2 events for each order: 1 for accepted, 1 for fill.
+
         self.assertEqual(len(strat.orderExecutionInfo), 4)
         self.assertEqual(strat.orderExecutionInfo[0], None)
         self.assertEqual(strat.orderExecutionInfo[1].getPrice(), 10)
         self.assertEqual(strat.orderExecutionInfo[1].getQuantity(), 0.5)
         self.assertEqual(strat.orderExecutionInfo[1].getCommission(), 0.01)
         self.assertEqual(strat.orderExecutionInfo[1].getDateTime().date(), datetime.datetime.now().date())
+        
         self.assertEqual(strat.orderExecutionInfo[2], None)
         self.assertEqual(strat.orderExecutionInfo[3].getPrice(), 10)
         self.assertEqual(strat.orderExecutionInfo[3].getQuantity(), 0.5)
@@ -646,16 +654,17 @@ class WebSocketTestCase(tc_common.TestCase):
         def on_bars(dateTime, bars):
             bars[common.btc_symbol]
             events["on_bars"] = True
+
             if events["on_order_book_updated"] is True:
                 disp.stop()
 
         def on_order_book_updated(orderBookUpdate):
             events["on_order_book_updated"] = True
+
             if events["on_bars"] is True:
                 disp.stop()
 
         def on_idle():
-            # Stop after 5 minutes.
             if (datetime.datetime.now() - events["start"]).seconds > 60*5:
                 disp.stop()
 

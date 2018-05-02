@@ -80,7 +80,7 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 def main():
     # Load the orders file.
-    ordersFile = OrdersFile("../tests/data/orders.csv")
+    ordersFile = OrdersFile("./tests/data/orders.csv")
     print("First date", ordersFile.getFirstDate())
     print("Last date", ordersFile.getLastDate())
     print("Symbols", ordersFile.getInstruments())

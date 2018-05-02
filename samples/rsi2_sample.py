@@ -14,9 +14,9 @@ def main(plot):
     # Download the bars.
     # feed = quandl.build_feed("WIKI", [instrument], 2009, 2012, "./data")
     feeds = yahoofeed.Feed()
-    feeds.addBarsFromCSV("dia", "../tests/data/DIA-2009-yahoofinance.csv")
-    feeds.addBarsFromCSV("dia", "../tests/data/DIA-2010-yahoofinance.csv")
-    feeds.addBarsFromCSV("dia", "../tests/data/DIA-2011-yahoofinance.csv")
+    feeds.addBarsFromCSV("dia", "./tests/data/DIA-2009-yahoofinance.csv")
+    feeds.addBarsFromCSV("dia", "./tests/data/DIA-2010-yahoofinance.csv")
+    feeds.addBarsFromCSV("dia", "./tests/data/DIA-2011-yahoofinance.csv")
 
     strat = rsi2.RSI2(feeds, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

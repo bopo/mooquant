@@ -7,7 +7,7 @@ import sma_crossover
 
 # Load the yahoo feed from the CSV file
 feed = yahoofeed.Feed()
-feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
+feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
 # Evaluate the strategy with the feed's bars.
 myStrategy = sma_crossover.SMACrossOver(feed, "orcl", 20)

@@ -53,7 +53,7 @@ def main(plot):
     # feed = yahoofinance.build_feed(instruments, 2008, 2009, ".")
 
     feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "../tests/data/orcl-2000.csv")
+    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
     predicate = BuyOnGap(feed)
     eventProfiler = eventprofiler.Profiler(predicate, 5, 5)
