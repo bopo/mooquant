@@ -157,6 +157,7 @@ class DispatcherTestCase(common.TestCase):
         disp.run()
 
         self.assertEqual(len(values), len(datetimes1) + len(datetimes2))
+        
         for i in range(len(datetimes1)):
             self.assertEqual(values[i*2], datetimes1[i])
             self.assertEqual(values[i*2+1], datetimes2[i])
@@ -177,6 +178,7 @@ class DispatcherTestCase(common.TestCase):
         disp.run()
 
         self.assertEqual(len(values), len(datetimes1) + len(datetimes2))
+        
         for i in range(len(datetimes1)):
             self.assertEqual(values[i*2], datetimes1[i])
             self.assertEqual(values[i*2+1], datetimes2[i])
@@ -219,6 +221,7 @@ class DispatcherTestCase(common.TestCase):
         disp.addSubject(feed1)
         self.assertEqual(disp.getSubjects(), [feed1, feed2])
         disp.run()
+
         # Check that although feed2 is realtime, feed1 was dispatched before.
         self.assertTrue(values[0] < values[1])
 
@@ -276,12 +279,16 @@ class EventTestCase(common.TestCase):
 
         event.subscribe(handler1)
         event.emit()
+
         self.assertTrue(handlersData == [1])
         event.emit()
+
         self.assertTrue(handlersData == [1, 1, 2])
         event.unsubscribe(handler1)
         event.emit()
+
         self.assertTrue(handlersData == [1, 1, 2, 2])
         event.unsubscribe(handler2)
         event.emit()
+        
         self.assertTrue(handlersData == [1, 1, 2, 2])

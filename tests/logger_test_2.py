@@ -46,9 +46,10 @@ def main():
     bars = [
         bar.BasicBar(datetime.datetime(2000, 1, 1), 10, 10, 10, 10, 10, 10, bar.Frequency.DAY),
         bar.BasicBar(datetime.datetime(2000, 1, 2), 10, 10, 10, 10, 10, 10, bar.Frequency.DAY),
-        ]
+    ]
+    
     bf.addBarsFromSequence("orcl", bars)
-
     logger.getLogger().setLevel(logging.DEBUG)
+    
     strat = BacktestingStrategy(bf, 1)
     strat.run()

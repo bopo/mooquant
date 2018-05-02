@@ -34,12 +34,14 @@ from . import strategy_test
 def load_daily_barfeed(instrument):
     barFeed = yahoofeed.Feed()
     barFeed.addBarsFromCSV(instrument, common.get_data_file_path("orcl-2000-yahoofinance.csv"))
+    
     return barFeed
 
 
 def us_equities_datetime(*args, **kwargs):
     ret = datetime.datetime(*args, **kwargs)
     ret = dt.localize(ret, marketsession.USEquities.getTimezone())
+    
     return ret
 
 
@@ -195,6 +197,7 @@ class DoubleExitStrategy(BaseMyTestStrategy):
         elif not self.doubleExit:
             self.doubleExit = True
             self.position.exitMarket()
+
             try:
                 self.position.exitMarket()
             except Exception:
@@ -248,11 +251,13 @@ class BaseTestCase(common.TestCase):
         barFeed = ninjatraderfeed.Feed(barfeed.Frequency.MINUTE)
         barFeed.setBarFilter(barFilter)
         barFeed.addBarsFromCSV(BaseTestCase.TestInstrument, common.get_data_file_path("nt-spy-minute-2011.csv"))
+        
         return barFeed
 
     def loadDailyBarFeed(self):
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV(BaseTestCase.TestInstrument, common.get_data_file_path("orcl-2000-yahoofinance.csv"))
+        
         return barFeed
 
     def createStrategy(self, useIntradayBarFeed=False):
@@ -534,7 +539,8 @@ class LongPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 3), 12, 12, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat.addPosEntry(datetime.datetime(2000, 1, 1), strat.enterLong, instrument, 4, True)
@@ -575,7 +581,8 @@ class LongPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 3), 12, 12, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat.addPosEntry(datetime.datetime(2000, 1, 1), strat.enterLong, instrument, 4, True)
@@ -630,11 +637,13 @@ class LongPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 3), 12, 12, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat._setBroker(SkipCancelBroker(strat.getBroker()))
         strat.addPosEntry(datetime.datetime(2000, 1, 1), strat.enterLong, instrument, 4, True)
+        
         # Exit the position before the entry order gets completely filled.
         strat.addPosExitMarket(datetime.datetime(2000, 1, 2))
         strat.run()
@@ -686,7 +695,8 @@ class LongPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 3), 12, 12, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat._setBroker(SkipFirstCancelBroker(strat.getBroker()))
@@ -1044,7 +1054,8 @@ class StopPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 6), 15, 15, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat.addPosEntry(datetime.datetime(2000, 1, 1), strat.enterLongStop, instrument, 12, 4, True)
@@ -1086,10 +1097,12 @@ class StopPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 6), 15, 15, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat.addPosEntry(datetime.datetime(2000, 1, 1), strat.enterLongStop, instrument, 12, 4, True)
+        
         # Exit the position before the entry order gets completely filled.
         strat.addPosExitMarket(datetime.datetime(2000, 1, 3))
         strat.run()
@@ -1142,7 +1155,8 @@ class StopPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 6), 15, 15, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat._setBroker(SkipCancelBroker(strat.getBroker()))
@@ -1199,7 +1213,8 @@ class StopPosTestCase(BaseTestCase):
             bar.BasicBar(datetime.datetime(2000, 1, 4), 13, 13, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 5), 14, 14, 10, 10, 10, 10, bar.Frequency.DAY),
             bar.BasicBar(datetime.datetime(2000, 1, 6), 15, 15, 10, 10, 10, 10, bar.Frequency.DAY),
-            ]
+        ]
+        
         bf.addBarsFromSequence(instrument, bars)
         strat = MyTestStrategy(bf, instrument, 1000)
         strat._setBroker(SkipFirstCancelBroker(strat.getBroker()))

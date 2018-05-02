@@ -31,19 +31,25 @@ class TestSequenceDataSeries(common.TestCase):
     def testEmpty(self):
         ds = dataseries.SequenceDataSeries()
         self.assertTrue(len(ds) == 0)
+
         with self.assertRaises(IndexError):
             ds[-1]
+        
         with self.assertRaises(IndexError):
             ds[-2]
+        
         with self.assertRaises(IndexError):
             ds[0]
+        
         with self.assertRaises(IndexError):
             ds[1]
 
     def testNonEmpty(self):
         ds = dataseries.SequenceDataSeries()
+        
         for value in range(10):
             ds.append(value)
+
         self.assertTrue(len(ds) == 10)
         self.assertTrue(ds[-1] == 9)
         self.assertTrue(ds[-2] == 8)
@@ -81,8 +87,10 @@ class TestSequenceDataSeries(common.TestCase):
         # Test slices
         sl = slice(0, 1, 2)
         self.assertEqual(ds[sl], seq[sl])
+
         sl = slice(0, 9, 2)
         self.assertEqual(ds[sl], seq[sl])
+        
         sl = slice(0, -1, 1)
         self.assertEqual(ds[sl], seq[sl])
 
@@ -95,15 +103,19 @@ class TestSequenceDataSeries(common.TestCase):
 
     def testBounded(self):
         ds = dataseries.SequenceDataSeries(maxLen=2)
+
         for i in range(100):
             ds.append(i)
+        
             if i > 0:
                 self.assertEqual(ds[0], i - 1)
                 self.assertEqual(ds[1], i)
+        
         self.assertEqual(len(ds), 2)
 
     def testResize1(self):
         ds = dataseries.SequenceDataSeries(100)
+
         for i in range(100):
             ds.append(i)
 
@@ -120,6 +132,7 @@ class TestSequenceDataSeries(common.TestCase):
 
     def testResize2(self):
         ds = dataseries.SequenceDataSeries()
+
         for i in range(100):
             ds.append(i)
 
@@ -145,27 +158,34 @@ class TestSequenceDataSeries(common.TestCase):
 class TestBarDataSeries(common.TestCase):
     def testEmpty(self):
         ds = bards.BarDataSeries()
+
         with self.assertRaises(IndexError):
             ds[-1]
+        
         with self.assertRaises(IndexError):
             ds[0]
+        
         with self.assertRaises(IndexError):
             ds[1000]
 
     def testAppendInvalidDatetime(self):
         ds = bards.BarDataSeries()
+
         for i in range(10):
             now = datetime.datetime.now() + datetime.timedelta(seconds=i)
             ds.append(bar.BasicBar(now, 0, 0, 0, 0, 0, 0, bar.Frequency.SECOND))
+        
             # Adding the same datetime twice should fail
             with self.assertRaises(Exception):
                 ds.append(bar.BasicBar(now, 0, 0, 0, 0, 0, 0, bar.Frequency.SECOND))
+        
             # Adding a previous datetime should fail
             with self.assertRaises(Exception):
                 ds.append(bar.BasicBar(now - datetime.timedelta(seconds=i), 0, 0, 0, 0, 0, 0, bar.Frequency.SECOND))
 
     def testNonEmpty(self):
         ds = bards.BarDataSeries()
+
         for i in range(10):
             ds.append(bar.BasicBar(datetime.datetime.now() + datetime.timedelta(seconds=i), 0, 0, 0, 0, 0, 0, bar.Frequency.SECOND))
 
@@ -178,6 +198,7 @@ class TestBarDataSeries(common.TestCase):
 
     def testNestedDataSeries(self):
         ds = bards.BarDataSeries()
+
         for i in range(10):
             ds.append(bar.BasicBar(datetime.datetime.now() + datetime.timedelta(seconds=i), 2, 4, 1, 3, 10, 3, bar.Frequency.SECOND))
 
@@ -192,6 +213,7 @@ class TestBarDataSeries(common.TestCase):
     def testSeqLikeOps(self):
         seq = []
         ds = bards.BarDataSeries()
+
         for i in range(10):
             bar_ = bar.BasicBar(datetime.datetime.now() + datetime.timedelta(seconds=i), 2, 4, 1, 3, 10, 3, bar.Frequency.SECOND)
             ds.append(bar_)
@@ -206,6 +228,7 @@ class TestBarDataSeries(common.TestCase):
     def testDateTimes(self):
         ds = bards.BarDataSeries()
         firstDt = datetime.datetime.now()
+
         for i in range(10):
             ds.append(bar.BasicBar(firstDt + datetime.timedelta(seconds=i), 2, 4, 1, 3, 10, 3, bar.Frequency.SECOND))
 
@@ -220,8 +243,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds1 = dataseries.SequenceDataSeries()
         ds2 = dataseries.SequenceDataSeries()
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             if i % 2 == 0:
                 ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
@@ -240,8 +263,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds1 = dataseries.SequenceDataSeries()
         ds2 = dataseries.SequenceDataSeries()
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
             ds2.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
@@ -260,8 +283,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds1 = dataseries.SequenceDataSeries()
         ds2 = dataseries.SequenceDataSeries()
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             if i % 3 == 0:
                 commonDateTimes.append(now + datetime.timedelta(seconds=i))
@@ -282,8 +305,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds1 = dataseries.SequenceDataSeries()
         ds2 = dataseries.SequenceDataSeries()
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
             ds2.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
@@ -298,8 +321,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
         # Align the aligned dataseries again with respect to each other.
         ads1, ads2 = aligned.datetime_aligned(ads1, ads2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             if i % 2 == 0:
                 ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
@@ -320,8 +343,9 @@ class TestDateAlignedDataSeries(common.TestCase):
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
         # Align the aligned dataseries again with respect to each other.
         ads1, ads2 = aligned.datetime_aligned(ads1, ads2)
-
         now = datetime.datetime.now()
+
+
         for i in range(size):
             ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
             ds2.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
@@ -330,6 +354,7 @@ class TestDateAlignedDataSeries(common.TestCase):
 
         for ads in [ads1, ads2]:
             self.assertEqual(len(ads), size)
+            
             for i in range(size):
                 self.assertEqual(ads.getValueAbsolute(i), i)
                 self.assertEqual(ads.getDateTimes()[i], now + datetime.timedelta(seconds=i))
@@ -342,8 +367,8 @@ class TestDateAlignedDataSeries(common.TestCase):
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
         # Align the aligned dataseries again with respect to each other.
         ads1, ads2 = aligned.datetime_aligned(ads1, ads2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             if i % 3 == 0:
                 commonDateTimes.append(now + datetime.timedelta(seconds=i))
@@ -366,11 +391,12 @@ class TestDateAlignedDataSeries(common.TestCase):
         ads1, ads2 = aligned.datetime_aligned(ds1, ds2)
         # Align the aligned dataseries again with respect to each other.
         ads1, ads2 = aligned.datetime_aligned(ads1, ads2)
-
         now = datetime.datetime.now()
+
         for i in range(size):
             ds1.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
             ds2.appendWithDateTime(now + datetime.timedelta(seconds=i), i)
+            
             self.assertEqual(len(ads1), len(ads2))
             self.assertEqual(ads1[:], ads2[:])
             self.assertEqual(ads1.getDateTimes()[:], ads2.getDateTimes()[:])
@@ -387,6 +413,7 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=2), 2)
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=3), 3)
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=4), 4)
+        
         self.assertEqual(ads1[:], [3])
         self.assertEqual(ads2[:], [3])
 
@@ -402,6 +429,7 @@ class TestDateAlignedDataSeries(common.TestCase):
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=2), 2)
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=3), 3)
         ds2.appendWithDateTime(now + datetime.timedelta(seconds=4), 4)
+        
         self.assertEqual(ads1[:], [2, 3])
         self.assertEqual(ads2[:], [2, 3])
 
@@ -418,8 +446,10 @@ class TestUpdatedDefaultMaxLen(common.TestCase):
 
     def testMaxLen(self):
         ds = dataseries.SequenceDataSeries()
+        
         for i in range(3000):
             ds.append(i)
+
         self.assertEqual(len(ds), 2048)
         self.assertEqual(ds[0], 952)
         self.assertEqual(ds[-1], 2999)

@@ -111,16 +111,15 @@ class PosTrackerTestCase(common.TestCase):
     def testBuyAndSellMultipleEvals(self):
         posTracker = returns.PositionTracker(broker.IntegerTraits())
         posTracker.buy(2, 10)
+
         self.assertEqual(posTracker.getAvgPrice(), 10)
         self.assertEqual(posTracker.getPnL(), 0)
         self.assertEqual(posTracker.getPnL(price=9), -2)
         self.assertEqual(posTracker.getPnL(price=10), 0)
         self.assertEqual(posTracker.getPnL(price=11), 2)
         self.assertEqual(posTracker.getReturn(10), 0)
-
         self.assertEqual(posTracker.getPnL(price=11), 2)
         self.assertEqual(round(posTracker.getReturn(11), 2), 0.1)
-
         self.assertEqual(posTracker.getPnL(price=20), 20)
         self.assertEqual(posTracker.getReturn(20), 1)
 
@@ -140,6 +139,7 @@ class PosTrackerTestCase(common.TestCase):
         self.assertEqual(posTracker.getAvgPrice(), 13)
         self.assertEqual(posTracker.getPnL(), 0)
         self.assertEqual(posTracker.getPnL(price=10), 3)
+        
         posTracker.buy(1, 10)
         self.assertEqual(posTracker.getAvgPrice(), 0)
         self.assertEqual(posTracker.getPnL(), 3)
@@ -213,6 +213,7 @@ class PosTrackerTestCase(common.TestCase):
         posTracker = returns.PositionTracker(broker.IntegerTraits())
         posTracker.buy(1, 10, 0.5)
         self.assertEqual(posTracker.getAvgPrice(), 10)
+        
         posTracker.sell(1, 11, 0.5)
         self.assertEqual(posTracker.getPnL(includeCommissions=False), 1)
         self.assertEqual(posTracker.getPnL(), 0)
@@ -238,6 +239,7 @@ class PosTrackerTestCase(common.TestCase):
         combinedPos.sell(100, 1.1)
         combinedPos.buy(100, 1)
         self.assertEqual(round(combinedPos.getReturn(), 6), 2.090909)
+        
         # The return of the combined position is less than the two returns combined
         # because when the second position gets opened the amount of cash not invested is greater
         # than that of posB alone.
@@ -260,6 +262,7 @@ class PosTrackerTestCase(common.TestCase):
         posTracker.sell(30, 1)
         self.assertEqual(posTracker.getAvgPrice(), 0)
         self.assertEqual(posTracker.getPnL(), -10)
+        
         # self.assertEqual(posTracker.getCash(), -10)
         self.assertEqual(posTracker.getCommissions(), 10)
         self.assertEqual(posTracker.getReturn(), -10/30.0)
@@ -313,8 +316,10 @@ class AnalyzerTestCase(common.TestCase):
         strat.attachAnalyzer(stratAnalyzer)
         strat.run()
         self.assertTrue(strat.getBroker().getCash() == initialCash + (15.74 - 15.61))
+        
         # First day returns: Open vs Close
         self.assertTrue(stratAnalyzer.getReturns()[0] == (15.90 - 15.61) / 15.61)
+        
         # Second day returns: Open vs Prev. day's close
         self.assertTrue(stratAnalyzer.getReturns()[1] == (15.74 - 15.90) / 15.90)
 
@@ -336,8 +341,10 @@ class AnalyzerTestCase(common.TestCase):
         strat.attachAnalyzer(stratAnalyzer)
         strat.run()
         self.assertTrue(strat.getBroker().getCash() == initialCash + (15.91 - 15.61))
+        
         # First day returns: Open vs Close
         self.assertTrue(stratAnalyzer.getReturns()[0] == (15.90 - 15.61) / 15.61)
+        
         # Second day returns: Close vs Prev. day's close
         self.assertTrue(stratAnalyzer.getReturns()[1] == (15.91 - 15.90) / 15.90)
 
@@ -359,8 +366,10 @@ class AnalyzerTestCase(common.TestCase):
         strat.attachAnalyzer(stratAnalyzer)
         strat.run()
         self.assertTrue(strat.getBroker().getCash() == initialCash + (15.74 - 15.90))
+        
         # First day returns: 0
         self.assertTrue(stratAnalyzer.getReturns()[0] == 0)
+        
         # Second day returns: Open vs Prev. day's close
         self.assertTrue(stratAnalyzer.getReturns()[1] == (15.74 - 15.90) / 15.90)
 
@@ -382,8 +391,10 @@ class AnalyzerTestCase(common.TestCase):
         strat.attachAnalyzer(stratAnalyzer)
         strat.run()
         self.assertTrue(strat.getBroker().getCash() == initialCash + (15.91 - 15.90))
+        
         # First day returns: 0
         self.assertTrue(stratAnalyzer.getReturns()[0] == 0)
+        
         # Second day returns: Open vs Prev. day's close
         self.assertTrue(stratAnalyzer.getReturns()[1] == (15.91 - 15.90) / 15.90)
 
@@ -431,6 +442,7 @@ class AnalyzerTestCase(common.TestCase):
 
         strat.marketOrder("spy", 1)
         strat.run()
+        
         # The cumulative return should be the same if we load nikkei or not.
         self.assertEqual(round(stratAnalyzer.getCumulativeReturns()[-1], 5), 0.01338)
 
@@ -439,17 +451,18 @@ class AnalyzerTestCase(common.TestCase):
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV(AnalyzerTestCase.TestInstrument, common.get_data_file_path("orcl-2001-yahoofinance.csv"))
         strat = strategy_test.MyTestStrategy(barFeed, initialCash)
-
         strat.addOrder(datetime.datetime(2001, 1, 2), strat.getBroker().createMarketOrder, broker.Order.Action.BUY, AnalyzerTestCase.TestInstrument, 1, False)  # 2001-01-03 Open: 25.25 Close: 32.00
 
         stratAnalyzer = returns.Returns()
         strat.attachAnalyzer(stratAnalyzer)
         strat.run()
+        
         self.assertEqual(stratAnalyzer.getReturns()[0], 0)
         self.assertEqual(stratAnalyzer.getReturns()[1], (32.00 - 25.25) / 1000)
 
         # Check date times.
         datetimes = barFeed[AnalyzerTestCase.TestInstrument].getDateTimes()
+        
         for i in [0, -1]:
             self.assertEqual(stratAnalyzer.getReturns().getDateTimes()[i], datetimes[i])
             self.assertEqual(stratAnalyzer.getCumulativeReturns().getDateTimes()[i], datetimes[i])

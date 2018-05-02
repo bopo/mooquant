@@ -55,14 +55,17 @@ class IntraDayRange(common.TestCase):
 
         begin = datetime.datetime(2011, 1, 1, 1)
         end = datetime.datetime(2011, 1, 1, 1, 5)
+        
         if timezone is not None:
             begin = dt.localize(begin, timezone)
             end = dt.localize(end, timezone)
 
         r = resamplebase.build_range(begin + datetime.timedelta(seconds=120), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), end)
 
@@ -71,14 +74,17 @@ class IntraDayRange(common.TestCase):
 
         begin = datetime.datetime(2011, 1, 1, 16)
         end = datetime.datetime(2011, 1, 1, 17)
+
         if timezone is not None:
             begin = dt.localize(begin, timezone)
             end = dt.localize(end, timezone)
 
         r = resamplebase.build_range(begin + datetime.timedelta(seconds=120), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), end)
 
@@ -107,14 +113,17 @@ class DayRange(common.TestCase):
 
         begin = datetime.datetime(2011, 1, 1)
         end = datetime.datetime(2011, 1, 2)
+
         if timezone is not None:
             begin = dt.localize(begin, timezone)
             end = dt.localize(end, timezone)
 
         r = resamplebase.build_range(begin + datetime.timedelta(hours=5, minutes=25), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), end)
 
@@ -131,8 +140,10 @@ class MonthRange(common.TestCase):
         begin = datetime.datetime(2011, 1, 1)
         r = resamplebase.build_range(begin + datetime.timedelta(hours=5, minutes=25), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), datetime.datetime(2011, 2, 1))
 
@@ -141,8 +152,10 @@ class MonthRange(common.TestCase):
         begin = datetime.datetime(2011, 2, 1)
         r = resamplebase.build_range(begin + datetime.timedelta(hours=5, minutes=25), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq - bar.Frequency.DAY*3):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), datetime.datetime(2011, 3, 1))
 
@@ -151,8 +164,10 @@ class MonthRange(common.TestCase):
         begin = datetime.datetime(2011, 12, 1)
         r = resamplebase.build_range(begin + datetime.timedelta(hours=5, minutes=25), freq)
         self.assertEqual(r.getBeginning(), begin)
+        
         for i in range(freq):
             self.assertTrue(r.belongs(begin + datetime.timedelta(seconds=i)))
+        
         self.assertFalse(r.belongs(begin + datetime.timedelta(seconds=freq+1)))
         self.assertEqual(r.getEnding(), datetime.datetime(2012, 1, 1))
 

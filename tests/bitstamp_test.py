@@ -43,8 +43,10 @@ class WebSocketClientThreadMock(threading.Thread):
         threading.Thread.__init__(self)
         self.__queue = queue.Queue()
         self.__queue.put((wsclient.WebSocketClient.ON_CONNECTED, None))
+        
         for event in events:
             self.__queue.put(event)
+        
         self.__queue.put((wsclient.WebSocketClient.ON_DISCONNECTED, None))
         self.__stop = False
 
@@ -77,7 +79,8 @@ class TestingLiveTradeFeed(barfeed.LiveTradeFeed):
             "price": price,
             "amount": amount,
             "type": 0,
-            }
+        }
+
         eventDict = {}
         eventDict["data"] = json.dumps(dataDict)
         self.__events.append((wsclient.WebSocketClient.ON_TRADE, wsclient.Trade(dateTime, eventDict)))
@@ -236,6 +239,7 @@ class BacktestingTestCase(tc_common.TestCase):
         brk = broker.BacktestingBroker(100, barFeed)
         strat = TestStrategy(barFeed, brk)
         strat.run()
+        
         self.assertEqual(strat.pos.getShares(), 1)
         self.assertEqual(strat.pos.entryActive(), False)
         self.assertEqual(strat.pos.isOpen(), True)

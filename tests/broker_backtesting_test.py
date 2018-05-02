@@ -70,9 +70,11 @@ class BarsBuilder(object):
     # sessionClose is True if the next bars should start at a different date.
     def nextBars(self, openPrice, highPrice, lowPrice, closePrice, volume=None, sessionClose=False):
         if volume is None:
-            volume = closePrice*10
+            volume = closePrice * 10
+
         bar_ = bar.BasicBar(self.__nextDateTime, openPrice, highPrice, lowPrice, closePrice, volume, closePrice, self.__frequency)
         ret = {self.__instrument: bar_}
+        
         self.advance(sessionClose)
         return bar.Bars(ret)
 
@@ -207,14 +209,17 @@ class BrokerTestCase(BaseTestCase):
 
         brk.getOrderUpdatedEvent().subscribe(onOrderEvent)
         o1 = brk.createMarketOrder(broker.Order.Action.BUY, BaseTestCase.TestInstrument, 1)
+        
         self.assertEqual(o1.getSubmitDateTime(), None)
         brk.submitOrder(o1)
+        
         self.assertEqual(o1.getSubmitDateTime(), barFeed.getCurrentDateTime())
         o2 = brk.createMarketOrder(broker.Order.Action.BUY, BaseTestCase.TestInstrument, 1)
+        
         self.assertEqual(o2.getSubmitDateTime(), None)
         brk.submitOrder(o2)
-        self.assertEqual(o2.getSubmitDateTime(), barFeed.getCurrentDateTime())
 
+        self.assertEqual(o2.getSubmitDateTime(), barFeed.getCurrentDateTime())
         self.assertEqual(o1.getFilled(), 0)
         self.assertEqual(o2.getFilled(), 0)
         self.assertEqual(o1.getRemaining(), o1.getQuantity())
@@ -243,6 +248,7 @@ class BrokerTestCase(BaseTestCase):
         order = brk.createMarketOrder(broker.Order.Action.BUY, BaseTestCase.TestInstrument, 3)
         self.assertEqual(order.getSubmitDateTime(), None)
         brk.submitOrder(order)
+
         self.assertEqual(order.getSubmitDateTime(), barFeed.getCurrentDateTime())
         self.assertEqual(order.getFilled(), 0)
         self.assertEqual(order.getRemaining(), 3)
@@ -330,6 +336,7 @@ class BrokerTestCase(BaseTestCase):
         self.assertEqual(len(ordersUpdated), 1)  # First order got accepted.
         self.assertTrue(firstOrder in ordersUpdated)
         self.assertEqual(len(brk.getActiveOrders()), 2)  # Both orders are active.
+        
         # Check that the first one was accepted, and the second one submitted.
         for activeOrder in brk.getActiveOrders():
             if activeOrder.getId() == firstOrder.getId():

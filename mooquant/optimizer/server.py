@@ -39,7 +39,7 @@ class Results(object):
         return self.__result
 
 
-def serve(barFeed, strategyParameters, address, port, drivce='zmq'):
+def serve(barFeed, strategyParameters, address, port, drivce='xml'):
     """Executes a server that will provide bars and strategy parameters for workers to use.
 
     :param drivce: backend server drivce.
@@ -59,8 +59,6 @@ def serve(barFeed, strategyParameters, address, port, drivce='zmq'):
     if not drivce in ('xml', 'zmq'):
         logger.error('drivce not found')
         raise Execute('drivce not found')
-    
-    print(drivce)
     
     if drivce == 'xml':
         from mooquant.optimizer import xmlrpcserver as server

@@ -42,9 +42,7 @@ class BacktestingStrategy(strategy.BacktestingStrategy):
 
 def main():
     bf = TestBarFeed(bar.Frequency.DAY)
-    bars = [
-        bar.BasicBar(datetime.datetime(2000, 1, 1), 10, 10, 10, 10, 10, 10, bar.Frequency.DAY),
-        ]
+    bars = [bar.BasicBar(datetime.datetime(2000, 1, 1), 10, 10, 10, 10, 10, 10, bar.Frequency.DAY),]
     bf.addBarsFromSequence("orcl", bars)
 
     strat = BacktestingStrategy(bf, 1000)

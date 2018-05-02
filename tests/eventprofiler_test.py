@@ -64,18 +64,20 @@ class EventProfilerTestCase(common.TestCase):
         dates.append(datetime.date(2000, 12, 27))
         dates.append(datetime.date(2000, 12, 28))
         dates.append(datetime.date(2000, 12, 29))
+
         predicate = Predicate(dates)
         eventProfiler = eventprofiler.Profiler(predicate, 5, 5)
         eventProfiler.run(feed, True)
+        
         self.assertEqual(eventProfiler.getResults().getEventCount(), 0)
 
     def testOneEvent(self):
         feed = yahoofeed.Feed()
         feed.addBarsFromCSV("orcl", common.get_data_file_path("orcl-2000-yahoofinance.csv"))
-
         predicate = Predicate([datetime.date(2000, 1, 11)])
         eventProfiler = eventprofiler.Profiler(predicate, 5, 5)
         eventProfiler.run(feed, True)
+        
         self.assertEqual(eventProfiler.getResults().getEventCount(), 1)
         self.assertEqual(eventProfiler.getResults().getValues(0)[0], 1.0)
         self.assertEqual(round(eventProfiler.getResults().getValues(5)[0], 5), round(1.016745541, 5))

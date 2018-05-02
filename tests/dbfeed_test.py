@@ -90,6 +90,7 @@ class SQLiteFeedTestCase(common.TestCase):
             yahooDS = yahooFeed["orcl"]
             sqliteDS = sqliteFeed["orcl"]
             self.assertEqual(len(yahooDS), len(sqliteDS))
+            
             for i in range(len(yahooDS)):
                 self.assertEqual(yahooDS[i].getDateTime(), sqliteDS[i].getDateTime())
                 self.assertEqual(yahooDS[i].getOpen(), sqliteDS[i].getOpen())
@@ -112,6 +113,7 @@ class SQLiteFeedTestCase(common.TestCase):
 
             # Load the SQLite feed and process all bars.
             sqliteFeed.loadBars("orcl")
+
             for bars in sqliteFeed:
                 pass
 

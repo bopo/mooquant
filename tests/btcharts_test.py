@@ -34,7 +34,6 @@ class TestCase(common.TestCase):
         loaded = [(dateTime, bars) for dateTime, bars in feed]
 
         self.assertEqual(len(loaded), 9999)
-
         self.assertEqual(loaded[0][0], dt.as_utc(datetime.datetime(2011, 9, 13, 13, 53, 36)))
         self.assertEqual(loaded[0][1]["BTC"].getDateTime(), dt.as_utc(datetime.datetime(2011, 9, 13, 13, 53, 36)))
         self.assertEqual(loaded[0][1]["BTC"].getClose(), 5.8)

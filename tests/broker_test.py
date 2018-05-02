@@ -56,8 +56,10 @@ class OrderTestCase(common.TestCase):
 
     def testCompleteFillInvalidSize(self):
         order = self.__buildAcceptedLimitOrder(broker.Order.Action.BUY, 1, 1)
+        
         with self.assertRaises(Exception):
             order.addExecutionInfo(broker.OrderExecutionInfo(1, 1.001, 0, datetime.datetime.now()))
+        
         self.assertTrue(order.isAccepted())
         self.assertEqual(order.getRemaining(), 1)
         self.assertEqual(order.getFilled(), 0)

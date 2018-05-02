@@ -33,10 +33,12 @@ def build_bars_from_closing_prices(closingPrices):
     ret = []
 
     nextDateTime = datetime.datetime.now()
+
     for closePrice in closingPrices:
         bar_ = bar.BasicBar(nextDateTime, closePrice, closePrice, closePrice, closePrice, closePrice, closePrice, bar.Frequency.DAY)
         ret.append(bar_)
         nextDateTime = nextDateTime + datetime.timedelta(days=1)
+    
     return ret
 
 
@@ -55,7 +57,6 @@ class DDHelperCase(common.TestCase):
 
     def testNoDrawDown2(self):
         helper = drawdown.DrawDownHelper()
-
         dt = datetime.datetime.now()
         helper.update(dt, 10, 10)
         self.assertEqual(helper.getMaxDrawDown(), 0)
@@ -76,7 +77,6 @@ class DDHelperCase(common.TestCase):
 
     def testDrawDown1(self):
         helper = drawdown.DrawDownHelper()
-
         dt = datetime.datetime.now()
         helper.update(dt, 10, 10)
         self.assertEqual(helper.getMaxDrawDown(), 0)
@@ -187,8 +187,8 @@ class AnalyzerTestCase(common.TestCase):
         strat.setUseAdjustedValues(True)
         stratAnalyzer = drawdown.DrawDown()
         strat.attachAnalyzer(stratAnalyzer)
-
         strat.run()
+
         self.assertTrue(strat.getBroker().getCash() == 1000)
         self.assertEqual(strat.orderUpdatedCalls, 0)
         self.assertTrue(stratAnalyzer.getMaxDrawDown() == 0)
@@ -240,8 +240,8 @@ class AnalyzerTestCase(common.TestCase):
         order = strat.getBroker().createMarketOrder(broker.Order.Action.BUY, "orcl", 1, True)
         order.setGoodTillCanceled(True)
         strat.getBroker().submitOrder(order)
-
         strat.run()
+        
         return stratAnalyzer
 
     def testManual_NoDD(self):

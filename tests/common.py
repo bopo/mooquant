@@ -62,7 +62,7 @@ def run_cmd(cmd):
 
 
 def run_python_code(code):
-    cmd = ["python"]
+    cmd = ["python3"]
     cmd.append("-u")
     cmd.append("-c")
     cmd.append(code)
@@ -71,7 +71,7 @@ def run_python_code(code):
 
 
 def run_sample_script(script, params=[]):
-    cmd = ["python"]
+    cmd = ["python3"]
     cmd.append("-u")
     cmd.append(os.path.join("examples", script))
     cmd.extend(params)

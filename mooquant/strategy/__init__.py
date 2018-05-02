@@ -22,8 +22,6 @@
 import abc
 import logging
 
-import six
-
 import mooquant.broker
 import mooquant.strategy.position
 from mooquant import dispatcher, observer, logger
@@ -31,7 +29,6 @@ from mooquant.barfeed import resampled
 from mooquant.broker import backtesting
 
 
-# @six.add_metaclass(abc.ABCMeta)
 class BaseStrategy(object, metaclass=abc.ABCMeta):
     """Base class for strategies.
 

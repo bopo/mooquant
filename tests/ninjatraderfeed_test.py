@@ -85,8 +85,10 @@ class NinjaTraderTestCase(common.TestCase):
             dt.localize(datetime.datetime(2011, 3, 11, 9, 31), timezone): 129.72,
             dt.localize(datetime.datetime(2011, 3, 11, 16), timezone): 130.84,
         }
+
         barFeed = ninjatraderfeed.Feed(ninjatraderfeed.Frequency.MINUTE, timezone)
         barFeed.addBarsFromCSV("spy", common.get_data_file_path("nt-spy-minute-2011-03.csv"))
+        
         for dateTime, bars in barFeed:
             price = prices.get(bars.getDateTime(), None)
             if price is not None:
@@ -132,6 +134,7 @@ class NinjaTraderTestCase(common.TestCase):
         self.assertEqual(len(reloadedDs), len(ds))
         self.assertNotEqual(reloadedDs, ds)
         self.assertEqual(instruments, barFeed.getRegisteredInstruments())
+        
         for i in range(len(ds)):
             self.assertEqual(ds[i].getDateTime(), reloadedDs[i].getDateTime())
             self.assertEqual(ds[i].getClose(), reloadedDs[i].getClose())

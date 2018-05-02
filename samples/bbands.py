@@ -16,11 +16,13 @@ class BBands(strategy.BacktestingStrategy):
     def onBars(self, bars):
         lower = self.__bbands.getLowerBand()[-1]
         upper = self.__bbands.getUpperBand()[-1]
+        
         if lower is None:
             return
 
         shares = self.getBroker().getShares(self.__instrument)
         bar = bars[self.__instrument]
+        
         if shares == 0 and bar.getClose() < lower:
             sharesToBuy = int(self.getBroker().getCash(False) / bar.getClose())
             self.marketOrder(self.__instrument, sharesToBuy)
@@ -48,6 +50,7 @@ def main(plot):
         plt.getInstrumentSubplot(instrument).addDataSeries("lower", strat.getBollingerBands().getLowerBand())
 
     strat.run()
+    
     print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot:

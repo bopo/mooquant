@@ -52,7 +52,7 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 
 
 class Worker(object):
-    def __init__(self, address, port, workerName=None, drivce='zmq'):
+    def __init__(self, address, port, workerName=None, drivce='xml'):
         if drivce  == 'xml':
             url = "http://%s:%s/MQRPC" % (address, port)
             self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
