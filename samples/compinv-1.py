@@ -24,6 +24,7 @@ class MyStrategy(strategy.BacktestingStrategy):
     def onBars(self, bars):
         pass
 
+
 # Load the yahoo feed from CSV files.
 feed = yahoofeed.Feed()
 feed.addBarsFromCSV("aeti", "./tests/data/aeti-2011-yahoofinance.csv")

@@ -65,7 +65,7 @@ class MyStrategy(strategy.BacktestingStrategy):
             if action.lower() == "buy":
                 self.marketOrder(instrument, quantity, onClose=True)
             else:
-                self.marketOrder(instrument, quantity*-1, onClose=True)
+                self.marketOrder(instrument, quantity * -1, onClose=True)
 
     def onOrderUpdated(self, order):
         if order.isCanceled():
@@ -86,7 +86,7 @@ def main():
     # Load the data from QSTK storage. QS environment variable has to be defined.
     if os.getenv("QS") is None:
         raise Exception("QS environment variable not defined")
-    
+
     feed = yahoofeed.Feed()
     feed.setBarFilter(csvfeed.DateRangeFilter(ordersFile.getFirstDate(), ordersFile.getLastDate()))
     feed.setDailyBarTime(datetime.time(0, 0, 0))  # This is to match the dates loaded with the ones in the orders file.
@@ -112,6 +112,7 @@ def main():
     print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
     print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
     print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+
 
 if __name__ == '__main__':
     main()
