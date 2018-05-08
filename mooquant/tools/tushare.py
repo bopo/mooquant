@@ -51,9 +51,10 @@ def download_daily_bars(instrument, year, csvFile):
 
     if len(bars) > 0:
         bars = bars.drop(['code'], axis=1)
-        bars.columns = ['Date Time', 'Open', 'Close', 'High', 'Low', 'Volume']
-        bars['Date Time'] = pd.to_datetime(bars['Date Time'], format='%Y-%m-%d %H:%M:%S')
-        bars.to_csv(csvFile, encoding='utf-8', index=False, date_format='%Y-%m-%d %H:%M:%S')
+        bars.columns = ['Date', 'Open', 'Close', 'High', 'Low', 'Volume']
+        # bars['Date Time'] = pd.to_datetime(bars['Date Time'], format='%Y-%m-%d %H:%M:%S')
+        # bars.to_csv(csvFile, encoding='utf-8', index=False, date_format='%Y-%m-%d %H:%M:%S')
+        bars.to_csv(csvFile, encoding='utf-8', index=False)
 
 
 def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.DAY, skipErrors=False):

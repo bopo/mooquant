@@ -8,7 +8,6 @@ from mooquant.technical import ma
 from mooquant.tools import tushare
 
 
-# 1.构建一个策略
 class Strategy(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument):
         super(Strategy, self).__init__(feed)
@@ -58,16 +57,23 @@ class Strategy(strategy.BacktestingStrategy):
 
 
 def main():
-    instruments = ["600016"]
+    instruments = ["600036"]
 
-    feed = tushare.build_feed(instruments, 2006, 2012, "tushare")
+    feeds = tushare.build_feed(instruments, 2006, 2018, "tushare")
 
     # feeds = csvfeed.Feed("Date", "%Y-%m-%d")
     # feeds.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))
     # feeds.addValuesFromCSV("tushare/600016-2012-tushare.csv")
 
-    feeds = GenericBarFeed(Frequency.DAY, None, None)
-    feeds.addBarsFromCSV("600016", "tushare/600016-2006-tushare.csv")
+    # feeds = GenericBarFeed(Frequency.DAY, None, None)
+    # # feeds = tusharefeed.Feed(Frequency.DAY)
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2006-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2007-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2008-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2009-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2010-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2011-tushare.csv")
+    # feeds.addBarsFromCSV("600016", "tushare/600016-2012-tushare.csv")
 
     # 3.实例化策略
     strat = Strategy(feeds, instruments[0])

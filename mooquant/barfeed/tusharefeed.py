@@ -18,9 +18,11 @@
 """
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
+import datetime
 
 from mooquant import bar
 from mooquant.barfeed import common, csvfeed
+from mooquant.utils import dt
 
 
 ######################################################################
@@ -31,6 +33,11 @@ from mooquant.barfeed import common, csvfeed
 # Date,Open,High,Low,Close,Volume
 #
 # The csv Date column must have the following format: D-B-YY
+def parse_date(date):
+    date = date.split("-")
+    ret = datetime.datetime(int(date[0]), int(date[1]), int(date[2]))
+
+    return ret
 
 
 class RowParser(csvfeed.RowParser):
@@ -40,6 +47,18 @@ class RowParser(csvfeed.RowParser):
         self.__timezone = timezone
         self.__sanitize = sanitize
 
+    def __parseDate(self, dateString):
+        ret = parse_date(dateString)
+        # Time on Google Finance CSV files is empty. If told to set one, do it.
+        if self.__dailyBarTime is not None:
+            ret = datetime.datetime.combine(ret, self.__dailyBarTime)
+
+        # Localize the datetime if a timezone was given.
+        if self.__timezone:
+            ret = dt.localize(ret, self.__timezone)
+
+        return ret
+
     def getFieldNames(self):
         # It is expected for the first row to have the field names.
         return None
@@ -48,7 +67,7 @@ class RowParser(csvfeed.RowParser):
         return ","
 
     def parseBar(self, csvRowDict):
-        dateTime = csvRowDict["Date Time"]
+        dateTime = self.__parseDate(csvRowDict["Date"])
         close = float(csvRowDict["Close"])
         open_ = float(csvRowDict["Open"])
         high = float(csvRowDict["High"])
