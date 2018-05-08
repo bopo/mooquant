@@ -27,6 +27,7 @@ from mooquant.analyzer import returns
 from mooquant.utils import stats
 
 
+# 已经交易天数
 def days_traded(begin, end):
     delta = end - begin
     ret = delta.days + 1
@@ -34,6 +35,7 @@ def days_traded(begin, end):
     return ret
 
 
+# 夏普率 1
 # :param returns: The returns.
 # :param riskFreeRate: The risk free rate per annum.
 # :param tradingPeriods: The number of trading periods per annum.
@@ -58,6 +60,7 @@ def sharpe_ratio(returns, riskFreeRate, tradingPeriods, annualized=True):
     return ret
 
 
+# 夏普率 2
 # :param returns: The returns.
 # :param riskFreeRate: The risk free rate per annum.
 # :param firstDateTime: The first datetime in the period.
@@ -86,6 +89,7 @@ def sharpe_ratio_2(returns, riskFreeRate, firstDateTime, lastDateTime, annualize
     return ret
 
 
+# 夏普率分析类
 class SharpeRatio(analyzer.StrategyAnalyzer):
     """A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates
     Sharpe ratio for the whole portfolio.
@@ -95,7 +99,8 @@ class SharpeRatio(analyzer.StrategyAnalyzer):
     """
 
     def __init__(self, useDailyReturns=True):
-        super(SharpeRatio, self).__init__()
+        super().__init__()
+
         self.__useDailyReturns = useDailyReturns
         self.__returns = []
 

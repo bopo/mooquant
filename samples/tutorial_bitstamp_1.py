@@ -1,8 +1,6 @@
-from mooquant.provider.bitstamp import barfeed
-from mooquant.provider.bitstamp import broker
 from mooquant import strategy
-from mooquant.technical import ma
-from mooquant.technical import cross
+from mooquant.provider.bitstamp import barfeed, broker
+from mooquant.technical import cross, ma
 
 
 class Strategy(strategy.BaseStrategy):

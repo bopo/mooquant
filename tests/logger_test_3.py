@@ -20,11 +20,9 @@
 
 import datetime
 
-from mooquant import strategy
-from mooquant.broker import backtesting
-from mooquant import bar
-from mooquant import logger
+from mooquant import bar, logger, strategy
 from mooquant.barfeed import membf
+from mooquant.broker import backtesting
 
 
 class TestBarFeed(membf.BarFeed):

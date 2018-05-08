@@ -85,6 +85,7 @@ class BacktestingBroker(backtesting.Broker):
             # Check that there is enough cash.
             fee = self.getCommission().calculate(None, limitPrice, quantity)
             cashRequired = limitPrice * quantity + fee
+
             if cashRequired > self.getCash(False):
                 raise Exception("Not enough cash")
         elif action == broker.Order.Action.SELL:

@@ -20,11 +20,11 @@
 """
 
 import datetime
+import queue
 import time
 
 from mooquant import bar, barfeed, observer
 from mooquant.provider.bitstamp import common, wsclient
-import queue
 
 
 class TradeBar(bar.Bar):
@@ -42,7 +42,7 @@ class TradeBar(bar.Bar):
         (self.__dateTime, self.__tradeId, self.__price, self.__amount) = state
 
     def __getstate__(self):
-        return (self.__dateTime, self.__tradeId, self.__price, self.__amount)
+        return self.__dateTime, self.__tradeId, self.__price, self.__amount
 
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted:
@@ -106,7 +106,8 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
     QUEUE_TIMEOUT = 0.01
 
     def __init__(self, maxLen=None):
-        super(LiveTradeFeed, self).__init__(bar.Frequency.TRADE, maxLen)
+        super().__init__(bar.Frequency.TRADE, maxLen)
+
         self.registerInstrument(common.btc_symbol)
         self.__barDicts = []
         self.__prevTradeDateTime = None
@@ -225,7 +226,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
 
     # This may raise.
     def start(self):
-        super(LiveTradeFeed, self).start()
+        super().start()
 
         if self.__thread is not None:
             raise Exception("Already running")
@@ -241,7 +242,7 @@ class LiveTradeFeed(barfeed.BaseBarFeed):
         if self.__dispatchImpl(None):
             ret = True
 
-        if super(LiveTradeFeed, self).dispatch():
+        if super().dispatch():
             ret = True
 
         return ret

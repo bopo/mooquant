@@ -44,7 +44,7 @@ from mooquant import technical
 class SMAEventWindow(technical.EventWindow):
     def __init__(self, period):
         assert (period > 0)
-        super(SMAEventWindow, self).__init__(period)
+        super().__init__(period)
         self.__value = None
 
     def onNewValue(self, dateTime, value):
@@ -54,7 +54,7 @@ class SMAEventWindow(technical.EventWindow):
             firstValue = self.getValues()[0]
             assert (firstValue is not None)
 
-        super(SMAEventWindow, self).onNewValue(dateTime, value)
+        super().onNewValue(dateTime, value)
 
         if value is not None and self.windowFull():
             if self.__value is None:
@@ -81,19 +81,19 @@ class SMA(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(SMA, self).__init__(dataSeries, SMAEventWindow(period), maxLen)
+        super().__init__(dataSeries, SMAEventWindow(period), maxLen)
 
 
 class EMAEventWindow(technical.EventWindow):
     def __init__(self, period):
         assert (period > 1)
-        super(EMAEventWindow, self).__init__(period)
+        super().__init__(period)
 
         self.__multiplier = (2.0 / (period + 1))
         self.__value = None
 
     def onNewValue(self, dateTime, value):
-        super(EMAEventWindow, self).onNewValue(dateTime, value)
+        super().onNewValue(dateTime, value)
 
         # Formula from http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:moving_averages
         if value is not None and self.windowFull():
@@ -120,13 +120,13 @@ class EMA(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(EMA, self).__init__(dataSeries, EMAEventWindow(period), maxLen)
+        super().__init__(dataSeries, EMAEventWindow(period), maxLen)
 
 
 class WMAEventWindow(technical.EventWindow):
     def __init__(self, weights):
         assert (len(weights) > 0)
-        super(WMAEventWindow, self).__init__(len(weights))
+        super().__init__(len(weights))
         self.__weights = np.asarray(weights)
 
     def getValue(self):
@@ -154,4 +154,4 @@ class WMA(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, weights, maxLen=None):
-        super(WMA, self).__init__(dataSeries, WMAEventWindow(weights), maxLen)
+        super().__init__(dataSeries, WMAEventWindow(weights), maxLen)

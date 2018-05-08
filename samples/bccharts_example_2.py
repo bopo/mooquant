@@ -1,10 +1,9 @@
 from mooquant import bar
-from mooquant import strategy
-from mooquant import plotter
-from mooquant.technical import vwap
+from mooquant import broker as basebroker
+from mooquant import plotter, strategy
 from mooquant.barfeed import csvfeed
 from mooquant.provider.bitstamp import broker
-from mooquant import broker as basebroker
+from mooquant.technical import vwap
 
 
 class VWAPMomentum(strategy.BacktestingStrategy):

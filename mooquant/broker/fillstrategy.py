@@ -303,6 +303,7 @@ class DefaultStrategy(FillStrategy):
 
         if volumeLimit is not None:
             assert volumeLimit > 0 and volumeLimit <= 1, "Invalid volume limit"
+
         self.__volumeLimit = volumeLimit
 
     def setSlippageModel(self, slippageModel):

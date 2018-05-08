@@ -22,7 +22,6 @@
 import abc
 import datetime
 
-
 from mooquant import bar
 from mooquant.utils import dt
 

@@ -42,12 +42,13 @@ def hurst_exp(p, minLags, maxLags):
     m = np.polyfit(np.log10(lagvec), np.log10(tau), 1)
     # calculate hurst
     hurst = m[0] * 2
+
     return hurst
 
 
 class HurstExponentEventWindow(technical.EventWindow):
     def __init__(self, period, minLags, maxLags, logValues=True):
-        super(HurstExponentEventWindow, self).__init__(period)
+        super().__init__(period)
         self.__minLags = minLags
         self.__maxLags = maxLags
         self.__logValues = logValues
@@ -89,8 +90,4 @@ class HurstExponent(technical.EventBasedFilter):
         assert minLags >= 2, "minLags must be >= 2"
         assert maxLags > minLags, "maxLags must be > minLags"
 
-        super(HurstExponent, self).__init__(
-            dataSeries,
-            HurstExponentEventWindow(period, minLags, maxLags, logValues),
-            maxLen
-        )
+        super().__init__(dataSeries, HurstExponentEventWindow(period, minLags, maxLags, logValues), maxLen)

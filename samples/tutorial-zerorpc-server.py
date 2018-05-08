@@ -1,4 +1,5 @@
 import itertools
+
 from mooquant.barfeed import yahoofeed
 from mooquant.optimizer import server
 

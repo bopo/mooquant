@@ -89,7 +89,7 @@ class SequenceDataSeries(DataSeries):
     """
 
     def __init__(self, maxLen=None):
-        super(SequenceDataSeries, self).__init__()
+        super().__init__()
         maxLen = get_checked_max_len(maxLen)
 
         self.__newValueEvent = observer.Event()
@@ -120,8 +120,10 @@ class SequenceDataSeries(DataSeries):
 
     def getValueAbsolute(self, pos):
         ret = None
+
         if (pos >= 0) and (pos < len(self.__values)):
             ret = self.__values[pos]
+
         return ret
 
     def append(self, value):

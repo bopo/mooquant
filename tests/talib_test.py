@@ -19,15 +19,14 @@
 """
 
 import datetime
+
 import talib
 
-from . import common
-
-from mooquant.talibext import indicator
-from mooquant import bar
-from mooquant import dataseries
+from mooquant import bar, dataseries
 from mooquant.dataseries import bards
+from mooquant.talibext import indicator
 
+from . import common
 
 # Market data used for regression tests (252 price bars) extracted from ta-lib/src/tools/ta_regtest/test_data.c
 OPEN_VALUES = [

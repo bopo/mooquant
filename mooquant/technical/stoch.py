@@ -34,13 +34,13 @@ def get_low_high_values(useAdjusted, bars):
         lowestLow = min(lowestLow, currBar.getLow(useAdjusted))
         highestHigh = max(highestHigh, currBar.getHigh(useAdjusted))
 
-    return (lowestLow, highestHigh)
+    return lowestLow, highestHigh
 
 
 class SOEventWindow(technical.EventWindow):
     def __init__(self, period, useAdjustedValues):
         assert (period > 1)
-        super(SOEventWindow, self).__init__(period, dtype=object)
+        super().__init__(period, dtype=object)
         self.__useAdjusted = useAdjustedValues
 
     def getValue(self):
@@ -83,7 +83,7 @@ class StochasticOscillator(technical.EventBasedFilter):
         assert isinstance(barDataSeries, bards.BarDataSeries), \
             "barDataSeries must be a dataseries.bards.BarDataSeries instance"
 
-        super(StochasticOscillator, self).__init__(barDataSeries, SOEventWindow(period, useAdjustedValues), maxLen)
+        super().__init__(barDataSeries, SOEventWindow(period, useAdjustedValues), maxLen)
         self.__d = ma.SMA(self, dSMAPeriod, maxLen)
 
     def getD(self):

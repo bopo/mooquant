@@ -39,6 +39,7 @@ def parse_datetime(dateTime):
         ret = datetime.datetime.strptime(dateTime, "%Y-%m-%d %H:%M:%S")
     except ValueError:
         ret = datetime.datetime.strptime(dateTime, "%Y-%m-%d %H:%M:%S.%f")
+
     return dt.as_utc(ret)
 
 
@@ -185,6 +186,7 @@ class HTTPClient(object):
         url = "https://www.bitstamp.net/api/cancel_order/"
         params = {"id": orderId}
         jsonResponse = self._post(url, params)
+
         if jsonResponse != True:
             raise Exception("Failed to cancel order")
 
@@ -197,13 +199,14 @@ class HTTPClient(object):
         # Rounding amount to avoid 'Ensure that there are no more than 8 decimal places'
         # error.
         amount = round(quantity, 8)
-
         params = {
             "price": price,
             "amount": amount
         }
-        jsonResponse = self._post(url, params)
-        return Order(jsonResponse)
+
+        response = self._post(url, params)
+
+        return Order(response)
 
     def sellLimit(self, limitPrice, quantity):
         url = "https://www.bitstamp.net/api/sell/"
@@ -214,21 +217,22 @@ class HTTPClient(object):
         # Rounding amount to avoid 'Ensure that there are no more than 8 decimal places'
         # error.
         amount = round(quantity, 8)
-
         params = {
             "price": price,
             "amount": amount
         }
-        jsonResponse = self._post(url, params)
-        return Order(jsonResponse)
+
+        response = self._post(url, params)
+        return Order(response)
 
     def getUserTransactions(self, transactionType=None):
         url = "https://www.bitstamp.net/api/user_transactions/"
-        jsonResponse = self._post(url, {})
+        response = self._post(url, {})
 
         if transactionType is not None:
-            jsonUserTransactions = [jsonUserTransaction for jsonUserTransaction in jsonResponse if
+            jsonUserTransactions = [jsonUserTransaction for jsonUserTransaction in response if
                                     jsonUserTransaction["type"] == transactionType]
         else:
-            jsonUserTransactions = jsonResponse
+            jsonUserTransactions = response
+
         return [UserTransaction(jsonUserTransaction) for jsonUserTransaction in jsonUserTransactions]

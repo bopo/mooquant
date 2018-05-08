@@ -22,6 +22,8 @@
 from mooquant import bar, barfeed, resamplebase
 from mooquant.dataseries import resampled
 
+'''重采样，重复取样'''
+
 
 class BarsGrouper(resamplebase.Grouper):
     def __init__(self, groupDateTime, bars, frequency):
@@ -56,7 +58,7 @@ class BarsGrouper(resamplebase.Grouper):
 
 class ResampledBarFeed(barfeed.BaseBarFeed):
     def __init__(self, barFeed, frequency, maxLen=None):
-        super(ResampledBarFeed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         if not isinstance(barFeed, barfeed.BaseBarFeed):
             raise Exception("barFeed must be a barfeed.BaseBarFeed instance")
@@ -112,7 +114,7 @@ class ResampledBarFeed(barfeed.BaseBarFeed):
         return None
 
     def start(self):
-        super(ResampledBarFeed, self).start()
+        super().start()
 
     def stop(self):
         pass

@@ -25,6 +25,7 @@ from mooquant import bar
 from mooquant.barfeed import common, csvfeed
 from mooquant.utils import dt
 
+
 ######################################################################
 # Google Finance CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
@@ -122,7 +123,7 @@ class Feed(csvfeed.BarFeed):
         if frequency not in [bar.Frequency.DAY]:
             raise Exception("Invalid frequency.")
 
-        super(Feed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         self.__timezone = timezone
         self.__sanitizeBars = False
@@ -150,4 +151,4 @@ class Feed(csvfeed.BarFeed):
             timezone = self.__timezone
 
         rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars)
-        super(Feed, self).addBarsFromCSV(instrument, path, rowParser)
+        super().addBarsFromCSV(instrument, path, rowParser)

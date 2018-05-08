@@ -25,6 +25,7 @@ from mooquant import bar
 from mooquant.barfeed import common, csvfeed
 from mooquant.utils import dt
 
+
 ## Yahoo Finance CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
 #
@@ -32,7 +33,7 @@ from mooquant.utils import dt
 # Date,Open,High,Low,Close,Volume,Adj Close
 #
 # The csv Date column must have the following format: YYYY-MM-DD
-
+# 解析日期
 def parse_date(date):
     # Sample: 2005-12-30
     # This custom parsing works faster than:
@@ -117,7 +118,7 @@ class Feed(csvfeed.BarFeed):
         if frequency not in [bar.Frequency.DAY, bar.Frequency.WEEK]:
             raise Exception("Invalid frequency.")
 
-        super(Feed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         self.__timezone = timezone
         self.__sanitizeBars = False
@@ -151,5 +152,6 @@ class Feed(csvfeed.BarFeed):
         if timezone is None:
             timezone = self.__timezone
 
-        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars, self.__barClass)
-        super(Feed, self).addBarsFromCSV(instrument, path, rowParser)
+        rowParser = RowParser(self.getDailyBarTime(), self.getFrequency(), timezone, self.__sanitizeBars,
+                              self.__barClass)
+        super().addBarsFromCSV(instrument, path, rowParser)

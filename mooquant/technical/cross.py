@@ -19,6 +19,7 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
+
 # 交叉指标
 def compute_diff(values1, values2):
     assert (len(values1) == len(values2))

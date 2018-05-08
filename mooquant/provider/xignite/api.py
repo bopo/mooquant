@@ -20,11 +20,10 @@
 """
 
 import json
-import urllib
-import urllib2
-import urlparse
+from urllib.parse import urlparse
 
 import pytz
+import requests
 
 from mooquant.utils import dt
 
@@ -68,15 +67,16 @@ def datetime_to_string(dateTime, exchange):
 
 
 def json_http_request(url):
-    f = urllib2.urlopen(url)
-    response = f.read()
-    return json.loads(response)
+    response = requests.get(url)
+    return response.json()
 
 
 def parse_instrument_exchange(identifier):
     ret = identifier.split(".")
+
     if len(ret) != 2:
         raise Exception("Invalid identifier. Exchange suffix is missing")
+
     return ret
 
 

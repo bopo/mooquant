@@ -22,12 +22,11 @@
 import datetime
 
 from mooquant import broker, marketsession
+from mooquant.analyzer import sharpe
 from mooquant.barfeed import csvfeed, ninjatraderfeed, yahoofeed
 from mooquant.broker import backtesting
-from mooquant.analyzer import sharpe
 
-from . import common
-from . import strategy_test
+from . import common, strategy_test
 
 
 class SharpeRatioTestCase(common.TestCase):

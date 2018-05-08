@@ -19,7 +19,7 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import numpy
+import numpy as np
 
 
 # 取平均值
@@ -27,7 +27,7 @@ def mean(values):
     ret = None
 
     if len(values):
-        ret = numpy.array(values).mean()
+        ret = np.array(values).mean()
 
     return ret
 
@@ -37,6 +37,6 @@ def stddev(values, ddof=1):
     ret = None
 
     if len(values):
-        ret = numpy.array(values).std(ddof=ddof)
+        ret = np.array(values).std(ddof=ddof)
 
     return ret

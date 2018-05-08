@@ -23,6 +23,7 @@ import datetime
 
 from mooquant import bar, barfeed, dispatcher
 from mooquant.barfeed import common as bfcommon
+
 from . import common
 
 

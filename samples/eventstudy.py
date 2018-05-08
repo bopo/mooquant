@@ -1,8 +1,7 @@
 from mooquant import eventprofiler
-from mooquant.technical import stats
-from mooquant.technical import roc
-from mooquant.technical import ma
 from mooquant.barfeed import yahoofeed
+from mooquant.technical import ma, roc, stats
+
 # Event inspired on an example from Ernie Chan's book:
 # 'Algorithmic Trading: Winning Strategies and Their Rationale'
 

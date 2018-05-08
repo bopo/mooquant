@@ -1,8 +1,9 @@
+import datetime
+
+from mooquant import bar
 from mooquant.provider.bitcoincharts import barfeed
 from mooquant.tools import resample
-from mooquant import bar
 
-import datetime
 
 def main():
     barFeed = barfeed.CSVTradeFeed()

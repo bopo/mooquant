@@ -2,12 +2,10 @@ import csv
 import datetime
 import os
 
-from mooquant.barfeed import yahoofeed
-from mooquant.barfeed import csvfeed
 from mooquant import strategy
+from mooquant.analyzer import returns, sharpe
+from mooquant.barfeed import csvfeed, yahoofeed
 from mooquant.utils import stats
-from mooquant.analyzer import returns
-from mooquant.analyzer import sharpe
 
 
 class OrdersFile:
@@ -117,4 +115,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

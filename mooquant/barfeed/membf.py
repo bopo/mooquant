@@ -23,6 +23,7 @@ import sys
 
 from mooquant import bar, barfeed, utils
 
+
 # A non real-time BarFeed responsible for:
 # - Holding bars in memory.
 # - Aligning them with respect to time.
@@ -32,7 +33,7 @@ from mooquant import bar, barfeed, utils
 
 class BarFeed(barfeed.BaseBarFeed):
     def __init__(self, frequency, maxLen=None):
-        super(BarFeed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         self.__bars = {}
         self.__nextPos = {}
@@ -46,13 +47,13 @@ class BarFeed(barfeed.BaseBarFeed):
             self.__nextPos.setdefault(instrument, 0)
 
         self.__currDateTime = None
-        super(BarFeed, self).reset()
+        super().reset()
 
     def getCurrentDateTime(self):
         return self.__currDateTime
 
     def start(self):
-        super(BarFeed, self).start()
+        super().start()
         self.__started = True
 
     def stop(self):

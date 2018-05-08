@@ -25,14 +25,13 @@ from distutils import version
 
 import numpy
 import pytz
+
 from mooquant import broker
+from mooquant.analyzer import trades
 from mooquant.barfeed import csvfeed, ninjatraderfeed
 from mooquant.broker import backtesting
-from mooquant.analyzer import trades
 
-from . import common
-from . import position_test
-from . import strategy_test
+from . import common, position_test, strategy_test
 
 
 def buildUTCDateTime(year, month, day, hour, minute):

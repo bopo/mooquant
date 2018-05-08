@@ -4,6 +4,7 @@ from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.tools import quandl
 
+
 def main(plot):
     instrument = "AAPL"
     smaPeriod = 163

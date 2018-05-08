@@ -20,10 +20,12 @@
 """
 
 import datetime
+import pickle
 
 from mooquant import bar
-import pickle
+
 from . import common
+
 
 class BasicBarTestCase(common.TestCase):
     def testInvalidConstruction(self):

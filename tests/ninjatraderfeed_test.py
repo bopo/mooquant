@@ -20,14 +20,11 @@
 
 import datetime
 
-from . import common
-from . import barfeed_test
-from . import feed_test
-
+from mooquant import bar, marketsession
 from mooquant.barfeed import ninjatraderfeed
-from mooquant import marketsession
-from mooquant import bar
 from mooquant.utils import dt
+
+from . import barfeed_test, common, feed_test
 
 
 class NinjaTraderTestCase(common.TestCase):

@@ -25,7 +25,7 @@ from mooquant import technical
 # 高低价指标
 class HighLowEventWindow(technical.EventWindow):
     def __init__(self, windowSize, useMin):
-        super(HighLowEventWindow, self).__init__(windowSize)
+        super().__init__(windowSize)
         self.__useMin = useMin
 
     def getValue(self):
@@ -56,7 +56,7 @@ class High(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(High, self).__init__(dataSeries, HighLowEventWindow(period, False), maxLen)
+        super().__init__(dataSeries, HighLowEventWindow(period, False), maxLen)
 
 
 class Low(technical.EventBasedFilter):
@@ -73,4 +73,4 @@ class Low(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(Low, self).__init__(dataSeries, HighLowEventWindow(period, True), maxLen)
+        super().__init__(dataSeries, HighLowEventWindow(period, True), maxLen)

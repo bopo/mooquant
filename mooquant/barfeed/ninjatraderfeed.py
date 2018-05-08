@@ -28,6 +28,7 @@ from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt
 
+
 ######################################################################
 ## NinjaTrader CSV parser
 # Each bar must be on its own line and fields must be separated by semicolon (;).
@@ -152,4 +153,4 @@ class Feed(csvfeed.BarFeed):
             timezone = self.__timezone
 
         rowParser = RowParser(self.getFrequency(), self.getDailyBarTime(), timezone)
-        super(Feed, self).addBarsFromCSV(instrument, path, rowParser)
+        super().addBarsFromCSV(instrument, path, rowParser)

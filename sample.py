@@ -1,10 +1,11 @@
 # coding=utf-8
+import coloredlogs
+
 from mooquant import plotter, strategy
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.bar import Frequency
 from mooquant.barfeed.csvfeed import GenericBarFeed
 from mooquant.technical import ma
-import coloredlogs
 
 
 # 1.构建一个策略

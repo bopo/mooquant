@@ -18,10 +18,10 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import xmlrpc.server
 import pickle
 import threading
 import time
+import xmlrpc.server
 
 import mooquant.logger
 from mooquant.optimizer import base
@@ -66,8 +66,8 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
     defaultBatchSize = 200
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
-        xmlrpc.server.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
-        # super(Server, self).__init__((address, port), requestHandler=RequestHandler, logRequests=False, allow_none=True)
+        xmlrpc.server.SimpleXMLRPCServer.__init__(self, (address, port), requestHandler=RequestHandler,
+                                                  logRequests=False, allow_none=True)
 
         self.__paramSource = paramSource
         self.__resultSinc = resultSinc
@@ -136,13 +136,13 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
                 return
 
         # if result is None or result > self.__bestResult:
-        
+
         if result is None:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
             self.__bestResult = result
         elif self.__bestResult is None and result is not None:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
-            self.__bestResult = result            
+            self.__bestResult = result
         elif result > self.__bestResult:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
             self.__bestResult = result
@@ -157,10 +157,10 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
-            
+
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
-            
+
             instruments = self.__barFeed.getRegisteredInstruments()
 
             self.__instrumentsAndBars = pickle.dumps((list(instruments), loadedBars))

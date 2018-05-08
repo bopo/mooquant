@@ -29,6 +29,7 @@ from mooquant.optimizer import local
 from . import common
 from .sma_crossover import SMACrossOver
 
+
 def parameters_generator(instrument, smaFirst, smaLast):
     for sma in range(smaFirst, smaLast+1):
         yield(instrument, sma)
@@ -60,4 +61,3 @@ class OptimizerTestCase(common.TestCase):
         res = local.run(FailingStrategy, barFeed, parameters_generator("orcl", 5, 100), logLevel=logging.DEBUG)
         
         self.assertIsNone(res)
-

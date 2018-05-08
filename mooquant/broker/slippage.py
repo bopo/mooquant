@@ -22,7 +22,6 @@
 import abc
 
 
-
 # 滑点模型
 class SlippageModel(object, metaclass=abc.ABCMeta):
     """Base class for slippage models.

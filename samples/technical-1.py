@@ -1,5 +1,4 @@
-from mooquant import dataseries
-from mooquant import technical
+from mooquant import dataseries, technical
 
 
 # An EventWindow is responsible for making calculations using a window of values.

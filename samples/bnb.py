@@ -1,4 +1,5 @@
 from binance.client import Client
+from binance.websockets import BinanceSocketManager
 
 apikey = 'w9j8X6B4c6RC2WaqoO9eud0Ev7RKbxw6ioBekRoeVnu3DAHqy9mqer9ktaYkN7GR'
 serect = 'uWsFyaUiGzdvfwqhIMoji0wR39sUXg3aHmrSgHfU1CtQXbWEwifnk4cIbOpa3SZ7'
@@ -49,7 +50,6 @@ def process_message(msg):
     print(msg)
     # do something
 
-from binance.websockets import BinanceSocketManager
 bm = BinanceSocketManager(client)
 bm.start_aggtrade_socket(symbol='BNBBTC', callback=process_message)
 bm.start()

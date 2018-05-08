@@ -21,7 +21,6 @@
 
 import abc
 
-
 from mooquant import observer, dispatchprio
 
 
@@ -292,6 +291,7 @@ class Order(object):
         """
         if self.__state != Order.State.INITIAL:
             raise Exception("The order has already been submitted")
+
         self.__goodTillCanceled = goodTillCanceled
 
     def getAllOrNone(self):
@@ -319,7 +319,7 @@ class Order(object):
             self.__avgFillPrice = orderExecutionInfo.getPrice()
         else:
             self.__avgFillPrice = (
-                                      self.__avgFillPrice * self.__filled + orderExecutionInfo.getPrice() * orderExecutionInfo.getQuantity()) / float(
+                                          self.__avgFillPrice * self.__filled + orderExecutionInfo.getPrice() * orderExecutionInfo.getQuantity()) / float(
                 self.__filled + orderExecutionInfo.getQuantity())
 
         self.__executionInfo = orderExecutionInfo

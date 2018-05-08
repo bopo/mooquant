@@ -28,14 +28,13 @@ from mooquant.dataseries import bards
 class ATREventWindow(technical.EventWindow):
     def __init__(self, period, useAdjustedValues):
         assert (period > 1)
-        super(ATREventWindow, self).__init__(period)
+        super().__init__(period)
+
         self.__useAdjustedValues = useAdjustedValues
         self.__prevClose = None
         self.__value = None
 
     def _calculateTrueRange(self, value):
-        ret = None
-
         if self.__prevClose is None:
             ret = value.getHigh(self.__useAdjustedValues) - value.getLow(self.__useAdjustedValues)
         else:
@@ -81,4 +80,4 @@ class ATR(technical.EventBasedFilter):
         if not isinstance(barDataSeries, bards.BarDataSeries):
             raise Exception("barDataSeries must be a dataseries.bards.BarDataSeries instance")
 
-        super(ATR, self).__init__(barDataSeries, ATREventWindow(period, useAdjustedValues), maxLen)
+        super().__init__(barDataSeries, ATREventWindow(period, useAdjustedValues), maxLen)

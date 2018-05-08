@@ -41,19 +41,20 @@ class Trades(analyzer.StrategyAnalyzer):
     """
 
     def __init__(self):
-        super(Trades, self).__init__()
+        super().__init__()
+        
         self.__all = []
         self.__profits = []
         self.__losses = []
+        self.__evenTrades = 0
         self.__allReturns = []
+        self.__posTrackers = {}
+        self.__allCommissions = []
         self.__positiveReturns = []
         self.__negativeReturns = []
-        self.__allCommissions = []
+        self.__evenCommissions = []
         self.__profitableCommissions = []
         self.__unprofitableCommissions = []
-        self.__evenCommissions = []
-        self.__evenTrades = 0
-        self.__posTrackers = {}
 
     def __updateTrades(self, posTracker):
         price = 0  # The price doesn't matter since the position should be closed.
@@ -138,6 +139,7 @@ class Trades(analyzer.StrategyAnalyzer):
         # Update the tracker for this order.
         execInfo = orderEvent.getEventInfo()
         price = execInfo.getPrice()
+
         commission = execInfo.getCommission()
         action = order.getAction()
 

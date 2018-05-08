@@ -1,7 +1,6 @@
 from mooquant import strategy
+from mooquant.analyzer import returns, sharpe
 from mooquant.barfeed import yahoofeed
-from mooquant.analyzer import returns
-from mooquant.analyzer import sharpe
 from mooquant.utils import stats
 
 

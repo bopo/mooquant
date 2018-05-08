@@ -21,6 +21,7 @@
 
 from mooquant import technical
 
+
 # RSI = 100 - 100 / (1 + RS)
 # RS = Average gain / Average loss
 # First Average Gain = Sum of Gains over the past 14 periods / 14
@@ -69,7 +70,7 @@ def avg_gain_loss(values, begin, end):
         gain += currGain
         loss += currLoss
 
-    return (gain / float(rangeLen - 1), loss / float(rangeLen - 1))
+    return gain / float(rangeLen - 1), loss / float(rangeLen - 1)
 
 
 def rsi(values, period):
@@ -96,17 +97,19 @@ def rsi(values, period):
 class RSIEventWindow(technical.EventWindow):
     def __init__(self, period):
         assert (period > 1)
-        # We need N + 1 samples to calculate N averages because they are calculated based on the diff with previous values.
-        super(RSIEventWindow, self).__init__(period + 1)
+        # We need N + 1 samples to calculate N averages because they are calculated based
+        # on the diff with previous values.
+        super().__init__(period + 1)
         self.__value = None
         self.__prevGain = None
         self.__prevLoss = None
         self.__period = period
 
     def onNewValue(self, dateTime, value):
-        super(RSIEventWindow, self).onNewValue(dateTime, value)
+        super().onNewValue(dateTime, value)
 
-        # Formula from http://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
+        # Formula from http://stockcharts.com/school/doku.php?id=chart_school:technical_
+        # indicators:relative_strength_index_rsi
         if value is not None and self.windowFull():
             if self.__prevGain is None:
                 assert (self.__prevLoss is None)
@@ -147,4 +150,4 @@ class RSI(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(RSI, self).__init__(dataSeries, RSIEventWindow(period), maxLen)
+        super().__init__(dataSeries, RSIEventWindow(period), maxLen)

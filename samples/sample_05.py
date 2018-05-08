@@ -1,9 +1,8 @@
 # coding=utf-8
 from mooquant import strategy
-from mooquant.barfeed.csvfeed import GenericBarFeed
+from mooquant.analyzer import returns, sharpe
 from mooquant.bar import Frequency
-from mooquant.analyzer import returns
-from mooquant.analyzer import sharpe
+from mooquant.barfeed.csvfeed import GenericBarFeed
 from mooquant.utils import stats
 
 

@@ -20,6 +20,7 @@
 """
 
 import numpy
+
 from mooquant import dataseries
 from mooquant.technical import stats
 

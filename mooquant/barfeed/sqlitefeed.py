@@ -122,9 +122,11 @@ class Database(dbfeed.Database):
 
     def getBars(self, instrument, frequency, timezone=None, fromDateTime=None, toDateTime=None):
         instrument = normalize_instrument(instrument)
+
         sql = "SELECT bar.timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume, bar.adj_close, bar.frequency" \
               " FROM bar JOIN instrument ON (bar.instrument_id = instrument.instrument_id)" \
               " WHERE instrument.name = ? AND bar.frequency = ?"
+
         args = [instrument, frequency]
 
         if fromDateTime is not None:
@@ -137,7 +139,7 @@ class Database(dbfeed.Database):
 
         ret = []
         sql += " ORDER by bar.timestamp ASC"
-        
+
         cursor = self.__connection.cursor()
         cursor.execute(sql, args)
 
@@ -150,6 +152,7 @@ class Database(dbfeed.Database):
             ret.append(bar.BasicBar(dateTime, row[1], row[2], row[3], row[4], row[5], row[6], row[7]))
 
         cursor.close()
+
         return ret
 
     def disconnect(self):
@@ -159,7 +162,7 @@ class Database(dbfeed.Database):
 
 class Feed(membf.BarFeed):
     def __init__(self, dbFilePath, frequency, maxLen=None):
-        super(Feed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
         self.__db = Database(dbFilePath)
 
     def barsHaveAdjClose(self):

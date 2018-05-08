@@ -26,6 +26,7 @@ logger = mooquant.logger.getLogger('optimizer.server')
 
 class Results(object):
     """The results of the strategy executions."""
+
     def __init__(self, parameters, result):
         self.__parameters = parameters
         self.__result = result
@@ -56,10 +57,10 @@ def serve(barFeed, strategyParameters, address, port, drivce='xml'):
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
 
-    if not drivce in ('xml', 'zmq'):
+    if drivce not in ('xml', 'zmq'):
         logger.error('drivce not found')
         raise Execute('drivce not found')
-    
+
     if drivce == 'xml':
         from mooquant.optimizer import xmlrpcserver as server
     elif drivce == 'zmq':
@@ -73,11 +74,11 @@ def serve(barFeed, strategyParameters, address, port, drivce='xml'):
 
     ret = None
     bestResult, bestParameters = resultSinc.getBest()
-    
+
     if bestResult is not None:
         logger.info("Best final result %s with parameters %s" % (bestResult, bestParameters.args))
         ret = Results(bestParameters.args, bestResult)
     else:
         logger.error("No results. All jobs failed or no jobs were processed.")
-    
+
     return ret

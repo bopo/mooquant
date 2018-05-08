@@ -3,6 +3,7 @@ from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
 
+
 def main(plot):
     instrument = "dia"
     entrySMA = 152

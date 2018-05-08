@@ -22,13 +22,13 @@
 import datetime
 
 import pytz
+
 from mooquant import bar, barfeed, marketsession, strategy
 from mooquant.barfeed import csvfeed, membf, ninjatraderfeed, yahoofeed
 from mooquant.strategy import position
 from mooquant.utils import dt
 
-from . import common
-from . import strategy_test
+from . import common, strategy_test
 
 
 def load_daily_barfeed(instrument):

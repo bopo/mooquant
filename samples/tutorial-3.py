@@ -1,7 +1,6 @@
 from mooquant import strategy
 from mooquant.barfeed import yahoofeed
-from mooquant.technical import ma
-from mooquant.technical import rsi
+from mooquant.technical import ma, rsi
 
 
 class MyStrategy(strategy.BacktestingStrategy):

@@ -18,12 +18,13 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import xmlrpc.client
-import pickle
-import time
-import socket
-import random
 import multiprocessing
+import pickle
+import random
+import socket
+import time
+import xmlrpc.client
+
 import zerorpc
 
 import mooquant.logger
@@ -35,8 +36,6 @@ def call_function(function, *args, **kwargs):
 
 
 def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
-    ret = None
-    
     while retryCount > 0:
         retryCount -= 1
     
@@ -74,22 +73,24 @@ class Worker(object):
         ret = call_and_retry_on_network_error(self.__server.getInstrumentsAndBars, 10)
         ret = getattr(ret, 'data') if hasattr(ret, 'data') else ret
         ret = pickle.loads(ret)
+
         return ret
 
     def getBarsFrequency(self):
         ret = call_and_retry_on_network_error(self.__server.getBarsFrequency, 10)
         ret = int(ret)
+
         return ret
 
     def getNextJob(self):
         ret = call_and_retry_on_network_error(self.__server.getNextJob, 10)
         ret = getattr(ret, 'data') if hasattr(ret, 'data') else ret
         ret = pickle.loads(ret)
+
         return ret
 
     def pushJobResults(self, jobId, result, parameters):
-        print(jobId, result, parameters, self.__workerName)
-        
+
         jobId = pickle.dumps(jobId)
         result = pickle.dumps(result)
 
@@ -99,10 +100,10 @@ class Worker(object):
         call_and_retry_on_network_error(self.__server.pushJobResults, 10, jobId, result, parameters, workerName)
 
     def __processJob(self, job, barsFreq, instruments, bars):
-        bestResult = None
         parameters = job.getNextParameters()
         bestParams = parameters
-        
+        bestResult = None
+
         while parameters is not None:
             # Wrap the bars into a feed.
             feed = barfeed.OptimizerBarFeed(barsFreq, instruments, bars)

@@ -25,7 +25,7 @@ from mooquant.dataseries import bards
 
 class VWAPEventWindow(technical.EventWindow):
     def __init__(self, windowSize, useTypicalPrice):
-        super(VWAPEventWindow, self).__init__(windowSize, dtype=object)
+        super().__init__(windowSize, dtype=object)
         self.__useTypicalPrice = useTypicalPrice
 
     def getValue(self):
@@ -67,7 +67,7 @@ class VWAP(technical.EventBasedFilter):
         assert isinstance(dataSeries, bards.BarDataSeries), \
             "dataSeries must be a dataseries.bards.BarDataSeries instance"
 
-        super(VWAP, self).__init__(dataSeries, VWAPEventWindow(period, useTypicalPrice), maxLen)
+        super().__init__(dataSeries, VWAPEventWindow(period, useTypicalPrice), maxLen)
 
     def getPeriod(self):
-        return self.getWindowSize()
+        return self.getEventWindow().getWindowSize()

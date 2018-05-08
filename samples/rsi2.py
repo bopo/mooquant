@@ -1,7 +1,5 @@
 from mooquant import strategy
-from mooquant.technical import ma
-from mooquant.technical import rsi
-from mooquant.technical import cross
+from mooquant.technical import cross, ma, rsi
 
 
 class RSI2(strategy.BacktestingStrategy):

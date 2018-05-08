@@ -20,7 +20,6 @@
 
 import pickle
 import threading
-import time
 
 import zerorpc
 
@@ -42,10 +41,10 @@ class Job(object):
 
     def getNextParameters(self):
         ret = None
-        
+
         if len(self.__strategyParameters):
             ret = self.__strategyParameters.pop()
-        
+
         return ret
 
 
@@ -81,7 +80,7 @@ class RPCService(object):
         # Map the active job
         if len(params):
             ret = Job(params)
-            
+
             with self.__activeJobsLock:
                 self.__activeJobs[ret.getId()] = ret
 
@@ -112,13 +111,13 @@ class RPCService(object):
                 return
 
         # if result is None or result > self.__bestResult:
-        
+
         if result is None:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
             self.__bestResult = result
         elif self.__bestResult is None and result is not None:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
-            self.__bestResult = result            
+            self.__bestResult = result
         elif result > self.__bestResult:
             logger.info("Best result so far %s with parameters %s" % (result, parameters))
             self.__bestResult = result
@@ -130,10 +129,10 @@ class RPCService(object):
             # Initialize instruments, bars and parameters.
             logger.info("Loading bars")
             loadedBars = []
-            
+
             for dateTime, bars in self.__barFeed:
                 loadedBars.append(bars)
-            
+
             instruments = self.__barFeed.getRegisteredInstruments()
 
             self.__instrumentsAndBars = pickle.dumps((list(instruments), loadedBars))
@@ -141,9 +140,10 @@ class RPCService(object):
         finally:
             pass
 
+
 class Server(object):
 
-    def __init__(self, paramSource, resultSinc, barFeed, address, port, autoStop=True):
+    def __init__(self, paramSource, resultSinc, barFeed, address, port):
         self.__zerorpc = zerorpc.Server(RPCService(paramSource, resultSinc, barFeed))
         self.__zerorpc.bind("tcp://%s:%s" % (address, port))
 

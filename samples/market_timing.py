@@ -1,10 +1,7 @@
-from mooquant import strategy
-from mooquant import plotter
+from mooquant import plotter, strategy
+from mooquant.analyzer import returns, sharpe
 from mooquant.barfeed import yahoofeed
-from mooquant.technical import ma
-from mooquant.technical import cumret
-from mooquant.analyzer import sharpe
-from mooquant.analyzer import returns
+from mooquant.technical import cumret, ma
 
 
 class MarketTiming(strategy.BacktestingStrategy):

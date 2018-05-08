@@ -20,10 +20,10 @@
 """
 
 import datetime
+import queue
 import threading
 
 from mooquant.provider.bitstamp import common
-import queue
 from mooquant.websocket import pusher
 
 
@@ -104,7 +104,7 @@ class WebSocketClient(pusher.WebSocketClient):
     ON_DISCONNECTED = 4
 
     def __init__(self):
-        super(WebSocketClient, self).__init__(WebSocketClient.PUSHER_APP_KEY, 5)
+        super().__init__(WebSocketClient.PUSHER_APP_KEY, 5)
         self.__queue = queue.Queue()
 
     def getQueue(self):
@@ -118,7 +118,7 @@ class WebSocketClient(pusher.WebSocketClient):
         elif event == "data" and msg.get("channel") == "order_book":
             self.onOrderBookUpdate(OrderBookUpdate(get_current_datetime(), msg))
         else:
-            super(WebSocketClient, self).onMessage(msg)
+            super().onMessage(msg)
 
     ######################################################################
     # WebSocketClientBase events.
@@ -136,6 +136,7 @@ class WebSocketClient(pusher.WebSocketClient):
             self.stopClient()
         except Exception as e:
             common.logger.error("Error stopping websocket client: %s." % (str(e)))
+
         self.__queue.put((WebSocketClient.ON_DISCONNECTED, None))
 
     ######################################################################
@@ -165,7 +166,7 @@ class WebSocketClient(pusher.WebSocketClient):
 
 class WebSocketClientThread(threading.Thread):
     def __init__(self):
-        super(WebSocketClientThread, self).__init__()
+        super().__init__()
         self.__wsClient = WebSocketClient()
 
     def getQueue(self):
@@ -173,7 +174,7 @@ class WebSocketClientThread(threading.Thread):
 
     def start(self):
         self.__wsClient.connect()
-        super(WebSocketClientThread, self).start()
+        super().start()
 
     def run(self):
         self.__wsClient.startClient()

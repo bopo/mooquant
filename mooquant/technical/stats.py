@@ -25,7 +25,7 @@ from mooquant import technical
 class StdDevEventWindow(technical.EventWindow):
     def __init__(self, period, ddof):
         assert (period > 0)
-        super(StdDevEventWindow, self).__init__(period)
+        super().__init__(period)
         self.__ddof = ddof
 
     def getValue(self):
@@ -53,13 +53,13 @@ class StdDev(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, ddof=0, maxLen=None):
-        super(StdDev, self).__init__(dataSeries, StdDevEventWindow(period, ddof), maxLen)
+        super().__init__(dataSeries, StdDevEventWindow(period, ddof), maxLen)
 
 
 class ZScoreEventWindow(technical.EventWindow):
     def __init__(self, period, ddof):
         assert (period > 1)
-        super(ZScoreEventWindow, self).__init__(period)
+        super().__init__(period)
         self.__ddof = ddof
 
     def getValue(self):
@@ -91,4 +91,4 @@ class ZScore(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, ddof=0, maxLen=None):
-        super(ZScore, self).__init__(dataSeries, ZScoreEventWindow(period, ddof), maxLen)
+        super().__init__(dataSeries, ZScoreEventWindow(period, ddof), maxLen)

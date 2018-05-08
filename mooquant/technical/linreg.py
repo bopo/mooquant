@@ -39,7 +39,7 @@ def lsreg(x, y):
 class LeastSquaresRegressionWindow(technical.EventWindow):
     def __init__(self, windowSize):
         assert (windowSize > 1)
-        super(LeastSquaresRegressionWindow, self).__init__(windowSize)
+        super().__init__(windowSize)
         self.__timestamps = collections.NumPyDeque(windowSize)
 
     def onNewValue(self, dateTime, value):
@@ -91,7 +91,7 @@ class LeastSquaresRegression(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, windowSize, maxLen=None):
-        super(LeastSquaresRegression, self).__init__(dataSeries, LeastSquaresRegressionWindow(windowSize), maxLen)
+        super().__init__(dataSeries, LeastSquaresRegressionWindow(windowSize), maxLen)
 
     def getValueAt(self, dateTime):
         """Calculates the value at a given time based on the regression line.
@@ -105,7 +105,7 @@ class LeastSquaresRegression(technical.EventBasedFilter):
 
 class SlopeEventWindow(technical.EventWindow):
     def __init__(self, windowSize):
-        super(SlopeEventWindow, self).__init__(windowSize)
+        super().__init__(windowSize)
         self.__x = np.asarray(list(range(windowSize)))
 
     def getValue(self):
@@ -135,7 +135,7 @@ class Slope(technical.EventBasedFilter):
     """
 
     def __init__(self, dataSeries, period, maxLen=None):
-        super(Slope, self).__init__(dataSeries, SlopeEventWindow(period), maxLen)
+        super().__init__(dataSeries, SlopeEventWindow(period), maxLen)
 
 
 class TrendEventWindow(SlopeEventWindow):
@@ -148,7 +148,7 @@ class TrendEventWindow(SlopeEventWindow):
         self.__negativeThreshold = negativeThreshold
 
     def getValue(self):
-        ret = super(TrendEventWindow, self).getValue()
+        ret = super().getValue()
 
         if ret is not None:
             if ret > self.__positiveThreshold:

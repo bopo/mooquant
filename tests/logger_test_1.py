@@ -20,9 +20,7 @@
 
 import datetime
 
-from mooquant import strategy
-from mooquant import bar
-from mooquant import logger
+from mooquant import bar, logger, strategy
 from mooquant.barfeed import membf
 
 

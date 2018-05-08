@@ -1,8 +1,7 @@
 import threading
 from wsgiref import simple_server
 
-from ws4py.server import wsgirefserver
-from ws4py.server import wsgiutils
+from ws4py.server import wsgirefserver, wsgiutils
 
 
 class WebSocketServerThread(threading.Thread):

@@ -24,8 +24,7 @@ import datetime
 from mooquant import dispatcher
 from mooquant.feed import memfeed
 
-from . import common
-from . import feed_test
+from . import common, feed_test
 
 
 class MemFeedTestCase(common.TestCase):

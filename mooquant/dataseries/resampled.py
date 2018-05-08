@@ -27,7 +27,8 @@ from mooquant.dataseries import bards
 
 class AggFunGrouper(resamplebase.Grouper):
     def __init__(self, groupDateTime, value, aggfun):
-        super(AggFunGrouper, self).__init__(groupDateTime)
+        super().__init__(groupDateTime)
+
         self.__values = [value]
         self.__aggfun = aggfun
 
@@ -40,7 +41,8 @@ class AggFunGrouper(resamplebase.Grouper):
 
 class BarGrouper(resamplebase.Grouper):
     def __init__(self, groupDateTime, bar_, frequency):
-        super(BarGrouper, self).__init__(groupDateTime)
+        super().__init__(groupDateTime)
+
         self.__open = bar_.getOpen()
         self.__high = bar_.getHigh()
         self.__low = bar_.getLow()
@@ -70,7 +72,6 @@ class BarGrouper(resamplebase.Grouper):
 
 
 # 重复取样;
-# @six.add_metaclass(abc.ABCMeta)
 class DSResampler(object, metaclass=abc.ABCMeta):
     def initDSResampler(self, dataSeries, frequency):
         if not resamplebase.is_valid_frequency(frequency):
@@ -133,7 +134,7 @@ class ResampledBarDataSeries(bards.BarDataSeries, DSResampler):
         if not isinstance(dataSeries, bards.BarDataSeries):
             raise Exception("dataSeries must be a dataseries.bards.BarDataSeries instance")
 
-        super(ResampledBarDataSeries, self).__init__(maxLen)
+        super().__init__(maxLen)
         self.initDSResampler(dataSeries, frequency)
 
     def checkNow(self, dateTime):
@@ -144,7 +145,7 @@ class ResampledBarDataSeries(bards.BarDataSeries, DSResampler):
        :type dateTime: :class:`datetime.datetime`
         """
 
-        return super(ResampledBarDataSeries, self).checkNow(dateTime)
+        return super().checkNow(dateTime)
 
     def buildGrouper(self, range_, value, frequency):
         return BarGrouper(range_.getBeginning(), value, frequency)
@@ -152,7 +153,7 @@ class ResampledBarDataSeries(bards.BarDataSeries, DSResampler):
 
 class ResampledDataSeries(dataseries.SequenceDataSeries, DSResampler):
     def __init__(self, dataSeries, frequency, aggfun, maxLen=None):
-        super(ResampledDataSeries, self).__init__(maxLen)
+        super().__init__(maxLen)
         self.initDSResampler(dataSeries, frequency)
         self.__aggfun = aggfun
 

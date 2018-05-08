@@ -1,8 +1,7 @@
-from mooquant import plotter
-from mooquant.barfeed import yahoofeed
-from mooquant.analyzer import returns
-
 import sma_crossover
+from mooquant import plotter
+from mooquant.analyzer import returns
+from mooquant.barfeed import yahoofeed
 
 if __name__ == '__main__':
 	# Load the yahoo feed from the CSV file

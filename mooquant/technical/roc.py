@@ -24,7 +24,7 @@ from mooquant import technical
 
 class ROCEventWindow(technical.EventWindow):
     def __init__(self, windowSize):
-        super(ROCEventWindow, self).__init__(windowSize)
+        super().__init__(windowSize)
 
     def getValue(self):
         ret = None
@@ -59,4 +59,4 @@ class RateOfChange(technical.EventBasedFilter):
 
     def __init__(self, dataSeries, valuesAgo, maxLen=None):
         assert (valuesAgo > 0)
-        super(RateOfChange, self).__init__(dataSeries, ROCEventWindow(valuesAgo + 1), maxLen)
+        super().__init__(dataSeries, ROCEventWindow(valuesAgo + 1), maxLen)

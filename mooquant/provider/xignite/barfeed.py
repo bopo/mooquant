@@ -20,6 +20,7 @@
 """
 
 import datetime
+import queue
 import threading
 import time
 
@@ -27,7 +28,6 @@ import mooquant.logger
 from mooquant import bar, barfeed, dataseries, resamplebase
 from mooquant.provider.xignite import api
 from mooquant.utils import dt
-from mooquant.utils.compat import queue
 
 logger = mooquant.logger.getLogger("xignite")
 

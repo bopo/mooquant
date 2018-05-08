@@ -1,9 +1,6 @@
-from mooquant.barfeed import yahoofeed
-from mooquant.analyzer import returns
-from mooquant.analyzer import sharpe
-from mooquant.analyzer import drawdown
-from mooquant.analyzer import trades
 import sma_crossover
+from mooquant.analyzer import drawdown, returns, sharpe, trades
+from mooquant.barfeed import yahoofeed
 
 # Load the yahoo feed from the CSV file
 feed = yahoofeed.Feed()

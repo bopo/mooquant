@@ -1,7 +1,9 @@
-import tushare as ts
-import pandas as pd
+import logging
+
 import click
-import coloredlogs, logging
+import coloredlogs
+import pandas as pd
+import tushare as ts
 
 logger = logging.getLogger(__name__)
 coloredlogs.install(level='DEBUG', logger=logger)

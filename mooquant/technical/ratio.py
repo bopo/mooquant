@@ -24,7 +24,7 @@ from mooquant import technical, utils
 
 class RatioEventWindow(technical.EventWindow):
     def __init__(self):
-        super(RatioEventWindow, self).__init__(2)
+        super().__init__(2)
 
     def getValue(self):
         ret = None
@@ -41,4 +41,4 @@ class RatioEventWindow(technical.EventWindow):
 # The ratio can't be calculated if a previous value is 0.
 class Ratio(technical.EventBasedFilter):
     def __init__(self, dataSeries, maxLen=None):
-        super(Ratio, self).__init__(dataSeries, RatioEventWindow(), maxLen)
+        super().__init__(dataSeries, RatioEventWindow(), maxLen)

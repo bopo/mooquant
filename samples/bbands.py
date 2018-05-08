@@ -1,8 +1,8 @@
-from mooquant import strategy
-from mooquant import plotter
-from mooquant.technical import bollinger
+from mooquant import plotter, strategy
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
+from mooquant.technical import bollinger
+
 
 class BBands(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, bBandsPeriod):

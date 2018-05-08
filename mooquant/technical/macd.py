@@ -46,7 +46,7 @@ class MACD(dataseries.SequenceDataSeries):
         assert (fastEMA < slowEMA)
         assert (signalEMA > 0)
 
-        super(MACD, self).__init__(maxLen)
+        super().__init__(maxLen)
 
         # We need to skip some values when calculating the fast EMA in order for both EMA
         # to calculate their first values at the same time.

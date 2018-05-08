@@ -19,16 +19,15 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import sys
 import os
+import sys
 
-from . import common
-
-from mooquant.barfeed import yahoofeed
 from mooquant import plotter
+from mooquant.barfeed import yahoofeed
+
+from . import common, sma_crossover
 
 sys.path.append("examples")
-from . import sma_crossover
 
 
 class PlotterTestCase(common.TestCase):

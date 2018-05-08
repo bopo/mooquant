@@ -19,10 +19,10 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
-import mooquant.logger
 from mooquant import broker
+from mooquant import logger as logging
 
-logger = mooquant.logger.getLogger("bitstamp")
+logger = logging.getLogger("bitstamp")
 btc_symbol = "BTC"
 
 

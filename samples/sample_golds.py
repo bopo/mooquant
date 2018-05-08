@@ -1,12 +1,10 @@
-from mooquant import strategy
-from mooquant import dataseries
-from mooquant.dataseries import aligned
-from mooquant import plotter
-from mooquant.tools import yahoofinance
-from mooquant.analyzer import sharpe
-
 import numpy as np
 import statsmodels.api as sm
+
+from mooquant import dataseries, plotter, strategy
+from mooquant.analyzer import sharpe
+from mooquant.dataseries import aligned
+from mooquant.tools import yahoofinance
 
 
 def get_beta(values1, values2):

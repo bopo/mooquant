@@ -19,23 +19,24 @@
 """
 
 import json
-import urllib.request, urllib.parse, urllib.error
+from urllib.parse import urlencode
 
 import mooquant
-from mooquant.websocket import client
 import mooquant.logger
-
+from mooquant.websocket import client
 
 logger = mooquant.logger.getLogger("pusher")
 
 
 # Pusher protocol reference: http://pusher.com/docs/pusher_protocol
 # Every message on a Pusher WebSocket connection is packaged as an event.
-# The data field is sent as a string (check 'Double encoding' in the protocol reference). If dataIsJSON is True, it is decoded.
+# The data field is sent as a string (check 'Double encoding' in the protocol reference).
+# If dataIsJSON is True, it is decoded.
 class Event(object):
     def __init__(self, eventDict, dataIsJSON):
         self.__eventDict = eventDict
         self.__data = eventDict.get("data")
+
         if self.__data is not None and dataIsJSON:
             self.__data = json.loads(self.__data)
 
@@ -54,7 +55,7 @@ class Event(object):
 
 class PingKeepAliveMgr(client.KeepAliveMgr):
     def __init__(self, wsClient, maxInactivity, responseTimeout):
-        super(PingKeepAliveMgr, self).__init__(wsClient, maxInactivity, responseTimeout)
+        super().__init__(wsClient, maxInactivity, responseTimeout)
 
     # Override to send the keep alive msg.
     def sendKeepAlive(self):
@@ -64,8 +65,10 @@ class PingKeepAliveMgr(client.KeepAliveMgr):
     # Return True if the response belongs to a keep alive message, False otherwise.
     def handleResponse(self, msg):
         ret = msg.get("event") == "pusher:pong"
+
         if ret:
             logger.debug("Received pusher:pong.")
+
         return ret
 
 
@@ -75,16 +78,21 @@ class WebSocketClient(client.WebSocketClientBase):
             "protocol": protocol,
             "client": "Python-MooQuant",
             "version": mooquant.__version__
-            }
-        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urllib.parse.urlencode(params))
-        super(WebSocketClient, self).__init__(url)
+        }
+
+        url = "ws://ws.pusherapp.com/app/%s?%s" % (appKey, urlencode(params))
+
+        super().__init__(url)
         self.setKeepAliveMgr(PingKeepAliveMgr(self, maxInactivity, responseTimeout))
 
     def sendEvent(self, eventType, eventData):
         msgDict = {"event": eventType}
+
         if eventData:
             msgDict["data"] = eventData
+
         msg = json.dumps(msgDict)
+
         self.send(msg, False)
 
     def subscribeChannel(self, channel):

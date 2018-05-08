@@ -1,8 +1,8 @@
-from mooquant import strategy
-from mooquant import plotter
-from mooquant.tools import quandl
-from mooquant.feed import csvfeed
 import datetime
+
+from mooquant import plotter, strategy
+from mooquant.feed import csvfeed
+from mooquant.tools import quandl
 
 
 class MyStrategy(strategy.BacktestingStrategy):

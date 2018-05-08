@@ -46,7 +46,7 @@ class Feed(csvfeed.GenericBarFeed):
         if frequency not in [bar.Frequency.DAY, bar.Frequency.WEEK]:
             raise Exception("Invalid frequency.")
 
-        super(Feed, self).__init__(frequency, timezone, maxLen)
+        super().__init__(frequency, timezone, maxLen)
 
         self.setDateTimeFormat("%Y-%m-%d")
         self.setColumnName("datetime", "Date")

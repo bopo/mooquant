@@ -32,7 +32,7 @@ class BarDataSeries(dataseries.SequenceDataSeries):
     """
 
     def __init__(self, maxLen=None):
-        super(BarDataSeries, self).__init__(maxLen)
+        super().__init__(maxLen)
 
         self.__openDS = dataseries.SequenceDataSeries(maxLen)
         self.__closeDS = dataseries.SequenceDataSeries(maxLen)
@@ -63,7 +63,7 @@ class BarDataSeries(dataseries.SequenceDataSeries):
         assert (bar is not None)
 
         bar.setUseAdjustedValue(self.__useAdjustedValues)
-        super(BarDataSeries, self).appendWithDateTime(dateTime, bar)
+        super().appendWithDateTime(dateTime, bar)
 
         self.__openDS.appendWithDateTime(dateTime, bar.getOpen())
         self.__closeDS.appendWithDateTime(dateTime, bar.getClose())

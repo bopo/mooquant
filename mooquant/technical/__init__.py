@@ -79,7 +79,8 @@ class EventBasedFilter(dataseries.SequenceDataSeries):
     """
 
     def __init__(self, dataSeries, eventWindow, maxLen=None):
-        super(EventBasedFilter, self).__init__(maxLen)
+        super().__init__(maxLen)
+
         self.__dataSeries = dataSeries
         self.__dataSeries.getNewValueEvent().subscribe(self.__onNewValue)
         self.__eventWindow = eventWindow

@@ -18,9 +18,9 @@
 """
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
+"""backtesting 回溯测试;返回检验;回顾测试"""
 
 import abc
-
 
 import mooquant.bar
 from mooquant import broker, logger
@@ -187,7 +187,7 @@ class Broker(broker.Broker):
     LOGGER_NAME = "broker.backtesting"
 
     def __init__(self, cash, barFeed, commission=None):
-        super(Broker, self).__init__()
+        super().__init__()
 
         assert (cash >= 0)
         self.__cash = cash
@@ -515,7 +515,7 @@ class Broker(broker.Broker):
 
     def cancelOrder(self, order):
         activeOrder = self.__activeOrders.get(order.getId())
-        
+
         if activeOrder is None:
             raise Exception("The order is not active anymore")
 

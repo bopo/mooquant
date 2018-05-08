@@ -22,11 +22,10 @@
 import datetime
 
 from mooquant import bar, broker
-from mooquant.barfeed import membf, yahoofeed
 from mooquant.analyzer import drawdown
+from mooquant.barfeed import membf, yahoofeed
 
-from . import common
-from . import strategy_test
+from . import common, strategy_test
 
 
 def build_bars_from_closing_prices(closingPrices):

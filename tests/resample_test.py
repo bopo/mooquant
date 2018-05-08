@@ -23,10 +23,11 @@ import datetime
 import os
 
 from mooquant import bar, dispatcher, marketsession, resamplebase
+from mooquant.barfeed import csvfeed, ninjatraderfeed
 from mooquant.barfeed import resampled as resampled_bf
-from mooquant.barfeed import csvfeed, ninjatraderfeed, yahoofeed
-from mooquant.dataseries import resampled as resampled_ds
+from mooquant.barfeed import yahoofeed
 from mooquant.dataseries import bards
+from mooquant.dataseries import resampled as resampled_ds
 from mooquant.tools import resample
 from mooquant.utils import dt
 

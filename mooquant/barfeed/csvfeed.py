@@ -73,7 +73,7 @@ class USEquitiesRTH(DateRangeFilter):
     timezone = pytz.timezone("US/Eastern")
 
     def __init__(self, fromDate=None, toDate=None):
-        super(USEquitiesRTH, self).__init__(fromDate, toDate)
+        super().__init__(fromDate, toDate)
 
         self.__fromTime = datetime.time(9, 30, 0)
         self.__toTime = datetime.time(16, 0, 0)
@@ -109,7 +109,7 @@ class BarFeed(membf.BarFeed):
     """
 
     def __init__(self, frequency, maxLen=None):
-        super(BarFeed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         self.__barFilter = None
         self.__dailyTime = datetime.time(0, 0, 0)
@@ -129,6 +129,7 @@ class BarFeed(membf.BarFeed):
     def addBarsFromCSV(self, instrument, path, rowParser):
         # Load the csv file
         loadedBars = []
+
         reader = csvutils.FastDictReader(
             open(path, "r"), fieldnames=rowParser.getFieldNames(),
             delimiter=rowParser.getDelimiter())
@@ -242,7 +243,7 @@ class GenericBarFeed(BarFeed):
     """
 
     def __init__(self, frequency, timezone=None, maxLen=None):
-        super(GenericBarFeed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         self.__timezone = timezone
         # Assume bars don't have adjusted close. This will be set to True after
@@ -299,7 +300,7 @@ class GenericBarFeed(BarFeed):
             timezone, self.__barClass
         )
 
-        super(GenericBarFeed, self).addBarsFromCSV(instrument, path, rowParser)
+        super().addBarsFromCSV(instrument, path, rowParser)
 
         if rowParser.barsHaveAdjClose():
             self.__haveAdjClose = True

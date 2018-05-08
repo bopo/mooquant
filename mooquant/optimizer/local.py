@@ -25,10 +25,7 @@ import random
 import socket
 import threading
 
-from mooquant.optimizer import base
-from mooquant.optimizer import server
-from mooquant.optimizer import worker
-from mooquant.optimizer import xmlrpcserver
+from mooquant.optimizer import base, server, worker, xmlrpcserver
 
 logger = logging.getLogger(__name__)
 
@@ -93,15 +90,15 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     :rtype: A :class:`Results` instance with the best results found.
     """
 
-    assert(workerCount is None or workerCount > 0)
-    
+    assert (workerCount is None or workerCount > 0)
+
     if workerCount is None:
         workerCount = multiprocessing.cpu_count()
 
     ret = None
     workers = []
     port = find_port()
-    
+
     if port is None:
         raise Exception("Failed to find a port to listen")
 
@@ -109,9 +106,9 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
     # We'll manually stop the server once workers have finished.
     paramSource = base.ParameterSource(strategyParameters)
     resultSinc = base.ResultSinc()
-    
+
     srv = xmlrpcserver.Server(paramSource, resultSinc, barFeed, "localhost", port, False)
-    
+
     serverThread = ServerThread(srv)
     serverThread.start()
 
@@ -139,7 +136,7 @@ def run(strategyClass, barFeed, strategyParameters, workerCount=None, logLevel=l
         srv.stop()
         serverThread.join()
         bestResult, bestParameters = resultSinc.getBest()
-        
+
         if bestResult is not None:
             ret = server.Results(bestParameters.args, bestResult)
 

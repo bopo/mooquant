@@ -19,24 +19,19 @@
 """
 
 import datetime
-import time
-import threading
-import queue
 import json
+import queue
+import threading
+import time
+
+from mooquant import broker as basebroker
+from mooquant import dispatcher, strategy
+from mooquant.provider.bitcoincharts import barfeed as btcbarfeed
+from mooquant.provider.bitstamp import (barfeed, broker, common, httpclient,
+                                        wsclient)
 
 from . import common as tc_common
 from . import test_strategy
-
-from mooquant import broker as basebroker
-from mooquant.provider.bitstamp import barfeed
-from mooquant.provider.bitstamp import broker
-from mooquant.provider.bitstamp import wsclient
-from mooquant.provider.bitstamp import httpclient
-from mooquant.provider.bitstamp import common
-from mooquant.provider.bitcoincharts import barfeed as btcbarfeed
-
-from mooquant import strategy
-from mooquant import dispatcher
 
 
 class WebSocketClientThreadMock(threading.Thread):

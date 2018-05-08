@@ -116,8 +116,8 @@ class PositionTracker(object):
 
     # 获得返回
     def getReturn(self, price=None, includeCommissions=True):
-        ret = 0
         pnl = self.getPnL(price=price, includeCommissions=includeCommissions)
+        ret = 0
 
         if self.__totalCommited != 0:
             ret = pnl / float(self.__totalCommited)
@@ -243,7 +243,8 @@ class Returns(analyzer.StrategyAnalyzer):
     """
 
     def __init__(self, maxLen=None):
-        super(Returns, self).__init__()
+        super().__init__()
+
         self.__netReturns = dataseries.SequenceDataSeries(maxLen=maxLen)
         self.__cumReturns = dataseries.SequenceDataSeries(maxLen=maxLen)
 

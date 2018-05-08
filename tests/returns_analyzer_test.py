@@ -22,12 +22,10 @@
 import datetime
 
 from mooquant import broker, marketsession
-from mooquant.barfeed import csvfeed, yahoofeed
 from mooquant.analyzer import returns
+from mooquant.barfeed import csvfeed, yahoofeed
 
-from . import common
-from . import position_test
-from . import strategy_test
+from . import common, position_test, strategy_test
 
 
 class TimeWeightedReturnsTestCase(common.TestCase):

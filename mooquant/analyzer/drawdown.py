@@ -67,13 +67,13 @@ class DrawDownHelper(object):
             self.__lowWatermark = min(self.__lowWatermark, low)
 
 
-# 回撤
+# 回撤分析类
 class DrawDown(analyzer.StrategyAnalyzer):
     """A :class:`mooquant.analyzer.StrategyAnalyzer` that calculates
     max. drawdown and longest drawdown duration for the portfolio."""
 
     def __init__(self):
-        super(DrawDown, self).__init__()
+        super().__init__()
         self.__maxDD = 0
         self.__longestDDDuration = datetime.timedelta()
         self.__currDrawDown = DrawDownHelper()
@@ -89,12 +89,12 @@ class DrawDown(analyzer.StrategyAnalyzer):
         self.__longestDDDuration = max(self.__longestDDDuration, self.__currDrawDown.getDuration())
         self.__maxDD = min(self.__maxDD, self.__currDrawDown.getMaxDrawDown())
 
-    # 获取最大回撤
+    # 取最大回撤
     def getMaxDrawDown(self):
         """Returns the max. (deepest) drawdown."""
         return abs(self.__maxDD)
 
-    # 获得最长的回撤持续时间
+    # 取最长的回撤持续时间
     def getLongestDrawDownDuration(self):
         """Returns the duration of the longest drawdown.
 

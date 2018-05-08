@@ -19,12 +19,12 @@
 .. moduleauthor:: bopo.wang <ibopo@126.com>
 """
 
+import queue
 import threading
 import time
 
 from mooquant import broker
 from mooquant.provider.bitstamp import common, httpclient
-import queue
 
 
 def build_order_from_open_order(openOrder, instrumentTraits):
@@ -186,8 +186,9 @@ class LiveBroker(broker.Broker):
         self.__stop = False  # No errors. Keep running.
 
     def _startTradeMonitor(self):
-        self.__stop = True  # Stop running in case of errors.
         common.logger.info("Initializing trade monitor.")
+
+        self.__stop = True  # Stop running in case of errors.
         self.__tradeMonitor.start()
         self.__stop = False  # No errors. Keep running.
 
@@ -222,7 +223,8 @@ class LiveBroker(broker.Broker):
 
     # BEGIN observer.Subject interface
     def start(self):
-        super(LiveBroker, self).start()
+        super().start()
+
         self.refreshAccountBalance()
         self.refreshOpenOrders()
         self._startTradeMonitor()
@@ -242,6 +244,7 @@ class LiveBroker(broker.Broker):
     def dispatch(self):
         # Switch orders from SUBMITTED to ACCEPTED.
         ordersToProcess = list(self.__activeOrders.values())
+
         for order in ordersToProcess:
             if order.isSubmitted():
                 order.switchState(broker.Order.State.ACCEPTED)

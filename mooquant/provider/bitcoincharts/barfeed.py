@@ -46,7 +46,7 @@ class TradeBar(bar.Bar):
         (self.__dateTime, self.__price, self.__amount) = state
 
     def __getstate__(self):
-        return (self.__dateTime, self.__price, self.__amount)
+        return self.__dateTime, self.__price, self.__amount
 
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted:
@@ -102,6 +102,7 @@ class UnixTimeFix(object):
             self.__nextFix = 1
 
         self.__lastDateTime = dateTime
+
         return ret
 
 
@@ -149,7 +150,7 @@ class CSVTradeFeed(csvfeed.BarFeed):
     """
 
     def __init__(self, timezone=None, maxLen=None):
-        super(CSVTradeFeed, self).__init__(barfeed.Frequency.TRADE, maxLen)
+        super().__init__(barfeed.Frequency.TRADE, maxLen)
         self.__timezone = timezone
         self.__unixTimeFix = UnixTimeFix()
 
@@ -189,7 +190,7 @@ class CSVTradeFeed(csvfeed.BarFeed):
             if fromDateTime or toDateTime:
                 self.setBarFilter(csvfeed.DateRangeFilter(to_utc_if_naive(fromDateTime), to_utc_if_naive(toDateTime)))
 
-            super(CSVTradeFeed, self).addBarsFromCSV(instrument, path, rowParser)
+            super().addBarsFromCSV(instrument, path, rowParser)
 
         finally:
             self.setBarFilter(prevBarFilter)

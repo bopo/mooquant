@@ -22,9 +22,9 @@
 import abc
 
 from mooquant import bar
-from mooquant.dataseries import bards
-from mooquant import feed
 from mooquant import dispatchprio
+from mooquant import feed
+from mooquant.dataseries import bards
 
 # This is only for backward compatibility since Frequency used to be defined here and not in bar.py.
 Frequency = bar.Frequency
@@ -44,7 +44,7 @@ class BaseBarFeed(feed.BaseFeed):
     """
 
     def __init__(self, frequency, maxLen=None):
-        super(BaseBarFeed, self).__init__(maxLen)
+        super().__init__(maxLen)
 
         self.__frequency = frequency
         self.__useAdjustedValues = False
@@ -56,7 +56,7 @@ class BaseBarFeed(feed.BaseFeed):
         self.__currentBars = None
         self.__lastBars = {}
 
-        super(BaseBarFeed, self).reset()
+        super().reset()
 
     def setUseAdjustedValues(self, useAdjusted):
         if useAdjusted and not self.barsHaveAdjClose():
@@ -167,7 +167,7 @@ class BaseBarFeed(feed.BaseFeed):
 # and the bars are sent back to workers.
 class OptimizerBarFeed(BaseBarFeed):
     def __init__(self, frequency, instruments, bars, maxLen=None):
-        super(OptimizerBarFeed, self).__init__(frequency, maxLen)
+        super().__init__(frequency, maxLen)
 
         for instrument in instruments:
             self.registerInstrument(instrument)
@@ -188,7 +188,7 @@ class OptimizerBarFeed(BaseBarFeed):
         return self.__barsHaveAdjClose
 
     def start(self):
-        super(OptimizerBarFeed, self).start()
+        super().start()
 
     def stop(self):
         pass

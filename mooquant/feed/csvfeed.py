@@ -25,7 +25,6 @@ import datetime
 from mooquant.feed import memfeed
 from mooquant.utils import csvutils, dt
 
-
 # Interface for csv row parsers.
 
 class RowParser(object, metaclass=abc.ABCMeta):
@@ -69,7 +68,7 @@ class DateRangeFilter(RowFilter):
 
 class BaseFeed(memfeed.MemFeed):
     def __init__(self, rowParser, maxLen=None):
-        super(BaseFeed, self).__init__(maxLen)
+        super().__init__(maxLen)
 
         self.__rowParser = rowParser
         self.__rowFilter = None

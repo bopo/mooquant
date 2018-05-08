@@ -26,8 +26,7 @@ from mooquant import dispatcher, marketsession
 from mooquant.feed import csvfeed
 from mooquant.utils import dt
 
-from . import common
-from . import feed_test
+from . import common, feed_test
 
 
 class TestCase(common.TestCase):

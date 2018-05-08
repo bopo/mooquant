@@ -18,9 +18,9 @@
 .. moduleauthor:: Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 """
 
-import unittest
-import threading
 import datetime
+import threading
+import unittest
 
 from mooquant.websocket import pusher
 
