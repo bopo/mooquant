@@ -17,6 +17,7 @@ class OrdersFile:
 
         # Load orders from the file.
         reader = csv.DictReader(open(ordersFile, "r"), fieldnames=["year", "month", "day", "symbol", "action", "qty"])
+
         for row in reader:
             dateTime = datetime.datetime(int(row["year"]), int(row["month"]), int(row["day"]))
             self.__orders.setdefault(dateTime, [])
@@ -54,10 +55,11 @@ class MyStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed, cash, ordersFile, useAdjustedClose):
         # Suscribe to the feed bars event before the broker just to place the orders properly.
         feed.getNewValuesEvent().subscribe(self.__onBarsBeforeBroker)
-        super(MyStrategy, self).__init__(feed, cash)
+
+        super().__init__(feed, cash)
+
         self.__ordersFile = ordersFile
         self.setUseAdjustedValues(useAdjustedClose)
-        # We will allow buying more shares than cash allows.
         self.getBroker().setAllowNegativeCash(True)
 
     def __onBarsBeforeBroker(self, dateTime, bars):
@@ -90,6 +92,7 @@ def main():
     feed = yahoofeed.Feed()
     feed.setBarFilter(csvfeed.DateRangeFilter(ordersFile.getFirstDate(), ordersFile.getLastDate()))
     feed.setDailyBarTime(datetime.time(0, 0, 0))  # This is to match the dates loaded with the ones in the orders file.
+
     for symbol in ordersFile.getInstruments():
         feed.addBarsFromCSV(symbol, os.path.join(os.getenv("QS"), "QSData", "Yahoo", symbol + ".csv"))
 

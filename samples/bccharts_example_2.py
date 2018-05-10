@@ -10,7 +10,8 @@ class VWAPMomentum(strategy.BacktestingStrategy):
     MIN_TRADE = 5
 
     def __init__(self, feed, brk, instrument, vwapWindowSize, buyThreshold, sellThreshold):
-        super(VWAPMomentum, self).__init__(feed, brk)
+        super().__init__(feed, brk)
+
         self.__instrument = instrument
         self.__vwap = vwap.VWAP(feed[instrument], vwapWindowSize)
         self.__buyThreshold = buyThreshold
@@ -24,6 +25,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
     def _cancelOrders(self, orders):
         brk = self.getBroker()
+
         for o in orders:
             self.info("Canceling order %s" % (o.getId()))
             brk.cancelOrder(o)
@@ -35,7 +37,8 @@ class VWAPMomentum(strategy.BacktestingStrategy):
         brk = self.getBroker()
         cashAvail = brk.getCash() * 0.98
         size = round(cashAvail / price, 3)
-        if len(buyOrders) == 0 and price*size > VWAPMomentum.MIN_TRADE:
+
+        if len(buyOrders) == 0 and price * size > VWAPMomentum.MIN_TRADE:
             self.info("Buy %s at %s" % (size, price))
             try:
                 self.limitOrder(self.__instrument, price, size)
@@ -48,9 +51,10 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
         brk = self.getBroker()
         shares = brk.getShares(self.__instrument)
+
         if len(sellOrders) == 0 and shares > 0:
             self.info("Sell %s at %s" % (shares, price))
-            self.limitOrder(self.__instrument, price, shares*-1)
+            self.limitOrder(self.__instrument, price, shares * -1)
 
     def getVWAP(self):
         return self.__vwap
@@ -61,6 +65,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
             return
 
         price = bars[self.__instrument].getClose()
+
         if price > vwap * (1 + self.__buyThreshold):
             self._buySignal(price)
         elif price < vwap * (1 - self.__sellThreshold):
@@ -71,6 +76,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
             orderType = "Buy"
         else:
             orderType = "Sell"
+            
         self.info("%s order %d updated - Status: %s - %s" % (
             orderType,
             order.getId(),
@@ -86,7 +92,7 @@ def main(plot):
     buyThreshold = 0.02
     sellThreshold = 0.01
 
-    barFeed = csvfeed.GenericBarFeed(bar.Frequency.MINUTE*30)
+    barFeed = csvfeed.GenericBarFeed(bar.Frequency.MINUTE * 30)
     barFeed.addBarsFromCSV(instrument, "./tests/data/30min-bitstampUSD.csv")
     brk = broker.BacktestingBroker(initialCash, barFeed)
     strat = VWAPMomentum(barFeed, brk, instrument, vwapWindowSize, buyThreshold, sellThreshold)

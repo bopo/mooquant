@@ -59,8 +59,9 @@ class StatArbHelper:
 
     def update(self):
         if len(self.__ds1) >= self.__windowSize:
-            values1 = np.asarray(self.__ds1[-1*self.__windowSize:])
-            values2 = np.asarray(self.__ds2[-1*self.__windowSize:])
+            values1 = np.asarray(self.__ds1[-1 * self.__windowSize:])
+            values2 = np.asarray(self.__ds2[-1 * self.__windowSize:])
+
             self.__updateHedgeRatio(values1, values2)
             self.__updateSpread()
             self.__updateSpreadMeanAndStd(values1, values2)
@@ -70,8 +71,10 @@ class StatArbHelper:
 class StatArb(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument1, instrument2, windowSize):
         strategy.BacktestingStrategy.__init__(self, feed)
+
         self.setUseAdjustedValues(True)
-        self.__statArbHelper = StatArbHelper(feed[instrument1].getAdjCloseDataSeries(), feed[instrument2].getAdjCloseDataSeries(), windowSize)
+        self.__statArbHelper = StatArbHelper(feed[instrument1].getAdjCloseDataSeries(),
+                                             feed[instrument2].getAdjCloseDataSeries(), windowSize)
         self.__i1 = instrument1
         self.__i2 = instrument2
 
@@ -91,7 +94,8 @@ class StatArb(strategy.BacktestingStrategy):
         price2 = bars[self.__i2].getAdjClose()
         size1 = int(cash / (price1 + hedgeRatio * price2))
         size2 = int(size1 * hedgeRatio)
-        return (size1, size2)
+
+        return size1, size2
 
     def buySpread(self, bars, hedgeRatio):
         amount1, amount2 = self.__getOrderSize(bars, hedgeRatio)
@@ -105,6 +109,7 @@ class StatArb(strategy.BacktestingStrategy):
 
     def reducePosition(self, instrument):
         currentPos = self.getBroker().getShares(instrument)
+
         if currentPos > 0:
             self.marketOrder(instrument, currentPos * -1)
         elif currentPos < 0:
@@ -120,6 +125,7 @@ class StatArb(strategy.BacktestingStrategy):
         if bars.getBar(self.__i1) and bars.getBar(self.__i2):
             hedgeRatio = self.__statArbHelper.getHedgeRatio()
             zScore = self.__statArbHelper.getZScore()
+
             if zScore is not None:
                 currentPos = abs(self.getBroker().getShares(self.__i1)) + abs(self.getBroker().getShares(self.__i2))
                 if abs(zScore) <= 1 and currentPos != 0:
@@ -137,7 +143,6 @@ def main(plot):
 
     # Download the bars.
     feed = yahoofinance.build_feed(instruments, 2006, 2012, ".")
-
     strat = StatArb(feed, instruments[0], instruments[1], windowSize)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
@@ -150,7 +155,7 @@ def main(plot):
     strat.run()
     print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
-    if plot:
+    if plot and plt:
         plt.plot()
 
 

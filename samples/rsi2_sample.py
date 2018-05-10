@@ -1,7 +1,7 @@
-import rsi2
 from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
+from . import rsi2
 
 
 def main(plot):

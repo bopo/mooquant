@@ -35,7 +35,7 @@ def main(plot):
     threshold = 0.01
 
     # Download the bars.
-    feed = quandl.build_feed('WIKI',[instrument], 2011, 2012, ".")
+    feed = quandl.build_feed('WIKI', [instrument], 2011, 2012, ".")
 
     strat = VWAPMomentum(feed, instrument, vwapWindowSize, threshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
@@ -50,6 +50,7 @@ def main(plot):
 
     if plot:
         plt.plot()
+
 
 if __name__ == "__main__":
     main(True)

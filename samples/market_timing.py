@@ -13,6 +13,7 @@ class MarketTiming(strategy.BacktestingStrategy):
         self.__sharesToBuy = {}
         # Initialize indicators for each instrument.
         self.__sma = {}
+
         for assetClass in instrumentsByClass:
             for instrument in instrumentsByClass[assetClass]:
                 priceDS = feed[instrument].getPriceDataSeries()
@@ -26,6 +27,7 @@ class MarketTiming(strategy.BacktestingStrategy):
         # all.
         smas = self.__sma[instrument]
         price = self.getLastPrice(instrument)
+
         if len(smas) == 0 or smas[-1] is None or price < smas[-1]:
             return None
 
@@ -33,25 +35,31 @@ class MarketTiming(strategy.BacktestingStrategy):
         ret = None
         lookBack = 20
         priceDS = self.getFeed()[instrument].getPriceDataSeries()
+
         if len(priceDS) >= lookBack and smas[-1] is not None and smas[-1*lookBack] is not None:
             ret = (priceDS[-1] - priceDS[-1*lookBack]) / float(priceDS[-1*lookBack])
+
         return ret
 
     def _getTopByClass(self, assetClass):
         # Find the instrument with the highest rank.
         ret = None
         highestRank = None
+
         for instrument in self.__instrumentsByClass[assetClass]:
             rank = self._getRank(instrument)
             if rank is not None and (highestRank is None or rank > highestRank):
                 highestRank = rank
                 ret = instrument
+
         return ret
 
     def _getTop(self):
         ret = {}
+
         for assetClass in self.__instrumentsByClass:
             ret[assetClass] = self._getTopByClass(assetClass)
+
         return ret
 
     def _placePendingOrders(self):
@@ -59,6 +67,7 @@ class MarketTiming(strategy.BacktestingStrategy):
 
         for instrument in self.__sharesToBuy:
             orderSize = self.__sharesToBuy[instrument]
+
             if orderSize > 0:
                 # Adjust the order size based on available cash.
                 lastPrice = self.getLastPrice(instrument)
@@ -66,6 +75,7 @@ class MarketTiming(strategy.BacktestingStrategy):
                 while cost > remainingCash and orderSize > 0:
                     orderSize -= 1
                     cost = orderSize * lastPrice
+
                 if orderSize > 0:
                     remainingCash -= cost
                     assert(remainingCash >= 0)

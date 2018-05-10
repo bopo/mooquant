@@ -8,7 +8,7 @@ from mooquant.utils import stats
 
 class MyStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed):
-        super(MyStrategy, self).__init__(feed, 10000000)
+        super().__init__(feed, 10000000)
         self.__position = None
 
     def onEnterOk(self, position):
@@ -37,6 +37,7 @@ class MyStrategy(strategy.BacktestingStrategy):
             self.__position = self.enterLong('c', 1, True)
         elif day == 20:
             self.__position = self.enterLong('d', 1, True)
+
 
 # 2.读取csv文件.
 feed = GenericBarFeed(Frequency.DAY, None, None)

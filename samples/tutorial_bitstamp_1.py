@@ -64,9 +64,10 @@ class Strategy(strategy.BaseStrategy):
 def main():
     barFeed = barfeed.LiveTradeFeed()
     brk = broker.PaperTradingBroker(1000, barFeed)
-    
+
     strat = Strategy(barFeed, brk)
     strat.run()
+
 
 if __name__ == "__main__":
     main()

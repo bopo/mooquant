@@ -6,7 +6,7 @@ from mooquant.utils import stats
 
 class MyStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed):
-        super(MyStrategy, self).__init__(feed, 1000000)
+        super().__init__(feed, 1000000)
 
         # We wan't to use adjusted close prices instead of close.
         self.setUseAdjustedValues(True)

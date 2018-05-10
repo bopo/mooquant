@@ -1,8 +1,7 @@
-import sma_crossover
 from mooquant import plotter
-# from mooquant.tools import yahoofinance
 from mooquant.analyzer import sharpe
 from mooquant.tools import quandl
+from . import sma_crossover
 
 
 def main(plot):
@@ -11,7 +10,7 @@ def main(plot):
 
     # Download the bars.
     # feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
-    feed = quandl.build_feed('WIKI',[instrument], 2011, 2012, ".")
+    feed = quandl.build_feed('WIKI', [instrument], 2011, 2012, ".")
 
     strat = sma_crossover.SMACrossOver(feed, instrument, smaPeriod)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()

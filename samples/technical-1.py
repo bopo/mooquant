@@ -5,8 +5,10 @@ from mooquant import dataseries, technical
 class Accumulator(technical.EventWindow):
     def getValue(self):
         ret = None
+
         if self.windowFull():
             ret = self.getValues().sum()
+
         return ret
 
 

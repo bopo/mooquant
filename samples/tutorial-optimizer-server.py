@@ -13,6 +13,7 @@ def parameters_generator():
     overSoldThreshold = list(range(5, 26))
     return itertools.product(instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
 
+
 # The if __name__ == '__main__' part is necessary if running on Windows.
 if __name__ == '__main__':
     # Load the feed from the CSV files.
@@ -23,8 +24,8 @@ if __name__ == '__main__':
 
     # Run the server.
     server.serve(
-        strategyParameters=parameters_generator(), 
-        address="0.0.0.0", 
+        strategyParameters=parameters_generator(),
+        address="0.0.0.0",
         barFeed=feeds,
         drivce='xml',
         port=5000

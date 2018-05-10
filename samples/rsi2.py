@@ -4,13 +4,13 @@ from mooquant.technical import cross, ma, rsi
 
 class RSI2(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold):
-        super(RSI2, self).__init__(feed)
+        super().__init__(feed)
         self.__instrument = instrument
 
         # We'll use adjusted close values, if available, instead of regular close values.
         if feed.barsHaveAdjClose():
             self.setUseAdjustedValues(True)
-        
+
         self.__priceDS = feed[instrument].getPriceDataSeries()
         self.__entrySMA = ma.SMA(self.__priceDS, entrySMA)
         self.__exitSMA = ma.SMA(self.__priceDS, exitSMA)
@@ -35,7 +35,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert(False)
+            assert (False)
 
     def onExitOk(self, position):
         if self.__longPos == position:
@@ -43,7 +43,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert(False)
+            assert (False)
 
     def onExitCanceled(self, position):
         # If the exit was canceled, re-submit it.
@@ -55,6 +55,7 @@ class RSI2(strategy.BacktestingStrategy):
             return
 
         bar = bars[self.__instrument]
+
         if self.__longPos is not None:
             if self.exitLongSignal():
                 self.__longPos.exitMarket()

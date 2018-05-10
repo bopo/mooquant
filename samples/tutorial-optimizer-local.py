@@ -1,8 +1,8 @@
 import itertools
 
-import rsi2
 from mooquant.barfeed import yahoofeed
 from mooquant.optimizer import local
+from . import rsi2
 
 
 def parameters_generator():

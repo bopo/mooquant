@@ -6,7 +6,7 @@ from mooquant.technical import bollinger
 
 class BBands(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, bBandsPeriod):
-        super(BBands, self).__init__(feed)
+        super().__init__(feed)
         self.__instrument = instrument
         self.__bbands = bollinger.BollingerBands(feed[instrument].getCloseDataSeries(), bBandsPeriod, 2)
 
@@ -16,18 +16,18 @@ class BBands(strategy.BacktestingStrategy):
     def onBars(self, bars):
         lower = self.__bbands.getLowerBand()[-1]
         upper = self.__bbands.getUpperBand()[-1]
-        
+
         if lower is None:
             return
 
         shares = self.getBroker().getShares(self.__instrument)
         bar = bars[self.__instrument]
-        
+
         if shares == 0 and bar.getClose() < lower:
             sharesToBuy = int(self.getBroker().getCash(False) / bar.getClose())
             self.marketOrder(self.__instrument, sharesToBuy)
         elif shares > 0 and bar.getClose() > upper:
-            self.marketOrder(self.__instrument, -1*shares)
+            self.marketOrder(self.__instrument, -1 * shares)
 
 
 def main(plot):
@@ -50,11 +50,11 @@ def main(plot):
         plt.getInstrumentSubplot(instrument).addDataSeries("lower", strat.getBollingerBands().getLowerBand())
 
     strat.run()
-    
+
     print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot:
-        plt.plot()
+        plot.plot()
 
 
 if __name__ == "__main__":

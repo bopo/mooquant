@@ -14,8 +14,8 @@ class MyStrategy(strategy.BacktestingStrategy):
         bar = bars[self.__instrument]
         self.info("%s %s %s" % (bar.getClose(), self.__rsi[-1], self.__sma[-1]))
 
+
 if __name__ == '__main__':
-    # Load the yahoo feed from the CSV file
     feed = yahoofeed.Feed()
     feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 

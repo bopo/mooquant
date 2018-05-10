@@ -14,11 +14,12 @@ class MyStrategy(strategy.BacktestingStrategy):
         bar = bars[self.__instrument]
         self.info("%s %s" % (bar.getClose(), self.__sma[-1]))
 
-if __name__ == '__main__':
-	# Load the yahoo feed from the CSV file
-	feed = yahoofeed.Feed()
-	feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
-	# Evaluate the strategy with the feed's bars.
-	strat = MyStrategy(feed, "orcl")
-	strat.run()
+if __name__ == '__main__':
+    # Load the yahoo feed from the CSV file
+    feed = yahoofeed.Feed()
+    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+
+    # Evaluate the strategy with the feed's bars.
+    strat = MyStrategy(feed, "orcl")
+    strat.run()

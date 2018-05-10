@@ -1,4 +1,4 @@
-import sma_crossover
+from . import sma_crossover
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.barfeed import yahoofeed
 

@@ -55,5 +55,6 @@ def run_strategy(smaPeriod):
 
     print("Final portfolio value: $%.2f" % strat.getBroker().getEquity())
 
+
 if __name__ == '__main__':
     run_strategy(15)

@@ -59,7 +59,7 @@ class Strategy(strategy.BacktestingStrategy):
 def main():
     instruments = ["600036"]
 
-    feeds = tushare.build_feed(instruments, 2006, 2018, "tushare")
+    feeds = tushare.build_feed(instruments, 2003, 2018, "tushare")
 
     # feeds = csvfeed.Feed("Date", "%Y-%m-%d")
     # feeds.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))
@@ -81,7 +81,7 @@ def main():
     # 4.设置指标和绘图
     ratio = sharpe.SharpeRatio()
     strat.attachAnalyzer(ratio)
-    plter = plotter.StrategyPlotter(strat)
+    # plter = plotter.StrategyPlotter(strat)
 
     # coloredlogs.install(level='DEBUG')
 
@@ -91,7 +91,7 @@ def main():
 
     # 6.输出夏普率、绘图
     strat.info("夏普比率: " + str(ratio.getSharpeRatio(0)))
-    plter.plot()
+    # plter.plot()
 
 
 if __name__ == '__main__':

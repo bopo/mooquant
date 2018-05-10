@@ -2,19 +2,18 @@ from mooquant import eventprofiler
 from mooquant.barfeed import yahoofeed
 from mooquant.technical import ma, roc, stats
 
-# Event inspired on an example from Ernie Chan's book:
-# 'Algorithmic Trading: Winning Strategies and Their Rationale'
-
 
 class BuyOnGap(eventprofiler.Predicate):
     def __init__(self, feed):
-        super(BuyOnGap, self).__init__()
+        super().__init__()
 
         stdDevPeriod = 90
         smaPeriod = 20
+
         self.__returns = {}
         self.__stdDev = {}
         self.__ma = {}
+
         for instrument in feed.getRegisteredInstruments():
             priceDS = feed[instrument].getAdjCloseDataSeries()
             # Returns over the adjusted close values.
@@ -26,33 +25,39 @@ class BuyOnGap(eventprofiler.Predicate):
 
     def __gappedDown(self, instrument, bards):
         ret = False
+
         if self.__stdDev[instrument][-1] is not None:
             prevBar = bards[-2]
             currBar = bards[-1]
             low2OpenRet = (currBar.getOpen(True) - prevBar.getLow(True)) / float(prevBar.getLow(True))
+
             if low2OpenRet < (self.__returns[instrument][-1] - self.__stdDev[instrument][-1]):
                 ret = True
+
         return ret
 
     def __aboveSMA(self, instrument, bards):
         ret = False
+
         if self.__ma[instrument][-1] is not None and bards[-1].getOpen(True) > self.__ma[instrument][-1]:
             ret = True
+
         return ret
 
     def eventOccurred(self, instrument, bards):
         ret = False
+
         if self.__gappedDown(instrument, bards) and self.__aboveSMA(instrument, bards):
             ret = True
+
         return ret
 
 
 def main(plot):
     instruments = ["orcl", ]
-    # feed = yahoofinance.build_feed(instruments, 2008, 2009, ".")
 
     feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    feed.addBarsFromCSV(instruments[0], "./tests/data/orcl-2000.csv")
 
     predicate = BuyOnGap(feed)
     eventProfiler = eventprofiler.Profiler(predicate, 5, 5)
@@ -60,9 +65,10 @@ def main(plot):
 
     results = eventProfiler.getResults()
     print("%d events found" % (results.getEventCount()))
-    
+
     if plot:
         eventprofiler.plot(results)
+
 
 if __name__ == "__main__":
     main(True)
