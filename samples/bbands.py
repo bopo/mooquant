@@ -54,7 +54,7 @@ def main(plot):
     print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot:
-        plot.plot()
+        plt.plot()
 
 
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ requirements = [
     "python-dateutil",
     "requests",
     "numpy",
-    "pytz",    
+    "pytz",
 ]
 
 setup_requirements = [
@@ -51,19 +51,19 @@ setup(
     author_email='ibopo@126.com',
     url='http://www.mooquant.com/',
     download_url='https://github.com/bopo/mooquant/archive/master.zip',
-    packages=find_packages(include=['mooquant','mooquant.*']),
+    packages=find_packages(include=['mooquant', 'mooquant.*']),
     extras_require={
-        'Scipy':  ["scipy"],
-        'TALib':  ["Cython", "TA-Lib"],
-        'Plotting':  ["matplotlib"],
-        'Bitstamp':  ["ws4py>=0.3.4", "tornado"],
+        'Scipy': ["scipy"],
+        'TALib': ["Cython", "TA-Lib"],
+        'Plotting': ["matplotlib"],
+        'Bitstamp': ["ws4py>=0.3.4", "tornado==4.5.3"],
     },
     entry_points={
         'console_scripts': [
             'moo = mooquant.cli:main',
             'mooquant = mooquant.cli:main',
         ]
-    },    
+    },
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,
@@ -73,8 +73,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
@@ -83,5 +81,5 @@ setup(
     ],
     test_suite='tests',
     tests_require=test_requirements,
-    setup_requires=setup_requirements,    
+    setup_requires=setup_requirements,
 )

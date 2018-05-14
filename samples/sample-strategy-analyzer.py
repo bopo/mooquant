@@ -1,8 +1,10 @@
-from . import sma_crossover
+# from . import sma_crossover
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.barfeed import yahoofeed
 
 # Load the yahoo feed from the CSV file
+from samples import sma_crossover
+
 feed = yahoofeed.Feed()
 feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
@@ -30,6 +32,7 @@ print("Longest drawdown duration: %s" % (drawDownAnalyzer.getLongestDrawDownDura
 
 print()
 print("Total trades: %d" % (tradesAnalyzer.getCount()))
+
 if tradesAnalyzer.getCount() > 0:
     profits = tradesAnalyzer.getAll()
     print("Avg. profit: $%2.f" % (profits.mean()))

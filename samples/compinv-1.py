@@ -25,28 +25,33 @@ class MyStrategy(strategy.BacktestingStrategy):
         pass
 
 
-# Load the yahoo feed from CSV files.
-feed = yahoofeed.Feed()
-feed.addBarsFromCSV("aeti", "./tests/data/aeti-2011-yahoofinance.csv")
-feed.addBarsFromCSV("egan", "./tests/data/egan-2011-yahoofinance.csv")
-feed.addBarsFromCSV("glng", "./tests/data/glng-2011-yahoofinance.csv")
-feed.addBarsFromCSV("simo", "./tests/data/simo-2011-yahoofinance.csv")
+def main():
+    # Load the yahoo feed from CSV files.
+    feed = yahoofeed.Feed()
+    feed.addBarsFromCSV("aeti", "./tests/data/aeti-2011-yahoofinance.csv")
+    feed.addBarsFromCSV("egan", "./tests/data/egan-2011-yahoofinance.csv")
+    feed.addBarsFromCSV("glng", "./tests/data/glng-2011-yahoofinance.csv")
+    feed.addBarsFromCSV("simo", "./tests/data/simo-2011-yahoofinance.csv")
 
-# Evaluate the strategy with the feed's bars.
-myStrategy = MyStrategy(feed)
+    # Evaluate the strategy with the feed's bars.
+    myStrategy = MyStrategy(feed)
 
-# Attach returns and sharpe ratio analyzers.
-retAnalyzer = returns.Returns()
-myStrategy.attachAnalyzer(retAnalyzer)
-sharpeRatioAnalyzer = sharpe.SharpeRatio()
-myStrategy.attachAnalyzer(sharpeRatioAnalyzer)
+    # Attach returns and sharpe ratio analyzers.
+    retAnalyzer = returns.Returns()
+    myStrategy.attachAnalyzer(retAnalyzer)
+    sharpeRatioAnalyzer = sharpe.SharpeRatio()
+    myStrategy.attachAnalyzer(sharpeRatioAnalyzer)
 
-# Run the strategy
-myStrategy.run()
+    # Run the strategy
+    myStrategy.run()
 
-# Print the results.
-print("Final portfolio value: $%.2f" % myStrategy.getResult())
-print("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
-print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
-print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
-print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+    # Print the results.
+    print("Final portfolio value: $%.2f" % myStrategy.getResult())
+    print("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
+    print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
+    print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
+    print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+
+
+if __name__ == '__main__':
+    main()

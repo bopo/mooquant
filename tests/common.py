@@ -50,7 +50,7 @@ class RunResults(object):
         # Skip the last, empty line.
         if skip_last_line_if_empty and len(ret[:-1]) == 0:
             ret = ret[:-1]
-            
+
         return ret
 
 
@@ -63,7 +63,7 @@ def run_cmd(cmd):
 
 
 def run_python_code(code):
-    cmd = ["python3"]
+    cmd = [os.environ['__PYVENV_LAUNCHER__']]
     cmd.append("-u")
     cmd.append("-c")
     cmd.append(code)
@@ -72,7 +72,7 @@ def run_python_code(code):
 
 
 def run_sample_script(script, params=[]):
-    cmd = ["python3"]
+    cmd = [os.environ['__PYVENV_LAUNCHER__']]
     cmd.append("-u")
     cmd.append(os.path.join("examples", script))
     cmd.extend(params)
@@ -86,27 +86,27 @@ def get_file_lines(fileName):
 
 
 def compare_head(fileName, lines, path="examples"):
-    assert(len(lines) > 0)
+    assert (len(lines) > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
     return fileLines[0:len(lines)] == lines
 
 
 def compare_tail(fileName, lines, path="examples"):
-    assert(len(lines) > 0)
+    assert (len(lines) > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
-    return fileLines[len(lines)*-1:] == lines
+    return fileLines[len(lines) * -1:] == lines
 
 
 def head_file(fileName, line_count, path="examples"):
-    assert(line_count > 0)
+    assert (line_count > 0)
     fileLines = get_file_lines(os.path.join(path, fileName))
     return fileLines[0:line_count]
 
 
 def tail_file(fileName, line_count, path="examples"):
-    assert(line_count > 0)
+    assert (line_count > 0)
     lines = get_file_lines(os.path.join(path, fileName))
-    return lines[line_count*-1:]
+    return lines[line_count * -1:]
 
 
 def load_test_csv(path):
@@ -123,7 +123,7 @@ def load_test_csv(path):
             expected = None
         else:
             expected = float(expected)
-            
+
         expectedSeq.append(expected)
 
     return inputSeq, expectedSeq

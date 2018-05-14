@@ -666,6 +666,7 @@ class WebSocketTestCase(tc_common.TestCase):
         # Subscribe to events.
         barFeed.getNewValuesEvent().subscribe(on_bars)
         barFeed.getOrderBookUpdateEvent().subscribe(on_order_book_updated)
+
         disp.getIdleEvent().subscribe(on_idle)
         disp.run()
 

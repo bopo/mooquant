@@ -4,18 +4,42 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
---index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
+--index-url http://mirrors.aliyun.com/pypi/simple/
 
-coloredlogs
-statsmodels
-matplotlib
-requests
-tornado
-tushare
-mootdx
-ta-lib
-pytest
-numpy
-scipy
-ws4py
-pytz
+asn1crypto==0.24.0        # via cryptography
+attrs==18.1.0             # via pytest
+certifi==2018.4.16        # via requests
+cffi==1.11.5              # via cryptography
+chardet==3.0.4            # via requests
+click==6.7                # via mootdx, pytdx
+coloredlogs==9.3.1
+cryptography==2.2.2       # via pytdx
+cycler==0.10.0            # via matplotlib
+cython==0.28.2
+humanfriendly==4.12.1     # via coloredlogs
+idna==2.6                 # via cryptography, requests
+kiwisolver==1.0.1         # via matplotlib
+matplotlib==2.2.2
+mootdx==0.1.8
+more-itertools==4.1.0     # via pytest
+numpy==1.14.3             # via matplotlib, pandas, patsy, scipy, ta-lib
+pandas==0.22.0
+patsy==0.5.0              # via statsmodels
+pluggy==0.6.0             # via pytest
+prettytable==0.7.2        # via mootdx
+py==1.5.3                 # via pytest
+pycparser==2.18           # via cffi
+pyparsing==2.2.0          # via matplotlib
+pytdx==1.67               # via mootdx
+pytest==3.5.1
+python-dateutil==2.7.3    # via matplotlib, pandas
+pytz==2018.4
+requests==2.18.4
+scipy==1.1.0
+six==1.11.0               # via cryptography, cycler, matplotlib, more-itertools, patsy, pytdx, pytest, python-dateutil
+statsmodels==0.8.0
+ta-lib==0.4.17
+tornado==4.5.3
+tushare==1.1.7
+urllib3==1.22             # via requests
+ws4py==0.5.1

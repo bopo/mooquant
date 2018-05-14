@@ -1,6 +1,6 @@
 from mooquant import strategy
-from mooquant.barfeed import yahoofeed
 from mooquant.technical import ma, rsi
+from mooquant.tools import tushare
 
 
 class MyStrategy(strategy.BacktestingStrategy):
@@ -16,9 +16,11 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 
 if __name__ == '__main__':
-    feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    # feed = yahoofeed.Feed()
+    # feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
+    instrument = '600016'
+    feed = tushare.build_feed([instrument], 2013, 2018, './tests/data')
     # Evaluate the strategy with the feed's bars.
-    strat = MyStrategy(feed, "orcl")
+    strat = MyStrategy(feed, instrument)
     strat.run()

@@ -1,10 +1,10 @@
 from mooquant import strategy
-from mooquant.barfeed import yahoofeed
+from mooquant.tools import tushare
 
 
 class MyStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument):
-        super(MyStrategy, self).__init__(feed)
+        super().__init__(feed)
         self.__instrument = instrument
 
     def onBars(self, bars):
@@ -13,10 +13,12 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 
 if __name__ == '__main__':
+    instruments = ['600016', '600036']
     # Load the yahoo feed from the CSV file
-    feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    feed = tushare.build_feed(instruments, 2013, 2018, './tests/data')
+    # feed = yahoofeed.Feed()
+    # feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
 
     # Evaluate the strategy with the feed's bars.
-    strat = MyStrategy(feed, "orcl")
+    strat = MyStrategy(feed, instruments[0])
     strat.run()

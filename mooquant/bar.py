@@ -121,13 +121,14 @@ class BasicBar(Bar):
         '__high',
         '__low',
         '__volume',
+        '__amount',
         '__adjClose',
         '__frequency',
         '__useAdjustedValue',
         '__extra',
     )
 
-    def __init__(self, dateTime, open_, high, low, close, volume, adjClose, frequency, extra={}):
+    def __init__(self, dateTime, open_, high, low, close, volume, adjClose, frequency, amount=None, extra={}):
         if high < low:
             raise Exception("high < low on %s" % (dateTime))
         elif high < open_:
@@ -145,6 +146,7 @@ class BasicBar(Bar):
         self.__high = high
         self.__low = low
         self.__volume = volume
+        self.__amount = amount
         self.__adjClose = adjClose
         self.__frequency = frequency
         self.__useAdjustedValue = False
@@ -157,6 +159,7 @@ class BasicBar(Bar):
          self.__high,
          self.__low,
          self.__volume,
+         self.__amount,
          self.__adjClose,
          self.__frequency,
          self.__useAdjustedValue,
@@ -170,6 +173,7 @@ class BasicBar(Bar):
             self.__high,
             self.__low,
             self.__volume,
+            self.__amount,
             self.__adjClose,
             self.__frequency,
             self.__useAdjustedValue,
@@ -223,6 +227,9 @@ class BasicBar(Bar):
             return self.__adjClose
         else:
             return self.__close
+
+    def getAmount(self):
+        return self.__amount
 
     def getVolume(self):
         return self.__volume

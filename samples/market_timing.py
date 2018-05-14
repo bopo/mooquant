@@ -6,12 +6,12 @@ from mooquant.technical import cumret, ma
 
 class MarketTiming(strategy.BacktestingStrategy):
     def __init__(self, feed, instrumentsByClass, initialCash):
-        super(MarketTiming, self).__init__(feed, initialCash)
+        super().__init__(feed, initialCash)
+
         self.setUseAdjustedValues(True)
         self.__instrumentsByClass = instrumentsByClass
         self.__rebalanceMonth = None
         self.__sharesToBuy = {}
-        # Initialize indicators for each instrument.
         self.__sma = {}
 
         for assetClass in instrumentsByClass:
@@ -172,8 +172,8 @@ def main(plot):
 
     strat.run()
 
-    print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
-    print("Returns: %.2f %%" % (returnsAnalyzer.getCumulativeReturns()[-1] * 100))
+    print("夏普比率: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
+    print("最后收益: %.2f %%" % (returnsAnalyzer.getCumulativeReturns()[-1] * 100))
 
     if plot:
         plt.plot()

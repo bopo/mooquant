@@ -27,9 +27,9 @@ class Dispatcher(object):
     def __init__(self):
         self.__subjects = []
         self.__stop = False
+        self.__currDateTime = None
         self.__startEvent = observer.Event()
         self.__idleEvent = observer.Event()
-        self.__currDateTime = None
 
     # Returns the current event datetime. It may be None for events from realtime subjects.
     def getCurrentDateTime(self):
