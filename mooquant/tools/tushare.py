@@ -28,14 +28,14 @@ import tushare as ts
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import tusharefeed
-
+from pathlib import Path
 
 def download_csv(instrument, begin, end):
     return ts.get_k_data(instrument, begin, end)
 
 
 def download_daily_bars(instrument, year, csvFile):
-    """Download daily bars from Google Finance for a given year.
+    """Download daily bars from Tushare Library for a given year.
 
     :param instrument: Instrument identifier.
     :type instrument: string.
@@ -52,13 +52,11 @@ def download_daily_bars(instrument, year, csvFile):
     if len(bars) > 0:
         bars = bars.drop(['code'], axis=1)
         bars.columns = ['Date', 'Open', 'Close', 'High', 'Low', 'Volume']
-        # bars['Date Time'] = pd.to_datetime(bars['Date Time'], format='%Y-%m-%d %H:%M:%S')
-        # bars.to_csv(csvFile, encoding='utf-8', index=False, date_format='%Y-%m-%d %H:%M:%S')
         bars.to_csv(csvFile, encoding='utf-8', index=False)
 
 
 def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.DAY, skipErrors=False):
-    """Build and load a :class:`mooquant.barfeed.tusharefeed.Feed` using CSV files downloaded from Google Finance.
+    """Build and load a :class:`mooquant.barfeed.tusharefeed.Feed` using CSV files downloaded from Tushare Library.
     CSV files are downloaded if they haven't been downloaded before.
 
     :param instruments: Instrument identifiers.
@@ -75,7 +73,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
     :rtype: :class:`mooquant.barfeed.tusharefeed.Feed`.
     """
 
-    logger = mooquant.logger.getLogger("tools_tushare")
+    logger = mooquant.logger.getLogger("tushare")
     ret = tusharefeed.Feed(frequency)
 
     if not os.path.exists(storage):
@@ -84,12 +82,9 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
 
     for year in range(fromYear, toYear + 1):
         for instrument in instruments:
-            fileName = os.path.join(
-                storage,
-                "{instrument}-{year}-tushare.csv".format(
-                    instrument=instrument, year=year))
-
-            print(fileName)
+            filePath = Path(storage) 
+            fileName = filePath / "{instrument}-{year}-tushare.csv".format(
+                    instrument=instrument, year=year)
 
             if not os.path.exists(fileName):
                 logger.info(

@@ -24,21 +24,13 @@ import os
 
 import mooquant.logger
 from mooquant import bar
-from mooquant.barfeed import googlefeed
+from mooquant.barfeed import mootdxfeed
 from mooquant.utils import csvutils
-
+from mootdx import quotes
 
 def download_csv(instrument, begin, end):
-    url = "http://www.google.com/finance/historical"
-    params = {
-        "q": instrument,
-        "startdate": begin.strftime("%Y-%m-%d"),
-        "enddate": end.strftime("%Y-%m-%d"),
-        "output": "csv",
-    }
-
-    return csvutils.download_csv(url, url_params=params, content_type="application/vnd.ms-excel")
-
+    quote = quotes.Quotes()
+    return quote.k(instrument, begin, end)
 
 def download_daily_bars(instrument, year, csvFile):
     """Download daily bars from Google Finance for a given year.
@@ -51,16 +43,18 @@ def download_daily_bars(instrument, year, csvFile):
     :type csvFile: string.
     """
 
-    bars = download_csv(instrument,
-                        datetime.date(year, 1, 1),
-                        datetime.date(year, 12, 31))
+    begin = datetime.date(year, 1, 1).strftime('%Y-%m-%d')
+    end = datetime.date(year, 12, 31).strftime('%Y-%m-%d')
+    bars = download_csv(instrument, begin, end)
 
-    with open(csvFile, "w") as f:
-        f.write(bars)
+    if len(bars) > 0:
+        bars = bars.drop(['code'], axis=1)
+        bars.columns = ['Open', 'Close', 'High', 'Low', 'Volume', 'Amount', 'Date']
+        bars.to_csv(csvFile, encoding='utf-8', index=False)
 
 
 def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.DAY, timezone=None, skipErrors=False):
-    """Build and load a :class:`mooquant.barfeed.googlefeed.Feed` using CSV files downloaded from Google Finance.
+    """Build and load a :class:`mooquant.barfeed.mootdxfeed.Feed` using CSV files downloaded from Google Finance.
     CSV files are downloaded if they haven't been downloaded before.
 
     :param instruments: Instrument identifiers.
@@ -76,11 +70,11 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
     :type timezone: A pytz timezone.
     :param skipErrors: True to keep on loading/downloading files in case of errors.
     :type skipErrors: boolean.
-    :rtype: :class:`mooquant.barfeed.googlefeed.Feed`.
+    :rtype: :class:`mooquant.barfeed.mootdxfeed.Feed`.
     """
 
-    logger = mooquant.logger.getLogger("googlefinance")
-    ret = googlefeed.Feed(frequency, timezone)
+    logger = mooquant.logger.getLogger("mootdx")
+    ret = mootdxfeed.Feed(frequency, timezone)
 
     if not os.path.exists(storage):
         logger.info("Creating {dirname} directory".format(dirname=storage))
@@ -90,7 +84,7 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
         for instrument in instruments:
             fileName = os.path.join(
                 storage,
-                "{instrument}-{year}-googlefinance.csv".format(
+                "{instrument}-{year}-mootdx.csv".format(
                     instrument=instrument, year=year))
             if not os.path.exists(fileName):
                 logger.info(
