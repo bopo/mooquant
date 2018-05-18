@@ -1,7 +1,6 @@
 # from . import sma_crossover
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.barfeed import yahoofeed
-
 # Load the yahoo feed from the CSV file
 from samples import sma_crossover
 

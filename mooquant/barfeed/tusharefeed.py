@@ -26,7 +26,7 @@ from mooquant.utils import dt
 
 
 ######################################################################
-# Google Finance CSV parser
+# Tushare CSV parser
 # Each bar must be on its own line and fields must be separated by comma (,).
 #
 # Bars Format:
@@ -49,7 +49,7 @@ class RowParser(csvfeed.RowParser):
 
     def __parseDate(self, dateString):
         ret = parse_date(dateString)
-        # Time on Google Finance CSV files is empty. If told to set one, do it.
+        # Time on Tushare CSV files is empty. If told to set one, do it.
         if self.__dailyBarTime is not None:
             ret = datetime.datetime.combine(ret, self.__dailyBarTime)
 
@@ -82,7 +82,7 @@ class RowParser(csvfeed.RowParser):
 
 
 class Feed(csvfeed.BarFeed):
-    """A :class:`mooquant.barfeed.csvfeed.BarFeed` that loads bars from CSV files downloaded from Google Finance.
+    """A :class:`mooquant.barfeed.csvfeed.BarFeed` that loads bars from CSV files downloaded from Tushare.
 
     :param frequency: The frequency of the bars. Only **mooquant.bar.Frequency.DAY** is currently supported.
     :param timezone: The default timezone to use to localize bars. Check :mod:`mooquant.marketsession`.
@@ -93,7 +93,7 @@ class Feed(csvfeed.BarFeed):
     :type maxLen: int.
 
     .. note::
-        Google Finance csv files lack timezone information.
+        Tushare csv files lack timezone information.
         When working with multiple instruments:
 
             * If all the instruments loaded are in the same timezone, then the timezone parameter may not be specified.

@@ -21,12 +21,14 @@
 
 import datetime
 import os
+from pathlib import Path
 
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import mootdxfeed
 from mooquant.utils import csvutils
 from mootdx import quotes
+
 
 def download_csv(instrument, begin, end):
     quote = quotes.Quotes()
@@ -82,10 +84,10 @@ def build_feed(instruments, fromYear, toYear, storage, frequency=bar.Frequency.D
 
     for year in range(fromYear, toYear + 1):
         for instrument in instruments:
-            fileName = os.path.join(
-                storage,
-                "{instrument}-{year}-mootdx.csv".format(
-                    instrument=instrument, year=year))
+            filePath = Path(storage) 
+            fileName = filePath / "{instrument}-{year}-tushare.csv".format(
+                    instrument=instrument, year=year)
+
             if not os.path.exists(fileName):
                 logger.info(
                     "Downloading {instrument} {year} to {filename}".format(

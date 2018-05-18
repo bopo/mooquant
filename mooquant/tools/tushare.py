@@ -21,6 +21,7 @@
 
 import datetime
 import os
+from pathlib import Path
 
 import pandas as pd
 import tushare as ts
@@ -28,7 +29,7 @@ import tushare as ts
 import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import tusharefeed
-from pathlib import Path
+
 
 def download_csv(instrument, begin, end):
     return ts.get_k_data(instrument, begin, end)

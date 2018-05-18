@@ -2,6 +2,7 @@ import itertools
 
 from mooquant.barfeed import yahoofeed
 from mooquant.optimizer import local
+
 from . import rsi2
 
 

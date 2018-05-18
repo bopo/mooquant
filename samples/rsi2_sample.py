@@ -1,6 +1,7 @@
 from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
+
 from . import rsi2
 
 
