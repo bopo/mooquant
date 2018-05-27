@@ -25,30 +25,25 @@ class MyStrategy(strategy.BacktestingStrategy):
         self.info(bars[self.__instrument].getAdjClose())
 
 
-def main(plot):
+def main():
     instruments = ["GORO"]
 
     # Download GORO bars using WIKI source code.
-    feed = quandl.build_feed("WIKI", instruments, 2006, 2012, "./data")
-
-    # Load Quandl CSV downloaded from http://www.quandl.com/OFDP-Open-Financial-Data-Project/GOLD_2-LBMA-Gold-Price-London-Fixings-P-M
+    feed = quandl.build_feed("WIKI", instruments, 2006, 2012, "./histdata")
     quandlFeed = csvfeed.Feed("Date", "%Y-%m-%d")
     quandlFeed.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))
-    quandlFeed.addValuesFromCSV("quandl_gold_2.csv")
+    quandlFeed.addValuesFromCSV("histdata/quandl_gold_2.csv")
 
-    myStrategy = MyStrategy(feed, quandlFeed, instruments[0])
+    strat = MyStrategy(feed, quandlFeed, instruments[0])
+    plter = plotter.StrategyPlotter(strat, True, False, False)
 
-    if plot:
-        plt = plotter.StrategyPlotter(myStrategy, True, False, False)
-        plt.getOrCreateSubplot("quandl").addDataSeries("USD", quandlFeed["USD"])
-        plt.getOrCreateSubplot("quandl").addDataSeries("EUR", quandlFeed["EUR"])
-        plt.getOrCreateSubplot("quandl").addDataSeries("GBP", quandlFeed["GBP"])
+    plter.getOrCreateSubplot("quandl").addDataSeries("USD", quandlFeed["USD"])
+    plter.getOrCreateSubplot("quandl").addDataSeries("EUR", quandlFeed["EUR"])
+    plter.getOrCreateSubplot("quandl").addDataSeries("GBP", quandlFeed["GBP"])
 
-    myStrategy.run()
-
-    if plot:
-        plt.plot()
+    strat.run()
+    plter.plot()
 
 
 if __name__ == "__main__":
-    main(True)
+    main()

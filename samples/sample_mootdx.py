@@ -58,8 +58,7 @@ class Strategy(strategy.BacktestingStrategy):
 
 def main():
     instruments = ["600036"]
-
-    feeds = mootdx.build_feed(instruments, 2003, 2018, "mootdx")
+    feeds = mootdx.build_feed(instruments, 2003, 2018, "histdata/mootdx")
 
     # feeds = csvfeed.Feed("Date", "%Y-%m-%d")
     # feeds.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))

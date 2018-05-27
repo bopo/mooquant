@@ -26,6 +26,9 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 
 def main():
+    import coloredlogs
+    coloredlogs.install(level='DEBUG', fmt='[%(asctime)s] %(levelname)s %(message)s')
+
     # Load the yahoo feed from CSV files.
     feed = yahoofeed.Feed()
     feed.addBarsFromCSV("aeti", "./tests/data/aeti-2011-yahoofinance.csv")

@@ -188,6 +188,7 @@ class BasicBar(Bar):
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted and self.__adjClose is None:
             raise Exception("Adjusted close is not available")
+
         self.__useAdjustedValue = useAdjusted
 
     def getUseAdjValue(self):
@@ -200,6 +201,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose * self.__open / float(self.__close)
         else:
             return self.__open
@@ -208,6 +210,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose * self.__high / float(self.__close)
         else:
             return self.__high
@@ -216,6 +219,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose * self.__low / float(self.__close)
         else:
             return self.__low
@@ -224,6 +228,7 @@ class BasicBar(Bar):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose
         else:
             return self.__close
@@ -243,8 +248,8 @@ class BasicBar(Bar):
     def getPrice(self):
         if self.__useAdjustedValue:
             return self.__adjClose
-        else:
-            return self.__close
+
+        return self.__close
 
     def getExtraColumns(self):
         return self.__extra
@@ -267,12 +272,13 @@ class Bars(object):
         # Check that bar datetimes are in sync
         firstDateTime = None
         firstInstrument = None
+
         for instrument, currentBar in barDict.iteritems():
             if firstDateTime is None:
                 firstDateTime = currentBar.getDateTime()
                 firstInstrument = instrument
             elif currentBar.getDateTime() != firstDateTime:
-                raise Exception("Bar data times are not in sync. %s %s != %s %s" % (
+                raise Exception("Bar data times are not in sync. {} {} != {} {}".format(
                     instrument,
                     currentBar.getDateTime(),
                     firstInstrument,
@@ -354,12 +360,15 @@ class BasicTick(object):
         self.__close = close
         self.__high = high
         self.__low = low
+        
         self.__volume = volume
         self.__amount = amount
+
         self.__bp = bp
         self.__ap = ap
         self.__bv = bv
         self.__av = av
+        
         self.__preclose = preclose
         self.__bought_amount = bought_amount
         self.__sold_amount = sold_amount
@@ -375,12 +384,15 @@ class BasicTick(object):
          self.__close,
          self.__high,
          self.__low,
+         
          self.__volume,
          self.__amount,
+
          self.__bp,
          self.__ap,
          self.__bv,
          self.__av,
+         
          self.__preclose,
          self.__bought_amount,
          self.__sold_amount,
@@ -416,25 +428,27 @@ class BasicTick(object):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose * self.__open / float(self.__close)
-        else:
-            return self.__open
+
+        return self.__open
 
     def getHigh(self, adjusted=False):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
+
             return self.__adjClose * self.__high / float(self.__close)
-        else:
-            return self.__high
+
+        return self.__high
 
     def getLow(self, adjusted=False):
         if adjusted:
             if self.__adjClose is None:
                 raise Exception("Adjusted close is missing")
             return self.__adjClose * self.__low / float(self.__close)
-        else:
-            return self.__low
+
+        return self.__low
 
     def getClose(self, adjusted=False):
         return self.__close
@@ -481,6 +495,7 @@ class BasicTick(object):
     def setUseAdjustedValue(self, useAdjusted):
         if useAdjusted and self.__adjClose is None:
             raise Exception("Adjusted close is not available")
+        
         self.__useAdjustedValue = useAdjusted
 
     def getUseAdjValue(self):
@@ -510,6 +525,7 @@ class Ticks(object):
         # Check that bar datetimes are in sync
         firstDateTime = None
         firstInstrument = None
+        
         for instrument, currentBar in barDict.iteritems():
             if firstDateTime is None:
                 firstDateTime = currentBar.getDateTime()

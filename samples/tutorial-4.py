@@ -1,6 +1,6 @@
 from mooquant import strategy
-from mooquant.barfeed import yahoofeed
 from mooquant.technical import ma
+from mooquant.tools import tushare
 
 
 class MyStrategy(strategy.BacktestingStrategy):
@@ -45,15 +45,13 @@ class MyStrategy(strategy.BacktestingStrategy):
 
 
 def run_strategy(smaPeriod):
-    # Load the yahoo feed from the CSV file
-    feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    instrument = '600016'
+    feeds = tushare.build_feed([instrument], 2016, 2018, './histdata/tushare')
 
     # Evaluate the strategy with the feed.
-    strat = MyStrategy(feed, "orcl", smaPeriod)
+    strat = MyStrategy(feeds, instrument, smaPeriod)
     strat.run()
-
-    print("Final portfolio value: $%.2f" % strat.getBroker().getEquity())
+    strat.info("Final portfolio value: $%.2f" % strat.getBroker().getEquity())
 
 
 if __name__ == '__main__':

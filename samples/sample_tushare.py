@@ -1,9 +1,7 @@
 # coding=utf-8
 
-from mooquant import plotter, strategy
+from mooquant import strategy, plotter
 from mooquant.analyzer import sharpe
-from mooquant.bar import Frequency
-from mooquant.barfeed.csvfeed import GenericBarFeed
 from mooquant.technical import ma
 from mooquant.tools import tushare
 
@@ -59,7 +57,7 @@ class Strategy(strategy.BacktestingStrategy):
 def main():
     instruments = ["600036"]
 
-    feeds = tushare.build_feed(instruments, 2003, 2018, "tushare")
+    feeds = tushare.build_feed(instruments, 2003, 2018, "histdata/tushare")
 
     # feeds = csvfeed.Feed("Date", "%Y-%m-%d")
     # feeds.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))
@@ -81,7 +79,7 @@ def main():
     # 4.设置指标和绘图
     ratio = sharpe.SharpeRatio()
     strat.attachAnalyzer(ratio)
-    # plter = plotter.StrategyPlotter(strat)
+    plter = plotter.StrategyPlotter(strat)
 
     # coloredlogs.install(level='DEBUG')
 
@@ -91,7 +89,7 @@ def main():
 
     # 6.输出夏普率、绘图
     strat.info("夏普比率: " + str(ratio.getSharpeRatio(0)))
-    # plter.plot()
+    plter.plot()
 
 
 if __name__ == '__main__':

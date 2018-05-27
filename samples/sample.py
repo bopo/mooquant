@@ -1,20 +1,27 @@
 # coding=utf-8
-import coloredlogs
+
 
 from mooquant import plotter, strategy
 from mooquant.analyzer import drawdown, sharpe, trades
-from mooquant.bar import Frequency
-from mooquant.barfeed.csvfeed import GenericBarFeed
 from mooquant.technical import ma
+from mooquant.tools import mootdx
+
+import coloredlogs
+coloredlogs.install(level='DEBUG', fmt='[%(asctime)s] %(levelname)s %(message)s')
 
 
-# 1.构建一个策略
-class Strategy(strategy.BacktestingStrategy):
+class MyStrategy(strategy.BacktestingStrategy):
+    '''
+    # 1.构建一个策略
+    '''
+
     def __init__(self, feed, instrument):
-        super().__init__(feed)
+        super(MyStrategy, self).__init__(feed)
+
         self.__position = None
         self.__sma = ma.SMA(feed[instrument].getCloseDataSeries(), 150)
         self.__instrument = instrument
+
         self.getBroker()
 
     def onEnterOk(self, position):
@@ -57,12 +64,15 @@ class Strategy(strategy.BacktestingStrategy):
 
 
 def main():
-    import sys
-    feeds = GenericBarFeed(Frequency.DAY, None, None)
-    feeds.addBarsFromCSV("feeds", sys.argv[1])
+    '''
+    策略执行
+    :return:
+    '''
+    instrument = "600036"
+    feeds = mootdx.build_feed([instrument], 2008, 2018, "histdata/mootdx")
 
     # 3.实例化策略
-    strat = Strategy(feeds, "feeds")
+    strat = MyStrategy(feeds, instrument)
 
     # 4.设置指标和绘图
     ratio = sharpe.SharpeRatio()
@@ -77,16 +87,15 @@ def main():
     strat.attachAnalyzer(tradeAnalyzer)
 
     plter = plotter.StrategyPlotter(strat)
-    coloredlogs.install(level='DEBUG')
 
     # 5.运行策略
     strat.run()
-    strat.info("最终收益: %.2f" % strat.getResult())
+    strat.info("最终收益: {}".format(strat.getResult()))
 
     # 6.输出夏普率、绘图
-    strat.info("夏普比率: " + str(ratio.getSharpeRatio(0)))
-    strat.info("最大回撤: " + str(draws.getMaxDrawDown()))
-    strat.info("回撤时间: " + str(draws.getLongestDrawDownDuration()))
+    strat.info("夏普比率: {}".format(ratio.getSharpeRatio(0)))
+    strat.info("最大回撤: {}".format(draws.getMaxDrawDown()))
+    strat.info("回撤时间: {}".format(draws.getLongestDrawDownDuration()))
     plter.plot()
 
 

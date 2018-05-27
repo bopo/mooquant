@@ -56,8 +56,10 @@ class XigniteError(Exception):
 
 def to_market_datetime(dateTime, exchange):
     timezone = MARKET_TIMEZONES.get(exchange)
+
     if timezone is None:
         raise Exception("No timezone available to localize datetime for exchange %s" % (exchange))
+    
     return dt.localize(dateTime, timezone)
 
 

@@ -129,7 +129,6 @@ class GetBarThread(PollingThread):
         self.__nextBarClose = None
         # The delay between the bar's close and the API call.
         self.__apiCallDelay = apiCallDelay
-
         self.__updateNextBarClose()
 
     def __updateNextBarClose(self):
@@ -140,8 +139,9 @@ class GetBarThread(PollingThread):
 
     def doCall(self):
         endDateTime = self.__nextBarClose
-        self.__updateNextBarClose()
         barDict = {}
+        
+        self.__updateNextBarClose()
 
         for indentifier in self.__identifiers:
             try:

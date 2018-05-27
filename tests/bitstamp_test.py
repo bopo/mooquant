@@ -636,9 +636,9 @@ class LiveTradingTestCase(tc_common.TestCase):
 class WebSocketTestCase(tc_common.TestCase):
     def testBarFeed(self):
         events = {
+            "break": False,
             "on_bars": False,
             "on_order_book_updated": False,
-            "break": False,
             "start": datetime.datetime.now()
         }
 

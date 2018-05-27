@@ -36,8 +36,8 @@ class MarketTiming(strategy.BacktestingStrategy):
         lookBack = 20
         priceDS = self.getFeed()[instrument].getPriceDataSeries()
 
-        if len(priceDS) >= lookBack and smas[-1] is not None and smas[-1*lookBack] is not None:
-            ret = (priceDS[-1] - priceDS[-1*lookBack]) / float(priceDS[-1*lookBack])
+        if len(priceDS) >= lookBack and smas[-1] is not None and smas[-1 * lookBack] is not None:
+            ret = (priceDS[-1] - priceDS[-1 * lookBack]) / float(priceDS[-1 * lookBack])
 
         return ret
 
@@ -72,13 +72,14 @@ class MarketTiming(strategy.BacktestingStrategy):
                 # Adjust the order size based on available cash.
                 lastPrice = self.getLastPrice(instrument)
                 cost = orderSize * lastPrice
+
                 while cost > remainingCash and orderSize > 0:
                     orderSize -= 1
                     cost = orderSize * lastPrice
 
                 if orderSize > 0:
                     remainingCash -= cost
-                    assert(remainingCash >= 0)
+                    assert (remainingCash >= 0)
 
             if orderSize != 0:
                 self.info("Placing market order for %d %s shares" % (orderSize, instrument))
@@ -88,7 +89,7 @@ class MarketTiming(strategy.BacktestingStrategy):
     def _logPosSize(self):
         totalEquity = self.getBroker().getEquity()
         positions = self.getBroker().getPositions()
-        
+
         for instrument in self.getBroker().getPositions():
             posSize = positions[instrument] * self.getLastPrice(instrument) / totalEquity * 100
             self.info("%s - %0.2f %%" % (instrument, posSize))
@@ -105,11 +106,11 @@ class MarketTiming(strategy.BacktestingStrategy):
 
         # Calculate which positions should be open during the next period.
         topByClass = self._getTop()
-        
+
         for assetClass in topByClass:
             instrument = topByClass[assetClass]
             self.info("Best for class %s: %s" % (assetClass, instrument))
-            
+
             if instrument is not None:
                 lastPrice = self.getLastPrice(instrument)
                 cashForInstrument = cashPerAssetClass - self.getBroker().getShares(instrument) * lastPrice
@@ -121,7 +122,7 @@ class MarketTiming(strategy.BacktestingStrategy):
         for instrument in self.getBroker().getPositions():
             if instrument not in list(topByClass.values()):
                 currentShares = self.getBroker().getShares(instrument)
-                assert(instrument not in self.__sharesToBuy)
+                assert (instrument not in self.__sharesToBuy)
                 self.__sharesToBuy[instrument] = currentShares * -1
 
     def getSMA(self, instrument):
@@ -152,7 +153,7 @@ def main(plot):
 
     for assetClass in instrumentsByClass:
         instruments.extend(instrumentsByClass[assetClass])
-    
+
     # feed = yahoofinance.build_feed(instruments, 2007, 2013, "data", skipErrors=True)
     feed = yahoofeed.Feed()
     feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
@@ -167,7 +168,8 @@ def main(plot):
         plt = plotter.StrategyPlotter(strat, False, False, True)
         plt.getOrCreateSubplot("cash").addCallback("Cash", lambda x: strat.getBroker().getCash())
         # Plot strategy vs. SPY cumulative returns.
-        plt.getOrCreateSubplot("returns").addDataSeries("SPY", cumret.CumulativeReturn(feed["SPY"].getPriceDataSeries()))
+        plt.getOrCreateSubplot("returns").addDataSeries("SPY",
+                                                        cumret.CumulativeReturn(feed["SPY"].getPriceDataSeries()))
         plt.getOrCreateSubplot("returns").addDataSeries("Strategy", returnsAnalyzer.getCumulativeReturns())
 
     strat.run()

@@ -144,6 +144,7 @@ def main(plot):
     # Download the bars.
     feed = yahoofinance.build_feed(instruments, 2006, 2012, ".")
     strat = StatArb(feed, instruments[0], instruments[1], windowSize)
+
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 
@@ -153,7 +154,7 @@ def main(plot):
         plt.getOrCreateSubplot("spread").addDataSeries("Spread", strat.getSpreadDS())
 
     strat.run()
-    print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
+    strat.info("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
     if plot and plt:
         plt.plot()

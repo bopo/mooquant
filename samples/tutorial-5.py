@@ -1,15 +1,13 @@
 from mooquant import plotter
 from mooquant.analyzer import returns
-from mooquant.barfeed import yahoofeed
+from mooquant.tools import tushare
 from samples import sma_crossover
 
 if __name__ == '__main__':
-    # Load the yahoo feed from the CSV file
-    feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    instrument = '600016'
 
-    # Evaluate the strategy with the feed's bars.
-    strat = sma_crossover.SMACrossOver(feed, "orcl", 20)
+    feeds = tushare.build_feed([instrument], 2016, 2018, './histdata/tushare')
+    strat = sma_crossover.SMACrossOver(feeds, instrument, 20)
 
     # Attach a returns analyzers to the strategy.
     returnsAnalyzer = returns.Returns()

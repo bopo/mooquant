@@ -49,6 +49,7 @@ class Feed(membf.BarFeed):
         idataframe.ix[:, 'datetime'] = idataframe.ix[:, 'datetime'].apply(
             lambda x: datetime.strptime(x, self._datetime_format))
         idataframe = idataframe[(idataframe.datetime >= fromdate) & (idataframe.datetime <= todate)]
+        
         bars = dataframeToBar(idataframe, self.__frequency)
         mooquant_id = instrument + '.' + exchange_id
 

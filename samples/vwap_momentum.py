@@ -1,12 +1,13 @@
 from mooquant import plotter, strategy
 from mooquant.analyzer import sharpe
 from mooquant.technical import vwap
-from mooquant.tools import quandl
+from mooquant.tools import tushare
 
 
 class VWAPMomentum(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument, vwapWindowSize, threshold):
-        super(VWAPMomentum, self).__init__(feed)
+        super().__init__(feed)
+
         self.__instrument = instrument
         self.__vwap = vwap.VWAP(feed[instrument], vwapWindowSize)
         self.__threshold = threshold
@@ -16,6 +17,7 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
     def onBars(self, bars):
         vwap = self.__vwap[-1]
+
         if vwap is None:
             return
 
@@ -30,26 +32,23 @@ class VWAPMomentum(strategy.BacktestingStrategy):
 
 
 def main(plot):
-    instrument = "AAPL"
+    instrument = '600016'
     vwapWindowSize = 5
     threshold = 0.01
 
-    # Download the bars.
-    feed = quandl.build_feed('WIKI', [instrument], 2011, 2012, ".")
+    feeds = tushare.build_feed([instrument], 2010, 2018, './histdata/tushare')
+    strat = VWAPMomentum(feeds, instrument, vwapWindowSize, threshold)
 
-    strat = VWAPMomentum(feed, instrument, vwapWindowSize, threshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 
-    if plot:
-        plt = plotter.StrategyPlotter(strat, True, False, True)
-        plt.getInstrumentSubplot(instrument).addDataSeries("vwap", strat.getVWAP())
+    plter = plotter.StrategyPlotter(strat, True, False, True)
+    plter.getInstrumentSubplot(instrument).addDataSeries("vwap", strat.getVWAP())
 
     strat.run()
-    print("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
 
-    if plot:
-        plt.plot()
+    strat.info("Sharpe ratio: %.2f" % sharpeRatioAnalyzer.getSharpeRatio(0.05))
+    plter.plot()
 
 
 if __name__ == "__main__":

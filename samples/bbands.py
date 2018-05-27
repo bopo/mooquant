@@ -1,7 +1,7 @@
 from mooquant import plotter, strategy
 from mooquant.analyzer import sharpe
-from mooquant.barfeed import yahoofeed
 from mooquant.technical import bollinger
+from mooquant.tools import mootdx
 
 
 class BBands(strategy.BacktestingStrategy):
@@ -31,15 +31,15 @@ class BBands(strategy.BacktestingStrategy):
 
 
 def main(plot):
-    instrument = "orcl"
+    import coloredlogs
+    coloredlogs.install(level='DEBUG', fmt='[%(asctime)s] %(levelname)s %(message)s')
+
+    instrument = "600036"
     bBandsPeriod = 40
 
-    # Download the bars.
-    # feed = yahoofinance.build_feed([instrument], 2011, 2012, ".")
-    feed = yahoofeed.Feed()
-    feed.addBarsFromCSV("orcl", "./tests/data/orcl-2000.csv")
+    feeds = mootdx.build_feed([instrument], 2003, 2018, "histdata/mootdx")
+    strat = BBands(feeds, instrument, bBandsPeriod)
 
-    strat = BBands(feed, instrument, bBandsPeriod)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 

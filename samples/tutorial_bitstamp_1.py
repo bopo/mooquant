@@ -3,15 +3,17 @@ from mooquant.provider.bitstamp import barfeed, broker
 from mooquant.technical import cross, ma
 
 
-class Strategy(strategy.BaseStrategy):
-    def __init__(self, feed, brk):
-        super(Strategy, self).__init__(feed, brk)
-        smaPeriod = 20
+class MyStrategy(strategy.BaseStrategy):
+    def __init__(self, feed, brk, smaPeriod=20):
+        super().__init__(feed, brk)
+
         self.__instrument = "BTC"
         self.__prices = feed[self.__instrument].getCloseDataSeries()
         self.__sma = ma.SMA(self.__prices, smaPeriod)
+
         self.__bid = None
         self.__ask = None
+
         self.__position = None
         self.__posSize = 0.05
 
@@ -62,10 +64,10 @@ class Strategy(strategy.BaseStrategy):
 
 
 def main():
-    barFeed = barfeed.LiveTradeFeed()
-    brk = broker.PaperTradingBroker(1000, barFeed)
+    feeds = barfeed.LiveTradeFeed()
+    brk = broker.PaperTradingBroker(1000, feeds)
 
-    strat = Strategy(barFeed, brk)
+    strat = MyStrategy(feeds, brk, smaPeriod=20)
     strat.run()
 
 

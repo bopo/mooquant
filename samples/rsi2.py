@@ -3,6 +3,10 @@ from mooquant.technical import cross, ma, rsi
 
 
 class RSI2(strategy.BacktestingStrategy):
+    '''
+    RSI2 策略
+    '''
+
     def __init__(self, feed, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold):
         super().__init__(feed)
         self.__instrument = instrument
@@ -35,7 +39,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert (False)
+            assert False
 
     def onExitOk(self, position):
         if self.__longPos == position:
@@ -43,7 +47,7 @@ class RSI2(strategy.BacktestingStrategy):
         elif self.__shortPos == position:
             self.__shortPos = None
         else:
-            assert (False)
+            assert False
 
     def onExitCanceled(self, position):
         # If the exit was canceled, re-submit it.

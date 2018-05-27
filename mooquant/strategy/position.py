@@ -59,6 +59,7 @@ class WaitingEntryState(PositionState):
             position.getStrategy().onEnterOk(position)
         elif orderEvent.getEventType() == broker.OrderEvent.Type.CANCELED:
             assert (position.getEntryOrder().getFilled() == 0)
+            
             position.switchState(ClosedState())
             position.getStrategy().onEnterCanceled(position)
 
@@ -188,7 +189,6 @@ class Position(object):
         # This may raise an exception, so we wan't to submit the order before moving forward and registering
         # the order in the strategy.
         self.getStrategy().getBroker().submitOrder(order)
-
         self.__activeOrders[order.getId()] = order
         self.getStrategy().registerPositionOrder(self, order)
 
@@ -454,6 +454,7 @@ class LongPosition(Position):
     def buildExitOrder(self, stopPrice, limitPrice):
         quantity = self.getShares()
         assert (quantity > 0)
+        
         if limitPrice is None and stopPrice is None:
             ret = self.getStrategy().getBroker().createMarketOrder(broker.Order.Action.SELL, self.getInstrument(),
                                                                    quantity, False)

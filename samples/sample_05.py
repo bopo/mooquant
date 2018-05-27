@@ -39,37 +39,42 @@ class MyStrategy(strategy.BacktestingStrategy):
             self.__position = self.enterLong('d', 1, True)
 
 
-# 2.读取csv文件.
-feed = GenericBarFeed(Frequency.DAY, None, None)
-feed.addBarsFromCSV("a", "a.csv")
-feed.addBarsFromCSV("b", "b.csv")
-feed.addBarsFromCSV("c", "c.csv")
-feed.addBarsFromCSV("d", "d.csv")
+def main():
+    # 2.读取csv文件.
+    feed = GenericBarFeed(Frequency.DAY, None, None)
+    feed.addBarsFromCSV("a", "a.csv")
+    feed.addBarsFromCSV("b", "b.csv")
+    feed.addBarsFromCSV("c", "c.csv")
+    feed.addBarsFromCSV("d", "d.csv")
 
-strat = MyStrategy(feed)
+    strat = MyStrategy(feed)
 
-# 3.加入分析器
-retAnalyzer = returns.Returns()
-strat.attachAnalyzer(retAnalyzer)
-sharpeRatioAnalyzer = sharpe.SharpeRatio()
-strat.attachAnalyzer(sharpeRatioAnalyzer)
+    # 3.加入分析器
+    retAnalyzer = returns.Returns()
+    strat.attachAnalyzer(retAnalyzer)
+    sharpeRatioAnalyzer = sharpe.SharpeRatio()
+    strat.attachAnalyzer(sharpeRatioAnalyzer)
 
-# 4.运行策略
-strat.run()
+    # 4.运行策略
+    strat.run()
 
-# 5.输出结果
+    # 5.输出结果
 
-# 最终的投资组合价值
-print("Final portfolio value: $%.2f" % strat.getResult())
+    # 最终的投资组合价值
+    print("Final portfolio value: $%.2f" % strat.getResult())
 
-# 年化平均收益率
-print("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
+    # 年化平均收益率
+    print("Anual return: %.2f %%" % (retAnalyzer.getCumulativeReturns()[-1] * 100))
 
-# 平均日收益
-print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
+    # 平均日收益
+    print("Average daily return: %.2f %%" % (stats.mean(retAnalyzer.getReturns()) * 100))
 
-# 每日收益标准开发
-print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
+    # 每日收益标准开发
+    print("Std. dev. daily return: %.4f" % (stats.stddev(retAnalyzer.getReturns())))
 
-# 夏普比率
-print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+    # 夏普比率
+    print("Sharpe ratio: %.2f" % (sharpeRatioAnalyzer.getSharpeRatio(0)))
+
+
+if __name__ == '__main__':
+    main()
