@@ -28,8 +28,10 @@ from . import common
 
 def safe_round(number, ndigits):
     ret = None
+
     if number is not None:
         ret = round(number, ndigits)
+
     return ret
 
 
@@ -37,8 +39,10 @@ class SMATestCase(common.TestCase):
     def __buildSMA(self, period, values, smaMaxLen=None):
         seqDs = dataseries.SequenceDataSeries()
         ret = ma.SMA(seqDs, period, smaMaxLen)
+
         for value in values:
             seqDs.append(value)
+
         return ret
 
     def testPeriod1(self):
@@ -48,6 +52,7 @@ class SMATestCase(common.TestCase):
         self.assertTrue(sma[1] == 20)
         self.assertTrue(sma[-1] == 20)
         self.assertTrue(sma[-2] == 10)
+
         with self.assertRaises(IndexError):
             sma[2]
 
@@ -55,6 +60,7 @@ class SMATestCase(common.TestCase):
             sma[-3]
 
         self.assertEqual(len(sma.getDateTimes()), 2)
+
         for i in range(len(sma)):
             self.assertEqual(sma.getDateTimes()[i], None)
 
@@ -63,10 +69,12 @@ class SMATestCase(common.TestCase):
         self.assertEqual(sma[0], None)
         self.assertEqual(sma[1], (0+1) / float(2))
         self.assertEqual(sma[2], (1+2) / float(2))
+
         with self.assertRaises(IndexError):
             sma[3]
 
         self.assertEqual(len(sma.getDateTimes()), 3)
+
         for i in range(len(sma)):
             self.assertEqual(sma.getDateTimes()[i], None)
 
@@ -81,6 +89,7 @@ class SMATestCase(common.TestCase):
         period = 5
         values = list(range(1, 10))
         sma = self.__buildSMA(period, values)
+
         for i in range(period-1, len(values)):
             expected = sum(values[i-(period-1):i+1]) / float(period)
             self.assertTrue(sma[i] == expected)
@@ -90,6 +99,7 @@ class SMATestCase(common.TestCase):
         period = 5
         values = list(range(1, 10))
         sma = self.__buildSMA(period, values)
+
         for i in range(period-1, len(values), 2):
             expected = sum(values[i-(period-1):i+1]) / float(period)
             self.assertTrue(sma[i] == expected)
@@ -108,6 +118,7 @@ class SMATestCase(common.TestCase):
 
         # Test length and every item.
         self.assertEqual(len(ds), len(seq))
+
         for i in range(len(seq)):
             self.assertEqual(ds[i], seq[i])
 
@@ -119,8 +130,10 @@ class SMATestCase(common.TestCase):
         # Test slices
         sl = slice(0, 1, 2)
         self.assertEqual(ds[sl], seq[sl])
+
         sl = slice(0, 9, 2)
         self.assertEqual(ds[sl], seq[sl])
+
         sl = slice(0, -1, 1)
         self.assertEqual(ds[sl], seq[sl])
 
@@ -136,6 +149,7 @@ class SMATestCase(common.TestCase):
         smaEW = ma.SMAEventWindow(10)
         sma = ma.SMA(ds, 10)
         smaEW.onNewValue(None, None)  # This value should get skipped
+        
         for i in range(100):
             ds.append(i)
             smaEW.onNewValue(None, i)
@@ -154,16 +168,18 @@ class WMATestCase(common.TestCase):
     def __buildWMA(self, weights, values, seqMaxLen=None, wmaMaxLen=None):
         seqDS = dataseries.SequenceDataSeries(maxLen=seqMaxLen)
         ret = ma.WMA(seqDS, weights, wmaMaxLen)
+        
         for value in values:
             seqDS.append(value)
+        
         return ret
 
     def testPeriod1(self):
         wma = self.__buildWMA([2], [10, 20])
         self.assertTrue(wma[0] == 10)
         self.assertTrue(wma[1] == 20)
-
         self.assertEqual(len(wma.getDateTimes()), 2)
+        
         for i in range(len(wma)):
             self.assertEqual(wma.getDateTimes()[i], None)
 
@@ -172,11 +188,12 @@ class WMATestCase(common.TestCase):
         values = [1, 2, 3]
 
         wma = self.__buildWMA(weights, values, maxLen)
+        
         self.assertEqual(wma[0], None)
         self.assertEqual(wma[1], None)
         self.assertEqual(wma[2], (1*3 + 2*2 + 3*1) / float(3+2+1))
-
         self.assertEqual(len(wma.getDateTimes()), 3)
+        
         for i in range(len(wma)):
             self.assertEqual(wma.getDateTimes()[i], None)
 
@@ -188,8 +205,8 @@ class WMATestCase(common.TestCase):
     def testPeriod2_BoundedFilter(self):
         weights = [3, 2, 1]
         values = [1, 2, 3]
-
         wma = self.__buildWMA(weights, values, wmaMaxLen=2)
+        
         self.assertEqual(wma[0], None)
         self.assertEqual(wma[1], (1*3 + 2*2 + 3*1) / float(3+2+1))
         self.assertEqual(len(wma), 2)
@@ -214,9 +231,9 @@ class EMATestCase(common.TestCase):
 
     def testBoundedFilter(self):
         values = [22.2734, 22.1940, 22.0847, 22.1741, 22.1840, 22.1344, 22.2337, 22.4323, 22.2436, 22.2933, 22.1542, 22.3926, 22.3816, 22.6109, 23.3558, 24.0519, 23.7530, 23.8324, 23.9516, 23.6338, 23.8225, 23.8722, 23.6537, 23.1870, 23.0976, 23.3260, 22.6805, 23.0976, 22.4025, 22.1725]
-
         seqDS = dataseries.SequenceDataSeries()
         ema = ma.EMA(seqDS, 10, 2)
+        
         for value in values:
             seqDS.append(value)
 

@@ -95,7 +95,7 @@ class KeepAliveMgr(object):
 # To use it call connect and startClient, and stopClient.
 class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
     def __init__(self, url):
-        super(WebSocketClientBase, self).__init__(url)
+        super().__init__(url)
         self.__keepAliveMgr = None
         self.__connected = False
 
@@ -104,7 +104,7 @@ class WebSocketClientBase(tornadoclient.TornadoWebSocketClient):
         ret = None
 
         try:
-            ret = super(WebSocketClientBase, self)._cleanup()
+            ret = super()._cleanup()
         except Exception:
             pass
 

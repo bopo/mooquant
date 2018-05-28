@@ -33,8 +33,8 @@ class MACDTestCase(common.TestCase):
         signalValues = [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, 0.0036, 0.0056, 0.0048, -0.0064, -0.0313, -0.057, -0.0772, -0.0909, -0.0991, -0.0839, -0.0571, -0.0236, 0.011, 0.0475, 0.0829, 0.1111, 0.125]
         histogramValues = [None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, 0.0031, 0.005, -0.002, -0.0279, -0.0624, -0.0643, -0.0504, -0.0342, -0.0205, 0.0379, 0.0668, 0.0838, 0.0865, 0.0914, 0.0884, 0.0705, 0.0348]
         ds = dataseries.SequenceDataSeries()
-
         macdDs = macd.MACD(ds, 5, 13, 6)
+        
         for i, value in enumerate(values):
             ds.append(value)
             self.assertEqual(common.safe_round(macdDs[i], 4), macdValues[i])

@@ -76,7 +76,7 @@ def serve(barFeed, strategyParameters, address, port, drivce='xml'):
     bestResult, bestParameters = resultSinc.getBest()
 
     if bestResult is not None:
-        logger.info("Best final result %s with parameters %s" % (bestResult, bestParameters.args))
+        logger.info("Best final result {} with parameters {}".format(bestResult, bestParameters.args))
         ret = Results(bestParameters.args, bestResult)
     else:
         logger.error("No results. All jobs failed or no jobs were processed.")

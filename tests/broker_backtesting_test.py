@@ -473,6 +473,7 @@ class MarketOrderTestCase(BaseTestCase):
         order = brk.createMarketOrder(broker.Order.Action.BUY, BaseTestCase.TestInstrument, 1)
         brk.submitOrder(order)
         barFeed.dispatchBars(12.03, 12.03, 12.03, 12.03, 555.00)
+        
         self.assertTrue(order.isFilled())
         self.assertEqual(brk.getPositions().get(BaseTestCase.TestInstrument), 1)
 
@@ -480,6 +481,7 @@ class MarketOrderTestCase(BaseTestCase):
         order = brk.createMarketOrder(broker.Order.Action.SELL, BaseTestCase.TestInstrument, 1)
         brk.submitOrder(order)
         barFeed.dispatchBars(12.03, 12.03, 12.03, 12.03, 555.00)
+        
         self.assertTrue(order.isFilled())
         self.assertEqual(brk.getPositions().get(BaseTestCase.TestInstrument), None)
 
@@ -542,13 +544,16 @@ class MarketOrderTestCase(BaseTestCase):
         volumes = [0.0001, 0.1, 0.0000001, 0.00000001, 0.132401]
         volumeFill = [(volume, round(volume*maxFill, quantityPresicion)) for volume in volumes]
         cumFilled = 0
+
         for volume, expectedFill in volumeFill:
             cumFilled += expectedFill  # I'm not rounding here so I can carry errors.
             barFeed.dispatchBars(12.03, 12.03, 12.03, 12.03, volume)
             # print expectedFill, cumFilled
             self.assertTrue(order.isPartiallyFilled())
+            
             if expectedFill > 0:
                 self.assertEqual(order.getExecutionInfo().getQuantity(), expectedFill)
+            
             self.assertEqual(order.getFilled(), round(cumFilled, quantityPresicion))
             self.assertEqual(order.getRemaining(), 1 - cumFilled)
             self.assertEqual(round(order.getAvgFillPrice(), cashPresicion), 12.03)
@@ -561,6 +566,7 @@ class MarketOrderTestCase(BaseTestCase):
         volume = 10
         cumFilled += expectedFill  # I'm not rounding here so I can carry errors.
         barFeed.dispatchBars(12.03, 12.03, 12.03, 12.03, volume)
+        
         self.assertTrue(order.isFilled())
         self.assertEqual(order.getExecutionInfo().getQuantity(), 1 - filledSoFar)
         self.assertEqual(order.getFilled(), 1)

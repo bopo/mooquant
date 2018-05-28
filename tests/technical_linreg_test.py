@@ -32,6 +32,7 @@ class LeastSquaresRegressionTestCase(common.TestCase):
         x = [0, 1, 2]
         y = [1, 2, 3]
         a, b = linreg.lsreg(x, y)
+
         self.assertEqual(round(a, 2), 1.0)
         self.assertEqual(round(b, 2), 1.0)
 
@@ -39,6 +40,7 @@ class LeastSquaresRegressionTestCase(common.TestCase):
         x = [0, 1, 2]
         y = [4, 5, 6]
         a, b = linreg.lsreg(x, y)
+        
         self.assertEqual(round(a, 2), 1.0)
         self.assertEqual(round(b, 2), 4.0)
 
@@ -46,6 +48,7 @@ class LeastSquaresRegressionTestCase(common.TestCase):
         x = [1, 2, 3]
         y = [1, 2, 3]
         a, b = linreg.lsreg(x, y)
+        
         self.assertEqual(round(a, 2), 1.0)
         self.assertEqual(round(b, 2), 0)
 

@@ -37,6 +37,7 @@ class UtilsTestCase(common.TestCase):
         self.assertEqual(utils.get_change_percentage(1, -1), 2)
         self.assertEqual(utils.get_change_percentage(-2, -1), -1)
         self.assertEqual(utils.get_change_percentage(-1.5, -1), -0.5)
+        
         with self.assertRaisesRegex(Exception, "Invalid values"):
             utils.get_change_percentage(-1.5, 0)
 
@@ -170,6 +171,7 @@ class IntersectTestCase(common.TestCase):
         dateTimes1 = []
         dateTimes2 = []
         now = datetime.datetime.now()
+
         for i in range(size):
             dateTimes1.append(now + datetime.timedelta(seconds=i))
             dateTimes2.append(now + datetime.timedelta(seconds=i))
@@ -194,6 +196,7 @@ class CollectionTestCaseBase(common.TestCase):
 
         for i in range(10):
             d.append(i)
+
         self.assertEqual(d[0], 0)
         self.assertEqual(d[9], 9)
         self.assertEqual(d[-1], 9)
@@ -201,6 +204,7 @@ class CollectionTestCaseBase(common.TestCase):
 
         for i in range(3):
             d.append(i)
+
         self.assertEqual(len(d), 10)
         self.assertEqual(d[0], 3)
         self.assertEqual(d[9], 2)
@@ -212,8 +216,10 @@ class CollectionTestCaseBase(common.TestCase):
 
         # Fill the array.
         self.assertEqual(len(d), 0)
+        
         for i in range(20):
             d.append(i)
+
         self.assertEqual(d[0], 10)
         self.assertEqual(d[9], 19)
         self.assertEqual(d[-1], 19)
@@ -297,6 +303,7 @@ class NumPyDequeTestCase(CollectionTestCaseBase):
 
         for i in range(10):
             d.append(i)
+            
         self.assertEqual(d[0:3].sum(), 3)
 
 

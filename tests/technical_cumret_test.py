@@ -29,8 +29,10 @@ class CumRetTestCase(common.TestCase):
     def testCumRet(self):
         values = dataseries.SequenceDataSeries()
         rets = cumret.CumulativeReturn(values)
+
         for value in [1, 2, 3, 4, 4, 3, 1, 1.2]:
             values.append(value)
+            
         self.assertEqual(rets[0], None)
         self.assertEqual(rets[1], 1)
         self.assertEqual(rets[2], 2)

@@ -37,6 +37,7 @@ from . import test_strategy
 class WebSocketClientThreadMock(threading.Thread):
     def __init__(self, events):
         threading.Thread.__init__(self)
+
         self.__queue = queue.Queue()
         self.__queue.put((wsclient.WebSocketClient.ON_CONNECTED, None))
         
@@ -189,7 +190,8 @@ class TestingLiveBroker(broker.LiveBroker):
 
 class TestStrategy(test_strategy.BaseTestStrategy):
     def __init__(self, feed, brk):
-        super(TestStrategy, self).__init__(feed, brk)
+        super().__init__(feed, brk)
+        
         self.bid = None
         self.ask = None
 

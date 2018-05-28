@@ -48,7 +48,7 @@ class ATREventWindow(technical.EventWindow):
     def onNewValue(self, dateTime, value):
         tr = self._calculateTrueRange(value)
 
-        super(ATREventWindow, self).onNewValue(dateTime, tr)
+        super().onNewValue(dateTime, tr)
         self.__prevClose = value.getClose(self.__useAdjustedValues)
 
         if value is not None and self.windowFull():

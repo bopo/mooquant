@@ -41,6 +41,7 @@ class DataSeriesFilterTest(common.TestCase):
     def testInvalidPosNotCached(self):
         ds = dataseries.SequenceDataSeries()
         testFilter = MyTestFilter(ds)
+        
         for i in range(10):
             ds.append(i)
             ds.append(None)  # Interleave Nones.
@@ -51,8 +52,10 @@ class DataSeriesFilterTest(common.TestCase):
 
         self.assertEqual(testFilter[18], 9)
         self.assertEqual(testFilter[19], None)
+        
         # Absolut pos 20 should have the next value once we insert it, but right now it should be invalid.
         with self.assertRaises(IndexError):
             testFilter[20]
+        
         ds.append(10)
         self.assertEqual(testFilter[20], 10)

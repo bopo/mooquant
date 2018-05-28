@@ -30,8 +30,10 @@ from . import common
 def build_hurst(values, period, minLags, maxLags):
     ds = dataseries.SequenceDataSeries()
     ret = hurst.HurstExponent(ds, period, minLags, maxLags)
+    
     for value in values:
         ds.append(value)
+
     return ret
 
 
@@ -55,6 +57,7 @@ class TestCase(common.TestCase):
         num_values = 10000
         values = np.cumsum(np.random.randn(num_values)) + 1000
         hds = build_hurst(values, num_values - 10, 2, 20)
+        
         self.assertEqual(round(hds[-1], 1), 0.5)
         self.assertEqual(round(hds[-2], 1), 0.5)
 
@@ -62,6 +65,7 @@ class TestCase(common.TestCase):
         num_values = 10000
         values = np.cumsum(np.random.randn(num_values) + 10) + 1000
         hds = build_hurst(values, num_values - 10, 2, 20)
+
         self.assertEqual(round(hds[-1], 1), 1)
         self.assertEqual(round(hds[-2], 1), 1)
 
@@ -69,5 +73,6 @@ class TestCase(common.TestCase):
         num_values = 10000
         values = np.random.randn(num_values) + 100
         hds = build_hurst(values, num_values - 10, 2, 20)
+
         self.assertEqual(round(hds[-1], 1), 0)
         self.assertEqual(round(hds[-2], 1), 0)

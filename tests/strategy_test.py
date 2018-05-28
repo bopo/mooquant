@@ -29,8 +29,10 @@ from . import common
 
 def get_by_datetime_or_date(dict_, dateTimeOrDate):
     ret = dict_.get(dateTimeOrDate, [])
+    
     if len(ret) == 0 and isinstance(dateTimeOrDate, datetime.datetime):
         ret = dict_.get(dateTimeOrDate.date(), [])
+
     return ret
 
 
@@ -82,21 +84,23 @@ class StrategyTestCase(common.TestCase):
     def loadDailyBarFeed(self):
         barFeed = yahoofeed.Feed()
         barFeed.addBarsFromCSV(StrategyTestCase.TestInstrument, common.get_data_file_path("orcl-2000-yahoofinance.csv"))
+        
         return barFeed
 
     def createStrategy(self):
         barFeed = self.loadDailyBarFeed()
         strat = MyTestStrategy(barFeed, 1000)
+
         return strat
 
 
 class BrokerOrderTestCase(StrategyTestCase):
     def testMarketOrder(self):
         strat = self.createStrategy()
-
         o = strat.getBroker().createMarketOrder(broker.Order.Action.BUY, StrategyTestCase.TestInstrument, 1)
         strat.getBroker().submitOrder(o)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(strat.orderUpdatedCalls, 3)
 
@@ -104,17 +108,17 @@ class BrokerOrderTestCase(StrategyTestCase):
 class StrategyOrderTestCase(StrategyTestCase):
     def testOrder(self):
         strat = self.createStrategy()
-
         o = strat.marketOrder(StrategyTestCase.TestInstrument, 1)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(strat.orderUpdatedCalls, 3)
 
     def testMarketOrderBuy(self):
         strat = self.createStrategy()
-
         o = strat.marketOrder(StrategyTestCase.TestInstrument, 1)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.BUY)
         self.assertEqual(o.getQuantity(), 1)
@@ -124,9 +128,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testMarketOrderSell(self):
         strat = self.createStrategy()
-
         o = strat.marketOrder(StrategyTestCase.TestInstrument, -2)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.SELL)
         self.assertEqual(o.getQuantity(), 2)
@@ -136,9 +140,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testLimitOrderBuy(self):
         strat = self.createStrategy()
-
         o = strat.limitOrder(StrategyTestCase.TestInstrument, 60, 1, True)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.BUY)
         self.assertEqual(o.getAvgFillPrice(), 56.13)
@@ -149,9 +153,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testLimitOrderSell(self):
         strat = self.createStrategy()
-
         o = strat.limitOrder(StrategyTestCase.TestInstrument, 60, -3, False)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.SELL)
         self.assertEqual(o.getAvgFillPrice(), 124.62)
@@ -162,9 +166,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testStopOrderBuy(self):
         strat = self.createStrategy()
-
         o = strat.stopOrder(StrategyTestCase.TestInstrument, 100, 1, False)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.BUY)
         self.assertEqual(o.getAvgFillPrice(), 124.62)
@@ -175,9 +179,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testStopOrderSell(self):
         strat = self.createStrategy()
-
         o = strat.stopOrder(StrategyTestCase.TestInstrument, 55, -2, True)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.SELL)
         self.assertEqual(o.getAvgFillPrice(), 55)
@@ -189,9 +193,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testStopLimitOrderBuy(self):
         strat = self.createStrategy()
-
         o = strat.stopLimitOrder(StrategyTestCase.TestInstrument, 110, 100, 1, True)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.BUY)
         self.assertEqual(o.getAvgFillPrice(), 100)
@@ -203,9 +207,9 @@ class StrategyOrderTestCase(StrategyTestCase):
 
     def testStopLimitOrderSell(self):
         strat = self.createStrategy()
-
         o = strat.stopLimitOrder(StrategyTestCase.TestInstrument, 100, 110, -2, True)
         strat.run()
+
         self.assertTrue(o.isFilled())
         self.assertEqual(o.getAction(), broker.Order.Action.SELL)
         self.assertEqual(o.getAvgFillPrice(), 110)
@@ -220,6 +224,7 @@ class OptionalOverridesTestCase(StrategyTestCase):
     def testOnStartIdleFinish(self):
         strat = self.createStrategy()
         strat.run()
+
         self.assertTrue(strat.onStartCalled)
         self.assertTrue(strat.onFinishCalled)
         self.assertFalse(strat.onIdleCalled)

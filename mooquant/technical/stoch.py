@@ -40,6 +40,7 @@ def get_low_high_values(useAdjusted, bars):
 class SOEventWindow(technical.EventWindow):
     def __init__(self, period, useAdjustedValues):
         assert (period > 1)
+        
         super().__init__(period, dtype=object)
         self.__useAdjusted = useAdjustedValues
 

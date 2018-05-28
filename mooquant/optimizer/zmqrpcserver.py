@@ -113,13 +113,13 @@ class RPCService(object):
         # if result is None or result > self.__bestResult:
 
         if result is None:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
         elif self.__bestResult is None and result is not None:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
         elif result > self.__bestResult:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
 
         self.__resultSinc.push(result, base.Parameters(*parameters))
@@ -145,7 +145,7 @@ class Server(object):
 
     def __init__(self, paramSource, resultSinc, barFeed, address, port):
         self.__zerorpc = zerorpc.Server(RPCService(paramSource, resultSinc, barFeed))
-        self.__zerorpc.bind("tcp://%s:%s" % (address, port))
+        self.__zerorpc.bind("tcp://{}:{}".format(address, port))
 
     def stop(self):
         pass

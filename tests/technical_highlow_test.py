@@ -30,7 +30,9 @@ class HighLowTestCase(common.TestCase):
         values = dataseries.SequenceDataSeries()
         high = highlow.High(values, 5)
         low = highlow.Low(values, 3)
+
         for value in [1, 2, 3, 4, 5]:
             values.append(value)
+            
         self.assertEqual(high[-1], 5)
         self.assertEqual(low[-1], 3)

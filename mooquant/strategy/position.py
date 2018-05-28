@@ -95,7 +95,7 @@ class OpenState(PositionState):
             # Nothing to do since the entry order may be completely filled or canceled after a partial fill.
             assert (position.getShares() != 0)
         else:
-            raise Exception("Invalid order event '%s' in OpenState" % (orderEvent.getEventType()))
+            raise Exception("Invalid order event '{}' in OpenState".format(orderEvent.getEventType()))
 
     def isOpen(self, position):
         return True
@@ -128,7 +128,7 @@ class ClosedState(PositionState):
         raise Exception("The position is closed")
 
     def onOrderEvent(self, position, orderEvent):
-        raise Exception("Invalid order event '%s' in ClosedState" % (orderEvent.getEventType()))
+        raise Exception("Invalid order event '{}' in ClosedState".format(orderEvent.getEventType()))
 
     def isOpen(self, position):
         return False

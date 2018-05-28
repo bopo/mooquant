@@ -9,7 +9,7 @@ coloredlogs
 statsmodels
 matplotlib
 requests
-tornado
+tornado<5
 tushare
 cython
 mootdx

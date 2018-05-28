@@ -35,6 +35,7 @@ class TestCase(common.TestCase):
 
         seqDS = dataseries.SequenceDataSeries()
         bBands = bollinger.BollingerBands(seqDS, 20, 2)
+
         for value in prices:
             seqDS.append(value)
 
@@ -57,6 +58,7 @@ class TestCase(common.TestCase):
 
         seqDS = dataseries.SequenceDataSeries()
         bBands = bollinger.BollingerBands(seqDS, 20, 2, 3)
+        
         for value in prices:
             seqDS.append(value)
 

@@ -31,7 +31,7 @@ from mooquant import bar
 from mooquant.barfeed import tusharefeed
 
 
-def download_csv(instrument, begin, end):
+def download_bars(instrument, begin, end):
     return ts.get_k_data(instrument, begin, end)
 
 
@@ -48,7 +48,7 @@ def download_daily_bars(instrument, year, csvFile):
 
     begin = datetime.date(year, 1, 1).strftime('%Y-%m-%d')
     end = datetime.date(year, 12, 31).strftime('%Y-%m-%d')
-    bars = download_csv(instrument, begin, end)
+    bars = download_bars(instrument, begin, end)
 
     if len(bars) > 0:
         bars = bars.drop(['code'], axis=1)

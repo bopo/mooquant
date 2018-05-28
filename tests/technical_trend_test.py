@@ -29,8 +29,10 @@ class SlopeTest(common.TestCase):
     def __buildSlope(self, values, period, slopeMaxLen=None):
         seqDS = dataseries.SequenceDataSeries()
         ret = linreg.Slope(seqDS, period, slopeMaxLen)
+        
         for value in values:
             seqDS.append(value)
+        
         return ret
 
     def testSlope(self):
@@ -51,8 +53,10 @@ class TrendTest(common.TestCase):
     def __buildTrend(self, values, trendDays, positiveThreshold, negativeThreshold, trendMaxLen=None):
         seqDS = dataseries.SequenceDataSeries()
         ret = linreg.Trend(seqDS, trendDays, positiveThreshold, negativeThreshold, trendMaxLen)
+        
         for value in values:
             seqDS.append(value)
+        
         return ret
 
     def testTrend(self):
@@ -62,8 +66,8 @@ class TrendTest(common.TestCase):
         self.assertEqual(trend[2], True)
         self.assertEqual(trend[3], None)
         self.assertEqual(trend[4], False)
-
         self.assertEqual(len(trend.getDateTimes()), 5)
+
         for i in range(len(trend)):
             self.assertEqual(trend.getDateTimes()[i], None)
 
@@ -74,8 +78,8 @@ class TrendTest(common.TestCase):
         self.assertEqual(trend[2], None)
         self.assertEqual(trend[3], True)
         self.assertEqual(trend[4], False)
-
         self.assertEqual(len(trend.getDateTimes()), 5)
+
         for i in range(len(trend)):
             self.assertEqual(trend.getDateTimes()[i], None)
 
@@ -87,5 +91,6 @@ class TrendTest(common.TestCase):
 
     def testInvalidThreshold(self):
         seqDS = dataseries.SequenceDataSeries()
+        
         with self.assertRaisesRegex(Exception, "Invalid thresholds"):
             linreg.Trend(seqDS, 10, 0.2, 0.5, 5)

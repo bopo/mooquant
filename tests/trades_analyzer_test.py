@@ -37,6 +37,7 @@ from . import common, position_test, strategy_test
 def buildUTCDateTime(year, month, day, hour, minute):
     ret = datetime.datetime(year, month, day, hour, minute)
     ret = pytz.utc.localize(ret)
+
     return ret
 
 
@@ -46,8 +47,10 @@ class TradesAnalyzerTestCase(common.TestCase):
     def __loadBarFeed(self):
         ret = ninjatraderfeed.Feed(ninjatraderfeed.Frequency.MINUTE)
         barFilter = csvfeed.USEquitiesRTH()
+    
         ret.setBarFilter(barFilter)
         ret.addBarsFromCSV(TradesAnalyzerTestCase.TestInstrument, common.get_data_file_path("nt-spy-minute-2011.csv"))
+    
         return ret
 
     def __createStrategy(self):
@@ -180,6 +183,7 @@ class TradesAnalyzerTestCase(common.TestCase):
         # Regression test for a bug reported by 'Jackson Sam' on 30/Aug/2013.
         strat = self.__createStrategy()
         strat.getBroker().setCommission(backtesting.FixedPerTrade(0.01))
+        
         stratAnalyzer = trades.Trades()
         strat.attachAnalyzer(stratAnalyzer)
 

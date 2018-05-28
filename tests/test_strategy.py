@@ -26,7 +26,8 @@ from mooquant import strategy
 
 class BaseTestStrategy(strategy.BaseStrategy):
     def __init__(self, barFeed, broker, maxMinutes=5):
-        super(BaseTestStrategy, self).__init__(barFeed, broker)
+        super().__init__(barFeed, broker)
+        
         self.posExecutionInfo = []
         self.ordersUpdated = []
         self.orderExecutionInfo = []

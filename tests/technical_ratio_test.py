@@ -29,8 +29,10 @@ class TestCase(common.TestCase):
     def __buildRatio(self, values, ratioMaxLen=None):
         seqDS = dataseries.SequenceDataSeries()
         ret = ratio.Ratio(seqDS, ratioMaxLen)
+
         for value in values:
             seqDS.append(value)
+
         return ret
 
     def testSimple(self):
@@ -39,13 +41,14 @@ class TestCase(common.TestCase):
         self.assertEqual(ratio[1], 1)
         self.assertEqual(ratio[2], -0.5)
         self.assertEqual(ratio[-1], -0.5)
+
         with self.assertRaises(IndexError):
             ratio[3]
 
         self.assertEqual(ratio[-2], ratio[1])
         self.assertEqual(ratio[-1], ratio[2])
-
         self.assertEqual(len(ratio.getDateTimes()), 3)
+
         for i in range(len(ratio)):
             self.assertEqual(ratio.getDateTimes()[i], None)
 
@@ -55,13 +58,14 @@ class TestCase(common.TestCase):
         self.assertEqual(ratio[1], -1)
         self.assertEqual(ratio[2], 0.5)
         self.assertEqual(ratio[-1], 0.5)
+
         with self.assertRaises(IndexError):
             ratio[3]
 
         self.assertEqual(ratio[-2], ratio[1])
         self.assertEqual(ratio[-1], ratio[2])
-
         self.assertEqual(len(ratio.getDateTimes()), 3)
+
         for i in range(len(ratio)):
             self.assertEqual(ratio.getDateTimes()[i], None)
 

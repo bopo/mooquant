@@ -6,7 +6,8 @@ from ws4py.server import wsgirefserver, wsgiutils
 
 class WebSocketServerThread(threading.Thread):
     def __init__(self, host, port, webSocketServerClass):
-        super(WebSocketServerThread, self).__init__()
+        super().__init__()
+
         self.__host = host
         self.__port = port
         self.__webSocketServerClass = webSocketServerClass
@@ -23,6 +24,7 @@ class WebSocketServerThread(threading.Thread):
             handler_class=wsgirefserver.WebSocketWSGIRequestHandler,
             app=wsgiutils.WebSocketWSGIApplication(handler_cls=handler_cls_builder)
         )
+
         self.__server.initialize_websockets_manager()
         self.__server.serve_forever()
 
@@ -34,4 +36,5 @@ class WebSocketServerThread(threading.Thread):
 def run_websocket_server_thread(host, port, webSocketServerClass):
     wss_thread = WebSocketServerThread(host, port, webSocketServerClass)
     wss_thread.start()
+    
     return wss_thread

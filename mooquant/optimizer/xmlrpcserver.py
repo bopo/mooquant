@@ -31,7 +31,7 @@ logger = mooquant.logger.getLogger(__name__)
 
 class AutoStopThread(threading.Thread):
     def __init__(self, server):
-        super(AutoStopThread, self).__init__()
+        super().__init__()
         self.__server = server
 
     def run(self):
@@ -52,8 +52,10 @@ class Job(object):
 
     def getNextParameters(self):
         ret = None
+
         if len(self.__strategyParameters):
             ret = self.__strategyParameters.pop()
+        
         return ret
 
 
@@ -138,13 +140,13 @@ class Server(xmlrpc.server.SimpleXMLRPCServer):
         # if result is None or result > self.__bestResult:
 
         if result is None:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
         elif self.__bestResult is None and result is not None:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
         elif result > self.__bestResult:
-            logger.info("Best result so far %s with parameters %s" % (result, parameters))
+            logger.info("Best result so far {} with parameters {}".format(result, parameters))
             self.__bestResult = result
 
         self.__resultSinc.push(result, base.Parameters(*parameters))

@@ -53,11 +53,11 @@ def call_and_retry_on_network_error(function, retryCount, *args, **kwargs):
 class Worker(object):
     def __init__(self, address, port, workerName=None, drivce='xml'):
         if drivce  == 'xml':
-            url = "http://%s:%s/MQRPC" % (address, port)
+            url = "http://{}:{}/MQRPC".format(address, port)
             self.__server = xmlrpc.client.ServerProxy(url, allow_none=True)
         elif drivce  == 'zmq':
             self.__server = zerorpc.Client()
-            self.__server.connect("tcp://%s:%s" % (address, port))
+            self.__server.connect("tcp://{}:{}".format(address, port))
                 
         self.__logger = mooquant.logger.getLogger(workerName)
         
@@ -109,15 +109,15 @@ class Worker(object):
             feed = barfeed.OptimizerBarFeed(barsFreq, instruments, bars)
             
             # Run the strategy.
-            self.getLogger().info("Running strategy with parameters %s" % (str(parameters)))
+            self.getLogger().info("Running strategy with parameters {}".format(parameters))
             result = None
             
             try:
                 result = self.runStrategy(feed, *parameters)
             except Exception as e:
-                self.getLogger().exception("Error running strategy with parameters %s: %s" % (str(parameters), e))
+                self.getLogger().exception("Error running strategy with parameters {}: {}".format(parameters, e))
             
-            self.getLogger().info("Result %s" % result)
+            self.getLogger().info("Result {}".format(result))
             
             if bestResult is None or result > bestResult:
                 bestResult = result
@@ -149,7 +149,7 @@ class Worker(object):
             
             self.getLogger().info("Finished running")
         except Exception as e:
-            self.getLogger().exception("Finished running with errors: %s" % (e))
+            self.getLogger().exception("Finished running with errors: {}".format(e))
 
 
 def worker_process(strategyClass, address, port, workerName, drivce):

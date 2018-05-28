@@ -145,7 +145,7 @@ class GetBarThread(PollingThread):
 
         for indentifier in self.__identifiers:
             try:
-                logger.debug("Requesting bars with precision %s and period %s for %s" % (
+                logger.debug("Requesting bars with precision {} and period {} for {}".format(
                     self.__precision, self.__period, indentifier))
                 response = api.XigniteGlobalRealTime_GetBar(self.__apiToken, indentifier, "Symbol", endDateTime,
                                                             self.__precision, self.__period)

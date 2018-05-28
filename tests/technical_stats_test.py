@@ -32,8 +32,10 @@ class TestCase(common.TestCase):
         values = [1, 1, 2, 3, 5]
         seqDS = dataseries.SequenceDataSeries()
         stdDev = stats.StdDev(seqDS, 1)
+        
         for value in values:
             seqDS.append(value)
+        
         for i in stdDev:
             self.assertEqual(i, 0)
 
@@ -41,6 +43,7 @@ class TestCase(common.TestCase):
         values = [1, 1, 2, 3, 5]
         seqDS = dataseries.SequenceDataSeries()
         stdDev = stats.StdDev(seqDS, 2)
+        
         for value in values:
             seqDS.append(value)
 
@@ -54,6 +57,7 @@ class TestCase(common.TestCase):
         values = [1, 1, 2, 3, 5]
         seqDS = dataseries.SequenceDataSeries()
         stdDev = stats.StdDev(seqDS, 2, maxLen=2)
+        
         for value in values:
             seqDS.append(value)
 
@@ -66,8 +70,11 @@ class TestCase(common.TestCase):
         seqDS = dataseries.SequenceDataSeries()
         zscore = stats.ZScore(seqDS, 5)
         i = 0
+        
         for value in values:
             seqDS.append(value)
+            
             if i >= 4:
                 self.assertEqual(round(zscore[-1], 4), round(expected[i], 4))
+            
             i += 1

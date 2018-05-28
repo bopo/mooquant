@@ -68,8 +68,10 @@ class HelpersTestCase(common.TestCase):
 class TestCase(common.TestCase):
     def __buildSeqDS(self, values):
         ret = dataseries.SequenceDataSeries()
+
         for value in values:
             ret.append(value)
+
         return ret
 
     def testCrossAboveOnce(self):
@@ -105,6 +107,7 @@ class TestCase(common.TestCase):
 
         # Check every 2 values.
         period = 2
+
         for i in range(1, count):
             if i % 2 == 0:
                 self.assertEqual(cross.cross_above(values1, values2, i - period + 1, i + 1), 0)
@@ -113,6 +116,7 @@ class TestCase(common.TestCase):
 
         # Check every 4 values.
         period = 4
+
         for i in range(3, count):
             if i % 2 == 0:
                 self.assertEqual(cross.cross_above(values1, values2, i - period + 1, i + 1), 1)
@@ -155,6 +159,7 @@ class TestCase(common.TestCase):
 
         # Check every 2 values.
         period = 2
+
         for i in range(1, count):
             if i % 2 == 0:
                 self.assertEqual(cross.cross_below(values1, values2, i - period + 1, i + 1), 0)
@@ -163,6 +168,7 @@ class TestCase(common.TestCase):
 
         # Check every 4 values.
         period = 4
+
         for i in range(3, count):
             if i % 2 == 0:
                 self.assertEqual(cross.cross_below(values1, values2, i - period + 1, i + 1), 1)
@@ -175,11 +181,14 @@ class TestCase(common.TestCase):
     def testCrossAboveWithSMA(self):
         ds1 = dataseries.SequenceDataSeries()
         ds2 = dataseries.SequenceDataSeries()
+
         sma1 = ma.SMA(ds1, 15)
         sma2 = ma.SMA(ds2, 25)
+
         for i in range(100):
             ds1.append(i)
             ds2.append(50)
+            
             if i == 58:
                 self.assertEqual(cross.cross_above(sma1[:], sma2[:], -2, None), 1)
             else:

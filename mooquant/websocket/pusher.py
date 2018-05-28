@@ -76,7 +76,7 @@ class WebSocketClient(client.WebSocketClientBase):
     def __init__(self, appKey, protocol=5, maxInactivity=120, responseTimeout=30):
         params = {
             "protocol": protocol,
-            "client": "Python-MooQuant",
+            "client": "python-mooquant",
             "version": mooquant.__version__
         }
 

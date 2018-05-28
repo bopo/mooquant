@@ -113,7 +113,6 @@ class BarsTestCase(common.TestCase):
 
         self.assertEqual(bars["a"].getClose(), 1)
         self.assertEqual(bars["b"].getClose(), 2)
-
         self.assertTrue("a" in bars)
 
         self.assertEqual(list(bars.items()), [("a", b1), ("b", b2)])

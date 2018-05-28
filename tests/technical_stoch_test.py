@@ -33,6 +33,7 @@ def values_equal(v1, v2):
         return round(v1, 3) == round(v2, 3)
     elif v1 is None and v2 is None:
         return True
+
     return False
 
 
@@ -43,10 +44,12 @@ class TestCase(common.TestCase):
     def __buildBar(self, openPrice, highPrice, lowPrice, closePrice):
         dateTime = datetime.datetime.now() + datetime.timedelta(seconds=self.__currSeconds)
         self.__currSeconds += 1
+        
         return bar.BasicBar(dateTime, openPrice, highPrice, lowPrice, closePrice, closePrice*10, closePrice, bar.Frequency.DAY)
 
     def __fillBarDataSeries(self, barDS, closePrices, highPrices, lowPrices):
         assert(len(closePrices) == len(highPrices) == len(lowPrices))
+        
         for i in range(len(highPrices)):
             barDS.append(self.__buildBar(closePrices[i], highPrices[i], lowPrices[i], closePrices[i]))
 
@@ -57,8 +60,8 @@ class TestCase(common.TestCase):
 
         barDS = bards.BarDataSeries()
         stochFilter = stoch.StochasticOscillator(barDS, 2, 2)
-        self.__fillBarDataSeries(barDS, closePrices, highPrices, lowPrices)
 
+        self.__fillBarDataSeries(barDS, closePrices, highPrices, lowPrices)
         self.assertTrue(values_equal(stochFilter[0], None))
         self.assertTrue(values_equal(stochFilter[1], 50))
         self.assertTrue(values_equal(stochFilter[2], 100))
@@ -66,8 +69,8 @@ class TestCase(common.TestCase):
         self.assertTrue(values_equal(stochFilter.getD()[0], None))
         self.assertTrue(values_equal(stochFilter.getD()[1], None))
         self.assertTrue(values_equal(stochFilter.getD()[2], 75))
-
         self.assertEqual(len(stochFilter.getDateTimes()), len(closePrices))
+        
         for i in range(len(stochFilter)):
             self.assertNotEqual(stochFilter.getDateTimes()[i], None)
 
@@ -89,6 +92,7 @@ class TestCase(common.TestCase):
             self.assertTrue(values_equal(stochFilter.getD()[i], dValues[i]))
 
         self.assertEqual(len(stochFilter.getDateTimes()), len(closePrices))
+        
         for i in range(len(stochFilter)):
             self.assertNotEqual(stochFilter.getDateTimes()[i], None)
 
@@ -122,5 +126,6 @@ class TestCase(common.TestCase):
 
         barDS = bards.BarDataSeries()
         stochFilter = stoch.StochasticOscillator(barDS, 2, 2)
+        
         self.__fillBarDataSeries(barDS, closePrices, highPrices, lowPrices)
         self.assertEqual(stochFilter[-1], 0)

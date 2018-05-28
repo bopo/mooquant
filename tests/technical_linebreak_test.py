@@ -73,9 +73,11 @@ class LineBreakTestCase(common.TestCase):
             lineBreak = linebreak.LineBreak(bars, 3, maxLen=2)
 
         lineBreak = linebreak.LineBreak(bars, 3, maxLen=4)
+        
         # Invalid maxLen, smaller than reversalLines.
         with self.assertRaises(Exception):
             lineBreak.setMaxLen(2)
+
         barFeed.loadAll()
 
         self.assertEqual(len(lineBreak), 4)

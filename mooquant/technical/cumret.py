@@ -24,7 +24,7 @@ from mooquant import technical
 
 class CumRetEventWindow(technical.EventWindow):
     def __init__(self):
-        super(CumRetEventWindow, self).__init__(2)
+        super().__init__(2)
         self.__prevCumRet = 0
 
     def getValue(self):
