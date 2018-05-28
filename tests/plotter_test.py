@@ -50,6 +50,7 @@ class PlotterTestCase(common.TestCase):
             self.assertIsNotNone(subplots)
 
             fig = plt.buildFigure()
+            # fig = plt.buildFigureAndSubplots()
             fig.set_size_inches(10, 8)
 
             png = os.path.join(tmpPath, "plotter_test.png")

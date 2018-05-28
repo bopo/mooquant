@@ -61,7 +61,7 @@ class WebSocketClientThreadMock(threading.Thread):
         self.__stop = True
 
 
-class TestingLiveTradeFeed(barfeed.LiveTradeFeed):
+class MockLiveTradeFeed(barfeed.LiveTradeFeed):
     def __init__(self):
         # barfeed.LiveTradeFeed.__init__(self)
         super().__init__()
@@ -176,7 +176,7 @@ class HTTPClientMock(object):
             return [httpclient.UserTransaction(jsonDict) for jsonDict in self.__userTransactions]
 
 
-class TestingLiveBroker(broker.LiveBroker):
+class MockLiveBroker(broker.LiveBroker):
     def __init__(self, clientId, key, secret):
         self.__httpClient = HTTPClientMock()
         super().__init__(clientId, key, secret)
@@ -188,7 +188,7 @@ class TestingLiveBroker(broker.LiveBroker):
         return self.__httpClient
 
 
-class TestStrategy(test_strategy.BaseTestStrategy):
+class MockStrategy(test_strategy.BaseTestStrategy):
     def __init__(self, feed, brk):
         super().__init__(feed, brk)
         
@@ -222,7 +222,7 @@ class InstrumentTraitsTestCase(tc_common.TestCase):
 class BacktestingTestCase(tc_common.TestCase):
     def testBitcoinChartsFeed(self):
 
-        class TestStrategy(strategy.BaseStrategy):
+        class MockStrategy(strategy.BaseStrategy):
             def __init__(self, feed, brk):
                 strategy.BaseStrategy.__init__(self, feed, brk)
                 self.pos = None
@@ -234,7 +234,7 @@ class BacktestingTestCase(tc_common.TestCase):
         barFeed = btcbarfeed.CSVTradeFeed()
         barFeed.addBarsFromCSV(tc_common.get_data_file_path("bitstampUSD.csv"))
         brk = broker.BacktestingBroker(100, barFeed)
-        strat = TestStrategy(barFeed, brk)
+        strat = MockStrategy(barFeed, brk)
         strat.run()
         
         self.assertEqual(strat.pos.getShares(), 1)
@@ -243,7 +243,7 @@ class BacktestingTestCase(tc_common.TestCase):
         self.assertEqual(strat.pos.getEntryOrder().getAvgFillPrice(), 5.83)
 
     def testMinTrade(self):
-        class TestStrategy(strategy.BaseStrategy):
+        class MockStrategy(strategy.BaseStrategy):
             def __init__(self, feed, brk):
                 strategy.BaseStrategy.__init__(self, feed, brk)
                 self.pos = None
@@ -255,7 +255,7 @@ class BacktestingTestCase(tc_common.TestCase):
         barFeed = btcbarfeed.CSVTradeFeed()
         barFeed.addBarsFromCSV(tc_common.get_data_file_path("bitstampUSD.csv"))
         brk = broker.BacktestingBroker(100, barFeed)
-        strat = TestStrategy(barFeed, brk)
+        strat = MockStrategy(barFeed, brk)
         
         with self.assertRaisesRegex(Exception, "Trade must be >= 5"):
             strat.run()
@@ -264,7 +264,7 @@ class BacktestingTestCase(tc_common.TestCase):
 class PaperTradingTestCase(tc_common.TestCase):
     def testBuyWithPartialFill(self):
 
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.pos = None
@@ -273,7 +273,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 if self.pos is None:
                     self.pos = self.enterLongLimit("BTC", 100, 1, True)
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
@@ -290,7 +290,7 @@ class PaperTradingTestCase(tc_common.TestCase):
 
     def testBuyAndSellWithPartialFill1(self):
 
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.pos = None
@@ -301,7 +301,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 elif bars.getDateTime() == datetime.datetime(2000, 1, 3):
                     self.pos.exitLimit(101)
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
@@ -322,7 +322,7 @@ class PaperTradingTestCase(tc_common.TestCase):
 
     def testBuyAndSellWithPartialFill2(self):
 
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.pos = None
@@ -333,7 +333,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 elif bars.getDateTime() == datetime.datetime(2000, 1, 3):
                     self.pos.exitLimit(101)
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
@@ -357,7 +357,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         # Unless proper rounding is in place 0.01 - 0.00441376 - 0.00445547 - 0.00113077 == 6.50521303491e-19
         # instead of 0.
 
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.pos = None
@@ -368,7 +368,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 elif self.pos.entryFilled() and not self.pos.getExitOrder():
                     self.pos.exitLimit(1000, True)
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 1000, 1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 1000, 0.01)
         barFeed.addTrade(datetime.datetime(2000, 1, 3), 1, 1000, 0.00441376)
@@ -395,7 +395,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         self.assertEqual(strat.pos.getShares(), 0.0)
 
     def testInvalidOrders(self):
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         brk = broker.PaperTradingBroker(1000, barFeed)
 
         with self.assertRaises(Exception):
@@ -414,7 +414,7 @@ class PaperTradingTestCase(tc_common.TestCase):
             brk.createStopLimitOrder(basebroker.Order.Action.BUY, "none", 1, 1, 1)
 
     def testBuyWithoutCash(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.errors = 0
@@ -425,7 +425,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 except Exception:
                     self.errors += 1
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 0.1)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 101, 10)
@@ -440,7 +440,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         self.assertEqual(brk.getCash(), 0)
 
     def testRanOutOfCash(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.errors = 0
@@ -451,7 +451,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 except Exception:
                     self.errors += 1
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 10)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 10)
         barFeed.addTrade(datetime.datetime(2000, 1, 3), 1, 100, 10)
@@ -465,7 +465,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         self.assertEqual(brk.getCash(), 0)
 
     def testSellWithoutBTC(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.errors = 0
@@ -476,7 +476,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                 except Exception:
                     self.errors += 1
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 10)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 10)
 
@@ -489,7 +489,7 @@ class PaperTradingTestCase(tc_common.TestCase):
         self.assertEqual(brk.getCash(), 0)
 
     def testRanOutOfCoins(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.errors = 0
@@ -505,7 +505,7 @@ class PaperTradingTestCase(tc_common.TestCase):
                     except Exception:
                         self.errors += 1
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime(2000, 1, 1), 1, 100, 10)
         barFeed.addTrade(datetime.datetime(2000, 1, 2), 1, 100, 10)
         barFeed.addTrade(datetime.datetime(2000, 1, 3), 1, 100, 10)
@@ -521,17 +521,17 @@ class PaperTradingTestCase(tc_common.TestCase):
 
 class LiveTradingTestCase(tc_common.TestCase):
     def testMapUserTransactionsToOrderEvents(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
 
             def onBars(self, bars):
                 self.stop()
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
-        brk = TestingLiveBroker(None, None, None)
+        brk = MockLiveBroker(None, None, None)
         httpClient = brk.getHTTPClient()
         httpClient.setUSDAvailable(0)
         httpClient.setBTCAvailable(0.1)
@@ -557,7 +557,7 @@ class LiveTradingTestCase(tc_common.TestCase):
         self.assertEqual(strat.orderExecutionInfo[1].getDateTime().date(), datetime.datetime.now().date())
 
     def testCancelOrder(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
 
@@ -566,10 +566,10 @@ class LiveTradingTestCase(tc_common.TestCase):
                 self.getBroker().cancelOrder(order)
                 self.stop()
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
-        brk = TestingLiveBroker(None, None, None)
+        brk = MockLiveBroker(None, None, None)
         httpClient = brk.getHTTPClient()
         httpClient.setUSDAvailable(0)
         httpClient.setBTCAvailable(0)
@@ -586,14 +586,14 @@ class LiveTradingTestCase(tc_common.TestCase):
         self.assertTrue(strat.ordersUpdated[0].isCanceled())
 
     def testBuyAndSell(self):
-        class Strategy(TestStrategy):
+        class Strategy(MockStrategy):
             def __init__(self, feed, brk):
                 super().__init__(feed, brk)
                 self.buyOrder = None
                 self.sellOrder = None
 
             def onOrderUpdated(self, order):
-                TestStrategy.onOrderUpdated(self, order)
+                MockStrategy.onOrderUpdated(self, order)
 
                 if order == self.buyOrder and order.isPartiallyFilled():
                     if self.sellOrder is None:
@@ -607,10 +607,10 @@ class LiveTradingTestCase(tc_common.TestCase):
                     self.buyOrder = self.limitOrder(common.btc_symbol, 10, 1)
                     brk.getHTTPClient().addUserTransaction(self.buyOrder.getId(), 0.5, -5, 10, 0.01)
 
-        barFeed = TestingLiveTradeFeed()
+        barFeed = MockLiveTradeFeed()
         barFeed.addTrade(datetime.datetime.now(), 1, 100, 1)
 
-        brk = TestingLiveBroker(None, None, None)
+        brk = MockLiveBroker(None, None, None)
         httpClient = brk.getHTTPClient()
         httpClient.setUSDAvailable(10)
         httpClient.setBTCAvailable(0)
