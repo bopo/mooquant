@@ -1,5 +1,5 @@
 from mooquant import bar
-from mooquant.tools import resample, mootdx
+from mooquant.tools import mootdx, resample
 
 
 def main():

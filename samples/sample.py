@@ -1,12 +1,13 @@
 # coding=utf-8
 
 
+import coloredlogs
+
 from mooquant import plotter, strategy
 from mooquant.analyzer import drawdown, sharpe, trades
 from mooquant.technical import ma
 from mooquant.tools import mootdx
 
-import coloredlogs
 coloredlogs.install(level='DEBUG', fmt='[%(asctime)s] %(levelname)s %(message)s')
 
 

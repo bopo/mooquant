@@ -1,6 +1,7 @@
 from mooquant import strategy
 from mooquant.tools import tushare
 
+
 class MyStrategy(strategy.BacktestingStrategy):
     def __init__(self, feed, instrument):
         super().__init__(feed)

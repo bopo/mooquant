@@ -2,7 +2,6 @@ from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
 from mooquant.tools import mootdx
-
 from samples import rsi2
 
 

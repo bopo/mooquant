@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from mooquant import strategy, plotter
+from mooquant import plotter, strategy
 from mooquant.analyzer import sharpe
 from mooquant.technical import ma
 from mooquant.tools import tushare
