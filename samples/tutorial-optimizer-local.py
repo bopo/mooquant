@@ -3,7 +3,7 @@ import itertools
 from mooquant.optimizer import local
 from mooquant.tools import tushare
 
-from samples import rsi2
+from rsi2 import RSI2
 
 
 def parameters_generator(instrument):
@@ -18,5 +18,5 @@ def parameters_generator(instrument):
 if __name__ == '__main__':
     instruments = ['600016']
     
-    feeds = tushare.build_feed(instruments, 2016, 2018, './histdata/tushare')
-    local.run(rsi2.RSI2, feeds, parameters_generator(instruments))
+    feeds = tushare.build_feed(instruments, 2016, 2018, '../histdata/tushare')
+    local.run(RSI2, feeds, parameters_generator(instruments))

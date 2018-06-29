@@ -1,18 +1,18 @@
 from mooquant import plotter
 from mooquant.analyzer import sharpe
 from mooquant.barfeed import yahoofeed
-from mooquant.tools import mootdx
+from mooquant.tools import tushare
 
-from samples import rsi2
+from rsi2 import RSI2
 
-
+# ('600016', 150, 5, 3, 93, 25)
 def main(plot):
-    instrument = "600036"
-    entrySMA = 152
-    exitSMA = 11
-    rsiPeriod = 2
-    overBoughtThreshold = 92
-    overSoldThreshold = 18
+    instrument = "600016"
+    entrySMA = 150
+    exitSMA = 5
+    rsiPeriod = 3
+    overBoughtThreshold = 93
+    overSoldThreshold = 25
 
     # Download the bars.
     # feed = quandl.build_feed("WIKI", [instrument], 2009, 2012, "./data")
@@ -23,9 +23,9 @@ def main(plot):
 
     # instruments = ["600036"]
 
-    feeds = mootdx.build_feed([instrument], 2009, 2011, "histdata/mootdx")
+    feeds = tushare.build_feed([instrument], 2009, 2011, "histdata/mootdx")
 
-    strat = rsi2.RSI2(feeds, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
+    strat = RSI2(feeds, instrument, entrySMA, exitSMA, rsiPeriod, overBoughtThreshold, overSoldThreshold)
     sharpeRatioAnalyzer = sharpe.SharpeRatio()
     strat.attachAnalyzer(sharpeRatioAnalyzer)
 
