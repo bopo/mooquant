@@ -24,7 +24,6 @@ from urllib.parse import urlparse
 
 import pytz
 import requests
-
 from mooquant.utils import dt
 
 USE_SECURE_REQUESTS = False

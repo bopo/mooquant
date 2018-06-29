@@ -25,7 +25,6 @@ from distutils import version
 
 import numpy
 import pytz
-
 from mooquant import broker
 from mooquant.analyzer import trades
 from mooquant.barfeed import csvfeed, ninjatraderfeed

@@ -28,7 +28,6 @@ import unittest
 
 # Force matplotlib to not use any Xwindows backend.
 import matplotlib
-
 from mooquant import dataseries
 
 matplotlib.use('Agg')

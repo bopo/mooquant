@@ -21,7 +21,6 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-
 from mooquant import dispatcher
 from mooquant.technical import roc
 

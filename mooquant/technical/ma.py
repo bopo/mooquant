@@ -20,7 +20,6 @@
 """
 
 import numpy as np
-
 from mooquant import technical
 
 # This is the formula I'm using to calculate the averages based on previous ones.

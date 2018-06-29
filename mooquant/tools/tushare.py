@@ -23,10 +23,9 @@ import datetime
 import os
 from pathlib import Path
 
+import mooquant.logger
 import pandas as pd
 import tushare as ts
-
-import mooquant.logger
 from mooquant import bar
 from mooquant.barfeed import tusharefeed
 

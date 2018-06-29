@@ -21,7 +21,6 @@
 from datetime import datetime
 
 import pandas as pd
-
 from mooquant import dataseries
 from mooquant.barfeed import membf
 from mooquant.barfeed.pandasfeed import dataframeToBar, dataframeToTick

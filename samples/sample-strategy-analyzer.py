@@ -1,6 +1,7 @@
 # from . import sma_crossover
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.barfeed import yahoofeed
+
 from samples import sma_crossover
 
 if __name__ == '__main__':

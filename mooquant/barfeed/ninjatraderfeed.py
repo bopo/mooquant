@@ -21,9 +21,8 @@
 
 import datetime
 
-import pytz
-
 import mooquant.barfeed
+import pytz
 from mooquant import bar
 from mooquant.barfeed import csvfeed
 from mooquant.utils import dt

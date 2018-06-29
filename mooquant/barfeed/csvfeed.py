@@ -22,7 +22,6 @@
 import datetime
 
 import pytz
-
 from mooquant import bar
 from mooquant.barfeed import membf
 from mooquant.utils import csvutils, dt

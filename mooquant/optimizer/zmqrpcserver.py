@@ -21,9 +21,8 @@
 import pickle
 import threading
 
-import zerorpc
-
 import mooquant.logger
+import zerorpc
 from mooquant.optimizer import base
 
 logger = mooquant.logger.getLogger(__name__)

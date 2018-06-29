@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Dec 01 10:12:01 2015
-
-@author: Eunice
-"""
-
 import numpy as np
-
 from mooquant import plotter, strategy
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.broker.backtesting import TradePercentage

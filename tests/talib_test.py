@@ -21,7 +21,6 @@
 import datetime
 
 import talib
-
 from mooquant import bar, dataseries
 from mooquant.dataseries import bards
 from mooquant.talibext import indicator

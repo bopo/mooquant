@@ -25,9 +25,8 @@ import socket
 import time
 import xmlrpc.client
 
-import zerorpc
-
 import mooquant.logger
+import zerorpc
 from mooquant import barfeed
 
 

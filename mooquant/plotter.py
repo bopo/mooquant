@@ -22,7 +22,6 @@ import collections
 
 import matplotlib.pyplot as plt
 from matplotlib import ticker
-
 from mooquant import broker, warninghelpers
 
 

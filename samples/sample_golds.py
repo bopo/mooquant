@@ -1,6 +1,5 @@
 import numpy as np
 import statsmodels.api as sm
-
 from mooquant import dataseries, plotter, strategy
 from mooquant.analyzer import sharpe
 from mooquant.dataseries import aligned

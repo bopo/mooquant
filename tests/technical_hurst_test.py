@@ -20,7 +20,6 @@
 """
 
 import numpy as np
-
 from mooquant import dataseries
 from mooquant.technical import hurst
 

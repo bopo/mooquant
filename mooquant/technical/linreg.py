@@ -20,10 +20,9 @@
 """
 
 import numpy as np
-from scipy import stats
-
 from mooquant import technical
 from mooquant.utils import collections, dt
+from scipy import stats
 
 
 # Using scipy.stats.linregress instead of numpy.linalg.lstsq because of this:

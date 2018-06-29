@@ -1,4 +1,5 @@
 from mooquant.optimizer import worker
+
 from samples import rsi2
 
 if __name__ == '__main__':

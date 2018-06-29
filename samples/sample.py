@@ -2,7 +2,6 @@
 
 
 import coloredlogs
-
 from mooquant import plotter, strategy
 from mooquant.analyzer import drawdown, sharpe, trades
 from mooquant.technical import ma

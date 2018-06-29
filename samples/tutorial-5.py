@@ -1,6 +1,7 @@
 from mooquant import plotter
 from mooquant.analyzer import returns
 from mooquant.tools import tushare
+
 from samples import sma_crossover
 
 if __name__ == '__main__':

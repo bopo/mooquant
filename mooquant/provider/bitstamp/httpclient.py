@@ -27,7 +27,6 @@ import threading
 import time
 
 import requests
-
 from mooquant.provider.bitstamp import common
 from mooquant.utils import dt
 

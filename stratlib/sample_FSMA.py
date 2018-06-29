@@ -1,11 +1,4 @@
-﻿# -*- coding: utf-8 -*-
-"""
-Created on Tue Nov 03 13:06:56 2015
-
-@author: Eunice
-"""
-
-from mooquant import strategy
+﻿from mooquant import strategy
 from mooquant.analyzer import drawdown, returns, sharpe, trades
 from mooquant.broker.backtesting import TradePercentage
 from mooquant.broker.fillstrategy import DefaultStrategy

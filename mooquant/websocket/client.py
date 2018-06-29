@@ -21,10 +21,9 @@
 import json
 import time
 
+import mooquant.logger
 import tornado
 from ws4py.client import tornadoclient
-
-import mooquant.logger
 
 logger = mooquant.logger.getLogger("websocket.client")
 

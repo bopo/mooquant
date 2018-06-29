@@ -22,7 +22,6 @@
 import datetime
 
 import pytz
-
 from mooquant import bar, barfeed, marketsession, strategy
 from mooquant.barfeed import csvfeed, membf, ninjatraderfeed, yahoofeed
 from mooquant.strategy import position
