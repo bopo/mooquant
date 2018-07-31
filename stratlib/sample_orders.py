@@ -6,9 +6,6 @@ from mooquant.technical import ma
 
 
 class OrderBook(strategy.BacktestingStrategy):
-    '''
-    头寸设置
-    '''
     def __init__(self, feed, instrument, n, m):
         strategy.BacktestingStrategy.__init__(self, feed)
         self.__instrument = instrument

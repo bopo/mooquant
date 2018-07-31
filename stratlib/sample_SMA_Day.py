@@ -57,9 +57,11 @@ class thrSMA(strategy.BacktestingStrategy):
     def buyCon2(self):
         m1 = 0
         m2 = 0
+        
         for i in range(self.__circ):
             if self.__ma1[-i - 1] > self.__ma3[-i - 1]:
                 m1 += 1
+
             if self.__ma2[-i - 1] > self.__ma3[-i - 1]:
                 m2 += 1
 
@@ -106,6 +108,7 @@ class thrSMA(strategy.BacktestingStrategy):
             self.__highD.append(self.__high[-1])
             self.__lowD.append(self.__low[-1])
             self.__closeD.append(self.__close[-1])
+            
             return
 
         # if another day
@@ -153,7 +156,6 @@ def main():
 
     plter = plotter.StrategyPlotter(strat, True, True, True)
     strat.run()
-
     plter.plot()
 
     # 夏普率

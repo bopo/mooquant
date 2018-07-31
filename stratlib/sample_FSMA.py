@@ -175,12 +175,16 @@ def testStrategy():
 
     # 夏普率
     sharp = sharpeRatioAnalyzer.getSharpeRatio(0.05)
+    
     # 最大回撤
     maxdd = drawDownAnalyzer.getMaxDrawDown()
+    
     # 收益率
     return_ = retAnalyzer.getCumulativeReturns()[-1]
+    
     # 收益曲线
     return_list = []
+
     for item in retAnalyzer.getCumulativeReturns():
         return_list.append(item)
 

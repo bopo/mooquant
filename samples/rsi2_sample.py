@@ -5,6 +5,7 @@ from mooquant.tools import tushare
 
 from rsi2 import RSI2
 
+
 # ('600016', 150, 5, 3, 93, 25)
 def main(plot):
     instrument = "600016"
