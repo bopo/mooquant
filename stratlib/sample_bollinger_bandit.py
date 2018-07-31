@@ -223,7 +223,7 @@ def main():
     instrument = '600288'
     paras = [5, 20]
 
-    feeds = tushare.build_feed([instrument], 2016, 2017, "tushare")
+    feeds = tushare.build_feed([instrument], 2016, 2017, "histdata/tushare")
     strat = strat(feeds, instrument, *paras)
 
     retAnalyzer = returns.Returns()

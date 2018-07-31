@@ -74,7 +74,7 @@ def testStrategy():
     plot = True
 
     from mooquant.tools import tushare
-    feeds = tushare.build_feed([instrument], 2015, 2016, "tushare")
+    feeds = tushare.build_feed([instrument], 2015, 2016, "histdata/tushare")
     strat = strat(feeds, instrument, *paras)
 
     retAnalyzer = returns.Returns()

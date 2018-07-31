@@ -153,7 +153,7 @@ def testStrategy():
     # mooquant_id = instrument + '.' + market
     # strat = strat(barfeed, mooquant_id, *paras)
     from mooquant.tools import tushare
-    feeds = tushare.build_feed([instrument], 2016, 2017, "tushare")
+    feeds = tushare.build_feed([instrument], 2016, 2017, "histdata/tushare")
     strat = strat(feeds, instrument, *paras)
 
     retAnalyzer = returns.Returns()
