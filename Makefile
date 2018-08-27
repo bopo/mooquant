@@ -33,6 +33,8 @@ clean-build: ## remove build artifacts
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/
+	rm -fr .pytest_cache/
+	rm -fr .python-version
 	find . -name '*.egg-info' -exec rm -fr {} +
 	find . -name '*.egg' -exec rm -f {} +
 
@@ -76,13 +78,16 @@ servedocs: docs ## compile the docs watching for changes
 	watchmedo shell-command -p '*.rst' -c '$(MAKE) -C docs html' -R -D .
 
 release: clean ## package and upload a release
-	python3 setup.py sdist upload
-	python3 setup.py bdist_wheel upload
+	python setup.py sdist upload
+	python setup.py bdist_wheel upload
 
 dist: clean ## builds source and wheel package
-	python3 setup.py sdist
-	python3 setup.py bdist_wheel
+	python setup.py sdist
+	python setup.py bdist_wheel
 	ls -l dist
 
+develop: clean ## install the package to the active Python's site-packages
+	python setup.py develop
+
 install: clean ## install the package to the active Python's site-packages
-	python3 setup.py install
+	python setup.py install
