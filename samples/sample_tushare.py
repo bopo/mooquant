@@ -59,20 +59,6 @@ def main():
 
     feeds = tushare.build_feed(instruments, 2003, 2018, "histdata/tushare")
 
-    # feeds = csvfeed.Feed("Date", "%Y-%m-%d")
-    # feeds.setDateRange(datetime.datetime(2006, 1, 1), datetime.datetime(2012, 12, 31))
-    # feeds.addValuesFromCSV("tushare/600016-2012-tushare.csv")
-
-    # feeds = GenericBarFeed(Frequency.DAY, None, None)
-    # # feeds = tusharefeed.Feed(Frequency.DAY)
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2006-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2007-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2008-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2009-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2010-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2011-tushare.csv")
-    # feeds.addBarsFromCSV("600016", "tushare/600016-2012-tushare.csv")
-
     # 3.实例化策略
     strat = Strategy(feeds, instruments[0])
 
@@ -80,8 +66,6 @@ def main():
     ratio = sharpe.SharpeRatio()
     strat.attachAnalyzer(ratio)
     plter = plotter.StrategyPlotter(strat)
-
-    # coloredlogs.install(level='DEBUG')
 
     # 5.运行策略
     strat.run()

@@ -59,11 +59,7 @@ class Worker(object):
             self.__server.connect("tcp://{}:{}".format(address, port))
                 
         self.__logger = mooquant.logger.getLogger(workerName)
-        
-        if workerName is None:
-            self.__workerName = socket.gethostname()
-        else:
-            self.__workerName = workerName
+        self.__workerName = socket.gethostname() if workerName is None else workerName
 
     def getLogger(self):
         return self.__logger
@@ -176,7 +172,6 @@ def run(strategyClass, address, port, workerCount=None, workerName=None, drivce=
     :param workerName: A name for the worker. A name that identifies the worker. If None, the hostname is used.
     :type workerName: string.
     """
-    print(drivce)
 
     assert(workerCount is None or workerCount > 0)
     

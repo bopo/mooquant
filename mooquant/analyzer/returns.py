@@ -30,9 +30,9 @@ from mooquant import analyzer, dataseries, observer
 class TimeWeightedReturns(object):
     def __init__(self, initialValue):
         self.__lastValue = initialValue
-        self.__flows = 0.0
         self.__lastPeriodRet = 0.0
         self.__cumRet = 0.0
+        self.__flows = 0.0
 
     # 保证金
     def deposit(self, amount):

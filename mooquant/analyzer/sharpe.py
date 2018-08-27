@@ -107,6 +107,7 @@ class SharpeRatio(analyzer.StrategyAnalyzer):
         # Only use when self.__useDailyReturns == False
         self.__firstDateTime = None
         self.__lastDateTime = None
+        
         # Only use when self.__useDailyReturns == True
         self.__currentDate = None
 
