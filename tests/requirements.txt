@@ -7,7 +7,7 @@ pytest==3.8.1
 pytest-runner==2.11.1
 python-dateutil==2.6.1
 matplotlib==3.0.0
-requests==2.18.4
+requests==2.19.1
 tornado==4.5.2
 tweepy==3.5.0
 TA-Lib==0.4.10
