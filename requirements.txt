@@ -26,7 +26,7 @@ numpy==1.15.2             # via matplotlib, pandas, patsy, scipy, ta-lib
 pandas==0.23.4
 patsy==0.5.0              # via statsmodels
 pluggy==0.7.1             # via pytest
-prettytable==0.7.2        # via mootdx
+prettytable==7        # via mootdx
 py==1.5.3                 # via pytest
 pycparser==2.18           # via cffi
 pyparsing==2.2.0          # via matplotlib
