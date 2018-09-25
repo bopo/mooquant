@@ -16,7 +16,7 @@ coloredlogs==10.0
 cryptography==2.3.1       # via pytdx
 cycler==0.10.0            # via matplotlib
 cython==0.28.5
-humanfriendly==4.12.1     # via coloredlogs
+humanfriendly==4.16.1     # via coloredlogs
 idna==2.6                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
 matplotlib==2.2.2
