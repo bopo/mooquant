@@ -1,7 +1,7 @@
 import itertools
 
 from mooquant.optimizer import server
-from mooquant.tools import tushare
+from mooquant.tools import mootdx
 
 
 def parameters_generator(instrument):
@@ -22,8 +22,8 @@ if __name__ == '__main__':
     # feeds.addBarsFromCSV("dia", "./tests/data/DIA-2010-yahoofinance.csv")
     # feeds.addBarsFromCSV("dia", "./tests/data/DIA-2011-yahoofinance.csv")
 
-    instrument = '600016'
-    feeds = tushare.build_feed([instrument], 2016, 2018, './histdata/tushare')
+    instrument = '600036'
+    feeds = mootdx.build_feed([instrument], 2003, 2018, './histdata/mootdx')
 
     # Run the server.
     server.serve(

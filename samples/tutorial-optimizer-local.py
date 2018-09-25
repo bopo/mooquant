@@ -18,7 +18,7 @@ def parameters_generator(instrument):
 
 
 if __name__ == '__main__':
-    instruments = ['600016']
+    instruments = ['000848']
     
     feeds = tushare.build_feed(instruments, 2016, 2018, 'histdata/tushare')
     local.run(RSI2, feeds, parameters_generator(instruments))

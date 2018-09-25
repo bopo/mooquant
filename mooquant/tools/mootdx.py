@@ -31,7 +31,7 @@ from mootdx import quotes
 
 
 def download_bars(instrument, begin, end):
-    quote = quotes.Quotes()
+    quote = quotes.Quotes.factory()
     return quote.k(instrument, begin, end)
 
 def download_daily_bars(instrument, year, csvFile):

@@ -49,8 +49,8 @@ class PlotterTestCase(common.TestCase):
             self.assertIsNotNone(fig)
             self.assertIsNotNone(subplots)
 
-            fig = plt.buildFigure()
-            # fig = plt.buildFigureAndSubplots()
+            # fig = plt.buildFigure()
+            fig, _ = plt.buildFigureAndSubplots()
             fig.set_size_inches(10, 8)
 
             png = os.path.join(tmpPath, "plotter_test.png")

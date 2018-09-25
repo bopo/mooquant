@@ -1,25 +1,27 @@
-# ARG MOOQUANT_TAG
-# FROM gbecedillas/mooquant:${MOOQUANT_TAG}
-FROM gbecedillas/mooquant:0.3.3-py37
+# ARG PYALGOTRADE_TAG
+# FROM gbecedillas/pyalgotrade:${PYALGOTRADE_TAG}
+FROM gbecedillas/pyalgotrade:0.20-py27
 
-MAINTAINER BoPo <ibopo@126.com>
+MAINTAINER Gabriel Martin Becedillas Ruiz <gabriel.becedillas@gmail.com>
 
 RUN apt-get update
 
 RUN pip install tox
-
+# Required by matplotlib
 RUN apt-get install -y python-tk 
 
 RUN pip freeze
 
-RUN mkdir /tmp/mooquant
+RUN mkdir /tmp/pyalgotrade
 
-COPY setup.py /tmp/mooquant/
-COPY travis/run_tests.sh /tmp/mooquant/
-COPY coverage.cfg /tmp/mooquant/
-COPY tox.ini /tmp/mooquant/
-COPY mooquant /tmp/mooquant/mooquant
-COPY testcases /tmp/mooquant/testcases
-COPY samples /tmp/mooquant/samples
+# Files needed to execute testcases.
+COPY setup.py /tmp/pyalgotrade/
+COPY travis/run_tests.sh /tmp/pyalgotrade/
+COPY coverage.cfg /tmp/pyalgotrade/
+COPY tox.ini /tmp/pyalgotrade/
+COPY pyalgotrade /tmp/pyalgotrade/pyalgotrade
+COPY testcases /tmp/pyalgotrade/testcases
+COPY samples /tmp/pyalgotrade/samples
 
-RUN pip uninstall -y mooquant
+# Remove the installed version of PyAlgoTrade since we'll be executing testcases from source.
+RUN pip uninstall -y pyalgotrade
