@@ -16,7 +16,7 @@ MooQuant 量化交易框架
 .. image:: https://pyup.io/repos/github/bopo/mooquant/shield.svg
      :target: https://pyup.io/repos/github/bopo/mooquant/
      :alt: Updates
-
+![Updates](https://pyup.io/repos/github/bopo/mooquant/shield.svg)
 
 MooQuant 是一个基于 pyalgotrade 衍生而来的完全支持 python3.x 版本 的支持国内A股的量化交易框架。
 
@@ -27,8 +27,8 @@ MooQuant 是一个基于 pyalgotrade 衍生而来的完全支持 python3.x 版�
 功能
 --------
 
-* 添加 `tushare <https://github.com/waditu/tushare>`_ 做为数据源
-* 添加 `mootdx <https://github.com/bopo/mootdx>`_ 作为数据源
+* 添加 [tushare](https://github.com/waditu/tushare>) 做为数据源
+* 添加 [mootdx](<https://github.com/bopo/mootdx>) 作为数据源
 
 版权
 ---------
