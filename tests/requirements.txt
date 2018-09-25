@@ -16,5 +16,5 @@ scipy==1.1.0
 ws4py==0.5.1
 pytz==2018.5
 nose==1.3.7
-moult
+moult==0.1.2
 pycallgraph
