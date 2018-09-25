@@ -28,7 +28,7 @@ patsy==0.5.0              # via statsmodels
 pluggy==0.7.1             # via pytest
 prettytable==7        # via mootdx
 py==1.6.0                 # via pytest
-pycparser==2.18           # via cffi
+pycparser==2.19           # via cffi
 pyparsing==2.2.0          # via matplotlib
 pytdx==1.67               # via mootdx
 pytest==3.5.1
