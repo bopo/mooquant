@@ -34,7 +34,7 @@ pytdx==1.67               # via mootdx
 pytest==3.8.1
 python-dateutil==2.7.3    # via matplotlib, pandas
 pytz==2018.5
-requests==2.18.4
+requests==2.19.1
 scipy==1.1.0
 six==1.11.0               # via cryptography, cycler, matplotlib, more-itertools, patsy, pytdx, pytest, python-dateutil
 statsmodels==0.8.0
