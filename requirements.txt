@@ -7,39 +7,39 @@
 --index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
 asn1crypto==0.24.0        # via cryptography
-attrs==18.1.0             # via pytest
-certifi==2018.4.16        # via requests
+attrs==18.2.0             # via pytest
+certifi==2018.8.24        # via requests
 cffi==1.11.5              # via cryptography
 chardet==3.0.4            # via requests
 click==6.7                # via mootdx, pytdx
-coloredlogs==9.3.1
-cryptography==2.2.2       # via pytdx
+coloredlogs==10.0
+cryptography==2.3.1       # via pytdx
 cycler==0.10.0            # via matplotlib
-cython==0.28.2
-humanfriendly==4.12.1     # via coloredlogs
-idna==2.6                 # via cryptography, requests
+cython==0.28.5
+humanfriendly==4.16.1     # via coloredlogs
+idna==2.7                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
-matplotlib==2.2.2
-mootdx==0.1.8
-more-itertools==4.1.0     # via pytest
-numpy==1.14.3             # via matplotlib, pandas, patsy, scipy, ta-lib
-pandas==0.22.0
+matplotlib==3.0.0
+mootdx==0.2.1
+more-itertools==4.3.0     # via pytest
+numpy==1.15.2             # via matplotlib, pandas, patsy, scipy, ta-lib
+pandas==0.23.4
 patsy==0.5.0              # via statsmodels
-pluggy==0.6.0             # via pytest
-prettytable==0.7.2        # via mootdx
-py==1.5.3                 # via pytest
-pycparser==2.18           # via cffi
-pyparsing==2.2.0          # via matplotlib
+pluggy==0.7.1             # via pytest
+prettytable==7        # via mootdx
+py==1.6.0                 # via pytest
+pycparser==2.19           # via cffi
+pyparsing==2.2.1          # via matplotlib
 pytdx==1.67               # via mootdx
-pytest==3.5.1
+pytest==3.8.1
 python-dateutil==2.7.3    # via matplotlib, pandas
-pytz==2018.4
-requests==2.18.4
+pytz==2018.5
+requests==2.19.1
 scipy==1.1.0
 six==1.11.0               # via cryptography, cycler, matplotlib, more-itertools, patsy, pytdx, pytest, python-dateutil
-statsmodels==0.8.0
+statsmodels==0.9.0
 ta-lib==0.4.17
-tornado==4.5.3
-tushare==1.1.7
+tornado==5.1.1
+tushare==1.2.12
 urllib3==1.22             # via requests
 ws4py==0.5.1
