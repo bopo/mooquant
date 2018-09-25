@@ -19,7 +19,7 @@ cython==0.28.5
 humanfriendly==4.16.1     # via coloredlogs
 idna==2.7                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
-matplotlib==2.2.2
+matplotlib==3.0.0
 mootdx==0.1.8
 more-itertools==4.1.0     # via pytest
 numpy==1.14.3             # via matplotlib, pandas, patsy, scipy, ta-lib
