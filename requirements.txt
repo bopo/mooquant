@@ -39,7 +39,7 @@ scipy==1.1.0
 six==1.11.0               # via cryptography, cycler, matplotlib, more-itertools, patsy, pytdx, pytest, python-dateutil
 statsmodels==0.9.0
 ta-lib==0.4.17
-tornado==4.5.3
+tornado==5.1.1
 tushare==1.1.7
 urllib3==1.22             # via requests
 ws4py==0.5.1
