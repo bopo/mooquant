@@ -27,8 +27,7 @@ MooQuant 是一个基于 pyalgotrade 衍生而来的完全支持 python3.x 版�
 功能
 --------
 
-* 升级 tornado 版本到 5.1
-* 添加 tushare 做为数据源
+* 添加 `tushare <https://github.com/waditu/tushare>`_ 做为数据源
 * 添加 `mootdx <https://github.com/bopo/mootdx>`_ 作为数据源
 
 版权
