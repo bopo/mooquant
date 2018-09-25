@@ -2,6 +2,7 @@ global-exclude .DS_Store *.pyc *.pyo
 
 include HISTORY.rst
 include README.rst
+include README.md
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]

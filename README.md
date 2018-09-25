@@ -12,8 +12,8 @@ MooQuant 是一个基于 `pyalgotrade` 衍生而来的完全支持 `Python3.x` �
 功能
 --------
 
-* 添加 [tushare](https://github.com/waditu/tushare>) 作为数据源
-* 添加 [mootdx](<https://github.com/bopo/mootdx>) 作为数据源
+* 添加 [tushare](https://github.com/waditu/tushare) 作为数据源
+* 添加 [mootdx](https://github.com/bopo/mootdx) 作为数据源
 
 版权
 ---------

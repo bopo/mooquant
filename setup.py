@@ -21,8 +21,8 @@ try:
 except ImportError:
     from distutils.core import setup, find_packages
 
-with open('README.rst') as readme_file:
-    readme = readme_file.read()
+with open('README.rst', encoding='utf-8') as f:
+    description = f.read()
 
 requirements = [
     'click>=6.0',
@@ -46,7 +46,7 @@ setup(
     name='MooQuant',
     version=__version__,
     description='MooQuant',
-    long_description='',
+    long_description=description,
     author='bopowang',
     author_email='ibopo@126.com',
     url='http://www.mooquant.com/',
