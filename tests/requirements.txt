@@ -1,4 +1,4 @@
-flake8==2.6.0
+flake8==3.5.0
 tox==2.8.1
 coverage==4.1
 cryptography==2.3.1
