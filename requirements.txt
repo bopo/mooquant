@@ -37,7 +37,7 @@ pytz==2018.5
 requests==2.19.1
 scipy==1.1.0
 six==1.11.0               # via cryptography, cycler, matplotlib, more-itertools, patsy, pytdx, pytest, python-dateutil
-statsmodels==0.8.0
+statsmodels==0.9.0
 ta-lib==0.4.17
 tornado==4.5.3
 tushare==1.1.7
