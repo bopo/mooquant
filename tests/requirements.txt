@@ -6,7 +6,7 @@ PyYAML==3.11
 pytest==3.2.2
 pytest-runner==2.11.1
 python-dateutil==2.6.1
-matplotlib==2.0.2
+matplotlib==3.0.0
 requests==2.18.4
 tornado==4.5.2
 tweepy==3.5.0
