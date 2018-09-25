@@ -20,7 +20,6 @@ MooQuant 量化交易框架
 
 MooQuant 是一个基于 pyalgotrade 衍生而来的完全支持 python3.x 版本 的支持国内A股的量化交易框架。
 
-
 * 协议: MIT license
 * 文档: https://mooquant.readthedocs.io.
 
