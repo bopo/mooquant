@@ -15,7 +15,7 @@ click==6.7                # via mootdx, pytdx
 coloredlogs==10.0
 cryptography==2.3.1       # via pytdx
 cycler==0.10.0            # via matplotlib
-cython==0.28.5
+cython==0.29
 humanfriendly==4.16.1     # via coloredlogs
 idna==2.7                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
