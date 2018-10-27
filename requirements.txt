@@ -20,7 +20,7 @@ humanfriendly==4.16.1     # via coloredlogs
 idna==2.7                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
 matplotlib==3.0.0
-mootdx==0.2.1
+mootdx==0.2.3
 more-itertools==4.3.0     # via pytest
 numpy==1.15.2             # via matplotlib, pandas, patsy, scipy, ta-lib
 pandas==0.23.4
