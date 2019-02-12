@@ -21,7 +21,7 @@ idna==2.7                 # via cryptography, requests
 kiwisolver==1.0.1         # via matplotlib
 matplotlib==3.0.0
 mootdx==0.2.1
-more-itertools==4.3.0     # via pytest
+more-itertools==6.0.0     # via pytest
 numpy==1.15.2             # via matplotlib, pandas, patsy, scipy, ta-lib
 pandas==0.23.4
 patsy==0.5.0              # via statsmodels
