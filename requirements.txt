@@ -23,7 +23,7 @@ matplotlib==3.0.0
 mootdx==0.2.1
 more-itertools==4.3.0     # via pytest
 numpy==1.15.2             # via matplotlib, pandas, patsy, scipy, ta-lib
-pandas==0.23.4
+pandas==0.24.2
 patsy==0.5.0              # via statsmodels
 pluggy==0.7.1             # via pytest
 prettytable==7        # via mootdx
