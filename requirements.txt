@@ -31,7 +31,7 @@ py==1.6.0                 # via pytest
 pycparser==2.19           # via cffi
 pyparsing==2.2.1          # via matplotlib
 pytdx==1.67               # via mootdx
-pytest==3.8.1
+pytest==4.4.0
 python-dateutil==2.7.3    # via matplotlib, pandas
 pytz==2018.5
 requests==2.19.1
