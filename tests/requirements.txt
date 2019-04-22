@@ -11,7 +11,7 @@ requests==2.19.1
 tornado==5.1.1
 tweepy==3.6.0
 TA-Lib==0.4.17
-numpy==1.15.2
+numpy==1.16.3
 scipy==1.1.0
 ws4py==0.5.1
 pytz==2018.5
