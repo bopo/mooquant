@@ -41,5 +41,5 @@ statsmodels==0.9.0
 ta-lib==0.4.17
 tornado==5.1.1
 tushare==1.2.12
-urllib3==1.22             # via requests
+urllib3==1.25             # via requests
 ws4py==0.5.1
