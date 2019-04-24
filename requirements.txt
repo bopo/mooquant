@@ -18,7 +18,7 @@ cycler==0.10.0            # via matplotlib
 cython==0.28.5
 humanfriendly==4.16.1     # via coloredlogs
 idna==2.7                 # via cryptography, requests
-kiwisolver==1.0.1         # via matplotlib
+kiwisolver==1.1.0         # via matplotlib
 matplotlib==3.0.0
 mootdx==0.2.1
 more-itertools==4.3.0     # via pytest
