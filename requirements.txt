@@ -8,7 +8,7 @@
 
 asn1crypto==0.24.0        # via cryptography
 attrs==18.2.0             # via pytest
-certifi==2018.8.24        # via requests
+certifi==2019.9.11        # via requests
 cffi==1.11.5              # via cryptography
 chardet==3.0.4            # via requests
 click==6.7                # via mootdx, pytdx
