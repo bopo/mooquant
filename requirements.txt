@@ -6,7 +6,7 @@
 #
 --index-url http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com
 
-asn1crypto==0.24.0        # via cryptography
+asn1crypto==1.0.0        # via cryptography
 attrs==18.2.0             # via pytest
 certifi==2018.8.24        # via requests
 cffi==1.11.5              # via cryptography
